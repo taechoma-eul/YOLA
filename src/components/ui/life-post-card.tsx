@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import SAMPLE_IMAGE from '@images/images/sample-image.jpeg';
-import { LifePost } from '@/types/life-post';
+import type { LifePost } from '@/types/life-post';
 
 type LifePostCardProps = {
   lifePost: LifePost;

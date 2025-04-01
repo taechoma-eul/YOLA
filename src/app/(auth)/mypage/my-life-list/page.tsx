@@ -1,6 +1,6 @@
 import { fetchAllLifeList } from '@/lib/utils/api/my-life.api';
 import LifePostCard from '@/components/ui/life-post-card';
-import { LifePost } from '@/types/life-post';
+import type { LifePost } from '@/types/life-post';
 
 const MyLifeListPage = async () => {
   //supabase 데이터 불러오기 (우선 라이프 전체 글 가져오기로 테스트)
