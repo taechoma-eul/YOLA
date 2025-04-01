@@ -1,4 +1,4 @@
-import { createClient } from '../supabase/supabase-server';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 /**
  * Supabase에서 `mission_list` 테이블의 고유한 `type` 값을 조회하는 함수
