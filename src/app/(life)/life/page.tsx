@@ -13,7 +13,7 @@ const LifePage = () => {
         <Calendar setDate={setDate} />
       </div>
 
-      <h2 className="text-lg font-semibold">{date} &lt;닉네임&gt;님의 혼자 라이프</h2>
+      <h2 className="ml-[12px] text-lg font-semibold">{date} &lt;닉네임&gt;님의 혼자 라이프</h2>
 
       <SoloLifeList />
     </div>
