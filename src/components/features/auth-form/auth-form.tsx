@@ -1,23 +1,21 @@
 'use client';
 
-import { login, signup } from '@/lib/utils/api/auth-action';
-import type { SignupFormData } from '@/lib/utils/authValidate';
-import { signupSchema } from '@/lib/utils/authValidate';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import AuthFormInput from './auth-form-input';
 import Link from 'next/link';
-import { PATH } from '@/constants/page-path';
-import { AuthInputProps } from '@/types/components/auth-form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { login, signup } from '@/lib/utils/api/auth-action';
+import { signupSchema } from '@/lib/utils/authValidate';
+import AuthFormInput from '@/components/features/auth-form/auth-form-input';
 import { MODE } from '@/constants/auth-form';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { PATH } from '@/constants/page-path';
+import type { AuthInputProps } from '@/types/components/auth-form';
+import type { SignupFormData } from '@/lib/utils/authValidate';
 
 type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
 
 const AuthForm = ({ mode }: { mode: string }) => {
   const {
     register,
-    handleSubmit,
     formState: { errors, isSubmitting },
     getValues,
     trigger
