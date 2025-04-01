@@ -5,11 +5,11 @@ import SoloLifeList from '@/components/life/solo-life-list';
 import { useState } from 'react';
 
 const LifePage = () => {
-  const [date, setDate] = useState<string>(''); // 오늘 날짜로 초기화
+  const [date, setDate] = useState<string>('0000.00.00'); // 오늘 날짜로 초기화
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="ml-auto mr-auto w-[90%] text-center">
+      <div className="ml-auto mr-auto min-h-[750px] w-[90%] text-center">
         <Calendar setDate={setDate} />
       </div>
 
