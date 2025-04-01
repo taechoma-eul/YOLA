@@ -1,4 +1,4 @@
-import { createClient } from '../supabase/supabase-server';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 // 전체 라이프 리스트 가져오기
 export const fetchAllLifeList = async () => {
