@@ -1,6 +1,5 @@
-import React from 'react';
-import SoloLifeCard from './solo-life-card';
 import { SoloLifeCardType } from '@/types/solo-life';
+import SoloLifeCard from '@/components/life/solo-life-card';
 
 const SoloLifeList = () => {
   const emptyList: SoloLifeCardType[] = [

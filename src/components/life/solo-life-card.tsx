@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { SoloLifeCardType } from '@/types/solo-life';
 
 const SoloLifeCard = ({ img, title, content, date }: SoloLifeCardType) => {
