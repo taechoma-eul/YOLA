@@ -1,5 +1,5 @@
 import { SignupFormData } from '@/lib/utils/authValidate';
-import { UseFormRegister, UseFormTrigger } from 'react-hook-form';
+import { UseFormGetValues, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 
 export interface AuthInputProps {
   register: UseFormRegister<SignupFormData>;
@@ -10,4 +10,5 @@ export interface AuthInputProps {
   checkButton?: boolean;
   label: string;
   errorMessage?: string | undefined;
+  getValues: UseFormGetValues<SignupFormData>;
 }

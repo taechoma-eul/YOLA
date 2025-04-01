@@ -10,8 +10,9 @@ import Link from 'next/link';
 import { PATH } from '@/constants/page-path';
 import { AuthInputProps } from '@/types/components/auth-form';
 import { MODE } from '@/constants/auth-form';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 
-type FormData = Omit<AuthInputProps, 'register' | 'trigger'>;
+type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
 
 const AuthForm = ({ mode }: { mode: string }) => {
   const {
@@ -91,6 +92,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
           <AuthFormInput
             register={register}
             trigger={trigger}
+            getValues={getValues}
             placeholder={data.placeholder}
             type={data.type}
             name={data.name}
@@ -122,6 +124,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
           <AuthFormInput
             register={register}
             trigger={trigger}
+            getValues={getValues}
             placeholder={data.placeholder}
             type={data.type}
             name={data.name}
