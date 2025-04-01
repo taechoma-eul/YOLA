@@ -6,7 +6,6 @@ import { LifePost } from '@/types/life-post';
 const MyLifeListPage = async () => {
   //supabase 데이터 불러오기 (우선 라이프 전체 글 가져오기로 테스트)
   const lifePosts: LifePost[] = await fetchAllLifeList();
-  console.log(lifePosts);
 
   return (
     <div>

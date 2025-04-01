@@ -7,7 +7,6 @@ type LifePostCardProps = {
 };
 
 const LifePostCard = ({ lifePost }: LifePostCardProps) => {
-  console.log(lifePost);
   return (
     <div className="flex flex-col items-center justify-center gap-2 rounded-lg border">
       <figure>
