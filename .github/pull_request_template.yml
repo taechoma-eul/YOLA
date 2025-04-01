@@ -1,43 +1,31 @@
-name: '🔍 Pull Request'
-description: '작업한 내용을 정리하고 PR을 생성합니다.'
-title: '[PR]: '
-labels: []
-assignees:
-  - ''
+## ✨ feature(#이슈번호): 기능명
 
-body:
-  - type: input
-    id: issue-number
-    attributes:
-      label: '💡 이슈 번호'
-      description: '해당 이슈 번호를 적어주세요.'
-      placeholder: '#123'
-    validations:
-      required: true
+<br/>
 
-  - type: textarea
-    id: work-description
-    attributes:
-      label: '🍀 작업 설명'
-      description: '작업한 내용을 적어주세요.'
-      placeholder: '예: 로그인 UI 개선 및 API 연동 완료'
-    validations:
-      required: true
+## 🔎 작업 내용
 
-  - type: textarea
-    id: review-requirements
-    attributes:
-      label: '💬 리뷰 요구 사항'
-      description: '리뷰 예상 시간 및 고민 사항을 적어주세요.'
-      placeholder: |
-        - 리뷰 예상 시간: 약 10분
-        - 고민 사항: API 응답 처리 방식에 대한 의견 필요
-    validations:
-      required: false
+- 어떤 기능이 추가되었는지, 어떤 문제가 해결되었는지 설명해주세요.
 
-  - type: textarea
-    id: preview
-    attributes:
-      label: '💛 미리보기'
-      description: '프론트에서 디자인 변경이 있거나 새로운 디자인을 적용했다면 이미지를 첨부해주세요.'
-      placeholder: '스크린샷을 첨부하거나 설명을 작성하세요.'
+- 기능이 어떤 방식으로 동작하는지도 간단히 정리해주세요.
+
+  <br/>
+
+## 🖼️ 작업 내용 미리보기
+
+<img src="파일주소" width="50%" height="50%"/>
+
+<br/>
+
+## 💬 리뷰 요구사항
+
+> 리뷰어가 특별히 봐주었으면 하는 부분이 있다면 작성해주세요  
+> ex) 메서드 XXX의 이름을 더 잘 짓고 싶은데 혹시 좋은 명칭이 있을까요?
+
+## ⏰ 예상 리뷰 시간
+
+5분
+
+### ✔️ 이슈 닫기
+
+Closes #이슈번호 // 해당 이슈에 대한 작업이 완전히 끝난 경우
+Ref #이슈번호 // 해당 이슈에 대한 작업이 완전히 끝나지 않은 경우
