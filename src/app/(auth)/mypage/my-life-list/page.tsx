@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { fetchAllLifeList } from '@/lib/utils/api/my-life.api';
 import LifePostCard from '@/components/ui/life-post-card';
 import { LifePost } from '@/types/life-post';
