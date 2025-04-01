@@ -1,9 +1,4 @@
-interface Mode {
-  LOGIN: string;
-  SIGNUP: string;
-}
-
-export const MODE: Mode = {
+export const MODE = {
   LOGIN: 'login',
   SIGNUP: 'signup'
 };
