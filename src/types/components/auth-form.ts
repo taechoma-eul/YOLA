@@ -1,11 +1,13 @@
-export interface InputProps {
-  label: string;
-  name: string;
-  inputType: string;
-  button?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-}
+import { SignupFormData } from '@/lib/utils/authValidate';
+import { UseFormRegister, UseFormTrigger } from 'react-hook-form';
 
-export interface FormData {
-  formData: InputProps[];
-  mode: string;
+export interface AuthInputProps {
+  register: UseFormRegister<SignupFormData>;
+  trigger: UseFormTrigger<SignupFormData>;
+  placeholder: string;
+  type: string;
+  name: 'email' | 'password' | 'confirmPassword' | 'nickname';
+  checkButton?: boolean;
+  label: string;
+  errorMessage?: string | undefined;
 }
