@@ -1,0 +1,43 @@
+name: '🔍 Pull Request'
+description: '작업한 내용을 정리하고 PR을 생성합니다.'
+title: '[PR]: '
+labels: []
+assignees:
+  - ''
+
+body:
+  - type: input
+    id: issue-number
+    attributes:
+      label: '💡 이슈 번호'
+      description: '해당 이슈 번호를 적어주세요.'
+      placeholder: '#123'
+    validations:
+      required: true
+
+  - type: textarea
+    id: work-description
+    attributes:
+      label: '🍀 작업 설명'
+      description: '작업한 내용을 적어주세요.'
+      placeholder: '예: 로그인 UI 개선 및 API 연동 완료'
+    validations:
+      required: true
+
+  - type: textarea
+    id: review-requirements
+    attributes:
+      label: '💬 리뷰 요구 사항'
+      description: '리뷰 예상 시간 및 고민 사항을 적어주세요.'
+      placeholder: |
+        - 리뷰 예상 시간: 약 10분
+        - 고민 사항: API 응답 처리 방식에 대한 의견 필요
+    validations:
+      required: false
+
+  - type: textarea
+    id: preview
+    attributes:
+      label: '💛 미리보기'
+      description: '프론트에서 디자인 변경이 있거나 새로운 디자인을 적용했다면 이미지를 첨부해주세요.'
+      placeholder: '스크린샷을 첨부하거나 설명을 작성하세요.'
