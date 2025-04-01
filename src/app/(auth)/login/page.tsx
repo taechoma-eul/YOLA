@@ -1,19 +1,18 @@
-import { login, signup, logout } from './action';
+import FormInput from '@/components/ui/login-signin/FormInput';
+import { login, signup } from './action';
 
-export default function LoginPage() {
+const LoginPage = async () => {
   return (
-    <div>
-      <form>
-        <label htmlFor="email">Email:</label>
-        <input id="email" name="email" type="email" required />
-        <label htmlFor="password">Password:</label>
-        <input id="password" name="password" type="password" required />
-        <button formAction={login}>Log in</button>
-        <button formAction={signup}>Sign up</button>
-      </form>
-      <form action={logout} className="flex">
-        <button type="submit">로그아웃</button>
-      </form>
-    </div>
+    <form className="mx-auto my-10 flex w-96 flex-col gap-5">
+      <FormInput label="이메일" name="email" inputType="email" />
+      <FormInput label="비밀번호" name="password" inputType="password" />
+      <FormInput label="닉네임" name="nickname" inputType="text" />
+      <div className="flex justify-center gap-5">
+        <button formAction={login}>로그인</button>
+        <button formAction={signup}>회원가입</button>
+      </div>
+    </form>
   );
-}
+};
+
+export default LoginPage;
