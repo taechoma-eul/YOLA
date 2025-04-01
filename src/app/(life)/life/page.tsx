@@ -1,16 +1,21 @@
+'use client';
+
 import Calendar from '@/components/life/calendar';
-import React from 'react';
+import SoloLifeList from '@/components/life/solo-life-list';
+import { useState } from 'react';
 
 const LifePage = () => {
+  const [date, setDate] = useState<string>(''); // 오늘 날짜로 초기화
+
   return (
     <div className="flex flex-col gap-4">
-      <div
-        className="ml-auto mr-auto max-h-[700px] w-[90%] overflow-auto text-center"
-        style={{ scrollbarWidth: 'none' }}
-      >
-        <Calendar />
+      <div className="ml-auto mr-auto w-[90%] text-center">
+        <Calendar setDate={setDate} />
       </div>
-      <div>Solo Life List</div>
+
+      <h2 className="text-lg font-semibold">{date ?? date} &lt;닉네임&gt;님의 혼자 라이프</h2>
+
+      <SoloLifeList />
     </div>
   );
 };
