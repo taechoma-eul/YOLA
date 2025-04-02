@@ -20,7 +20,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
 
   const userMissionStatus = await getUserMissionStatus({ userId, type: decodedMission }); // 유저가 해당 체크리스트에 인증한 정보
 
-  const currentLevel = Math.ceil(userMissionStatus.length / 5); // 해당 체크리스트의 유저 레벨
+  const currentLevel = userMissionStatus.length > 0 ? Math.ceil(userMissionStatus.length / 5) : 1; // 해당 체크리스트의 유저 레벨
   const progress = userMissionStatus.filter((mission) => +mission.mission_list.level === currentLevel).length; // 레벨 진척도
 
   return (
