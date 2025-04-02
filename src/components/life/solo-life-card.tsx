@@ -2,7 +2,7 @@
 
 import { SoloLifeCardType } from '@/types/solo-life';
 
-const SoloLifeCard = ({ img, title, content, date }: SoloLifeCardType) => {
+const SoloLifeCard = ({ img, title, content, date, isMission }: SoloLifeCardType) => {
   return (
     <div className="flex h-full w-full flex-col overflow-hidden rounded border border-gray-300 bg-white text-left text-sm shadow-sm">
       {/* 이미지 */}
@@ -25,7 +25,20 @@ const SoloLifeCard = ({ img, title, content, date }: SoloLifeCardType) => {
         </div>
 
         {/* ⬇ 항상 아래에 위치 */}
-        <div className="text-[11px] text-gray-500">{date} 의 기록</div>
+        <div className="flex gap-2 text-[11px] text-gray-500">
+          {date}
+          {isMission ? (
+            <div className="flex items-center space-x-1">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-500" />
+              <span>미션인증</span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-1">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-black" />
+              <span>하루일기</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

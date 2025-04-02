@@ -20,7 +20,7 @@ type FormData = z.infer<typeof lifeRecordSchema>;
 const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
   const isMission = !!missionId;
   const today = new Date().toISOString().split('T')[0].replace(/-/g, '.');
-  const defaultTitle = `${today}의 혼자 라이프 기록`;
+  const DEFAULT_TITLE = `${today}의 혼자 라이프 기록`;
 
   const [images, setImages] = useState<File[]>([]);
 
@@ -43,7 +43,7 @@ const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
   };
 
   const onSubmit = (data: FormData) => {
-    const title = data.title?.trim() || defaultTitle;
+    const title = data.title?.trim() || DEFAULT_TITLE;
 
     console.log({
       user_id: userId,
@@ -65,7 +65,7 @@ const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
         <input
           type="text"
           {...register('title')}
-          placeholder={defaultTitle}
+          placeholder={DEFAULT_TITLE}
           className="w-full border-b border-zinc-600 bg-transparent pb-2 text-xl font-semibold outline-none placeholder:text-zinc-500 focus:border-blue-500"
         />
 
