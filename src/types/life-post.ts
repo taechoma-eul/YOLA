@@ -3,5 +3,5 @@ export interface LifePost {
   created_at: string;
   user_id: string;
   content: string;
-  mission_id: string;
+  mission_id: string | null;
 }
