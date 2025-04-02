@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import LifeInputForm from '@/components/common/post-input-form';
+import { PATH } from '@/constants/page-path';
 
 export default function LifePostPage() {
   const searchParams = useSearchParams();
@@ -20,7 +21,7 @@ export default function LifePostPage() {
       if (data?.user) {
         setUserId(data.user.id);
       } else {
-        router.push('/login');
+        router.push(PATH.LOGIN);
       }
       setIsLoading(false);
     };
