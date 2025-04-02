@@ -1,3 +1,4 @@
+import { getUserMetadata } from '@/lib/utils/api/auth-action';
 import { getMissionList, getUniqueMissionType } from '@/lib/utils/api/checklist.api';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -12,6 +13,9 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
 
   /** 미션 리스트 불러오기 */
   const missionList = await getMissionList(decodedMission);
+
+  /** 유저 정보 가져오기 */
+  const metadata = await getUserMetadata();
 
   const currentLevel = '1'; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
   const progress = 5; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
@@ -37,7 +41,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
             .map((mission, idx) => (
               <li key={idx}>
                 <Link
-                  href={{ pathname: '/checklist/post', query: { type: mission.type, content: mission.content } }}
+                  href="/checklist/post"
                   className="relative flex min-h-[150px] items-center justify-center border p-10"
                 >
                   <div className="text-center">{mission.content}</div>
