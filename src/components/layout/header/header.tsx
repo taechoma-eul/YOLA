@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import HeaderNav from './header-nav';
-import { PATH } from '@/constants/page-path';
 import { getUserMetadata } from '@/lib/utils/api/auth-action';
-import GuestOptionMenu from './header-guest-option';
-import UserOptionMenu from './header-user-option';
+import GuestOptionMenu from '@/components/layout/header/header-guest-option';
+import HeaderNav from '@/components/layout/header/header-nav';
+import UserOptionMenu from '@/components/layout/header/header-user-option';
+import { PATH } from '@/constants/page-path';
 
 const Header = async () => {
   const user = await getUserMetadata();
 
   return (
-    <header className="mx-auto w-[1200px]">
-      <div className="flex h-[120px] items-center justify-between px-6">
+    <header className="fixed left-0 top-0 z-50 mx-auto w-full">
+      <div className="mx-auto flex h-[120px] w-[1200px] items-center justify-between px-6">
         <div className="flex items-center justify-start gap-[65px]">
           <Link
             href={PATH.HOME}
@@ -22,7 +22,7 @@ const Header = async () => {
         </div>
         {user === null ? <GuestOptionMenu /> : <UserOptionMenu />}
       </div>
-      <hr className="w-[1200px] outline-neutral-300" />
+      <hr className="mx-auto w-[1200px] outline-neutral-300" />
     </header>
   );
 };
