@@ -3,6 +3,15 @@ import Image from 'next/image';
 import { PATH } from '@/constants/page-path';
 import defaultImg from '@images/images/yola-default-img.png';
 
+/*
+사용할 곳에서
+const [showModal, setShowModal] = useState(false);
+const clickModal = () => setShowModal(!showModal);
+을 선언해주시고,
+<button onClick={clickModal}>checklist</button>
+{showModal && <MissionModal clickModal={clickModal} type={type} />}
+을 통해 모달을 끌 수 있도록 setter 함수와, 체크리스트의 타입을 넘겨주면 사용할 수 있습니다
+ */
 const MissionModal = ({ clickModal, type }: { clickModal: Function; type: string }) => {
   const router = useRouter();
 
