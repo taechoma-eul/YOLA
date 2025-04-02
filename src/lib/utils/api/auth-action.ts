@@ -61,7 +61,7 @@ export const logout = async () => {
 /**
  * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 메타데이터를 불러옵니다.
  * 세션이 존재하지 않는(로그아웃) 경우 undefined을 반환합니다.
- * @returns {user_metadata} email, email_verified, nickname, uuid
+ * @returns user_metadata - email, email_verified, nickname, uuid
  */
 export const getUserMetadata = async () => {
   const supabase = await createClient();
@@ -71,4 +71,21 @@ export const getUserMetadata = async () => {
   } = await supabase.auth.getUser();
 
   return user?.user_metadata;
+};
+
+export const signInWithGoogle = async () => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'http://localhost:3000/api/auth/callback' // 서버 측 콜백 경로
+    }
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  // Supabase가 리다이렉션 URL을 반환하면 클라이언트로 전달
+  redirect(data.url); // OAuth 흐름 시작
 };
