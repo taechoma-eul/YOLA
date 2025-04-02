@@ -1,8 +1,8 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 
 type LifeInputFormProps = {
@@ -45,7 +45,6 @@ const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
   const onSubmit = (data: FormData) => {
     const title = data.title?.trim() || defaultTitle;
 
-    // TODO: Supabase 저장 로직 연결
     console.log({
       user_id: userId,
       mission_id: missionId,
@@ -56,53 +55,59 @@ const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-2xl space-y-4 rounded bg-white p-6 shadow">
-      <h1 className="text-xl font-bold">{isMission ? '미션 인증 기록' : '나의 일기 작성'}</h1>
+    <div className="min-h-screen bg-zinc-900 px-4 py-10 text-white">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mx-auto max-w-2xl space-y-6 rounded-2xl bg-zinc-800 p-8 shadow-lg"
+      >
+        <h1 className="text-2xl font-bold text-white">{isMission ? '미션 인증 기록' : '나의 일기 작성'}</h1>
 
-      <div>
         <input
           type="text"
           {...register('title')}
           placeholder={defaultTitle}
-          className="w-full border-b py-2 text-lg font-bold outline-none"
+          className="w-full border-b border-zinc-600 bg-transparent pb-2 text-xl font-semibold outline-none placeholder:text-zinc-500 focus:border-blue-500"
         />
-      </div>
 
-      <div>
-        <textarea
-          {...register('content')}
-          placeholder="내용을 입력하세요..."
-          className="h-40 w-full resize-none rounded border p-3"
-        />
-        {errors.content && <p className="mt-1 text-sm text-red-500">{errors.content.message}</p>}
-      </div>
-
-      <div>
-        <label className="mb-2 inline-block cursor-pointer">
-          <input type="file" multiple className="hidden" onChange={handleImageUpload} />
-          <span className="rounded bg-gray-200 px-3 py-1">이미지 업로드</span>
-        </label>
-
-        <div className="mt-2 flex flex-wrap gap-3">
-          {images.map((img, idx) => (
-            <div key={idx} className="relative h-24 w-24 overflow-hidden rounded border">
-              <img src={URL.createObjectURL(img)} alt={`preview-${idx}`} className="h-full w-full object-cover" />
-              <button
-                type="button"
-                onClick={() => handleImageRemove(idx)}
-                className="absolute right-0 top-0 bg-black bg-opacity-50 px-1 text-xs text-white"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+        <div>
+          <textarea
+            {...register('content')}
+            placeholder="내용을 입력하세요..."
+            className="h-40 w-full resize-none rounded-lg border border-zinc-600 bg-zinc-800 p-4 text-sm placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          {errors.content && <p className="mt-1 text-sm text-red-400">{errors.content.message}</p>}
         </div>
-      </div>
 
-      <button type="submit" className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-        저장하기
-      </button>
-    </form>
+        <div>
+          <label className="inline-block cursor-pointer rounded-md border border-zinc-500 bg-zinc-700 px-4 py-2 text-sm transition hover:bg-zinc-600">
+            이미지 업로드
+            <input type="file" multiple className="hidden" onChange={handleImageUpload} />
+          </label>
+
+          <div className="mt-3 flex flex-wrap gap-3">
+            {images.map((img, idx) => (
+              <div key={idx} className="relative h-24 w-24 overflow-hidden rounded-md border border-zinc-600">
+                <img src={URL.createObjectURL(img)} alt={`preview-${idx}`} className="h-full w-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => handleImageRemove(idx)}
+                  className="absolute right-1 top-1 rounded bg-black bg-opacity-70 px-1 text-xs text-white"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+        >
+          저장하기
+        </button>
+      </form>
+    </div>
   );
 };
 
