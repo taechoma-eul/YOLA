@@ -13,7 +13,7 @@ const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
   if (mode === AUTH.LOGIN)
     return (
       <div>
-        <button formAction={login} type="submit" disabled={isSubmitting || !isValid} className="w-full bg-gray-100 p-2">
+        <button formAction={login} type="submit" disabled={isSubmitting} className="w-full bg-gray-100 p-2">
           {isSubmitting ? '로그인 중..' : '로그인'}
         </button>
         <button formAction={signInWithGoogle} type="submit" className="w-full bg-gray-100 p-2">
