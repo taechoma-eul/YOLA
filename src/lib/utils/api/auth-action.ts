@@ -59,18 +59,34 @@ export const logout = async () => {
 };
 
 /**
- * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 메타데이터를 불러옵니다.
+ * supabase의 auth.getUser를 통해 현재 로그인 된 사용자 세션 정보를 불러옵니다.
  * 세션이 존재하지 않는(로그아웃) 경우 undefined을 반환합니다.
- * @returns user_metadata - email, email_verified, nickname, uuid
+ * @returns user info
  */
-export const getUserMetadata = async () => {
+export const getUserInfo = async () => {
   const supabase = await createClient();
 
   const {
-    data: { user }
+    data: { user },
+    error
   } = await supabase.auth.getUser();
+  if (error) throw new Error('유저 세션 정보가 없습니다.');
 
-  return user?.user_metadata;
+  return user;
+};
+
+/**
+ * 현재 로그인 된 사용자 uuid를 불러옵니다.
+ * 세션이 존재하지 않는(로그아웃) 경우 undefined을 반환합니다.
+ * @returns user_id
+ */
+export const getUserId = async () => {
+  try {
+    const data = await getUserInfo();
+    return data?.id;
+  } catch (error) {
+    throw new Error(' 유저 아이디 정보가 없습니다.');
+  }
 };
 
 export const signInWithGoogle = async () => {
