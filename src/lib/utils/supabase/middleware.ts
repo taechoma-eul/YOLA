@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { createClient } from './supabase-server';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
