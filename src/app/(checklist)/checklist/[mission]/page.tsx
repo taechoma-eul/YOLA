@@ -1,5 +1,5 @@
 import { getUserMetadata } from '@/lib/utils/api/auth-action';
-import { getMissionList, getUniqueMissionType } from '@/lib/utils/api/checklist.api';
+import { getMissionList, getUniqueMissionType, getUserMissionStatus } from '@/lib/utils/api/checklist.api';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -16,9 +16,12 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
 
   /** 유저 정보 가져오기 */
   const metadata = await getUserMetadata();
+  const userId = metadata?.sub;
 
-  const currentLevel = '1'; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
-  const progress = 5; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
+  const userMissionStatus = await getUserMissionStatus({ userId, type: decodedMission }); // 유저가 해당 체크리스트에 인증한 정보
+
+  const currentLevel = Math.ceil(userMissionStatus.length / 5); // 해당 체크리스트의 유저 레벨
+  const progress = userMissionStatus.filter((mission) => +mission.mission_list.level === currentLevel).length; // 레벨 진척도
 
   return (
     <section className="w-full p-10">
@@ -27,7 +30,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
       <div className="mt-10">
         {/* 현 레벨 정보 */}
         <div className="flex items-center gap-5">
-          <label className="rounded-2xl border bg-slate-100 p-1 pl-3 pr-3 font-semibold">{currentLevel}단계</label>
+          <label className="rounded-2xl border p-1 pl-3 pr-3 font-semibold">{currentLevel}단계</label>
           <ul className="flex gap-1">
             {Array.from({ length: progress }, (_, i) => (
               <li key={i}>o</li>
@@ -37,11 +40,11 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
         {/* 현 레벨의 미션 리스트 */}
         <ul className="mt-5 grid grid-cols-5 gap-4 rounded-md border p-3 shadow-sm">
           {missionList
-            .filter((mission) => mission.level === currentLevel)
+            .filter((mission) => +mission.level === currentLevel)
             .map((mission, idx) => (
               <li key={idx}>
                 <Link
-                  href="/checklist/post"
+                  href={metadata ? `/checklist/post/${mission.type}/${mission.content}` : '/login'}
                   className="relative flex min-h-[150px] items-center justify-center border p-10"
                 >
                   <div className="text-center">{mission.content}</div>
@@ -54,7 +57,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
         {/* 그 외 미션 리스트 */}
         <ul className="mt-10 grid min-h-[150px] grid-cols-4 gap-4">
           {missionList
-            .filter((mission) => mission.level !== currentLevel)
+            .filter((mission) => +mission.level !== currentLevel)
             .map((mission, idx) => (
               <li key={idx} className="flex flex-col items-center justify-center gap-3 border p-5">
                 <p>{mission.level}단계</p>
