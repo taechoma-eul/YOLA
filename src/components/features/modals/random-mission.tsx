@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { getRandomMissionData } from '@/lib/utils/api/mission-list.api';
 import { useState } from 'react';
 
 /*
@@ -13,10 +13,13 @@ const clickModal = () => setShowModal(!showModal);
 const RandomMissionModal = ({ clickModal }: { clickModal: Function }) => {
   const [randomMission, setRandomMission] = useState('오늘의 랜덤 미션은?');
 
-  const getRandomMission = () => {
-    //TODO - 수퍼베이스에서 체크리스트 가져와서 랜덤 가챠 돌리기
-    const randomMission = '랜덤미션';
-    setRandomMission(randomMission);
+  const handleRandomMission = async () => {
+    try {
+      const randomMissionData = await getRandomMissionData();
+      setRandomMission(randomMissionData.content);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -28,13 +31,14 @@ const RandomMissionModal = ({ clickModal }: { clickModal: Function }) => {
         onClick={(e) => e.stopPropagation()} // 모달 안을 클릭 했을 때 나가는 것 막음
         className="flex w-96 flex-col items-center justify-center rounded-2xl bg-slate-300 p-6"
       >
+        {/**TODO - 루시드 설치 후 X 아이콘 삽입 */}
         <h1>오늘의 랜덤 미션</h1>
         <p>더 많은 미션을 원하시면 회원가입하세요!</p>
         {/**TODO - 로그인 여부에 따라 조건부 렌더링 */}
         <div className="flex flex-col items-center justify-center gap-2">{randomMission}</div>
         <div className="flex gap-8 pt-3">
           <button onClick={() => clickModal()}>닫기</button>
-          <button type="button" onClick={() => getRandomMission()}>
+          <button type="button" onClick={() => handleRandomMission()}>
             다시 뽑기
           </button>
         </div>
