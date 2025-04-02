@@ -1,5 +1,5 @@
 import { getRandomMissionData } from '@/lib/utils/api/mission-list.api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /*
 사용할 곳에서
@@ -12,6 +12,10 @@ const clickModal = () => setShowModal(!showModal);
  */
 const RandomMissionModal = ({ clickModal }: { clickModal: Function }) => {
   const [randomMission, setRandomMission] = useState('오늘의 랜덤 미션은?');
+
+  useEffect(() => {
+    handleRandomMission(); 
+  }, []);
 
   const handleRandomMission = async () => {
     try {
