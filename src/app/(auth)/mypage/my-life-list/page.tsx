@@ -1,6 +1,5 @@
 import { getAllLifePostsById } from '@/lib/utils/api/my-life.api';
 import LifePostCard from '@/components/common/life-post-card';
-import type { LifePost } from '@/types/life-post';
 
 const MyLifeListPage = async () => {
   // 해당 User의 작성 게시글 전체 조회 (기본 최신순 _ 추후 페이지네이션 or 무한스크롤 작업 예정)
