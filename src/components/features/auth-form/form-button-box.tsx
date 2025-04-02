@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { login, signup } from '@/lib/utils/api/auth-action';
+import { login, signInWithGoogle, signup } from '@/lib/utils/api/auth-action';
 import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 
@@ -13,8 +13,11 @@ const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
   if (mode === AUTH.LOGIN)
     return (
       <div>
-        <button formAction={login} type="submit" disabled={isSubmitting || !isValid} className="w-full bg-gray-100 p-2">
+        <button formAction={login} type="submit" disabled={isSubmitting} className="w-full bg-gray-100 p-2">
           {isSubmitting ? '로그인 중..' : '로그인'}
+        </button>
+        <button formAction={signInWithGoogle} type="submit" className="w-full bg-gray-100 p-2">
+          구글 로그인
         </button>
         <p className="mt-5 text-center">
           아직 회원이 아니신가요?{' '}

@@ -22,9 +22,7 @@ const LoginForm = () => {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
-      password: '',
-      confirmPassword: '',
-      nickname: ''
+      password: ''
     },
     mode: 'onBlur'
   });
