@@ -6,7 +6,7 @@ import { supabase } from '@/lib/utils/supabase/supabase-client';
 import LifeInputForm from '@/components/common/post-input-form';
 import { PATH } from '@/constants/page-path';
 
-export default function LifePostPage() {
+const LifePostPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -37,4 +37,6 @@ export default function LifePostPage() {
       missionId={missionId ?? null} // 없으면 null
     />
   );
-}
+};
+
+export default LifePostPage;
