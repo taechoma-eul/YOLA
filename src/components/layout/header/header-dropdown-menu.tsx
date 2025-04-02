@@ -2,19 +2,12 @@
 
 import { useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import ChallengeMenuItem from '@/components/layout/header/header-challenge-menu-item';
-import { PATH } from '@/constants/page-path';
+import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-menu-item';
+import type { Children } from '@/types/children';
+import type { MenuItem } from '@/types/components/header';
 
-const ChallengeMenu = () => {
+const HeaderDropdownMenu = ({ menuItems, children }: { menuItems: MenuItem[] } & Children) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const challengeMenuItem = [
-    { path: PATH.CHECKLIST, label: '혼밥', isLine: true },
-    { path: PATH.CHECKLIST, label: '혼여', isLine: true },
-    { path: PATH.CHECKLIST, label: '갓생', isLine: true },
-    { path: PATH.CHECKLIST, label: '청소', isLine: true },
-    { path: PATH.CHECKLIST, label: '혼놀', isLine: false }
-  ];
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -24,7 +17,7 @@ const ChallengeMenu = () => {
         onMouseEnter={() => setIsOpen(true)} // hover 시 열기
         onMouseLeave={() => setIsOpen(false)} // 떠나면 닫기
       >
-        <button className="focus:outline-none">챌린지</button>
+        <button className="focus:outline-none">{children}</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"
@@ -33,12 +26,18 @@ const ChallengeMenu = () => {
         onMouseEnter={() => setIsOpen(true)} // 드롭다운 메뉴에 마우스가 들어가면 유지
         onMouseLeave={() => setIsOpen(false)} // 떠나면 닫기
       >
-        {challengeMenuItem.map((item, index) => (
-          <ChallengeMenuItem key={index} label={item.label} path={item.path} isLine={item.isLine} />
+        {menuItems.map((item, index) => (
+          <HeaderDropdownMenuItem
+            key={index}
+            label={item.label}
+            path={item.path}
+            isLine={item.isLine}
+            isButton={item.isButton}
+          />
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-export default ChallengeMenu;
+export default HeaderDropdownMenu;
