@@ -10,7 +10,7 @@ const Header = async () => {
 
   return (
     <header className="fixed left-0 top-0 z-50 mx-auto w-full bg-white">
-      <div className="mx-auto flex h-[120px] w-[1200px] items-center justify-between px-6">
+      <div className="mx-auto flex h-[120px] w-full max-w-[1280px] items-center justify-between px-6">
         <div className="flex items-center justify-start gap-[65px]">
           <Link
             href={PATH.HOME}
@@ -22,7 +22,7 @@ const Header = async () => {
         </div>
         {user === null ? <GuestOptionMenu /> : <UserOptionMenu />}
       </div>
-      <hr className="mx-auto w-[1200px] outline-neutral-300" />
+      <hr className="mx-auto w-full max-w-[1280px] outline-neutral-300" />
     </header>
   );
 };
