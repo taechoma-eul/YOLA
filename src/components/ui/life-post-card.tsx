@@ -8,13 +8,19 @@ type LifePostCardProps = {
 
 const LifePostCard = ({ lifePost }: LifePostCardProps) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-lg border">
-      <figure>
-        <Image src={SAMPLE_IMAGE} alt="라이프 포스트 이미지" width={200} height={100} className="rounded-md border" />
+    <div className="flex h-screen max-h-[279px] max-w-[222px] flex-col items-center rounded-lg border">
+      <figure className="relative h-[161px] w-full">
+        <Image
+          src={SAMPLE_IMAGE}
+          alt="라이프 포스트 이미지"
+          width={221}
+          height={161}
+          className="rounded-t-lg object-cover"
+        />
       </figure>
       <strong>{lifePost.content}</strong>
-      <div>{lifePost.created_at.slice(0, 10)}</div>
-      <div>작성시간 : {lifePost.created_at.slice(11, 16)}</div>
+      <div>🌤️덜나이뜨</div>
+      <div>{lifePost.created_at.slice(0, 10).replaceAll('-', '.')}</div>
     </div>
   );
 };
