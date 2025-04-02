@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import Image from 'next/image';
 
 type LifeInputFormProps = {
   userId: string;
@@ -45,13 +46,13 @@ const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
   const onSubmit = (data: FormData) => {
     const title = data.title?.trim() || DEFAULT_TITLE;
 
-    console.log({
-      user_id: userId,
-      mission_id: missionId,
-      title,
-      content: data.content,
-      images
-    });
+    // const formData = {
+    //   user_id: userId,
+    //   mission_id: missionId,
+    //   title,
+    //   content: data.content,
+    //   images
+    // };
   };
 
   return (
@@ -87,7 +88,13 @@ const LifeInputForm = ({ userId, missionId }: LifeInputFormProps) => {
           <div className="mt-3 flex flex-wrap gap-3">
             {images.map((img, idx) => (
               <div key={idx} className="relative h-24 w-24 overflow-hidden rounded-md border border-zinc-600">
-                <img src={URL.createObjectURL(img)} alt={`preview-${idx}`} className="h-full w-full object-cover" />
+                <Image
+                  src={URL.createObjectURL(img)}
+                  alt={`preview-${idx}`}
+                  width={96}
+                  height={96}
+                  className="h-full w-full object-cover"
+                />
                 <button
                   type="button"
                   onClick={() => handleImageRemove(idx)}
