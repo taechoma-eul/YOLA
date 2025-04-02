@@ -1,19 +1,12 @@
-import { login, signup, logout } from './action';
+import LoginForm from '@/components/features/auth-form/login-form';
 
-export default function LoginPage() {
+const LoginPage = async () => {
   return (
-    <div>
-      <form>
-        <label htmlFor="email">Email:</label>
-        <input id="email" name="email" type="email" required />
-        <label htmlFor="password">Password:</label>
-        <input id="password" name="password" type="password" required />
-        <button formAction={login}>Log in</button>
-        <button formAction={signup}>Sign up</button>
-      </form>
-      <form action={logout} className="flex">
-        <button type="submit">로그아웃</button>
-      </form>
+    <div className="mx-auto w-[800px]">
+      <h1 className="mb-6 text-center text-2xl font-bold">로그인</h1>
+      <LoginForm />
     </div>
   );
-}
+};
+
+export default LoginPage;
