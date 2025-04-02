@@ -11,5 +11,11 @@ export const PATH = {
   LIFE_POST: '/life/post',
   CHECKLIST: '/checklist',
 
+  MEAL_CHECKLIST: '/checklist/혼밥',
+  TRAVEL_CHECKLIST: '/checklist/혼자여행',
+  GOD_LIFE_CHECKLIST: '/checklist/갓생',
+  PLAY_CHECKLIST: '/checklist/혼놀',
+  CLEAN_CHECKLIST: '/checklist/청소',
+
   ERROR: '/error'
 };
