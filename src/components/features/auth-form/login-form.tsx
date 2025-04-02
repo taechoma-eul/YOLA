@@ -15,7 +15,7 @@ type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
 const LoginForm = () => {
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     getValues,
     trigger
   } = useForm<SignupFormData>({
@@ -63,7 +63,7 @@ const LoginForm = () => {
           label={data.label}
         />
       ))}
-      <FormButton mode={MODE.LOGIN} isSubmitting={isSubmitting} />
+      <FormButton mode={MODE.LOGIN} isSubmitting={isSubmitting} isValid={isValid} />
     </AuthFormContainer>
   );
 };

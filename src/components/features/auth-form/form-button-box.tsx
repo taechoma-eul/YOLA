@@ -3,11 +3,17 @@ import { login, signup } from '@/lib/utils/api/auth-action';
 import { MODE } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 
-const FormButton = ({ mode, isSubmitting }: { mode: string; isSubmitting: boolean }) => {
+interface FormButtonProps {
+  mode: string;
+  isSubmitting: boolean;
+  isValid: boolean;
+}
+
+const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
   if (mode === MODE.LOGIN)
     return (
       <div>
-        <button formAction={login} type="submit" disabled={isSubmitting} className="w-full bg-gray-100 p-2">
+        <button formAction={login} type="submit" disabled={isSubmitting || !isValid} className="w-full bg-gray-100 p-2">
           {isSubmitting ? '로그인 중..' : '로그인'}
         </button>
         <p className="mt-5 text-center">
@@ -22,7 +28,12 @@ const FormButton = ({ mode, isSubmitting }: { mode: string; isSubmitting: boolea
   if (mode === MODE.SIGNUP)
     return (
       <div>
-        <button formAction={signup} type="submit" disabled={isSubmitting} className="w-full bg-gray-100 p-2">
+        <button
+          formAction={signup}
+          type="submit"
+          disabled={isSubmitting || !isValid}
+          className="w-full bg-gray-100 p-2"
+        >
           {isSubmitting ? '가입 중...' : '회원가입'}
         </button>
         <p className="mt-5 text-center">

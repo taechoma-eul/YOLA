@@ -15,7 +15,7 @@ type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
 const SignupForm = () => {
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     getValues,
     trigger
   } = useForm<SignupFormData>({
@@ -52,7 +52,7 @@ const SignupForm = () => {
       name: 'confirmPassword',
       checkButton: false,
       errorMessage: errors.confirmPassword?.message,
-      label: '이메일'
+      label: '비밀번호 확인'
     },
     {
       placeholder: '닉네임 입력',
@@ -80,7 +80,7 @@ const SignupForm = () => {
           label={data.label}
         />
       ))}
-      <FormButton mode={MODE.SIGNUP} isSubmitting={isSubmitting} />
+      <FormButton mode={MODE.SIGNUP} isSubmitting={isSubmitting} isValid={isValid} />
     </AuthFormContainer>
   );
 };
