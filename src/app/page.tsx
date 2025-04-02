@@ -1,12 +1,9 @@
-import { createClient } from '@/lib/utils/supabase/supabase-server';
+import { getUserMetadata } from '@/lib/utils/api/auth-action';
 
 const HomePage = async () => {
-  const supabase = await createClient();
+  const user = await getUserMetadata();
 
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-  console.log('user', user?.user_metadata);
+  console.log('user', user);
 
   return <div>HomePage</div>;
 };
