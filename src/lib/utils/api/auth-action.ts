@@ -71,12 +71,9 @@ export const logout = async () => {
 export const getUserMetadata = async (): Promise<UserMetadata | null> => {
   const supabase = await createClient();
   const {
-    data: { user },
-    error
+    data: { user }
   } = await supabase.auth.getUser();
   const userMetadata = user !== null ? user.user_metadata : null;
-
-  if (error) throw new Error('유저 세션 정보가 없습니다.');
 
   return userMetadata;
 };
@@ -89,12 +86,9 @@ export const getUserMetadata = async (): Promise<UserMetadata | null> => {
 export const getUserId = async (): Promise<string | null> => {
   const supabase = await createClient();
   const {
-    data: { user },
-    error
+    data: { user }
   } = await supabase.auth.getUser();
   const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
-
-  if (error) throw new Error('유저 세션 정보가 없습니다.');
 
   return userId;
 };

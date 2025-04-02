@@ -1,21 +1,12 @@
 import Link from 'next/link';
-import { User } from 'lucide-react';
+import HeaderNav from './header-nav';
 import { PATH } from '@/constants/page-path';
-import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
+import { getUserMetadata } from '@/lib/utils/api/auth-action';
+import GuestOptionMenu from './header-guest-option';
+import UserOptionMenu from './header-user-option';
 
-const Header = () => {
-  const challengeMenuItem = [
-    { path: PATH.CHECKLIST, label: '혼밥', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '혼여', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '갓생', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '청소', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '혼놀', isLine: false, isButton: false }
-  ];
-
-  const userMenuItem = [
-    { path: PATH.MYPAGE, label: '마이페이지', isLine: true, isButton: false },
-    { path: '', label: '로그아웃', isLine: false, isButton: true }
-  ];
+const Header = async () => {
+  const user = await getUserMetadata();
 
   return (
     <header className="mx-auto w-[1200px]">
@@ -27,17 +18,9 @@ const Header = () => {
           >
             YOLA
           </Link>
-          <nav className="flex items-center justify-center gap-[38px]">
-            <Link href={PATH.LIFE}>혼자라이프 기록</Link>
-            <Link href={PATH.GONGGAM}>공감게시판</Link>
-            <HeaderDropdownMenu menuItems={challengeMenuItem}>챌린지</HeaderDropdownMenu>
-          </nav>
+          <HeaderNav />
         </div>
-        <HeaderDropdownMenu menuItems={userMenuItem}>
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-300">
-            <User color="#ffffff" />
-          </div>
-        </HeaderDropdownMenu>
+        {user === null ? <GuestOptionMenu /> : <UserOptionMenu />}
       </div>
       <hr className="w-[1200px] outline-neutral-300" />
     </header>
