@@ -1,6 +1,6 @@
 export interface MenuItem {
   label: string;
   path: string;
-  isLine: boolean;
-  isButton: boolean;
+  isLine?: boolean;
+  isButton?: boolean;
 }

@@ -3,7 +3,7 @@ import { logout } from '@/lib/utils/api/auth-action';
 import { DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import type { MenuItem } from '@/types/components/header';
 
-const HeaderDropdownMenuItem = ({ path, label, isLine, isButton }: MenuItem) => {
+const HeaderDropdownMenuItem = ({ path, label, isLine = true, isButton = false }: MenuItem) => {
   return (
     <>
       <DropdownMenuItem className="text-md w-24 justify-center font-normal text-black hover:bg-gray-100">

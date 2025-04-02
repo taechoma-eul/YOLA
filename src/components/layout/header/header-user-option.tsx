@@ -5,7 +5,7 @@ import { PATH } from '@/constants/page-path';
 
 const UserOptionMenu = () => {
   const userMenuItem: MenuItem[] = [
-    { path: PATH.MYPAGE, label: '마이페이지', isLine: true, isButton: false },
+    { path: PATH.MYPAGE, label: '마이페이지' },
     { path: '', label: '로그아웃', isLine: false, isButton: true }
   ];
   return (

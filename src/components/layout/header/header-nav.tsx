@@ -5,11 +5,11 @@ import { PATH } from '@/constants/page-path';
 
 const HeaderNav = () => {
   const challengeMenuItem: MenuItem[] = [
-    { path: PATH.CHECKLIST, label: '혼밥', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '혼여', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '갓생', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '청소', isLine: true, isButton: false },
-    { path: PATH.CHECKLIST, label: '혼놀', isLine: false, isButton: false }
+    { path: PATH.MEAL_CHECKLIST, label: '혼밥' },
+    { path: PATH.TRAVEL_CHECKLIST, label: '혼여' },
+    { path: PATH.GOD_LIFE_CHECKLIST, label: '갓생' },
+    { path: PATH.CLEAN_CHECKLIST, label: '청소' },
+    { path: PATH.PLAY_CHECKLIST, label: '혼놀', isLine: false }
   ];
 
   return (
