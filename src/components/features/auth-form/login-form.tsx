@@ -8,7 +8,7 @@ import AuthFormContainer from '@/components/features/auth-form/auth-form-contain
 import FormButton from '@/components/features/auth-form/form-button-box';
 import type { AuthInputProps } from '@/types/components/auth-form';
 import type { SignupFormData } from '@/lib/utils/authValidate';
-import { MODE } from '@/constants/auth-form';
+import { AUTH } from '@/constants/auth-form';
 
 type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
 
@@ -63,7 +63,7 @@ const LoginForm = () => {
           label={data.label}
         />
       ))}
-      <FormButton mode={MODE.LOGIN} isSubmitting={isSubmitting} isValid={isValid} />
+      <FormButton mode={AUTH.LOGIN} isSubmitting={isSubmitting} isValid={isValid} />
     </AuthFormContainer>
   );
 };

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { SignupFormData } from '@/lib/utils/authValidate';
 import type { AuthInputProps } from '@/types/components/auth-form';
+import { AUTH } from '@/constants/auth-form';
 
 const AuthFormInput = ({
   register,
@@ -21,13 +22,13 @@ const AuthFormInput = ({
   const handleDuplicateCheck = async (field: keyof SignupFormData) => {
     const value = getValues(field);
     if (!value) {
-      setCheckErrorMessage(`${field === 'email' ? '이메일' : '닉네임'}을 먼저 입력해주세요`);
+      setCheckErrorMessage(`${field === AUTH.EMAIL ? AUTH.EMAIL_LABEL : AUTH.NICKNAME_LABEL}을 먼저 입력해주세요`);
       return;
     } else if (errorMessage) return;
 
     const { data } = await supabase.from('users').select(field).eq(field, value).single();
     if (data) {
-      setCheckErrorMessage(`이미 사용 중인 ${field === 'email' ? '이메일' : '닉네임'}입니다`);
+      setCheckErrorMessage(`이미 사용 중인 ${field === AUTH.EMAIL ? AUTH.EMAIL_LABEL : AUTH.NICKNAME_LABEL}입니다`);
     } else {
       alert('사용 가능합니다');
       setCheckErrorMessage(null);

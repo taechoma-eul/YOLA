@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { login, signup } from '@/lib/utils/api/auth-action';
-import { MODE } from '@/constants/auth-form';
+import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 
 interface FormButtonProps {
@@ -10,7 +10,7 @@ interface FormButtonProps {
 }
 
 const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
-  if (mode === MODE.LOGIN)
+  if (mode === AUTH.LOGIN)
     return (
       <div>
         <button formAction={login} type="submit" disabled={isSubmitting || !isValid} className="w-full bg-gray-100 p-2">
@@ -25,7 +25,7 @@ const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
       </div>
     );
 
-  if (mode === MODE.SIGNUP)
+  if (mode === AUTH.SIGNUP)
     return (
       <div>
         <button
