@@ -5,7 +5,7 @@ import { LifePost } from '@/types/life-post';
  * Supabase에서 `life_posts` 테이블의 `로그인 한 User`가 작성한 게시글을 조회하는 함수
  *
  * @function getAllLifePostsById
- * @returns {Promise<LifePost[]>} id, created_at, user_id, content, missin_id
+ * @returns {Promise<LifePost[]>} id, created_at, user_id, content, mission_id
  * @throws {Error} 데이터베이스 작업 중 오류가 발생하면 예외를 던집니다.
  */
 export const getAllLifePostsById = async (): Promise<LifePost[]> => {
