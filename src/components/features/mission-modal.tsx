@@ -65,7 +65,7 @@ const MissionModal = ({ clickModal, type }: { clickModal: Function; type: string
   return (
     <div
       onClick={() => clickModal()} // 배경 클릭하면 모달 나가기
-      className="fixed top-0 flex h-full w-full items-center justify-center bg-gray-500"
+      className="fixed top-0 flex h-full w-full items-center justify-center bg-gray-500/50"
     >
       <div
         onClick={(e) => e.stopPropagation()} // 모달 안을 클릭 했을 때 나가는 것 막음
