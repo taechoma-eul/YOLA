@@ -6,7 +6,12 @@ import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-m
 import type { Children } from '@/types/children';
 import type { MenuItem } from '@/types/components/header';
 
-const HeaderDropdownMenu = ({ menuItems, children }: { menuItems: MenuItem[] } & Children) => {
+interface MenuProps extends Children {
+  menuItems: MenuItem[];
+  align?: 'center' | 'end' | 'start' | undefined;
+}
+
+const HeaderDropdownMenu = ({ menuItems, children, align }: MenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -20,7 +25,7 @@ const HeaderDropdownMenu = ({ menuItems, children }: { menuItems: MenuItem[] } &
         <button className="focus:outline-none">{children}</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align="center"
+        align={align}
         sideOffset={8}
         className="inline-flex w-[140px] flex-col items-center gap-3 rounded-xl bg-white p-5 shadow-none"
         onMouseEnter={() => setIsOpen(true)} // 드롭다운 메뉴에 마우스가 들어가면 유지

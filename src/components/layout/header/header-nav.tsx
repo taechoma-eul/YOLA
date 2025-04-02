@@ -16,7 +16,9 @@ const HeaderNav = () => {
     <nav className="flex items-center justify-center gap-[38px]">
       <Link href={PATH.LIFE}>혼자라이프 기록</Link>
       <Link href={PATH.GONGGAM}>공감게시판</Link>
-      <HeaderDropdownMenu menuItems={challengeMenuItem}>챌린지</HeaderDropdownMenu>
+      <HeaderDropdownMenu menuItems={challengeMenuItem} align="center">
+        챌린지
+      </HeaderDropdownMenu>
     </nav>
   );
 };

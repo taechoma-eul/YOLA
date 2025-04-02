@@ -9,7 +9,7 @@ const UserOptionMenu = () => {
     { path: '', label: '로그아웃', isLine: false, isButton: true }
   ];
   return (
-    <HeaderDropdownMenu menuItems={userMenuItem}>
+    <HeaderDropdownMenu menuItems={userMenuItem} align="end">
       <div className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-300">
         <User color="#ffffff" />
       </div>
