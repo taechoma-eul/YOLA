@@ -1,4 +1,5 @@
 import { getMissionList, getUniqueMissionType } from '@/lib/utils/api/checklist.api';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
@@ -13,7 +14,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
   const missionList = await getMissionList(decodedMission);
 
   const currentLevel = '1'; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
-  const progress = 10; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
+  const progress = 5; // TODO: 유저 정보에서 동적으로 가져오도록 수정 예정
 
   return (
     <section className="w-full p-10">
@@ -30,15 +31,18 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
           </ul>
         </div>
         {/* 현 레벨의 미션 리스트 */}
-        <ul className="mt-5 rounded-md border p-3 shadow-sm">
+        <ul className="mt-5 grid grid-cols-5 gap-4 rounded-md border p-3 shadow-sm">
           {missionList
             .filter((mission) => mission.level === currentLevel)
             .map((mission, idx) => (
               <li key={idx}>
-                <button className="relative min-h-[150px] border p-10">
+                <Link
+                  href={{ pathname: '/checklist/post', query: { type: mission.type, content: mission.content } }}
+                  className="relative flex min-h-[150px] items-center justify-center border p-10"
+                >
                   <div className="text-center">{mission.content}</div>
                   <span className="absolute bottom-2 text-xs">인증하기 &gt;</span>
-                </button>
+                </Link>
               </li>
             ))}
         </ul>
