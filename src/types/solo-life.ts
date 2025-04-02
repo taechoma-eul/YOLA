@@ -4,4 +4,5 @@ export interface SoloLifeCardType {
   content: string;
   date: string;
   id: string;
+  isMission: boolean;
 }
