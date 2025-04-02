@@ -20,7 +20,7 @@ const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
           구글 로그인
         </button>
         <p className="mt-5 text-center">
-          아직 회원이 아니신가요?{' '}
+          아직 회원이 아니신가요?
           <Link href={PATH.SIGNUP} className="text-blue-500">
             회원가입
           </Link>
@@ -40,7 +40,7 @@ const FormButton = ({ mode, isSubmitting, isValid }: FormButtonProps) => {
           {isSubmitting ? '가입 중...' : '회원가입'}
         </button>
         <p className="mt-5 text-center">
-          이미 계정이 있으신가요?{' '}
+          이미 계정이 있으신가요?
           <Link href={PATH.LOGIN} className="text-blue-500">
             로그인
           </Link>
