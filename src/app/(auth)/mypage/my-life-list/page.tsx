@@ -1,5 +1,5 @@
 import { fetchAllLifeList } from '@/lib/utils/api/my-life.api';
-import LifePostCard from '@/components/ui/life-post-card';
+import LifePostCard from '@/components/common/life-post-card';
 import type { LifePost } from '@/types/life-post';
 
 const MyLifeListPage = async () => {

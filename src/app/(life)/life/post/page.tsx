@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import LifeInputForm from '@/components/life/life-input-form';
+import LifeInputForm from '@/components/common/post-input-form';
 
 export default function LifePostPage() {
   const searchParams = useSearchParams();
