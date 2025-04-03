@@ -2,20 +2,58 @@
 
 import Calendar from '@/components/life/calendar';
 import SoloLifeList from '@/components/life/solo-life-list';
-import { useState } from 'react';
+import { PATH } from '@/constants/page-path';
+import { useLifePostsByMonth } from '@/lib/mutations/useLifePostsByMonth';
+import Link from 'next/link';
+import { useMemo, useState } from 'react';
+
+export const getToday = (): string => {
+  const now = new Date();
+  const kstOffset = 9 * 60 * 60 * 1000;
+  const kst = new Date(now.getTime() + kstOffset);
+  const yyyy = kst.getFullYear();
+  const mm = String(kst.getMonth() + 1).padStart(2, '0');
+  const dd = String(kst.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
 
 const LifePage = () => {
-  const [date, setDate] = useState<string>('0000.00.00'); // 오늘 날짜로 초기화
+  const [selectedDate, setSelectedDate] = useState<string>(getToday());
+  const [calendarMonth, setCalendarMonth] = useState(getToday().slice(0, 7)); // 'YYYY-MM'
+
+  const { data: posts = [] } = useLifePostsByMonth(calendarMonth);
+
+  // 날짜별 점 데이터 생성
+  const dotMap = useMemo(() => {
+    const map: Record<string, Set<'mission' | 'normal'>> = {};
+    posts.forEach((post) => {
+      const date = post.created_at.slice(0, 10); // YYYY-MM-DD
+      const type = post.mission_id !== null ? 'mission' : 'normal';
+      if (!map[date]) map[date] = new Set();
+      map[date].add(type);
+    });
+    return map;
+  }, [posts]);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="ml-auto mr-auto min-h-[750px] w-[90%] text-center">
-        <Calendar setDate={setDate} />
+        <Calendar
+          setDate={setSelectedDate}
+          selectedDate={selectedDate}
+          dotMap={dotMap}
+          onMonthChange={(month) => setCalendarMonth(month)}
+        />
       </div>
 
-      <h2 className="ml-[12px] text-lg font-semibold">{date} &lt;닉네임&gt;님의 혼자 라이프</h2>
+      <div className="flex items-center justify-between px-4">
+        <h2 className="text-lg font-semibold">{selectedDate} &lt;닉네임&gt;님의 혼자 라이프</h2>
 
-      <SoloLifeList />
+        <Link href={PATH.LIFE_POST} className="text-sm text-blue-600 hover:underline">
+          일기 작성하기 &gt;
+        </Link>
+      </div>
+      <SoloLifeList selectedDate={selectedDate} />
     </div>
   );
 };
