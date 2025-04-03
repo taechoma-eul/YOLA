@@ -348,7 +348,7 @@ export type Database = {
     };
     Enums: {
       categorys: '일상공유' | '꿀팁공유' | '여기추천' | '밋업';
-      level: '1' | '2' | '3' | '4' | '5';
+      level: '1' | '2' | '3' | '4' | '5' | 'master';
       tags: '혼밥' | '혼자여행' | '갓생' | '혼놀' | '청소' | '공감해죠' | '칭찬해죠' | '힘들어';
     };
     CompositeTypes: {
