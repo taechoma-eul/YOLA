@@ -2,32 +2,18 @@
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { useMemo } from 'react';
+import interactionPlugin from '@fullcalendar/interaction';
 
-export default function MyCalendar({ setDate }: { setDate: (date: string) => void }) {
-  const events = [
-    {
-      title: '혼자 떠돌이 타고 하남까지 갔다!',
-      start: '2025-03-27T00:00:00+09:00',
-      extendedProps: { isMission: true }
-    },
-    {
-      title: '일반 일기 내용',
-      start: '2025-03-27T00:00:00+09:00',
-      extendedProps: { isMission: false }
-    },
-    {
-      title: '일반 일기 내용',
-      start: '2025-03-24T00:00:00+09:00',
-      extendedProps: { isMission: true }
-    },
-    {
-      title: '일반 일기 내용',
-      start: '2025-03-28T00:00:00+09:00',
-      extendedProps: { isMission: false }
-    }
-  ];
+import { getToday } from '@/app/(life)/life/page';
 
+type Props = {
+  setDate: (date: string) => void;
+  selectedDate: string;
+  dotMap: Record<string, Set<'mission' | 'normal'>>;
+  onMonthChange: (month: string) => void;
+};
+
+const MyCalendar = ({ setDate, selectedDate, dotMap, onMonthChange }: Props) => {
   const formatToKoreanDate = (date: Date): string => {
     const kstOffset = 9 * 60 * 60 * 1000;
     const kst = new Date(date.getTime() + kstOffset);
@@ -36,61 +22,60 @@ export default function MyCalendar({ setDate }: { setDate: (date: string) => voi
     const dd = String(kst.getDate()).padStart(2, '0');
     return `${yyyy}-${mm}-${dd}`;
   };
-
-  // 날짜별 점 정리 (Set으로 미션/일반 모두 기록)
-  const dotMap = useMemo(() => {
-    const map: Record<string, Set<'mission' | 'normal'>> = {};
-    for (const ev of events) {
-      const date = ev.start.split('T')[0]; // 'YYYY-MM-DD'
-      if (!map[date]) {
-        map[date] = new Set();
-      }
-      const type = ev.extendedProps?.isMission ? 'mission' : 'normal';
-      map[date].add(type);
-    }
-    return map;
-  }, [events]);
-
-  const handleEventClick = (arg: any) => {
-    const clickedDate = arg.event.start;
-    setDate(formatToKoreanDate(clickedDate));
-  };
+  const TODAY = getToday();
 
   const handleDatesSet = (arg: any) => {
-    const startDate = arg.view.currentStart;
-    setDate(formatToKoreanDate(startDate));
+    const month = arg.view.currentStart.toISOString().slice(0, 7); // 'YYYY-MM'
+    onMonthChange(month);
   };
 
   return (
     <FullCalendar
-      plugins={[dayGridPlugin]}
+      plugins={[dayGridPlugin, interactionPlugin]}
       initialView="dayGridMonth"
       headerToolbar={{
         start: 'prev',
         center: 'title',
         end: 'today next'
       }}
-      locale="ko"
-      timeZone="local"
-      events={events}
+      timeZone="Asia/Seoul"
       dayCellContent={(arg) => {
         const dateStr = arg.date.toISOString().split('T')[0];
         const types = dotMap[dateStr];
+        const isSelected = selectedDate === dateStr;
 
         return (
-          <div className="relative flex flex-col items-center justify-center">
-            <span className="text-sm font-medium text-gray-800">{arg.dayNumberText}</span>
-            <div className="mt-1 flex space-x-1">
-              {types?.has('mission') && <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />}
-              {types?.has('normal') && <span className="h-1.5 w-1.5 rounded-full bg-black" />}
+          <div className="relative h-full w-full">
+            {/* 클릭 가능한 레이어 */}
+            <button type="button" className="absolute inset-0 z-10 h-full w-full cursor-pointer" />
+
+            {/* 내용 */}
+            <div className="pointer-events-none relative z-20 flex flex-col items-center justify-center">
+              <span
+                className={`p-1 text-sm font-medium ${
+                  isSelected ? 'rounded-full bg-yellow-400 text-black' : 'text-gray-800'
+                }`}
+              >
+                {arg.dayNumberText}
+              </span>
+              <div className="mt-1 flex min-h-[6px] space-x-1">
+                {types?.has('mission') && <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />}
+                {types?.has('normal') && <span className="h-1.5 w-1.5 rounded-full bg-black" />}
+              </div>
             </div>
           </div>
         );
       }}
+      initialDate={TODAY}
+      dateClick={(arg) => {
+        const clickedDate = arg.date;
+        setDate(formatToKoreanDate(clickedDate));
+      }}
       eventContent={() => null}
-      eventClick={handleEventClick}
-      datesSet={handleDatesSet}
       height={750}
+      datesSet={handleDatesSet}
     />
   );
-}
+};
+
+export default MyCalendar;
