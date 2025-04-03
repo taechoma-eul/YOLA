@@ -14,7 +14,7 @@ const MypageSideBar = async () => {
         <figure>
           <Image src={DEFAULT_AVATAR} alt="프로필 이미지" width={150} height={150} className="rounded-full border" />
         </figure>
-        <p className="font-bold">{userMetadata?.name}</p>
+        <p className="font-bold">{userMetadata?.nickname}</p>
         <p>{userMetadata?.email}</p>
         <Link href={PATH.MYPAGE}>
           <button className="rounded-full bg-gray-200 p-1 px-2 text-xs text-black">프로필 수정</button>
