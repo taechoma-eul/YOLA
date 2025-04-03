@@ -9,7 +9,6 @@ export const getRandomMissionData = async (): Promise<RandomMissionData> => {
   if (!data) {
     throw new Error('요청한 데이터가 없습니다.');
   }
-  console.log('data', data);
   const MAX = data.length;
   const MIN = 0;
   const randomIndexNum = Math.floor(Math.random() * (MAX - MIN));
