@@ -1,4 +1,4 @@
-import SoloLifeCard from '@/components/life/solo-life-card';
+import SoloLifeCard from '@/components/features/life/solo-life-card';
 import { useLifePostsByMonth } from '@/lib/mutations/useLifePostsByMonth';
 import { SoloLifeCardType } from '@/types/life-post';
 

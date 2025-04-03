@@ -1,7 +1,7 @@
 'use client';
 
-import Calendar from '@/components/life/calendar';
-import SoloLifeList from '@/components/life/solo-life-list';
+import Calendar from '@/components/features/life/calendar';
+import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
 import { useLifePostsByMonth } from '@/lib/mutations/useLifePostsByMonth';
 import Link from 'next/link';
