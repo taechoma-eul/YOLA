@@ -1,6 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { LifePost } from '@/types/life-post';
+import type { LifePost } from '@/types/life-post';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 /**

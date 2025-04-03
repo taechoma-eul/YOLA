@@ -1,6 +1,6 @@
 import SoloLifeCard from '@/components/features/life/solo-life-card';
-import { useLifePostsByMonth } from '@/lib/mutations/useLifePostsByMonth';
-import { SoloLifeCardType } from '@/types/life-post';
+import { useLifePostsByMonth } from '@/lib/queries/useLifePostsByMonth';
+import type { SoloLifeCardType } from '@/types/life-post';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
   const selectedMonth = selectedDate.slice(0, 7); // '2025-04'

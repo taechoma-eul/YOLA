@@ -1,6 +1,6 @@
 'use client';
 
-import { SoloLifeCardType } from '@/types/life-post';
+import type { SoloLifeCardType } from '@/types/life-post';
 import Image from 'next/image';
 
 const SoloLifeCard = ({ img, title, content, date, isMission }: SoloLifeCardType) => {

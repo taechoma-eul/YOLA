@@ -1,4 +1,4 @@
-import { LifePost } from '@/types/life-post';
+import type { LifePost } from '@/types/life-post';
 import { useQuery } from '@tanstack/react-query';
 
 export const useLifePostsByMonth = (month: string) => {
