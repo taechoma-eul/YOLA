@@ -1,5 +1,5 @@
 import SoloLifeCard from '@/components/features/life/solo-life-card';
-import { useLifePostsByMonth } from '@/lib/queries/useLifePostsByMonth';
+import { useLifePostsByMonth } from '@/lib/hooks/queries/useLifePostsByMonth';
 import type { SoloLifeCardType } from '@/types/life-post';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {

@@ -3,7 +3,7 @@
 import Calendar from '@/components/features/life/calendar';
 import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
-import { useLifePostsByMonth } from '@/lib/queries/useLifePostsByMonth';
+import { useLifePostsByMonth } from '@/lib/hooks/queries/useLifePostsByMonth';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
