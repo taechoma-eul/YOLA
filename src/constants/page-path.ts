@@ -8,5 +8,6 @@ export const PATH = {
   MY_GONGGAM_POST_LIST: '/mypage/my-gonggam-post-list',
   LIFE: '/life',
   LIFE_POST: '/life/post',
-  CHECKLIST: '/checklist'
+  CHECKLIST: '/checklist',
+  CHECKLIST_POST: '/checklist/post'
 };

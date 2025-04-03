@@ -2,6 +2,7 @@ import { getUserMetadata } from '@/lib/utils/api/auth-action';
 import { getMissionList, getUniqueMissionType, getUserMissionStatus } from '@/lib/utils/api/checklist.api';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { PATH } from '@/constants/page-path';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decodedMission = decodeURIComponent(params.mission); // 한글 경로 디코딩
@@ -44,7 +45,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
             .map((mission, idx) => (
               <li key={idx}>
                 <Link
-                  href={metadata ? `/checklist/post/${mission.type}/${mission.content}` : '/login'}
+                  href={metadata ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : '/login'}
                   className="relative flex min-h-[150px] items-center justify-center border p-10"
                 >
                   <div className="text-center">{mission.content}</div>
