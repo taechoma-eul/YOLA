@@ -18,10 +18,14 @@ export const getUserLevelAndProgress = async (userId: string | undefined, type: 
   const userMissionStatus = await getUserMissionStatus({ userId, type });
 
   // 유저의 현재 체크리스트 레벨 계산: 완료한 미션이 없을 경우 DEFAULT_LEVEL
-  const currentLevel =
+  let currentLevel: number | string =
     userMissionStatus.length > NUMBER.ZERO
       ? Math.ceil(userMissionStatus.length / NUMBER.LEVEL_THRESHOLD)
       : NUMBER.DEFAULT_LEVEL;
+
+  //최고 레벨을 초과하면 master 레벨 부여
+  const isMaster = currentLevel > NUMBER.MAX_LEVEL;
+  if (isMaster) currentLevel = 'master';
 
   // 유저가 완료한 미션 개수: 현재 레벨과 일치하는 미션 개수 필터링하여 카운트
   const progress = userMissionStatus.filter((mission) => +mission.mission_list.level === currentLevel).length;
