@@ -16,6 +16,6 @@ export const PATH = {
   GOD_LIFE_CHECKLIST: '/checklist/갓생',
   PLAY_CHECKLIST: '/checklist/혼놀',
   CLEAN_CHECKLIST: '/checklist/청소',
-
+  CHECKLIST_POST: '/checklist/post',
   ERROR: '/error'
 };
