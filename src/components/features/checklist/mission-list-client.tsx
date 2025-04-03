@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/lib/hooks/use-toast';
 import { PATH } from '@/constants/page-path';
 import { MSG } from '@/constants/messages';
 import type { MissionType } from '@/types/checklist';
