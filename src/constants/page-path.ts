@@ -9,5 +9,6 @@ export const PATH = {
   LIFE: '/life',
   LIFE_POST: '/life/post',
   CHECKLIST: '/checklist',
-  CHECKLIST_POST: '/checklist/post'
+  CHECKLIST_POST: '/checklist/post',
+  ERROR: '/error'
 };
