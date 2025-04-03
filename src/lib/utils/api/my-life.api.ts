@@ -29,3 +29,26 @@ export const getAllLifePostsById = async (): Promise<LifePost[]> => {
   }
   return MyLifePosts;
 };
+
+export const getLifePostsByMonth = async (month: string): Promise<LifePost[]> => {
+  const supabase = await createClient();
+
+  const getNextMonthFirstDay = (month: string): string => {
+    const [y, m] = month.split('-').map(Number);
+    const next = new Date(y, m); // 다음 달 1일
+    const yyyy = next.getFullYear();
+    const mm = String(next.getMonth() + 1).padStart(2, '0');
+    return `${yyyy}-${mm}-01`;
+  };
+
+  const { data, error } = await supabase
+    .from('life_posts')
+    .select('*')
+    .gte('created_at', `${month}-01`)
+    .lt('created_at', getNextMonthFirstDay(month))
+    .order('created_at', { ascending: true });
+
+  if (error) throw new Error(error.message);
+
+  return data ?? [];
+};
