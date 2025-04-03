@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import './globals.css';
 import TQProvider from '@/lib/providers/TQProvider';
+import Header from '@/components/layout/header/header';
+import Footer from '@/components/layout/footer/footer';
+import '@/app/globals.css';
 
 export const metadata: Metadata = {
   title: '니 혼자 산다',
@@ -15,7 +17,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <TQProvider>{children}</TQProvider>
+        <TQProvider>
+          <Header />
+          <main className="mx-auto flex min-h-[calc(100vh-150px)] w-full max-w-[1280px] flex-col items-center pt-[150px]">
+            {children}
+          </main>
+        </TQProvider>
+        <Footer />
       </body>
     </html>
   );
