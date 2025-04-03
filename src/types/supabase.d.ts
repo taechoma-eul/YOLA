@@ -1,3 +1,8 @@
+/**
+ * @example <Tables<'hospitals'> - <Tables<테이블명>>으로 row 데이터 타입 가져오기
+ * @example <Enums<'review'> - <Enums<'타입명'>>으로 enum 타입 가져오기
+ */
+
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
