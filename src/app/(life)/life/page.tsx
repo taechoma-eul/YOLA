@@ -36,7 +36,7 @@ const LifePage = () => {
   }, [posts]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       <div className="ml-auto mr-auto min-h-[750px] w-[90%] text-center">
         <Calendar
           setDate={setSelectedDate}
@@ -46,14 +46,16 @@ const LifePage = () => {
         />
       </div>
 
-      <div className="flex items-center justify-between px-4">
+      <div className="flex items-center justify-between px-20">
         <h2 className="text-lg font-semibold">{selectedDate} &lt;닉네임&gt;님의 혼자 라이프</h2>
 
         <Link href={PATH.LIFE_POST} className="text-sm text-blue-600 hover:underline">
           일기 작성하기 &gt;
         </Link>
       </div>
-      <SoloLifeList selectedDate={selectedDate} />
+      <div className="min-h-[300px] px-10">
+        <SoloLifeList selectedDate={selectedDate} />
+      </div>
     </div>
   );
 };

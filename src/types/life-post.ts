@@ -5,3 +5,11 @@ export interface LifePost {
   content: string;
   mission_id: string | null;
 }
+export interface SoloLifeCardType {
+  id: string;
+  date: string;
+  title: string;
+  content: string;
+  img: string;
+  isMission: boolean;
+}
