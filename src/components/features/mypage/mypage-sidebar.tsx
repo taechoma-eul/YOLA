@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DEFAULT_AVATAR from '@images/images/default-avatar.png';
 import { PATH } from '@/constants/page-path';
-import { getUserId, getUserMetadata } from '@/lib/utils/api/auth-action';
+import { getUserMetadata } from '@/lib/utils/api/auth-action';
 
 const MypageSideBar = async () => {
   const userMetadata = await getUserMetadata();
 
   return (
-    <aside className="flex w-full flex-col items-center gap-5 p-5 md:fixed md:h-full md:w-60">
+    <aside className="flex h-[calc(100vh-150px)] w-full flex-col items-center gap-5 p-5 md:fixed md:w-60">
       {/* 내 프로필 보기 */}
       <section className="flex w-full flex-col items-center justify-center gap-3 rounded-md border p-5">
         <figure>
