@@ -3,6 +3,7 @@ import { getMissionList, getUniqueMissionType, getUserMissionStatus } from '@/li
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PATH } from '@/constants/page-path';
+import { NUMBER } from '@/constants/magic-number';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decodedMission = decodeURIComponent(params.mission); // 한글 경로 디코딩
@@ -21,7 +22,10 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
 
   const userMissionStatus = await getUserMissionStatus({ userId, type: decodedMission }); // 유저가 해당 체크리스트에 인증한 정보
 
-  const currentLevel = userMissionStatus.length > 0 ? Math.ceil(userMissionStatus.length / 5) : 1; // 해당 체크리스트의 유저 레벨
+  const currentLevel =
+    userMissionStatus.length > NUMBER.ZERO
+      ? Math.ceil(userMissionStatus.length / NUMBER.LEVEL_THRESHOLD)
+      : NUMBER.DEFAULT_LEVEL; // 해당 체크리스트의 유저 레벨
   const progress = userMissionStatus.filter((mission) => +mission.mission_list.level === currentLevel).length; // 레벨 진척도
 
   return (

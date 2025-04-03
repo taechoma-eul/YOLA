@@ -1,3 +1,4 @@
+import { NUMBER } from '@/constants/magic-number';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { MissionListType, UserMissionStatusListType } from '@/types/checklist';
 
@@ -63,7 +64,9 @@ export const getUserMissionStatus = async ({
   const transformedData = data.map((item: any) => ({
     completed_id: item.completed_id,
     mission_list:
-      Array.isArray(item.mission_list) && item.mission_list.length > 0 ? item.mission_list[0] : item.mission_list
+      Array.isArray(item.mission_list) && item.mission_list.length > NUMBER.ZERO
+        ? item.mission_list[0]
+        : item.mission_list
   }));
   return transformedData;
 };
