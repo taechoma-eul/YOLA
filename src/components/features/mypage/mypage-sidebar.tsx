@@ -5,7 +5,7 @@ import { PATH } from '@/constants/page-path';
 
 const MypageSideBar = () => {
   return (
-    <aside className="flex w-full flex-col items-center gap-5 border-b p-5 md:fixed md:left-0 md:top-0 md:h-full md:w-60 md:border-r">
+    <aside className="flex w-full flex-col items-center gap-5 p-5 md:fixed md:h-full md:w-60">
       {/* 내 프로필 보기 */}
       <section className="flex w-full flex-col items-center justify-center gap-3 rounded-md border p-5">
         <figure>
