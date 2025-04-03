@@ -1,8 +1,6 @@
-import { getUserMetadata } from '@/lib/utils/api/auth-action';
-import { getMissionList, getUniqueMissionType, getUserMissionStatus } from '@/lib/utils/api/checklist.api';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { PATH } from '@/constants/page-path';
+import { getMissionList, getUniqueMissionType } from '@/lib/utils/api/checklist.api';
+import { getUserMetadata } from '@/lib/utils/api/auth-action';
 import { getUserLevelAndProgress } from '@/lib/utils/user-mission';
 import MissionListClient from '@/components/features/checklist/mission-list-client';
 
