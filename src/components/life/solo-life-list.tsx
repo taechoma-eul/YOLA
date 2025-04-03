@@ -1,39 +1,32 @@
 import { SoloLifeCardType } from '@/types/solo-life';
 import SoloLifeCard from '@/components/life/solo-life-card';
+import { useLifePostsByMonth } from '@/lib/mutations/useLifePostsByMonth';
 
-const SoloLifeList = () => {
-  const emptyList: SoloLifeCardType[] = [
-    {
+const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
+  const selectedMonth = selectedDate.slice(0, 7); // '2025-04'
+  const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
+
+  const parsedList: SoloLifeCardType[] = posts
+    .filter((p) => p.created_at.startsWith(selectedDate))
+    .map((post) => ({
+      id: post.id.toString(),
+      date: post.created_at.slice(0, 10),
+      title: post.content.split('\n')[0] || '제목 없음',
+      content: post.content,
       img: 'https://via.placeholder.com/300',
-      title: '엉멍이_박살난_하루 오늘_운동땅_예반데',
-      content: '혼자 따릉이 타고 하남까지 갔다!마쟈요 \n엉덩이가 박살나버렸다😌',
-      date: '2025.02.27 | 22:34',
-      id: '1',
-      isMission: true
-    },
-    {
-      img: 'https://via.placeholder.com/300',
-      title: '제목2',
-      content: '내용2',
-      date: '2025.03.01 | 15:00',
-      id: '2',
-      isMission: false
-    },
-    {
-      img: 'https://via.placeholder.com/300',
-      title: '제목3',
-      content: '내용3',
-      date: '2025.03.02 | 10:15',
-      id: '3',
-      isMission: true
-    }
-  ];
+      isMission: post.mission_id !== null
+    }));
+
+  if (isLoading) return <div className="p-4">로딩 중...</div>;
+  if (error) return <div className="p-4 text-red-500">에러 발생</div>;
 
   return (
-    <div className="m-4 grid grid-cols-1 gap-4 overflow-auto text-left sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      {emptyList.map((data: SoloLifeCardType) => (
-        <SoloLifeCard key={data.id} {...data} />
-      ))}
+    <div className="m-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {parsedList.length === 0 ? (
+        <div className="col-span-full text-center text-gray-500">이 날 작성된 혼자 라이프가 없어요.</div>
+      ) : (
+        parsedList.map((data) => <SoloLifeCard key={data.id} {...data} />)
+      )}
     </div>
   );
 };
