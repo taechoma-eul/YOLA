@@ -42,7 +42,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
             .map((mission, idx) => (
               <li key={idx}>
                 <Link
-                  href={metadata ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : '/login'}
+                  href={metadata ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : PATH.LOGIN}
                   className="relative flex min-h-[150px] items-center justify-center border p-10"
                 >
                   <div className="text-center">{mission.content}</div>
