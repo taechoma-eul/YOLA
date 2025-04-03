@@ -1,4 +1,5 @@
 import { NUMBER } from '@/constants/magic-number';
+import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { MissionListType, UserMissionStatusListType } from '@/types/checklist';
 
@@ -12,7 +13,7 @@ import type { MissionListType, UserMissionStatusListType } from '@/types/checkli
  */
 export const getUniqueMissionType = async (): Promise<string[]> => {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('mission_list').select('type');
+  const { data, error } = await supabase.from(TABLE.MISSION_LIST).select('type');
   if (error) {
     console.error(error);
     return [];
@@ -32,15 +33,16 @@ export const getUniqueMissionType = async (): Promise<string[]> => {
  */
 export const getMissionList = async (mission: string): Promise<MissionListType> => {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('mission_list').select('*').eq('type', mission);
+  const { data, error } = await supabase.from(TABLE.MISSION_LIST).select('*').eq('type', mission);
 
   if (error) throw new Error(error.message);
   return data;
 };
 
-/** 유저의 미션 현황 불러오기
+/** 유저의 특정 타입 체크리스트 미션 현황을 불러오는 함수
  *
- * @param {string} userId - 조회할 사용자의 ID
+ * @param {string} params.userId - 조회할 사용자의 ID
+ * @param {string} params.type - 조회할 미션 타입
  * @returns {Promise<UserMissionStatusListType>} - 사용자의 미션 현황 리스트
  * @throws {Error} - 데이터 조회 중 오류 발생 시 예외 처리
  */
@@ -53,11 +55,11 @@ export const getUserMissionStatus = async ({
 }): Promise<UserMissionStatusListType> => {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from('user_mission')
-    .select('completed_id, mission_list!inner(type, level)')
+    .from(TABLE.USER_MISSION)
+    .select(`completed_id, ${TABLE.MISSION_LIST}!inner(type, level)`)
     .eq('user_id', userId)
-    .eq('mission_list.type', type)
-    .not('mission_list', 'is', null);
+    .eq(`${TABLE.MISSION_LIST}.type`, type)
+    .not(TABLE.MISSION_LIST, 'is', null);
 
   if (error) throw new Error(error.message);
 
