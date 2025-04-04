@@ -38,6 +38,7 @@ const MyCalendar = ({ setDate, selectedDate, dotMap, onMonthChange }: Props) => 
         center: 'title',
         end: 'today next'
       }}
+      initialDate={selectedDate}
       timeZone="Asia/Seoul"
       dayCellContent={(arg) => {
         const dateStr = arg.date.toISOString().split('T')[0];
@@ -66,7 +67,6 @@ const MyCalendar = ({ setDate, selectedDate, dotMap, onMonthChange }: Props) => 
           </div>
         );
       }}
-      initialDate={TODAY}
       dateClick={(arg) => {
         const clickedDate = arg.date;
         setDate(formatToKoreanDate(clickedDate));
