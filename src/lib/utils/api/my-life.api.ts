@@ -1,6 +1,8 @@
+import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { LifePost } from '@/types/life-post';
+import type { LifePost } from '@/types/life-post';
 
+const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 /**
  * Supabase에서 `life_posts` 테이블의 `로그인 한 User`가 작성한 게시글을 조회하는 함수
  *
@@ -20,7 +22,7 @@ export const getAllLifePostsById = async (): Promise<LifePost[]> => {
   //로그인 한 유저의 작성 게시글 조회
   // ascending 정렬 _ false 내림차순, true 오름차순 정렬
   const { data: MyLifePosts, error } = await supabase
-    .from('life_posts')
+    .from(LIFE_POSTS_TABLE)
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
