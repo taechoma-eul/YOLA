@@ -1,36 +1,6 @@
-/**
- * @example <Tables<'hospitals'> - <Tables<테이블명>>으로 row 데이터 타입 가져오기
- * @example <Enums<'review'> - <Enums<'타입명'>>으로 enum 타입 가져오기
- */
-
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never;
-    };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      graphql: {
-        Args: {
-          operationName?: string;
-          query?: string;
-          variables?: Json;
-          extensions?: Json;
-        };
-        Returns: Json;
-      };
-    };
-    Enums: {
-      [_ in never]: never;
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
   public: {
     Tables: {
       comments: {
@@ -283,6 +253,44 @@ export type Database = {
           type?: Database['public']['Enums']['tags'];
         };
         Relationships: [];
+      };
+      user_level: {
+        Row: {
+          clean: number;
+          goat: number;
+          id: number;
+          meal: number;
+          play: number;
+          travel: number;
+          user_id: string;
+        };
+        Insert: {
+          clean?: number;
+          goat?: number;
+          id?: number;
+          meal?: number;
+          play?: number;
+          travel?: number;
+          user_id?: string;
+        };
+        Update: {
+          clean?: number;
+          goat?: number;
+          id?: number;
+          meal?: number;
+          play?: number;
+          travel?: number;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_level_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
       };
       user_mission: {
         Row: {
