@@ -8,9 +8,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 export const getToday = (): string => {
-  const now = new Date();
-  const kstOffset = 9 * 60 * 60 * 1000;
-  const kst = new Date(now.getTime() + kstOffset);
+  const kst = new Date();
   const yyyy = kst.getFullYear();
   const mm = String(kst.getMonth() + 1).padStart(2, '0');
   const dd = String(kst.getDate()).padStart(2, '0');

@@ -1,13 +1,11 @@
-import type { LifePost } from '@/types/life-post';
+// lib/hooks/queries/useLifePostsByMonth.ts
 import { useQuery } from '@tanstack/react-query';
+import type { LifePostWithImageUrls } from '@/types/life-post';
+import { getLifePostsByMonth } from '@/lib/utils/api/life-api-client';
 
 export const useLifePostsByMonth = (month: string) => {
-  return useQuery<LifePost[]>({
+  return useQuery<LifePostWithImageUrls[]>({
     queryKey: ['lifePosts', month],
-    queryFn: async () => {
-      const res = await fetch(`/api/life-posts?month=${month}`);
-      if (!res.ok) throw new Error('Failed to fetch posts');
-      return res.json();
-    }
+    queryFn: () => getLifePostsByMonth(month)
   });
 };

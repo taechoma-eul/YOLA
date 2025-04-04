@@ -3,19 +3,25 @@ import { useLifePostsByMonth } from '@/lib/hooks/queries/useLifePostsByMonth';
 import type { SoloLifeCardType } from '@/types/life-post';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
-  const selectedMonth = selectedDate.slice(0, 7); // '2025-04'
+  const selectedMonth = selectedDate.slice(0, 7); // 'YYYY-MM'
   const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
 
   const parsedList: SoloLifeCardType[] = posts
     .filter((p) => p.created_at.startsWith(selectedDate))
-    .map((post) => ({
-      id: post.id.toString(),
-      date: post.created_at.slice(0, 10),
-      title: post.content.split('\n')[0] || '제목 없음',
-      content: post.content,
-      img: 'https://via.placeholder.com/300',
-      isMission: post.mission_id !== null
-    }));
+    .map((post) => {
+      const imageUrls = post.image_urls ?? [];
+      return {
+        id: post.id.toString(),
+        date: post.created_at.slice(0, 10),
+        title: post.content.split('\n')[0] || '제목 없음',
+        content: post.content,
+        thumbnail:
+          imageUrls[0] ||
+          'https://rrrswimuyqumlnkrfsli.supabase.co/storage/v1/object/public/life-post-images//i16283854196.png',
+        imageUrls,
+        isMission: post.mission_id !== null
+      };
+    });
 
   if (isLoading) return <div className="p-4">로딩 중...</div>;
   if (error) return <div className="p-4 text-red-500">에러 발생</div>;
