@@ -1,6 +1,6 @@
 import { NUMBER } from '@/constants/magic-number';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { MissionListType, UserMissionStatusListType } from '@/types/checklist';
+import type { MissionType, UserMissionStatusListType } from '@/types/checklist';
 
 /**
  * Supabase에서 `mission_list` 테이블의 고유한 `type` 값을 조회하는 함수
@@ -27,10 +27,10 @@ export const getUniqueMissionType = async (): Promise<string[]> => {
  * @async
  * @function getMissionList
  * @param {string} mission - 조회할 미션의 `type` 값
- * @returns {Promise<MissionListType>} `mission_list` 테이블에서 필터링된 데이터 배열
+ * @returns {Promise<MissionType[]>} `mission_list` 테이블에서 필터링된 데이터 배열
  * @throws {Error} Supabase 쿼리 실행 중 오류 발생 시 throw Error
  */
-export const getMissionList = async (mission: string): Promise<MissionListType> => {
+export const getMissionList = async (mission: string): Promise<MissionType[]> => {
   const supabase = await createClient();
   const { data, error } = await supabase.from('mission_list').select('*').eq('type', mission);
 
