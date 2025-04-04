@@ -1,10 +1,6 @@
-export interface LifePost {
-  id: string;
-  created_at: string;
-  user_id: string;
-  content: string;
-  mission_id: string | null;
-}
+import type { Tables } from './supabase';
+
+export type LifePost = Tables<'life_posts'>;
 export interface SoloLifeCardType {
   id: string;
   date: string;
