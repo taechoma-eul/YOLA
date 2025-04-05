@@ -2,10 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DEFAULT_AVATAR from '@images/images/default-avatar.png';
 import { PATH } from '@/constants/page-path';
-import { getUserMetadata } from '@/lib/utils/api/auth-action';
+import { getUserProfile } from '@/lib/utils/api/auth-action';
 
 const MypageSideBar = async () => {
-  const userMetadata = await getUserMetadata();
+  const user = await getUserProfile();
 
   return (
     <aside className="flex h-[calc(100vh-150px)] w-full flex-col items-center gap-5 p-5 md:fixed md:w-60">
@@ -14,8 +14,8 @@ const MypageSideBar = async () => {
         <figure>
           <Image src={DEFAULT_AVATAR} alt="프로필 이미지" width={150} height={150} className="rounded-full border" />
         </figure>
-        <p className="font-bold">{userMetadata?.nickname}</p>
-        <p>{userMetadata?.email}</p>
+        <p className="font-bold">{user.nickname}</p>
+        <p>{user.email}</p>
         <Link href={PATH.MYPAGE}>
           <button className="rounded-full bg-gray-200 p-1 px-2 text-xs text-black">프로필 수정</button>
         </Link>

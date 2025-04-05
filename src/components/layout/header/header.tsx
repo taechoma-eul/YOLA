@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { getUserMetadata } from '@/lib/utils/api/auth-action';
 import GuestOptionMenu from '@/components/layout/header/header-guest-option';
 import HeaderNav from '@/components/layout/header/header-nav';
 import UserOptionMenu from '@/components/layout/header/header-user-option';
 import { PATH } from '@/constants/page-path';
+import { getUserId } from '@/lib/utils/api/auth-action';
 
 const Header = async () => {
-  const user = await getUserMetadata();
+  const user = await getUserId();
 
   return (
     <header className="fixed left-0 top-0 z-50 mx-auto w-full bg-white">
