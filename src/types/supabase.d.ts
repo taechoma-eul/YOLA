@@ -170,6 +170,8 @@ export type Database = {
           created_at: string
           id: number
           mission_id: number | null
+          tags: string[] | null
+          title: string
           user_id: string
         }
         Insert: {
@@ -177,6 +179,8 @@ export type Database = {
           created_at?: string
           id?: number
           mission_id?: number | null
+          tags?: string[] | null
+          title: string
           user_id?: string
         }
         Update: {
@@ -184,6 +188,8 @@ export type Database = {
           created_at?: string
           id?: number
           mission_id?: number | null
+          tags?: string[] | null
+          title?: string
           user_id?: string
         }
         Relationships: [
