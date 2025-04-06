@@ -86,12 +86,14 @@ export const getUserSessionState = async (): Promise<{
 
 /**
  * public.users 테이블에서 현재 로그인 된 사용자의 프로필 정보를 불러옵니다.
+ * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
  * @returns { Tables<'users'> } - 현재 세션에 해당하는 users 테이블 row
  */
-export const getUserProfile = async (): Promise<Tables<'users'>> => {
+export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
   const supabase = await createClient();
   const { userId } = await getUserSessionState();
-  if (userId === null) throw new Error('사용자 정보가 없습니다.');
+
+  if (!userId) return null;
 
   const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
 
