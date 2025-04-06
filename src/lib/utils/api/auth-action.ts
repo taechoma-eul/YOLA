@@ -65,18 +65,23 @@ export const logout = async () => {
 };
 
 /**
- * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 user_id(auth.uid)를 불러옵니다.
- * 세션이 존재하지 않는 경우 null을 반환합니다.
- * @returns { string | null } user_id
+ * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 user_id(auth.uid)와 로그인 상태를 불러옵니다.
+ * 세션이 존재하지 않는 경우 userId는 null을 반환하고, isLogin은 false를 반환합니다.
+ * @returns { string | null, boolean } userId, isLogin
  */
-export const getUserId = async (): Promise<string | null> => {
+export const getUserSessionState = async (): Promise<{
+  userId: string | null;
+  isLogin: boolean;
+}> => {
   const supabase = await createClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
   const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
 
-  return userId;
+  const isLogin = !!userId;
+
+  return { userId, isLogin };
 };
 
 /**
@@ -85,7 +90,7 @@ export const getUserId = async (): Promise<string | null> => {
  */
 export const getUserProfile = async (): Promise<Tables<'users'>> => {
   const supabase = await createClient();
-  const userId = await getUserId();
+  const { userId } = await getUserSessionState();
   if (userId === null) throw new Error('사용자 정보가 없습니다.');
 
   const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
