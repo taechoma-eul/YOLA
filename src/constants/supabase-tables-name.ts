@@ -8,5 +8,6 @@ export const TABLE = {
   LIKES: 'likes',
   MISSION_LIST: 'mission_list',
   USER_MISSION: 'user_mission',
+  USER_LEVEL: 'user_level',
   USERS: 'users'
 } as const;
