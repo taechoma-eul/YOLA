@@ -1,6 +1,6 @@
-import { Tables } from '@/types/supabase';
-import { deleteExistingImage } from '../extract-file-form-url';
-import { supabase } from '../supabase/supabase-client';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { deleteExistingImage } from '@/lib/utils/extract-file-form-url';
+import type { Tables } from '@/types/supabase';
 
 export const profileImageUpload = async (
   file: File,

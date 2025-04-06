@@ -1,8 +1,8 @@
 'use client';
 
-import ProfileAvatar from '@/components/common/profile-avatar';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
-import { Tables } from '@/types/supabase';
+import ProfileAvatar from '@/components/common/profile-avatar';
+import type { Tables } from '@/types/supabase';
 
 const ProfileBox = ({ initProfile }: { initProfile: Tables<'users'> }) => {
   const { profile, isProfilePending, isProfileError } = useUserProfile();

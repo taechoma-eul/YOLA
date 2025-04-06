@@ -1,4 +1,4 @@
-import { supabase } from './supabase/supabase-client';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 
 /**
  * 프로필 이미지로 등록되어있는 파일의 전체 URL에서 파일 경로만 추출하는 함수입니다. (예: 'user-id_profile_123456789.png')

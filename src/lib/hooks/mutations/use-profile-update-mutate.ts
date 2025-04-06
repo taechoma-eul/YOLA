@@ -1,6 +1,6 @@
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { getUserSessionState } from '@/lib/utils/api/auth-action';
 
 export const useUpdateProfileMutate = () => {
   const queryClient = useQueryClient();

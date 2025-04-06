@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { PATH } from '@/constants/page-path';
-import ProfileBox from './mypage-sidebar-profile';
 import { getUserProfile } from '@/lib/utils/api/auth-action';
+import ProfileBox from '@/components/features/mypage/mypage-sidebar-profile';
+import { PATH } from '@/constants/page-path';
 
 const MypageSideBar = async () => {
   const initProfile = await getUserProfile();
