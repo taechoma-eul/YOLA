@@ -2,12 +2,12 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signupSchema } from '@/lib/utils/validation/authValidate';
+import { signupSchema } from '@/lib/utils/validation/auth-validate';
 import AuthFormContainer from '@/components/features/auth-form/auth-form-container';
 import AuthFormInput from '@/components/features/auth-form/auth-form-input';
 import FormButton from '@/components/features/auth-form/form-button-box';
 import type { AuthInputProps } from '@/types/components/auth-form';
-import type { SignupFormData } from '@/lib/utils/validation/authValidate';
+import type { SignupFormData } from '@/lib/utils/validation/auth-validate';
 import { AUTH } from '@/constants/auth-form';
 
 type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
