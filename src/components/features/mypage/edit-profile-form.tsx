@@ -1,26 +1,26 @@
 'use client';
 
-import { Form, FormField } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/components/ui/button';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
 import { editProfileSchema } from '@/lib/utils/validation/auth-validate';
 import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
-import ProfileImageField from './edit-profile-form-image-field';
-import { EditFormData } from '@/types/components/edit-profile-form';
-import ProfileEmailField from './edit-profile-form-email-field';
-import NicknameField from './edit-profile-form-nickname-field';
+import { Button } from '@/components/ui/button';
+import { Form, FormField } from '@/components/ui/form';
+import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
+import ProfileEmailField from '@/components/features/mypage/edit-profile-form-email-field';
+import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
+import type { EditFormData } from '@/types/components/edit-profile-form';
 
-const EditProfileForm = () => {
+const EditProfileForm = ({ userNickname }: { userNickname: string }) => {
   const { profile, isProfilePending, isProfileError } = useUserProfile();
   const updateProfile = useUpdateProfileMutate();
 
   const form = useForm<EditFormData>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
-      nickname: '',
+      nickname: userNickname,
       profile_image_file: null,
       profile_image: ''
     }
