@@ -71,6 +71,26 @@ export const getMissionListByLevel = async (mission: MissionTag, userLevel: Leve
   return data;
 };
 
+/** 유저가 완료한 미션 ID만 추출 */
+export const getCompletedMissionIds = async ({
+  userId,
+  missionIds
+}: {
+  userId: string;
+  missionIds: number[];
+}): Promise<number[]> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('user_mission')
+    .select('completed_id')
+    .eq('user_id', userId)
+    .in('completed_id', missionIds);
+
+  if (error) throw new Error(error.message);
+  return data.map((item) => item.completed_id);
+};
+
 // /** 유저의 미션 현황 불러오기
 //  *
 //  * @param {string} userId - 조회할 사용자의 ID
