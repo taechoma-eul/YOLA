@@ -1,6 +1,5 @@
-import { NUMBER } from '@/constants/magic-number';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { MissionType, UserMissionStatusListType } from '@/types/checklist';
+import type { MissionType } from '@/types/checklist';
 import { Database } from '@/types/supabase';
 
 type UserLevel = Database['public']['Tables']['user_level']['Row'];
@@ -71,7 +70,16 @@ export const getMissionListByLevel = async (mission: MissionTag, userLevel: Leve
   return data;
 };
 
-/** 유저가 완료한 미션 ID만 추출 */
+/** getCompletedMissionIds: 유저가 완료한 미션 ID 리스트 반환
+ *
+ * @async
+ * @function getCompletedMissionIds
+ * @param {Object} params - 함수 매개변수 객체
+ * @param {string} params.userId - 조회할 유저의 ID
+ * @param {number[]} params.missionIds - 조회 대상이 되는 미션 ID 배열
+ * @returns {Promise<number[]>} 유저가 완료한 미션 ID 배열만 필터링하여 반환
+ * @throws {Error} Supabase 쿼리 실행 중 오류 발생 시 에러 throw
+ * */
 export const getCompletedMissionIds = async ({
   userId,
   missionIds
@@ -90,36 +98,3 @@ export const getCompletedMissionIds = async ({
   if (error) throw new Error(error.message);
   return data.map((item) => item.completed_id);
 };
-
-// /** 유저의 미션 현황 불러오기
-//  *
-//  * @param {string} userId - 조회할 사용자의 ID
-//  * @returns {Promise<UserMissionStatusListType>} - 사용자의 미션 현황 리스트
-//  * @throws {Error} - 데이터 조회 중 오류 발생 시 예외 처리
-//  */
-// export const getUserMissionStatus = async ({
-//   userId,
-//   type
-// }: {
-//   userId: string;
-//   type: string;
-// }): Promise<UserMissionStatusListType> => {
-//   const supabase = await createClient();
-//   const { data, error } = await supabase
-//     .from('user_mission')
-//     .select('completed_id, mission_list!inner(type, level)')
-//     .eq('user_id', userId)
-//     .eq('mission_list.type', type)
-//     .not('mission_list', 'is', null);
-
-//   if (error) throw new Error(error.message);
-
-//   const transformedData = data.map((item: any) => ({
-//     completed_id: item.completed_id,
-//     mission_list:
-//       Array.isArray(item.mission_list) && item.mission_list.length > NUMBER.ZERO
-//         ? item.mission_list[0]
-//         : item.mission_list
-//   }));
-//   return transformedData;
-// };
