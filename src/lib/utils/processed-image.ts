@@ -16,7 +16,7 @@ export const isHeicCheck = (file: File): boolean => {
 
 /**
  * 이미지 업로드 시, 선택한 파일의 확장자가 heic 타입이면 해당 파일을 jpg로 변환해주는 함수입니다.
- * heic 파일일 때는 heicConvertImage api 함수를 통해 파일을 jpg로 변환 후 processedFile에 할당한 후 반환합니다.
+ * heic 파일일 때는 heicConvertImage api 함수를 통해 파일을 jpg로 변환하여 processedFile에 할당한 후 반환합니다.
  * heic 파일이 아닐 때는 원본 파일 그대로 processedFile에 할당한 후 반환합니다.
  * @param { File } file - 업로드 하려는 이미지 파일
  * @returns { File } - jpg로 변환된 파일 또는 heic 파일이 아닐 때는 원본 파일
