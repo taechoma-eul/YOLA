@@ -1,17 +1,15 @@
 'use server';
+import { MSG } from '@/constants/messages';
+import { missionTypeMap } from '@/constants/mission';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { MissionType } from '@/types/checklist';
-import { Database } from '@/types/supabase';
-
-type UserLevel = Database['public']['Tables']['user_level']['Row'];
-interface UserLevelByMissionType {
-  userId: UserLevel['user_id'];
-  decodedMission: string;
-}
-
-type MissionMapType = Record<string, keyof Database['public']['Tables']['user_level']['Row']>;
-
-const INVALID_MISSION_TYPE = '유효하지 않은 미션 이름입니다';
+import type {
+  Level,
+  MissionMapType,
+  MissionTag,
+  MissionType,
+  UserLevel,
+  UserLevelByMissionType
+} from '@/types/checklist';
 
 /** getUserLevelByMission: 유저 레벨 정보 불러오기
  *
@@ -25,17 +23,9 @@ const INVALID_MISSION_TYPE = '유효하지 않은 미션 이름입니다';
  */
 export const getUserLevelByMission = async ({ userId, decodedMission }: UserLevelByMissionType) => {
   const supabase = await createClient();
-  const missionTypeMap: MissionMapType = {
-    혼밥: 'meal',
-    혼놀: 'play',
-    혼자여행: 'travel',
-    청소: 'clean',
-    갓생: 'goat'
-  };
-
   const col = missionTypeMap[decodedMission];
   if (!col) {
-    throw new Error(`${INVALID_MISSION_TYPE}: ${decodedMission}`);
+    throw new Error(`${MSG.INVALID_MISSION_TYPE}: ${decodedMission}`);
   }
   const { data, error } = (await supabase.from('user_level').select(col).eq('user_id', userId).single()) as {
     data: Pick<UserLevel, typeof col> | null;
@@ -45,13 +35,6 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
 
   return String(data?.[col] ?? '1');
 };
-
-// Supabase에서 생성된 전체 태그 ENUM 타입
-type AllTags = Database['public']['Enums']['tags'];
-export type Level = Database['public']['Enums']['level'];
-
-// 미션 태그 정의
-export type MissionTag = '혼밥' | '혼자여행' | '혼놀' | '청소' | '갓생';
 
 /** getMissionListByLevel: 미션 리스트 데이터 불러오기 (미션 타입 + 유저 레벨 기반)
  *
@@ -64,7 +47,6 @@ export type MissionTag = '혼밥' | '혼자여행' | '혼놀' | '청소' | '갓�
  */
 export const getMissionListByLevel = async (mission: MissionTag, userLevel: Level): Promise<MissionType[]> => {
   const supabase = await createClient();
-
   const { data, error } = await supabase.from('mission_list').select('*').eq('type', mission).eq('level', userLevel);
 
   if (error) throw new Error(error.message);

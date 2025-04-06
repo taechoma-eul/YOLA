@@ -1,14 +1,9 @@
 import { getUserId } from '@/lib/utils/api/auth-action';
-import {
-  getCompletedMissionIds,
-  getMissionListByLevel,
-  getUserLevelByMission,
-  Level,
-  MissionTag
-} from '@/lib/utils/api/checklist.api';
+import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PATH } from '@/constants/page-path';
+import { Level, MissionTag } from '@/types/checklist';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decoded = decodeURIComponent(params.mission);
