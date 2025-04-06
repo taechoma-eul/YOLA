@@ -8,32 +8,21 @@ type MypageProgressBarProps = {
 };
 const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
   //progress bar 시작위치 : 초기값 0
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
 
-  // level에 따른 currentStep 할당
+  const levelStepMap = {
+    [USER_LEVELS.START]: 0,
+    [USER_LEVELS.BEGINNER]: 1,
+    [USER_LEVELS.NOVICE]: 2,
+    [USER_LEVELS.INTERMEDIATE]: 3,
+    [USER_LEVELS.EXPERT]: 4,
+    [USER_LEVELS.MASTER]: 5
+  } as const;
+
+  type LevelKey = keyof typeof levelStepMap;
+
   useEffect(() => {
-    switch (level) {
-      case USER_LEVELS.START:
-        setCurrentStep(0);
-        break;
-      case USER_LEVELS.BEGINNER:
-        setCurrentStep(1);
-        break;
-      case USER_LEVELS.NOVICE:
-        setCurrentStep(2);
-        break;
-      case USER_LEVELS.INTERMEDIATE:
-        setCurrentStep(3);
-        break;
-      case USER_LEVELS.EXPERT:
-        setCurrentStep(4);
-        break;
-      case USER_LEVELS.MASTER:
-        setCurrentStep(5);
-        break;
-      default:
-        setCurrentStep(0);
-    }
+    setCurrentStep(levelStepMap[level as LevelKey] ?? 0);
   }, [level]);
 
   // 진행 상태에 맞는 색상 채우기
@@ -50,7 +39,7 @@ const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
 
       {/* 유저 레벨 라벨 */}
       <div className="mt-2 flex justify-between">
-        {LEVEL_NAME.map((level) => (
+        {Object.values(USER_LEVELS).map((level) => (
           <span key={level} className="text-sm">
             {level}
           </span>
@@ -61,5 +50,3 @@ const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
 };
 
 export default MypageProgressBar;
-
-const LEVEL_NAME = ['', '입문', '초보', '중수', '고수', '마스터'];
