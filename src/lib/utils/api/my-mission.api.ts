@@ -22,9 +22,7 @@ export const getUserMission = async () => {
     .select(`*,mission_list(type, level)`)
     .eq('user_id', user.id);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
   return UserMissions;
 };
 
@@ -47,8 +45,6 @@ export const getUserMissionLevels = async () => {
   // 로그인한 유저의 레벨 조회
   const { data: UserMissionsLevels, error } = await supabase.from('user_level').select('*').eq('user_id', user.id);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
   return UserMissionsLevels[0];
 };
