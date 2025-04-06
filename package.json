@@ -27,6 +27,7 @@
     "@tanstack/react-query-devtools": "^5.69.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "heic-convert": "^2.1.0",
     "lucide-react": "^0.487.0",
     "next": "14.2.24",
     "react": "^18",
@@ -38,6 +39,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@types/heic-convert": "^2.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
