@@ -3,9 +3,10 @@
 import { USER_LEVELS } from '@/lib/utils/calculate-user-level';
 import { useEffect, useState } from 'react';
 
-type MypageProgressBarProps = {
+interface MypageProgressBarProps {
   level: string;
-};
+}
+
 const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
   //progress bar 시작위치 : 초기값 0
   const [currentStep, setCurrentStep] = useState<number>(0);

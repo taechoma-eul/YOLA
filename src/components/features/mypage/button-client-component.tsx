@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import RandomMissionModal from '../modals/random-mission';
+import RandomMissionModal from '@/components/features/modals/random-mission';
 
-type ButtonClientComponentProps = {
+interface ButtonClientComponentProps {
   isLogin: boolean;
-};
+}
 
 const ButtonClientComponent = ({ isLogin }: ButtonClientComponentProps) => {
   const [showModal, setShowModal] = useState(false);
