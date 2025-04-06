@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 
 const MainBannerSwiper = () => {
   return (
-    <div className="mx-auto w-full max-w-[1280px]">
+    <section className="mx-auto w-full max-w-[1280px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={30}
@@ -28,7 +28,7 @@ const MainBannerSwiper = () => {
           <div className="h-60 w-full bg-zinc-700" />
         </SwiperSlide>
       </Swiper>
-    </div>
+    </section>
   );
 };
 
