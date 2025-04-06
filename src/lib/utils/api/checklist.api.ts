@@ -2,14 +2,7 @@
 import { MSG } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type {
-  Level,
-  MissionMapType,
-  MissionTag,
-  MissionType,
-  UserLevel,
-  UserLevelByMissionType
-} from '@/types/checklist';
+import type { Level, MissionTag, MissionType, UserLevel, UserLevelByMissionType } from '@/types/checklist';
 
 /** getUserLevelByMission: 유저 레벨 정보 불러오기
  *

@@ -1,4 +1,4 @@
-import { MissionMapType } from '@/types/checklist';
+import type { MissionMapType } from '@/types/checklist';
 
 export const missionTypeMap: MissionMapType = {
   혼밥: 'meal',
