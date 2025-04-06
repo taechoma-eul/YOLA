@@ -33,7 +33,40 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
     if (!file) return null;
 
-    const newImageUrl = await profileImageUpload(file, profile);
+    // HEIC 파일인지 확인 (확장자 또는 MIME 타입으로 판단)
+    const isHeic =
+      file.type === 'image/heic' ||
+      file.name.toLowerCase().endsWith('.heic') ||
+      file.name.toLowerCase().endsWith('.heif');
+
+    let processedFile = file;
+
+    if (isHeic) {
+      // HEIC 파일을 JPEG로 변환
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('/api/convert-heic', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('HEIC 변환 실패');
+
+        // 변환된 JPEG 파일을 Blob으로 받아 새로운 File 객체 생성
+        const blob = await response.blob();
+        processedFile = new File([blob], `${file.name.split('.')[0]}.jpg`, {
+          type: 'image/jpeg'
+        });
+      } catch (error) {
+        console.error('HEIC 변환 오류:', error);
+        return null; // 변환 실패 시 null 반환
+      }
+    }
+
+    // 변환된 파일(또는 원본 파일)을 기존 업로드 함수에 전달
+    const newImageUrl = await profileImageUpload(processedFile, profile);
     return newImageUrl;
   };
 
