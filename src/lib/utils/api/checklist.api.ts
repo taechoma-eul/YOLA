@@ -1,3 +1,4 @@
+'use server';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { MissionType } from '@/types/checklist';
 import { Database } from '@/types/supabase';
