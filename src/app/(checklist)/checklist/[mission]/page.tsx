@@ -4,11 +4,10 @@ import { getUserId } from '@/lib/utils/api/auth-action';
 import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
 import { PATH } from '@/constants/page-path';
 import type { Level, MissionTag } from '@/types/checklist';
+import { validMissionTags } from '@/constants/mission';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decoded = decodeURIComponent(params.mission);
-
-  const validMissionTags: MissionTag[] = ['혼밥', '혼자여행', '혼놀', '청소', '갓생'];
 
   if (!validMissionTags.includes(decoded as MissionTag)) {
     notFound(); // 유효한 미션타입이 아닌 경우 우회

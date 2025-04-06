@@ -7,3 +7,5 @@ export const missionTypeMap: MissionMapType = {
   청소: 'clean',
   갓생: 'goat'
 };
+
+export const validMissionTags = Object.keys(missionTypeMap) as (keyof typeof missionTypeMap)[];
