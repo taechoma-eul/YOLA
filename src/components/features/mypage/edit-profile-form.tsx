@@ -15,10 +15,8 @@ import NicknameField from '@/components/features/mypage/edit-profile-form-nickna
 import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
-  const { profile, isProfilePending, isProfileError } = useUserProfile();
+  const { profile, isProfileError } = useUserProfile(initProfile);
   const updateProfile = useUpdateProfileMutate();
-
-  const displayProfile = !profile || isProfileError || isProfilePending ? initProfile : profile;
 
   const form = useForm<EditFormData>({
     resolver: zodResolver(editProfileSchema),
@@ -52,21 +50,21 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
     }
   };
 
+  if (isProfileError) return;
+
   return (
     <Form {...form}>
       <form className="w-[500px] space-y-5 border-2 p-5" onSubmit={form.handleSubmit(handleUpdateProfile)}>
         <FormField
           control={form.control}
           name="profile_image"
-          render={() => <ProfileImageField form={form} profileImage={displayProfile.profile_image} />}
+          render={() => <ProfileImageField form={form} profileImage={profile.profile_image} />}
         />
-        <ProfileEmailField email={displayProfile.email} />
+        <ProfileEmailField email={profile.email} />
         <FormField
           control={form.control}
           name="nickname"
-          render={({ field }) => (
-            <NicknameField field={field} nickname={displayProfile.nickname ? displayProfile.nickname : ''} />
-          )}
+          render={({ field }) => <NicknameField field={field} nickname={profile.nickname ? profile.nickname : ''} />}
         />
         <div className="h-[30px]" />
         <Button type="submit" className="w-full">
