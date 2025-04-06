@@ -1,5 +1,5 @@
-import EditProfileForm from '@/components/features/mypage/edit-profile-form';
 import { getUserProfile } from '@/lib/utils/api/auth-action';
+import EditProfileForm from '@/components/features/mypage/edit-profile-form';
 
 const MyPage = async () => {
   const profile = await getUserProfile();
@@ -7,7 +7,7 @@ const MyPage = async () => {
   return (
     <>
       <h1 className="my-10 text-xl font-bold">프로필 수정</h1>
-      <EditProfileForm userNickname={profile.nickname!} />
+      <EditProfileForm initProfile={profile!} />
     </>
   );
 };

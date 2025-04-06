@@ -11,16 +11,18 @@ import { Form, FormField } from '@/components/ui/form';
 import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
 import ProfileEmailField from '@/components/features/mypage/edit-profile-form-email-field';
 import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
-import type { EditFormData } from '@/types/components/edit-profile-form';
+import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
 
-const EditProfileForm = ({ userNickname }: { userNickname: string }) => {
+const EditProfileForm = ({ initProfile }: InitProfile) => {
   const { profile, isProfilePending, isProfileError } = useUserProfile();
   const updateProfile = useUpdateProfileMutate();
+
+  const displayProfile = !profile || isProfileError || isProfilePending ? initProfile : profile;
 
   const form = useForm<EditFormData>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
-      nickname: userNickname,
+      nickname: initProfile.nickname as string,
       profile_image_file: null,
       profile_image: ''
     }
@@ -48,21 +50,21 @@ const EditProfileForm = ({ userNickname }: { userNickname: string }) => {
     }
   };
 
-  if (isProfileError || isProfilePending || !profile) return;
-
   return (
     <Form {...form}>
       <form className="w-[500px] space-y-5 border-2 p-5" onSubmit={form.handleSubmit(handleUpdateProfile)}>
         <FormField
           control={form.control}
           name="profile_image"
-          render={() => <ProfileImageField form={form} profileImage={profile.profile_image} />}
+          render={() => <ProfileImageField form={form} profileImage={displayProfile.profile_image} />}
         />
-        <ProfileEmailField email={profile.email} />
+        <ProfileEmailField email={displayProfile.email} />
         <FormField
           control={form.control}
           name="nickname"
-          render={({ field }) => <NicknameField field={field} nickname={profile.nickname ? profile.nickname : ''} />}
+          render={({ field }) => (
+            <NicknameField field={field} nickname={displayProfile.nickname ? displayProfile.nickname : ''} />
+          )}
         />
         <div className="h-[30px]" />
         <Button type="submit" className="w-full">

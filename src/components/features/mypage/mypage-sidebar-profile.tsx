@@ -2,26 +2,18 @@
 
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import ProfileAvatar from '@/components/common/profile-avatar';
-import type { Tables } from '@/types/supabase';
+import type { InitProfile } from '@/types/components/edit-profile-form';
 
-const ProfileBox = ({ initProfile }: { initProfile: Tables<'users'> }) => {
+const ProfileBox = ({ initProfile }: InitProfile) => {
   const { profile, isProfilePending, isProfileError } = useUserProfile();
 
-  if (!profile || isProfileError || isProfilePending)
-    // 로딩중일 땐 서버에서 받은 초기 데이터로 셋팅
-    return (
-      <section className="flex w-full flex-col items-center justify-center gap-3 rounded-md border p-5">
-        <ProfileAvatar src={initProfile.profile_image} />
-        <p className="font-bold">{initProfile.nickname}</p>
-        <p>{initProfile.email}</p>
-      </section>
-    );
+  const displayProfile = !profile || isProfileError || isProfilePending ? initProfile : profile;
 
   return (
     <section className="flex w-full flex-col items-center justify-center gap-3 rounded-md border p-5">
-      <ProfileAvatar src={profile.profile_image} />
-      <p className="font-bold">{profile.nickname}</p>
-      <p>{profile.email}</p>
+      <ProfileAvatar src={displayProfile.profile_image} />
+      <p className="font-bold">{displayProfile.nickname}</p>
+      <p>{displayProfile.email}</p>
     </section>
   );
 };
