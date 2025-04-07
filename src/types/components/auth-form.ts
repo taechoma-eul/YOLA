@@ -1,14 +1,13 @@
-import { UseFormGetValues, UseFormRegister, UseFormTrigger } from 'react-hook-form';
-import { SignupFormData } from '@/lib/utils/validation/auth-validate';
+import { UseFormReturn } from 'react-hook-form';
+import { AuthFormData } from '@/lib/utils/validation/auth-validate';
 
-export interface AuthInputProps {
-  register: UseFormRegister<SignupFormData>;
-  trigger: UseFormTrigger<SignupFormData>;
+export interface FieldData {
+  inputType: string;
+  fieldName: keyof AuthFormData;
   placeholder: string;
-  type: string;
-  name: 'email' | 'password' | 'confirmPassword' | 'nickname';
-  checkButton?: boolean;
-  label: string;
-  errorMessage?: string | undefined;
-  getValues: UseFormGetValues<SignupFormData>;
+  labelName?: string;
+  isCheckButton?: boolean;
+  isLabel?: boolean;
+  form: UseFormReturn<AuthFormData, any, undefined>;
+  isSubmitting: boolean;
 }
