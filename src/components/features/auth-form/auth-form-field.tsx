@@ -1,28 +1,22 @@
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { authFormData } from '@/lib/utils/validation/auth-validate';
+import { AuthFormData } from '@/lib/utils/validation/auth-validate';
 import { UseFormReturn } from 'react-hook-form';
-import { z } from 'zod';
 
-// 동적 필드 타입
-interface FieldProps<T extends keyof authFormData> {
+interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
   fieldName: T;
   placeholder: string;
-  labelName?: string;
   isCheckButton?: boolean;
-  isLabel?: boolean;
-  form: UseFormReturn<authFormData, any, undefined>;
+  form: UseFormReturn<AuthFormData, any, undefined>;
 }
 
-const AuthFormField = <T extends keyof authFormData>({
+const AuthFormField = <T extends keyof AuthFormData>({
   inputType,
   fieldName,
   placeholder,
-  labelName,
   isCheckButton = false,
-  isLabel = false,
   form
 }: FieldProps<T>) => {
   return (
@@ -31,7 +25,6 @@ const AuthFormField = <T extends keyof authFormData>({
       name={fieldName}
       render={({ field }) => (
         <FormItem className="flex items-center space-x-5">
-          {isLabel && <FormLabel className="w-20 text-end text-lg">{labelName}</FormLabel>}
           <div className="flex flex-1 items-center space-x-3">
             <div className="flex-1">
               <FormControl>
