@@ -130,7 +130,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "gogngam_posts_user_id_fkey"
+            foreignKeyName: "gonggam_posts_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -168,22 +168,31 @@ export type Database = {
         Row: {
           content: string
           created_at: string
+          date: string
           id: number
           mission_id: number | null
+          tags: string[] | null
+          title: string
           user_id: string
         }
         Insert: {
           content: string
           created_at?: string
+          date: string
           id?: number
           mission_id?: number | null
+          tags?: string[] | null
+          title: string
           user_id?: string
         }
         Update: {
           content?: string
           created_at?: string
+          date?: string
           id?: number
           mission_id?: number | null
+          tags?: string[] | null
+          title?: string
           user_id?: string
         }
         Relationships: [
