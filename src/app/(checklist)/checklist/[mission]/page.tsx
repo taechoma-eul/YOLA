@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import { getUserId } from '@/lib/utils/api/auth-action';
 import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
 import { PATH } from '@/constants/page-path';
-import type { Level, MissionTag } from '@/types/checklist';
 import { validMissionTags } from '@/constants/mission';
 import { DEFAULT_LEVEL } from '@/constants/magic-number';
+import type { Level, MissionTag } from '@/types/checklist';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decoded = decodeURIComponent(params.mission);
