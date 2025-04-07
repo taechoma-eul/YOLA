@@ -1,6 +1,9 @@
+'use client';
+
 import { supabase } from '../supabase/supabase-client';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { LifePostWithImageUrls } from '@/types/life-post';
+import { v4 as uuidv4 } from 'uuid';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 
@@ -42,4 +45,44 @@ export const getLifePostsByMonth = async (month: string): Promise<LifePostWithIm
   }));
 
   return processed;
+};
+
+const IMAGE_STORAGE_BUCKET = 'life-post-images';
+
+type UploadedImage = {
+  publicUrl: string;
+  storagePath: string;
+};
+
+export const uploadImages = async (files: File[]): Promise<UploadedImage[]> => {
+  const uploaded: UploadedImage[] = [];
+
+  for (const file of files) {
+    const fileExt = file.name.split('.').pop();
+    const randomid = uuidv4();
+    const fileName = `${randomid}.${fileExt}`;
+    const filePath = `diary/${fileName}`; // 실제 storage 경로
+
+    const { error } = await supabase.storage.from(IMAGE_STORAGE_BUCKET).upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
+
+    if (error) {
+      throw new Error('이미지 업로드 실패: ' + error.message);
+    }
+
+    const {
+      data: { publicUrl }
+    } = supabase.storage.from(IMAGE_STORAGE_BUCKET).getPublicUrl(filePath);
+
+    uploaded.push({ publicUrl, storagePath: filePath });
+  }
+
+  return uploaded;
+};
+
+export const deleteImages = async (paths: string[]) => {
+  const { error } = await supabase.storage.from(IMAGE_STORAGE_BUCKET).remove(paths);
+  if (error) throw new Error('이미지 삭제 실패: ' + error.message);
 };
