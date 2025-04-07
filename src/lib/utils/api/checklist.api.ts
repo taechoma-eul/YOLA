@@ -1,4 +1,5 @@
 'use server';
+import { DEFAULT_LEVEL } from '@/constants/magic-number';
 import { MSG } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
@@ -26,7 +27,7 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
   };
   if (error) throw new Error(error.message);
 
-  return String(data?.[col] ?? '1');
+  return String(data?.[col] ?? DEFAULT_LEVEL);
 };
 
 /** getMissionListByLevel: 미션 리스트 데이터 불러오기 (미션 타입 + 유저 레벨 기반)

@@ -5,6 +5,7 @@ import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } 
 import { PATH } from '@/constants/page-path';
 import type { Level, MissionTag } from '@/types/checklist';
 import { validMissionTags } from '@/constants/mission';
+import { DEFAULT_LEVEL } from '@/constants/magic-number';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decoded = decodeURIComponent(params.mission);
@@ -15,7 +16,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decodedMission = decoded as MissionTag;
 
   /** 레벨 세팅 */
-  let userLevel = '1'; // default level (for 비로그인 사용자)
+  let userLevel = DEFAULT_LEVEL; // default level (for 비로그인 사용자)
   const userId = await getUserId();
   if (userId) {
     userLevel = await getUserLevelByMission({ userId, decodedMission });
@@ -97,7 +98,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
         {missionListWithStatus.map((mission, idx) => (
           <li key={idx}>
             <Link
-              href={userId ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : '/login'}
+              href={userId ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : `${PATH.LOGIN}`}
               className={`relative flex min-h-[150px] items-center justify-center border p-10 ${
                 mission.completed ? 'bg-gray-300' : ''
               }`}
