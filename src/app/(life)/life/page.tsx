@@ -3,22 +3,24 @@
 import Calendar from '@/components/features/life/calendar';
 import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
-import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
-import { getToday } from '@/lib/utils/get-today';
+import { useLifePostsByMonthRange } from '@/lib/hooks/queries/use-life-posts-by-month-range';
+import { getNextMonth, getPrevMonth, getToday } from '@/lib/utils/get-date';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 const LifePage = () => {
-  const [selectedDate, setSelectedDate] = useState<string>(getToday());
+  const [selectedDate, setSelectedDate] = useState(getToday());
   const [calendarMonth, setCalendarMonth] = useState(getToday().slice(0, 7)); // 'YYYY-MM'
 
-  const { data: posts = [] } = useLifePostsByMonth(calendarMonth);
+  const prevMonth = getPrevMonth(calendarMonth);
+  const nextMonth = getNextMonth(calendarMonth);
 
-  // 날짜별 점 데이터 생성
+  const { data: posts = [] } = useLifePostsByMonthRange([prevMonth, calendarMonth, nextMonth]);
+
   const dotMap = useMemo(() => {
     const map: Record<string, Set<'mission' | 'normal'>> = {};
     posts.forEach((post) => {
-      const date = post.date.slice(0, 10); // YYYY-MM-DD
+      const date = post.date.slice(0, 10);
       const type = post.mission_id !== null ? 'mission' : 'normal';
       if (!map[date]) map[date] = new Set();
       map[date].add(type);

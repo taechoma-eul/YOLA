@@ -11,7 +11,7 @@ import { useLifePost } from '@/lib/hooks/mutations/useLifePost';
 import { v4 as uuidv4 } from 'uuid';
 import { PATH } from '@/constants/page-path';
 import DatePicker from './date-picker';
-import { getToday } from '@/lib/utils/get-today';
+import { getToday } from '@/lib/utils/get-date';
 
 type LifeInputFormProps = {
   userId: string;
