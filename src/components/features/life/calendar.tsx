@@ -84,7 +84,7 @@ const Calendar = ({ setDate, selectedDate, dotMap, onMonthChange }: Props) => {
                 >
                   {arg.date.getDate()}
                 </span>
-                <div className="mt-1 flex flex-col items-start space-y-[2px] text-[11px] text-gray-500">
+                <div className="mt-1 flex h-[28px] flex-col items-center justify-center space-y-[2px] text-[12px] font-light text-gray-500">
                   {types?.has('mission') && (
                     <div className="flex items-center space-x-1">
                       <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400" />
