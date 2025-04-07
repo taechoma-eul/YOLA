@@ -3,9 +3,10 @@
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { UserMetadata } from '@supabase/supabase-js';
 import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
+import { TABLE } from '@/constants/supabase-tables-name';
+import type { Tables } from '@/types/supabase';
 
 const LAYOUT = 'layout';
 
@@ -64,33 +65,41 @@ export const logout = async () => {
 };
 
 /**
- * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 메타데이터 정보를 불러옵니다.
- * 세션이 존재하지 않는 경우 null을 반환합니다.
- * @returns { UserMetadata | null } userMetadata
+ * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 user_id(auth.uid)와 로그인 상태를 불러옵니다.
+ * 세션이 존재하지 않는 경우 userId는 null을 반환하고, isLogin은 false를 반환합니다.
+ * @returns { string | null, boolean } userId, isLogin
  */
-export const getUserMetadata = async (): Promise<UserMetadata | null> => {
-  const supabase = await createClient();
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-  const userMetadata = user !== null ? user.user_metadata : null;
-
-  return userMetadata;
-};
-
-/**
- * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 user_id(auth.uid)를 불러옵니다.
- * 세션이 존재하지 않는 경우 null을 반환합니다.
- * @returns { string | null } user_id
- */
-export const getUserId = async (): Promise<string | null> => {
+export const getUserSessionState = async (): Promise<{
+  userId: string | null;
+  isLogin: boolean;
+}> => {
   const supabase = await createClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
   const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
 
-  return userId;
+  const isLogin = !!userId;
+
+  return { userId, isLogin };
+};
+
+/**
+ * public.users 테이블에서 현재 로그인 된 사용자의 프로필 정보를 불러옵니다.
+ * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
+ * @returns { Tables<'users'> } - 현재 세션에 해당하는 users 테이블 row
+ */
+export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
+  const supabase = await createClient();
+  const { userId } = await getUserSessionState();
+
+  if (!userId) return null;
+
+  const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
+
+  if (error) throw error;
+
+  return data;
 };
 
 export const signInWithGoogle = async () => {
