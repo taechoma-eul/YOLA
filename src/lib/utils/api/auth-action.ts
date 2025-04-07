@@ -19,10 +19,7 @@ export const login = async (formData: FormData) => {
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    console.log(error.message);
-    redirect(PATH.ERROR);
-  }
+  if (error) throw error;
 
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
@@ -42,10 +39,7 @@ export const signup = async (formData: FormData) => {
 
   const { error } = await supabase.auth.signUp(data);
 
-  if (error) {
-    console.log(error.message);
-    redirect(PATH.ERROR);
-  }
+  if (error) throw error;
 
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
