@@ -8,6 +8,7 @@ const SoloLifeCard = ({ id, imageUrls, thumbnail, title, content, date, isMissio
     <div className="flex h-full w-full flex-col overflow-hidden rounded border border-gray-300 bg-white shadow-sm">
       {/* 이미지 영역 */}
       <div className="relative aspect-square bg-gray-200">
+        {/* 이미지가 없을 경우 기본 이미지 사용 */}
         <Image src={thumbnail} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
       </div>
 

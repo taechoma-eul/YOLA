@@ -15,9 +15,7 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
         date: post.date,
         title: post.content.split('\n')[0] || '제목 없음',
         content: post.content,
-        thumbnail:
-          imageUrls[0] ||
-          'https://rrrswimuyqumlnkrfsli.supabase.co/storage/v1/object/public/life-post-images//i16283854196.png',
+        thumbnail: imageUrls[0] || '/images/default-image.svg',
         imageUrls,
         isMission: post.mission_id !== null,
         tags: post.tags ?? []
