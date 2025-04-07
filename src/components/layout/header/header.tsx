@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { getUserMetadata } from '@/lib/utils/api/auth-action';
+import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import GuestOptionMenu from '@/components/layout/header/header-guest-option';
 import HeaderNav from '@/components/layout/header/header-nav';
 import UserOptionMenu from '@/components/layout/header/header-user-option';
 import { PATH } from '@/constants/page-path';
 
 const Header = async () => {
-  const user = await getUserMetadata();
+  const { isLogin } = await getUserSessionState();
 
   return (
     <header className="fixed left-0 top-0 z-50 mx-auto w-full bg-white">
@@ -20,7 +20,7 @@ const Header = async () => {
           </Link>
           <HeaderNav />
         </div>
-        {user === null ? <GuestOptionMenu /> : <UserOptionMenu />}
+        {isLogin ? <UserOptionMenu /> : <GuestOptionMenu />}
       </div>
       <hr className="mx-auto w-full max-w-[1280px] outline-neutral-300" />
     </header>
