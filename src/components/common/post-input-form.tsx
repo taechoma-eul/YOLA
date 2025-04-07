@@ -16,11 +16,11 @@ import ChecklistPostDropdown from '@/components/features/checklist/checklist-pos
 import { MSG } from '@/constants/messages';
 import type { MissionType } from '@/types/checklist';
 
-type LifeInputFormProps = {
+interface LifeInputFormProps {
   missionId: string | null;
   dropdownMissions?: MissionType[];
   completedIds?: number[];
-};
+}
 
 const lifeRecordSchema = z.object({
   title: z.string().optional(),
