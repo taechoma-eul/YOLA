@@ -22,7 +22,7 @@ export const getUniqueMissionType = async (): Promise<string[]> => {
     return [];
   }
 
-  const uniqueTypes = Array.from(new Set<string>(data.map((item) => item.type)));
+  const uniqueTypes: string[] = Array.from(new Set<string>(data.map((item: { type: string }) => item.type)));
   return uniqueTypes;
 };
 
@@ -98,5 +98,5 @@ export const getCompletedMissionIds = async ({
     .in('completed_id', missionIds);
 
   if (error) throw new Error(error.message);
-  return data.map((item) => item.completed_id);
+  return data.map((item: { completed_id: number }) => item.completed_id);
 };
