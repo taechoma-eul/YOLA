@@ -6,14 +6,14 @@ const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 const USER_MISSION = TABLE.USER_MISSION;
 const IMAGE_TABLE = 'life_post_image_path';
 
-type NewLifePostParams = {
+interface NewLifePostParams {
   title: string;
   content: string;
   rawTags: string; // 사용자 입력 문자열 (예: "#혼밥, #기록")
   missionId: string | null;
   imageUrls: string[];
   date: string; // 'YYYY-MM-DD' 형식
-};
+}
 
 // 해시태그 문자열 → 배열 변환 함수
 const parseTags = (raw: string): string[] => {
