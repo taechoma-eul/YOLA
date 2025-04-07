@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { authFormData, authSchema } from '@/lib/utils/validation/auth-validate';
+import { AuthFormData, authSchema } from '@/lib/utils/validation/auth-validate';
 
 export const useAuthForm = () => {
-  const form = useForm<authFormData>({
+  const form = useForm<AuthFormData>({
     resolver: zodResolver(authSchema),
     defaultValues: {
       email: '',

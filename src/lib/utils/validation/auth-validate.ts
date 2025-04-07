@@ -29,4 +29,4 @@ export const authSchema = z
     path: ['checkPassword']
   });
 
-export type authFormData = z.infer<typeof authSchema>;
+export type AuthFormData = z.infer<typeof authSchema>;
