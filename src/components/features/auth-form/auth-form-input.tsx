@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { SignupFormData } from '@/lib/utils/validation/authValidate';
+import { SignupFormData } from '@/lib/utils/validation/auth-validate';
 import type { AuthInputProps } from '@/types/components/auth-form';
 import { AUTH } from '@/constants/auth-form';
 
