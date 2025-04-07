@@ -1,5 +1,5 @@
-import SoloLifeCard from '@/components/features/life/solo-life-card';
-import { useLifePostsByMonth } from '@/lib/hooks/queries/useLifePostsByMonth';
+import SoloLifeCard from '@/components/common/solo-life-card';
+import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { SoloLifeCardType } from '@/types/life-post';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
@@ -7,19 +7,18 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
   const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
 
   const parsedList: SoloLifeCardType[] = posts
-    .filter((p) => p.created_at.startsWith(selectedDate))
+    .filter((p) => p.date.startsWith(selectedDate))
     .map((post) => {
       const imageUrls = post.image_urls ?? [];
       return {
         id: post.id.toString(),
-        date: post.created_at.slice(0, 10),
+        date: post.date,
         title: post.content.split('\n')[0] || '제목 없음',
         content: post.content,
-        thumbnail:
-          imageUrls[0] ||
-          'https://rrrswimuyqumlnkrfsli.supabase.co/storage/v1/object/public/life-post-images//i16283854196.png',
+        thumbnail: imageUrls[0] || '/images/default-image.svg',
         imageUrls,
-        isMission: post.mission_id !== null
+        isMission: post.mission_id !== null,
+        tags: post.tags ?? []
       };
     });
 
