@@ -6,7 +6,7 @@ import '@/app/globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: '니 혼자 산다',
+  title: '너 혼자 산다',
   description: '혼자 사는 사람들의 소소한 일상 기록'
 };
 
