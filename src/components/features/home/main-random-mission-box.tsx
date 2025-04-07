@@ -1,10 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import RandomMissionContainer from '@/components/features/home/main-random-mission-container';
+import RandomMissionModal from '@/components/features/modals/random-mission';
 import TitleBox from '@/components/features/home/main-random-title-box';
-import { useState } from 'react';
-import RandomMissionModal from '../modals/random-mission';
 
 const RandomMissionBox = ({ isLogin }: { isLogin: boolean }) => {
   const [showModal, setShowModal] = useState<boolean>(false);

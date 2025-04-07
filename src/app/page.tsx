@@ -1,9 +1,9 @@
-import { getUniqueMissionType } from '@/lib/utils/api/checklist.api';
-import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
-import CheckListCard from '@/components/features/home/main-checklist-card';
-import RandomMissionBox from '@/components/features/home/main-random-mission-box';
-import GonggamPreviewBox from '@/components/features/home/main-gonggam-preview';
 import { getUserSessionState } from '@/lib/utils/api/auth-action';
+import { getUniqueMissionType } from '@/lib/utils/api/checklist.api';
+import CheckListCard from '@/components/features/home/main-checklist-card';
+import GonggamPreviewBox from '@/components/features/home/main-gonggam-preview';
+import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
+import RandomMissionBox from '@/components/features/home/main-random-mission-box';
 
 const HomePage = async () => {
   const checkListType = await getUniqueMissionType();

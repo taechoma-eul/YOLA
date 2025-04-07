@@ -1,7 +1,7 @@
+import { getGonggamPreviewList } from '@/lib/utils/api/gonggam-posts.api';
 import GonggamItem from '@/components/features/home/main-gonggam-item';
 import GonggamPreviewContainer from '@/components/features/home/main-gonggam-preview-container';
 import TitleBox from '@/components/features/home/main-gonggam-preview-title-box';
-import { getGonggamPreviewList } from '@/lib/utils/api/gonggam-posts.api';
 
 const GonggamPreviewBox = async () => {
   const postList = await getGonggamPreviewList();

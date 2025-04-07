@@ -1,7 +1,7 @@
 import ContentsContainer from '@/components/features/home/main-gonggam-item-contents-container';
 import ReactionBox from '@/components/features/home/main-gonggam-item-reaction-box';
 import ItemContainer from '@/components/features/home/main-gonggam-item-container';
-import { GonggamPost } from '@/types/gonggam-posts';
+import type { GonggamPost } from '@/types/gonggam-posts';
 
 interface ItemProps {
   post: GonggamPost;
