@@ -4,16 +4,9 @@ import Calendar from '@/components/features/life/calendar';
 import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
+import { getToday } from '@/lib/utils/get-today';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-
-export const getToday = (): string => {
-  const kst = new Date();
-  const yyyy = kst.getFullYear();
-  const mm = String(kst.getMonth() + 1).padStart(2, '0');
-  const dd = String(kst.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-};
 
 const LifePage = () => {
   const [selectedDate, setSelectedDate] = useState<string>(getToday());
@@ -51,7 +44,7 @@ const LifePage = () => {
           일기 작성하기 &gt;
         </Link>
       </div>
-      <div className="min-h-[300px] px-10">
+      <div className="min-h-[400px] px-10">
         <SoloLifeList selectedDate={selectedDate} />
       </div>
     </div>

@@ -3,8 +3,7 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-
-import { getToday } from '@/app/(life)/life/page';
+import { getToday } from '@/lib/utils/get-today';
 
 type Props = {
   setDate: (date: string) => void;
