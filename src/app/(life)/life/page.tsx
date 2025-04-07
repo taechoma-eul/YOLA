@@ -3,7 +3,7 @@
 import Calendar from '@/components/features/life/calendar';
 import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
-import { useLifePostsByMonth } from '@/lib/hooks/queries/useLifePostsByMonth';
+import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
@@ -25,7 +25,7 @@ const LifePage = () => {
   const dotMap = useMemo(() => {
     const map: Record<string, Set<'mission' | 'normal'>> = {};
     posts.forEach((post) => {
-      const date = post.created_at.slice(0, 10); // YYYY-MM-DD
+      const date = post.date.slice(0, 10); // YYYY-MM-DD
       const type = post.mission_id !== null ? 'mission' : 'normal';
       if (!map[date]) map[date] = new Set();
       map[date].add(type);
