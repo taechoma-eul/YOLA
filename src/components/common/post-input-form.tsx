@@ -150,8 +150,8 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
         className="mx-auto w-full max-w-2xl space-y-6 rounded-2xl border border-gray-200 bg-white p-8 shadow-lg"
       >
         <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-black">{isMission ? '미션 인증 기록' : '나의 일기 작성'}</h1>
-          {dropdownMissions && (
+          <h1 className="text-2xl font-bold text-black">{!isMission && '나의 일기 작성'}</h1>
+          {isMission && dropdownMissions && (
             <ChecklistPostDropdown
               missions={dropdownMissions}
               completedIds={completedIds}
@@ -163,13 +163,14 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
         </div>
 
         {/* 제목 입력 */}
-        <input
-          type="text"
-          {...register('title')}
-          placeholder={DEFAULT_TITLE}
-          className="w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
-        />
-
+        {!isMission && (
+          <input
+            type="text"
+            {...register('title')}
+            placeholder={DEFAULT_TITLE}
+            className="w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
+          />
+        )}
         {/* 내용 입력 */}
         <div>
           <textarea
