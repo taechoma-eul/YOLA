@@ -1,9 +1,9 @@
-import { Children } from '@/types/childeren';
+import { Children } from '@/types/children';
 import MypageSideBar from '@/components/features/mypage/mypage-sidebar';
 
 const Layout = ({ children }: Children) => {
   return (
-    <div className="flex h-screen w-full flex-col md:flex-row">
+    <div className="flex w-full flex-col md:flex-row">
       {/* 좌측 사이드바 (모바일에서는 상단) */}
       <MypageSideBar />
 
