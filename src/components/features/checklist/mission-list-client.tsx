@@ -37,7 +37,7 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
         {missionList.map((mission, idx) => (
           <li key={idx}>
             <Link
-              href={userId ? `${PATH.CHECKLIST_POST}/${mission.id}` : '#'}
+              href={userId ? `${PATH.LIFE_POST}?mission_id=${mission.id}` : '#'}
               onClick={handleMissionClick}
               className={`relative flex min-h-[150px] items-center justify-center border p-10 ${
                 mission.completed ? 'bg-gray-300' : ''
