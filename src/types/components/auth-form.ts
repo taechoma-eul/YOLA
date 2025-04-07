@@ -11,3 +11,7 @@ export interface FieldData {
   form: UseFormReturn<AuthFormData, any, undefined>;
   isSubmitting: boolean;
 }
+
+export interface AuthFormMode {
+  mode: 'login' | 'signup';
+}

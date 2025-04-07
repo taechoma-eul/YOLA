@@ -9,3 +9,8 @@ export const AUTH = {
   NICKNAME_LABEL: '닉네임',
   PASSWORD_LABEL: '비밀번호'
 } as const;
+
+export const MODE = {
+  SIGNUP: 'signup',
+  LOGIN: 'login'
+} as const;
