@@ -46,7 +46,9 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
   const [selectedMissionId, setSelectedMissionId] = useState<number | null>(missionId ? +missionId : null);
 
   const isMission = !!missionId;
-  const DEFAULT_TITLE = `${selectedDate}의 혼자 라이프 기록`;
+  const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
+  const DEFAULT_TITLE = isMission ? selectedMission?.content : `${selectedDate}의 혼자 라이프 기록`;
+
   const {
     register,
     handleSubmit,
