@@ -12,10 +12,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { PATH } from '@/constants/page-path';
 import { getToday } from '@/app/(life)/life/page';
 import DatePicker from './date-picker';
+import ChecklistPostDropdown from '../features/checklist/checklist-post-dropdown';
+import type { MissionType } from '@/types/checklist';
 
 type LifeInputFormProps = {
-  userId: string;
   missionId: string | null;
+  dropdownMissions?: MissionType[];
+  completedIds?: number[];
 };
 
 const lifeRecordSchema = z.object({
@@ -33,13 +36,14 @@ type UploadedImage = {
 
 const IMAGE_STORAGE_BUCKET = 'life-post-images';
 
-const PostInputForm = ({ userId, missionId }: LifeInputFormProps) => {
+const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputFormProps) => {
   const router = useRouter();
   const { mutate, isPending } = useLifePost();
 
   const [selectedDate, setSelectedDate] = useState<string>(getToday());
   const [images, setImages] = useState<File[]>([]);
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
+  const [selectedMissionId, setSelectedMissionId] = useState<number | null>(missionId ? +missionId : null);
 
   const isMission = !!missionId;
   const DEFAULT_TITLE = `${selectedDate}의 혼자 라이프 기록`;
@@ -147,6 +151,14 @@ const PostInputForm = ({ userId, missionId }: LifeInputFormProps) => {
       >
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-black">{isMission ? '미션 인증 기록' : '나의 일기 작성'}</h1>
+          {dropdownMissions && (
+            <ChecklistPostDropdown
+              missions={dropdownMissions}
+              completedIds={completedIds}
+              selectedId={selectedMissionId}
+              onSelect={setSelectedMissionId}
+            />
+          )}
           <DatePicker date={selectedDate} setDate={setSelectedDate} />
         </div>
 
