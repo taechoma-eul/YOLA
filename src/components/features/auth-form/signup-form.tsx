@@ -1,87 +1,54 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signupSchema } from '@/lib/utils/validation/auth-validate';
-import AuthFormContainer from '@/components/features/auth-form/auth-form-container';
-import AuthFormInput from '@/components/features/auth-form/auth-form-input';
-import FormButton from '@/components/features/auth-form/form-button-box';
-import type { AuthInputProps } from '@/types/components/auth-form';
-import type { SignupFormData } from '@/lib/utils/validation/auth-validate';
-import { AUTH } from '@/constants/auth-form';
+import { UseFormReturn } from 'react-hook-form';
+import { signup } from '@/lib/utils/api/auth-action';
+import { useAuthForm } from '@/lib/hooks/use-auth-form';
+import AuthFormField from '@/components/features/auth-form/auth-form-field';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import type { authFormData } from '@/lib/utils/validation/auth-validate';
 
-type FormData = Omit<AuthInputProps, 'register' | 'trigger' | 'getValues'>;
+// 동적 필드 타입
+interface FieldData {
+  inputType: string;
+  fieldName: keyof authFormData;
+  placeholder: string;
+  labelName?: string;
+  isCheckButton?: boolean;
+  isLabel?: boolean;
+  form: UseFormReturn<authFormData, any, undefined>;
+}
 
 const SignupForm = () => {
-  const {
-    register,
-    formState: { errors, isSubmitting, isValid },
-    getValues,
-    trigger
-  } = useForm<SignupFormData>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-      nickname: ''
-    },
-    mode: 'onBlur'
-  });
+  const form = useAuthForm();
 
-  const signFormData: FormData[] = [
-    {
-      placeholder: '이메일 입력',
-      type: 'email',
-      name: 'email',
-      checkButton: true,
-      errorMessage: errors.email?.message,
-      label: '이메일'
-    },
-    {
-      placeholder: '비밀번호 입력',
-      type: 'password',
-      name: 'password',
-      checkButton: false,
-      errorMessage: errors.password?.message,
-      label: '비밀번호'
-    },
-    {
-      placeholder: '비밀번호 확인 입력',
-      type: 'password',
-      name: 'confirmPassword',
-      checkButton: false,
-      errorMessage: errors.confirmPassword?.message,
-      label: '비밀번호 확인'
-    },
-    {
-      placeholder: '닉네임 입력',
-      type: 'text',
-      name: 'nickname',
-      checkButton: true,
-      errorMessage: errors.nickname?.message,
-      label: '닉네임'
-    }
+  const signupFieldData: FieldData[] = [
+    { fieldName: 'email', placeholder: '이메일을 입력하세요.', isCheckButton: true, form: form, inputType: 'email' },
+    { fieldName: 'nickname', placeholder: '닉네임을 입력하세요.', isCheckButton: true, form: form, inputType: 'text' },
+    { fieldName: 'password', placeholder: '비밀번호를 입력하세요.', form: form, inputType: 'password' },
+    { fieldName: 'checkPassword', placeholder: '비밀번호를 한번 더 입력하세요.', form: form, inputType: 'password' }
   ];
 
   return (
-    <AuthFormContainer>
-      {signFormData.map((data, index) => (
-        <AuthFormInput
-          key={index}
-          register={register}
-          trigger={trigger}
-          getValues={getValues}
-          placeholder={data.placeholder}
-          type={data.type}
-          name={data.name}
-          checkButton={data.checkButton}
-          errorMessage={data.errorMessage}
-          label={data.label}
-        />
-      ))}
-      <FormButton mode={AUTH.SIGNUP} isSubmitting={isSubmitting} isValid={isValid} />
-    </AuthFormContainer>
+    <Form {...form}>
+      <form className="mt-10 w-[365px] space-y-8">
+        {signupFieldData.map((data) => (
+          <AuthFormField
+            key={data.fieldName}
+            fieldName={data.fieldName}
+            placeholder={data.placeholder}
+            isCheckButton={data.isCheckButton}
+            form={data.form}
+            inputType={data.inputType}
+          />
+        ))}
+        <div className="space-y-3 pt-3">
+          <Button type="submit" formAction={signup} className="h-[42px] w-full">
+            가입하기
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
 
