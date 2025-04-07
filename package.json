@@ -27,17 +27,20 @@
     "@tanstack/react-query-devtools": "^5.69.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "heic-convert": "^2.1.0",
     "lucide-react": "^0.487.0",
     "next": "14.2.24",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.54.2",
+    "swiper": "^11.2.6",
     "tailwind-merge": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.2",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@types/heic-convert": "^2.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -47,6 +50,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "supabase": "^2.20.5",
+    "supabase-cli": "^0.0.21",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

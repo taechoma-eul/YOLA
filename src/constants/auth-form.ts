@@ -8,4 +8,4 @@ export const AUTH = {
   EMAIL_LABEL: '이메일',
   NICKNAME_LABEL: '닉네임',
   PASSWORD_LABEL: '비밀번호'
-};
+} as const;

@@ -1,5 +1,5 @@
 import { UseFormGetValues, UseFormRegister, UseFormTrigger } from 'react-hook-form';
-import { SignupFormData } from '@/lib/utils/validation/authValidate';
+import { SignupFormData } from '@/lib/utils/validation/auth-validate';
 
 export interface AuthInputProps {
   register: UseFormRegister<SignupFormData>;
