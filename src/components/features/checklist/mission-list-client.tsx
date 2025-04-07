@@ -40,14 +40,14 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
 
   return (
     <ul className="mt-10 grid grid-cols-5 gap-4 rounded-md border p-3 shadow-sm">
-      {missionList.map((mission, idx) => {
+      {missionList.map((mission) => {
         const isCompleted = mission.completed;
         const baseClasses = `relative flex min-h-[150px] items-center justify-center border p-10 text-center ${
           isCompleted ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'hover:bg-gray-100'
         }`;
 
         return (
-          <li key={idx}>
+          <li key={mission.id}>
             {isCompleted ? (
               <div className={baseClasses} onClick={handleCompletedMissionClick}>
                 <div>{mission.content}</div>
