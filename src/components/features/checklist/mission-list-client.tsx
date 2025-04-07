@@ -30,26 +30,43 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
     }
   };
 
+  const handleCompletedMissionClick = () => {
+    toast({
+      title: MSG.ALREADY_CLEAR,
+      description: MSG.ALREADY_CLEAR_CHOOSE_OTHER,
+      variant: 'default'
+    });
+  };
+
   return (
-    <>
-      {/* 미션 리스트 */}
-      <ul className="mt-10 grid grid-cols-5 gap-4 rounded-md border p-3 shadow-sm">
-        {missionList.map((mission, idx) => (
+    <ul className="mt-10 grid grid-cols-5 gap-4 rounded-md border p-3 shadow-sm">
+      {missionList.map((mission, idx) => {
+        const isCompleted = mission.completed;
+        const baseClasses = `relative flex min-h-[150px] items-center justify-center border p-10 text-center ${
+          isCompleted ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'hover:bg-gray-100'
+        }`;
+
+        return (
           <li key={idx}>
-            <Link
-              href={userId ? `${PATH.LIFE_POST}?mission_id=${mission.id}` : '#'}
-              onClick={handleMissionClick}
-              className={`relative flex min-h-[150px] items-center justify-center border p-10 ${
-                mission.completed ? 'bg-gray-300' : ''
-              }`}
-            >
-              <div className="text-center">{mission.content}</div>
-              <span className="absolute bottom-2 text-xs">인증하기 &gt;</span>
-            </Link>
+            {isCompleted ? (
+              <div className={baseClasses} onClick={handleCompletedMissionClick}>
+                <div>{mission.content}</div>
+                <span className="absolute bottom-2 text-xs">인증 완료</span>
+              </div>
+            ) : (
+              <Link
+                href={userId ? `${PATH.LIFE_POST}?mission_id=${mission.id}` : '#'}
+                onClick={handleMissionClick}
+                className={baseClasses}
+              >
+                <div>{mission.content}</div>
+                <span className="absolute bottom-2 text-xs">인증하기 &gt;</span>
+              </Link>
+            )}
           </li>
-        ))}
-      </ul>
-    </>
+        );
+      })}
+    </ul>
   );
 };
 
