@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { PATH } from '@/constants/page-path';
 import type { MissionType } from '@/types/checklist';
 
 type ChecklistPostDropdownProps = {
@@ -44,7 +45,7 @@ const ChecklistPostDropdown = ({ missions, completedIds = [], selectedId, onSele
 
     const params = new URLSearchParams(searchParams.toString());
     params.set('mission_id', id.toString());
-    router.replace(`/life/post?${params.toString()}`); // 미션 변경 시 URL 경로 수정
+    router.replace(`${PATH.LIFE_POST}?${params.toString()}`); // 미션 변경 시 URL 경로 수정
   };
 
   return (
