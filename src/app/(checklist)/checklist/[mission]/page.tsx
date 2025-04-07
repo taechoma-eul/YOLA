@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getUserId } from '@/lib/utils/api/auth-action';
 import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
 import { PATH } from '@/constants/page-path';
 import { validMissionTags } from '@/constants/mission';
 import { DEFAULT_LEVEL } from '@/constants/magic-number';
 import type { Level, MissionTag } from '@/types/checklist';
+import { getUserSessionState } from '@/lib/utils/api/auth-action';
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decoded = decodeURIComponent(params.mission);
@@ -17,7 +17,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
 
   /** 레벨 세팅 */
   let userLevel = DEFAULT_LEVEL; // default level (for 비로그인 사용자)
-  const userId = await getUserId();
+  const { userId } = await getUserSessionState();
   if (userId) {
     userLevel = await getUserLevelByMission({ userId, decodedMission });
   }
