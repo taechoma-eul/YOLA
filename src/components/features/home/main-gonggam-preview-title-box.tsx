@@ -1,5 +1,5 @@
-import { PATH } from '@/constants/page-path';
 import Link from 'next/link';
+import { PATH } from '@/constants/page-path';
 
 const TitleBox = () => {
   return (

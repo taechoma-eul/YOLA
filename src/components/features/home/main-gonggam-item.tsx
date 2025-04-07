@@ -1,13 +1,10 @@
 import ContentsContainer from '@/components/features/home/main-gonggam-item-contents-container';
 import ReactionBox from '@/components/features/home/main-gonggam-item-reaction-box';
 import ItemContainer from '@/components/features/home/main-gonggam-item-container';
-import type { Tables } from '@/types/supabase';
+import { GonggamPost } from '@/types/gonggam-posts';
 
 interface ItemProps {
-  post: Tables<'gonggam_posts'> & {
-    likes: Tables<'likes'>[];
-    comments: Tables<'comments'>[];
-  };
+  post: GonggamPost;
 }
 
 const GonggamItem = ({ post }: ItemProps) => {
