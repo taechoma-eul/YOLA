@@ -13,6 +13,7 @@ import { PATH } from '@/constants/page-path';
 import { getToday } from '@/app/(life)/life/page';
 import DatePicker from './date-picker';
 import ChecklistPostDropdown from '../features/checklist/checklist-post-dropdown';
+import { MSG } from '@/constants/messages';
 import type { MissionType } from '@/types/checklist';
 
 type LifeInputFormProps = {
@@ -47,7 +48,9 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
 
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
-  const DEFAULT_TITLE = isMission ? selectedMission?.content : `${selectedDate}의 혼자 라이프 기록`;
+  if (isMission && (!dropdownMissions || !selectedMission)) throw new Error(MSG.INVALID_MISSION_ID); // 미션 인증인데 유효한 미션이 없으면 에러 처리
+
+  const DEFAULT_TITLE = isMission ? (selectedMission?.content ?? '미션 인증') : `${selectedDate}의 혼자 라이프 기록`;
 
   const {
     register,
