@@ -9,11 +9,10 @@ import type { MissionType } from '@/types/checklist';
 
 interface ClientMissionListProps {
   missionList: (Omit<MissionType, 'id'> & { completed: boolean })[];
-  currentLevel: number | string;
   userId?: string;
 }
 
-const MissionListClient = ({ missionList, currentLevel, userId }: ClientMissionListProps) => {
+const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
   const { toast } = useToast();
   const router = useRouter();
 

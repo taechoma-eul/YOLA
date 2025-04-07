@@ -91,7 +91,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
           </div>
         </div>
       </div>
-      <MissionListClient missionList={missionListWithStatus} currentLevel={userLevel} {...(userId && { userId })} />
+      <MissionListClient missionList={missionListWithStatus} {...(userId && { userId })} />
     </section>
   );
 };
