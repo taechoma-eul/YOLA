@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { getUserId } from '@/lib/utils/api/auth-action';
 import { TABLE } from '@/constants/supabase-tables-name';
+import { getUserSessionState } from '@/lib/utils/api/auth-action';
 
 /**
  * Supabase에서 `user_mission` 테이블의 `로그인 한 User`가 달성한 미션 전부를 조회하는 함수
@@ -12,7 +12,7 @@ import { TABLE } from '@/constants/supabase-tables-name';
 export const getUserMission = async () => {
   const supabase = await createClient();
   //로그인한 유저 id 조회
-  const userId = await getUserId();
+  const { userId } = await getUserSessionState();
   if (!userId) throw new Error('로그인 한 유저의 아이디가 존재하지 않습니다');
 
   // 로그인한 유저의 완료 미션과, mission_list 테이블에서 id와 type을 조인하여 조회
@@ -35,7 +35,7 @@ export const getUserMission = async () => {
 export const getUserMissionLevels = async () => {
   const supabase = await createClient();
   //로그인한 유저 id 조회
-  const userId = await getUserId();
+  const { userId } = await getUserSessionState();
   if (!userId) throw new Error('로그인 한 유저의 아이디가 존재하지 않습니다');
 
   // 로그인한 유저의 레벨 조회
