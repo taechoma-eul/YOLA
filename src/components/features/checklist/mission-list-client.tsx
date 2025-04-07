@@ -7,8 +7,9 @@ import { PATH } from '@/constants/page-path';
 import { MSG } from '@/constants/messages';
 import type { MissionType } from '@/types/checklist';
 
+type MissionWithStatus = MissionType & { completed: boolean };
 interface ClientMissionListProps {
-  missionList: (Omit<MissionType, 'id'> & { completed: boolean })[];
+  missionList: MissionWithStatus[];
   userId?: string;
 }
 
@@ -36,7 +37,7 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
         {missionList.map((mission, idx) => (
           <li key={idx}>
             <Link
-              href={userId ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : '#'}
+              href={userId ? `${PATH.CHECKLIST_POST}/${mission.id}` : '#'}
               onClick={handleMissionClick}
               className={`relative flex min-h-[150px] items-center justify-center border p-10 ${
                 mission.completed ? 'bg-gray-300' : ''
