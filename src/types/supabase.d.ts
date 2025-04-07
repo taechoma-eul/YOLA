@@ -168,6 +168,7 @@ export type Database = {
         Row: {
           content: string
           created_at: string
+          date: string
           id: number
           mission_id: number | null
           tags: string[] | null
@@ -177,6 +178,7 @@ export type Database = {
         Insert: {
           content: string
           created_at?: string
+          date: string
           id?: number
           mission_id?: number | null
           tags?: string[] | null
@@ -186,6 +188,7 @@ export type Database = {
         Update: {
           content?: string
           created_at?: string
+          date?: string
           id?: number
           mission_id?: number | null
           tags?: string[] | null
