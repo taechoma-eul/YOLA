@@ -2,6 +2,7 @@
 import { DEFAULT_LEVEL } from '@/constants/magic-number';
 import { MSG } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
+import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { Level, MissionTag, MissionType, UserLevel, UserLevelByMissionType } from '@/types/checklist';
 
@@ -15,7 +16,7 @@ import type { Level, MissionTag, MissionType, UserLevel, UserLevelByMissionType 
  */
 export const getUniqueMissionType = async (): Promise<string[]> => {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('mission_list').select('type');
+  const { data, error } = await supabase.from(TABLE.MISSION_LIST).select('type');
   if (error) {
     console.error(error);
     return [];
@@ -41,7 +42,7 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
   if (!col) {
     throw new Error(`${MSG.INVALID_MISSION_TYPE}: ${decodedMission}`);
   }
-  const { data, error } = (await supabase.from('user_level').select(col).eq('user_id', userId).single()) as {
+  const { data, error } = (await supabase.from(TABLE.USER_LEVEL).select(col).eq('user_id', userId).single()) as {
     data: Pick<UserLevel, typeof col> | null;
     error: any;
   };
@@ -61,7 +62,11 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
  */
 export const getMissionListByLevel = async (mission: MissionTag, userLevel: Level): Promise<MissionType[]> => {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('mission_list').select('*').eq('type', mission).eq('level', userLevel);
+  const { data, error } = await supabase
+    .from(TABLE.MISSION_LIST)
+    .select('*')
+    .eq('type', mission)
+    .eq('level', userLevel);
 
   if (error) throw new Error(error.message);
   return data;
@@ -87,7 +92,7 @@ export const getCompletedMissionIds = async ({
   const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from('user_mission')
+    .from(TABLE.USER_MISSION)
     .select('completed_id')
     .eq('user_id', userId)
     .in('completed_id', missionIds);
