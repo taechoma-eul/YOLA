@@ -25,7 +25,7 @@ const LifePage = () => {
   const dotMap = useMemo(() => {
     const map: Record<string, Set<'mission' | 'normal'>> = {};
     posts.forEach((post) => {
-      const date = post.created_at.slice(0, 10); // YYYY-MM-DD
+      const date = post.date.slice(0, 10); // YYYY-MM-DD
       const type = post.mission_id !== null ? 'mission' : 'normal';
       if (!map[date]) map[date] = new Set();
       map[date].add(type);

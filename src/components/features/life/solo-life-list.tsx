@@ -7,7 +7,7 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
   const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
 
   const parsedList: SoloLifeCardType[] = posts
-    .filter((p) => p.created_at.startsWith(selectedDate))
+    .filter((p) => p.date.startsWith(selectedDate))
     .map((post) => {
       const imageUrls = post.image_urls ?? [];
       return {

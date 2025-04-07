@@ -33,8 +33,8 @@ export const getLifePostsByMonth = async (month: string): Promise<LifePostWithIm
     `
     )
     .eq('user_id', user.id)
-    .gte('created_at', `${month}-01`)
-    .lt('created_at', getNextMonthFirstDay(month))
+    .gte('date', `${month}-01`)
+    .lt('date', getNextMonthFirstDay(month))
     .order('created_at', { ascending: true });
 
   if (error) throw new Error(error.message);
