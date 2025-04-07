@@ -44,7 +44,7 @@ const LifePage = () => {
           일기 작성하기 &gt;
         </Link>
       </div>
-      <div className="min-h-[300px] px-10">
+      <div className="min-h-[400px] px-10">
         <SoloLifeList selectedDate={selectedDate} />
       </div>
     </div>
