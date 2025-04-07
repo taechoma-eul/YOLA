@@ -9,7 +9,7 @@ import type { GetLifePostsResponse, SoloLifeCardType } from '@/types/life-post';
 const MyLifeListClient = () => {
   const {
     data: posts,
-    isLoading,
+    isPending,
     error,
     fetchNextPage,
     hasNextPage,
@@ -37,7 +37,7 @@ const MyLifeListClient = () => {
           date: post.date,
           title: post.title || post.content.split('\n')[0] || '제목 없음',
           content: post.content,
-          thumbnail: imageUrls[0] || '/images/default-image.svg',
+          thumbnail: imageUrls[0] || DEFAULT_IMAGE_URL,
           imageUrls,
           isMission: post.mission_id !== null,
           tags: post.tags ?? []
@@ -45,7 +45,7 @@ const MyLifeListClient = () => {
       })
     ) ?? [];
 
-  if (isLoading) return <div className="p-4">로딩 중...</div>;
+  if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) return <div className="p-4 text-red-500">에러 발생</div>;
 
   return (
@@ -68,3 +68,5 @@ const MyLifeListClient = () => {
 };
 
 export default MyLifeListClient;
+
+const DEFAULT_IMAGE_URL = '/images/default-image.svg';
