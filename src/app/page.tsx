@@ -6,7 +6,7 @@ import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
 import RandomMissionBox from '@/components/features/home/main-random-mission-box';
 
 const HomePage = async () => {
-  const checkListType = await getUniqueMissionType();
+  const checkListTypes = await getUniqueMissionType();
   const { isLogin } = await getUserSessionState();
 
   return (
@@ -15,7 +15,7 @@ const HomePage = async () => {
       <section className="space-y-5">
         <strong className="text-xl">YOLA 챌린지</strong>
         <div className="flex gap-10">
-          {checkListType.map((item) => (
+          {checkListTypes.map((item) => (
             <CheckListCard key={item} checkListType={item} />
           ))}
         </div>
