@@ -28,7 +28,7 @@ const SoloLifeCard = ({ id, imageUrls, thumbnail, title, content, date, isMissio
         <div className="flex items-center gap-2 text-[11px] text-gray-500">
           <span>{date}</span>
           <div className="flex items-center gap-1">
-            <span className={`inline-block h-1.5 w-1.5 rounded-full ${isMission ? 'bg-blue-500' : 'bg-black'}`} />
+            <span className={`inline-block h-1.5 w-1.5 rounded-full ${isMission ? 'bg-red-400' : 'bg-black'}`} />
             <span>{isMission ? '미션인증' : '하루일기'}</span>
           </div>
         </div>

@@ -3,11 +3,12 @@
 import { useQueries } from '@tanstack/react-query';
 import type { LifePostWithImageUrls } from '@/types/life-post';
 import { getLifePostsByMonth } from '@/lib/utils/api/life-api-client';
+import { QUERY_KEY } from '@/constants/query-keys';
 
 export const useLifePostsByMonthRange = (months: string[]) => {
   const results = useQueries({
     queries: months.map((month) => ({
-      queryKey: ['life-posts', month],
+      queryKey: [QUERY_KEY.LIFE_POSTS, month],
       queryFn: () => getLifePostsByMonth(month)
     }))
   });
