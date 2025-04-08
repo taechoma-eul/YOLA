@@ -9,13 +9,9 @@ import { TABLE } from '@/constants/supabase-tables-name';
 export const getGonggamPreviewList = async (): Promise<GonggamPost[]> => {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from(TABLE.GONGGAM_POSTS)
-    .select('*, likes(*), comments(*)')
-    .order('created_at', { ascending: false })
-    .limit(3);
+  const { data, error } = await supabase.rpc('get_popular_posts', { limit_count: 3 });
 
-  if (error) throw new Error('공감게시글 불러오기를 실패했습니다.');
+  if (error) throw error;
 
   return data ?? [];
 };
