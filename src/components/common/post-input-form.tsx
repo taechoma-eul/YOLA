@@ -13,7 +13,6 @@ import { PATH } from '@/constants/page-path';
 import DatePicker from './date-picker';
 import { getToday } from '@/lib/utils/get-today';
 import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
-import { MSG } from '@/constants/messages';
 import type { MissionType } from '@/types/checklist';
 
 interface LifeInputFormProps {
