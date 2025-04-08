@@ -13,20 +13,24 @@ const nicknameSchema = z
   .regex(/^[가-힣A-Za-z0-9]+$/, '공백, 초성을 제외한 한글, 영어, 숫자만 사용 가능합니다.')
   .refine((val) => !/^\d+$/.test(val), '문자와 숫자 조합으로 사용 가능합니다.');
 
+const emailSchema = z.string({ required_error: '이메일을 입력해주세요.' }).email('유효한 이메일을 입력하세요.');
+
+const passwordSchema = z
+  .string({ required_error: '비밀번호를 입력해주세요.' })
+  .min(8, '최소 8자 이상이어야 합니다.')
+  .regex(/^[A-Za-z\d!@#$%^&*]+$/, '특수문자는 !, @, #, $, %, ^, &, *만 사용 가능합니다.')
+  .refine((val) => /[a-z]/.test(val), '소문자를 포함해야 합니다.')
+  .refine((val) => /[A-Z]/.test(val), '대문자를 포함해야 합니다.')
+  .refine((val) => /[!@#$%^&*]/.test(val), '특수문자를 포함해야 합니다.');
+
 export const editProfileSchema = z.object({
   nickname: nicknameSchema
 });
 
-export const authSchema = z
+export const signupSchema = z
   .object({
-    email: z.string({ required_error: '이메일을 입력해주세요.' }).email('유효한 이메일을 입력하세요.'),
-    password: z
-      .string({ required_error: '비밀번호를 입력해주세요.' })
-      .min(8, '최소 8자 이상이어야 합니다.')
-      .regex(/^[A-Za-z\d!@#$%^&*]+$/, '특수문자는 !, @, #, $, %, ^, &, *만 사용 가능합니다.')
-      .refine((val) => /[a-z]/.test(val), '소문자를 포함해야 합니다.')
-      .refine((val) => /[A-Z]/.test(val), '대문자를 포함해야 합니다.')
-      .refine((val) => /[!@#$%^&*]/.test(val), '특수문자를 포함해야 합니다.'),
+    email: emailSchema,
+    password: passwordSchema,
     checkPassword: z.string({ required_error: '비밀번호를 한번 더 입력해주세요.' }),
     nickname: nicknameSchema
   })
@@ -35,4 +39,11 @@ export const authSchema = z
     path: ['checkPassword']
   });
 
-export type AuthFormData = z.infer<typeof authSchema>;
+export const loginSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+  checkPassword: z.string().optional(), // 로그인 시 불필요
+  nickname: z.string().optional() // 로그인 시 불필요
+});
+
+export type AuthFormData = z.infer<typeof signupSchema>;

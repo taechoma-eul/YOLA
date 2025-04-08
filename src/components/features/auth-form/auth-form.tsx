@@ -11,14 +11,14 @@ import { Form } from '@/components/ui/form';
 import type { AuthFormMode, FieldData } from '@/types/components/auth-form';
 import { AUTH, ERROR_MESSAGE, PLACEHOLDER } from '@/constants/auth-form';
 
-type FormFieldData = Omit<FieldData, 'isSubmitting'> & { isSignup?: boolean };
+type FormFieldData = Omit<FieldData, 'isSubmitting'>;
 
 const AuthForm = ({ mode }: AuthFormMode) => {
   const [isPending, startTransition] = useTransition();
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<boolean>(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
 
-  const form = useAuthForm();
+  const form = useAuthForm(mode);
   const { isValid } = form.formState;
 
   const signupFieldData: FormFieldData[] = [
@@ -27,8 +27,7 @@ const AuthForm = ({ mode }: AuthFormMode) => {
       placeholder: PLACEHOLDER.EMAIL,
       isCheckButton: true,
       form: form,
-      inputType: 'email',
-      isSignup: true
+      inputType: 'email'
     },
     {
       fieldName: AUTH.NICKNAME,
@@ -49,21 +48,26 @@ const AuthForm = ({ mode }: AuthFormMode) => {
   const renderingData: FormFieldData[] = mode === AUTH.SIGNUP ? signupFieldData : loginFieldData;
 
   const handleFormAction = async (formData: FormData) => {
+    if (mode === AUTH.LOGIN) {
+      startTransition(async () => {
+        await login(formData);
+      });
+      return;
+    }
     if (!emailDuplicateCheck) {
       authToast(ERROR_MESSAGE.EMAIL_CHECK);
       return;
-    } else if (!nicknameDuplicateCheck) {
+    }
+    if (!nicknameDuplicateCheck) {
       authToast(ERROR_MESSAGE.NICKNAME_CHECK);
       return;
     }
-
     if (!isValid) {
       authToast(ERROR_MESSAGE.FIELD_CHECK);
       return;
     }
-
     startTransition(async () => {
-      mode === AUTH.SIGNUP ? await signup(formData) : await login(formData);
+      await signup(formData);
     });
   };
 
@@ -80,7 +84,6 @@ const AuthForm = ({ mode }: AuthFormMode) => {
             isCheckButton={data.isCheckButton}
             form={data.form}
             inputType={data.inputType}
-            isSignup={data.isSignup}
           />
         ))}
         {mode === AUTH.SIGNUP ? (
