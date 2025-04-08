@@ -9,6 +9,7 @@ import GOAT_ICON from '@images/images/goat-icon.svg';
 import CLEAN_ICON from '@images/images/clean-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
 import Image from 'next/image';
+import clsx from 'clsx';
 
 const AchievementPage = async () => {
   //유저 닉네임 조회
@@ -48,7 +49,10 @@ const AchievementPage = async () => {
         {categories.map(({ name, level, description, icon }, index) => (
           <div
             key={name}
-            className={`group relative flex flex-1 flex-col items-center justify-center p-3 transition-colors duration-200 hover:bg-gray-100 ${index !== 0 ? 'border-l border-slate-300' : ''}`}
+            className={clsx(
+              `group relative flex flex-1 flex-col items-center justify-center p-3 transition-colors duration-200 hover:bg-gray-100`,
+              { 'border-l border-slate-300': index !== 0 }
+            )}
           >
             {/* 카테고리명 */}
             <div className="flex cursor-pointer whitespace-nowrap">
