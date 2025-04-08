@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, SoloLifeCardType } from '@/types/life-post';
+import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 
 const MyLifeListClient = () => {
   const {
@@ -37,7 +38,7 @@ const MyLifeListClient = () => {
           date: post.date,
           title: post.title || post.content.split('\n')[0] || '제목 없음',
           content: post.content,
-          thumbnail: imageUrls[0] || DEFAULT_IMAGE_URL,
+          thumbnail: imageUrls[0] || DEFAULT_LIFE_IMAGE_URL,
           imageUrls,
           isMission: post.mission_id !== null,
           tags: post.tags ?? []
@@ -68,5 +69,3 @@ const MyLifeListClient = () => {
 };
 
 export default MyLifeListClient;
-
-const DEFAULT_IMAGE_URL = '/images/default-image.svg';
