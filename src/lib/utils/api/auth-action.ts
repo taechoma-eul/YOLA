@@ -111,6 +111,21 @@ export const signInWithGoogle = async (): Promise<never> => {
   redirect(data.url); // OAuth 흐름 시작
 };
 
+export const signInWithKakao = async () => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'kakao',
+    options: {
+      scopes: 'profile_nickname profile_image account_email',
+      redirectTo: 'http://localhost:3000/api/auth/callback' // 리다이렉트 URL
+    }
+  });
+
+  if (error) throw new Error(error.message);
+
+  redirect(data.url); // OAuth 흐름 시작
+};
+
 export const getDuplicateCheckData = async (field: string, value: string) => {
   const supabase = await createClient();
 

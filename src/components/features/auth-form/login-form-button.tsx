@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import type { FieldData } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
+import { signInWithGoogle, signInWithKakao } from '@/lib/utils/api/auth-action';
 
 const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
   return (
@@ -16,10 +17,10 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
       </div>
       <hr className="h-[30px] border-b border-t-0 border-gray-300" />
       <div className="flex gap-5">
-        <Button type="button" className="h-[42px] w-full">
+        <Button type="submit" className="h-[42px] w-full" formAction={signInWithGoogle}>
           구글
         </Button>
-        <Button type="button" className="h-[42px] w-full">
+        <Button type="submit" className="h-[42px] w-full" formAction={signInWithKakao}>
           카카오
         </Button>
       </div>
