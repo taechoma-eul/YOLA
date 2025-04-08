@@ -21,8 +21,6 @@ const AchievementPage = async () => {
   const totalCount = [...missions].length;
   const userLevel = calculateUserLevel(totalCount);
 
-  console.log('유저가 완료한 미션 리스트 전체 ===>', missions);
-
   //유저 미션 레벨 조회 : 5개 (혼밥,혼자여행,갓생,혼놀,청소)
   const userMissionLevels = await getUserMissionLevels();
 
