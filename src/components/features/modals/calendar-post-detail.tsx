@@ -1,5 +1,4 @@
 import { ImageSwiper } from '@/components/ui/card-detail-image-swiper';
-import { MODAL_Z_INDEX } from '@/constants/z-index';
 import type { LifePostWithImageUrls } from '@/types/life-post';
 import { ChevronsRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -27,9 +26,8 @@ import { useEffect, useState } from 'react';
   )}
  */
 
-const ZERO = 0;
-const TEN = 10;
-const THREE_HUNDRED = 300;
+const SET_TIME_OUT_CLOSE = 300;
+const SET_TIME_OUT_SHOW_MODAL = 10;
 
 export const PostDetailModal = ({
   clickModal,
@@ -44,11 +42,11 @@ export const PostDetailModal = ({
 
   if (!post) return;
 
-  const createdDate = post.created_at.slice(ZERO, TEN);
+  const createdDate = post.created_at.slice(0, 10);
 
   useEffect(() => {
     if (showModal) {
-      setTimeout(() => setIsVisible(true), TEN);
+      setTimeout(() => setIsVisible(true), SET_TIME_OUT_SHOW_MODAL);
       document.body.style.overflow = 'hidden'; //모달이 클릭되면 배경에 스크롤 막음
     } else {
       setIsVisible(false);
@@ -63,14 +61,14 @@ export const PostDetailModal = ({
     setIsVisible(false);
     setTimeout(() => {
       clickModal(false);
-    }, THREE_HUNDRED);
+    }, SET_TIME_OUT_CLOSE);
   };
 
   return (
     /** 모달 배경, 배경 터치시 나가짐 */
     <div
       onClick={() => handleClose()}
-      className={`fixed inset-0 z-[${MODAL_Z_INDEX}] bg-black/50 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[51] bg-black/50 transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
