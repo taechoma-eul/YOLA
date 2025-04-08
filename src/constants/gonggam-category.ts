@@ -1,4 +1,4 @@
-import type { CategoryMapType, GonggamCategory, slugToCategoryType } from '@/types/gonggam';
+import type { CategoryMapType, GonggamCategory, SlugToCategoryType } from '@/types/gonggam';
 
 /** categoryMap: 단일 source of truth
  * Supabase 'categorys' Enum (한글 카테고리명) → URL에서 사용하는 slug 값 매핑
@@ -17,7 +17,7 @@ export const categoryMap: CategoryMapType = {
  */
 export const slugToCategory = Object.fromEntries(
   Object.entries(categoryMap).map(([k, v]) => [v, k])
-) as slugToCategoryType;
+) as SlugToCategoryType;
 
 /**  tabs: TabsNav 컴포넌트 등에서 반복 렌더링에 사용
  * 공감 게시판 카테고리 탭 네비게이션 구성용 데이터 배열

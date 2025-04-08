@@ -3,7 +3,7 @@ import type { Enums } from './supabase';
 export type GonggamCategory = Enums<'categorys'>;
 
 export type CategoryMapType = Record<GonggamCategory, string>;
-export type slugToCategoryType = Record<string, GonggamCategory>;
+export type SlugToCategoryType = Record<string, GonggamCategory>;
 
 export interface GonggamPost {
   id: number;
