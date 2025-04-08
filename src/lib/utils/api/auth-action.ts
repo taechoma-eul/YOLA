@@ -96,7 +96,7 @@ export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
   return data;
 };
 
-export const signInWithGoogle = async () => {
+export const signInWithGoogle = async (): Promise<never> => {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -109,4 +109,12 @@ export const signInWithGoogle = async () => {
 
   // Supabase가 리다이렉션 URL을 반환하면 클라이언트로 전달
   redirect(data.url); // OAuth 흐름 시작
+};
+
+export const getDuplicateCheckData = async (field: string, value: string) => {
+  const supabase = await createClient();
+
+  const { data } = await supabase.from('users').select(field).eq(field, value).single();
+
+  return data;
 };
