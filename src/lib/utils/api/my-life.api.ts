@@ -1,6 +1,8 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
+import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import type { LifePost } from '@/types/life-post';
+import { MSG } from '@/constants/messages';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 /**
@@ -12,19 +14,16 @@ const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
  */
 export const getAllLifePostsById = async (): Promise<LifePost[]> => {
   const supabase = await createClient();
-  //로그인한 유저 id 조회 (임시용)
-  const {
-    data: { user },
-    error: userError
-  } = await supabase.auth.getUser();
-  if (!user) throw userError;
+  //로그인한 유저 id 조회
+  const { userId } = await getUserSessionState();
+  if (!userId) throw new Error(MSG.NEED_LOGIN);
 
   //로그인 한 유저의 작성 게시글 조회
   // ascending 정렬 _ false 내림차순, true 오름차순 정렬
   const { data: MyLifePosts, error } = await supabase
     .from(LIFE_POSTS_TABLE)
     .select('*')
-    .eq('user_id', user.id)
+    .eq('user_id', userId)
     .order('created_at', { ascending: false });
   if (error) {
     throw new Error(error.message);
