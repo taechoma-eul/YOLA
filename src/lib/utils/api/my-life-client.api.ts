@@ -29,9 +29,9 @@ export const getLifePostsAll = async ({ page }: { page: number }): Promise<GetLi
 
   const totalPages = count ? Math.ceil(count / postsPerPage) : 1;
 
-  const processed = (MyLifePosts ?? []).map((post: any) => ({
+  const processed = (MyLifePosts ?? []).map((post) => ({
     ...post,
-    image_urls: post.life_post_image_path?.map((img: any) => img.image_url) ?? []
+    image_urls: post.life_post_image_path?.map((img) => img.image_url) ?? []
   }));
 
   return {
