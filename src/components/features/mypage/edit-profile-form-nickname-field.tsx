@@ -7,7 +7,8 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
-import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
+import { AUTH, ERROR_MESSAGE, LABEL, PLACEHOLDER, SUCCESS_MESSAGE } from '@/constants/auth-form';
+import { authToast } from '@/lib/utils/auth-toast';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -31,16 +32,16 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
     if (initNickname === nowValue) setDuplicateCheck(true);
 
     if (!nowValue) {
-      alert(`${LABEL.NICKNAME}을 먼저 입력해주세요`);
+      authToast(ERROR_MESSAGE.NONE_NICKNAME);
       return;
     }
 
     const data = await getDuplicateCheckData(AUTH.NICKNAME, nowValue);
 
     if (data) {
-      alert(`이미 사용 중인 ${LABEL.NICKNAME}입니다`);
+      authToast(ERROR_MESSAGE.CHECK_NICKNAME_FAIL);
     } else {
-      alert('사용 가능합니다');
+      alert(SUCCESS_MESSAGE);
       setDuplicateCheck(true);
     }
   };

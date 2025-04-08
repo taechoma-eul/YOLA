@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
-import { AUTH, LABEL } from '@/constants/auth-form';
+import { AUTH, ERROR_MESSAGE, LABEL, SUCCESS_MESSAGE } from '@/constants/auth-form';
+import { authToast } from '@/lib/utils/auth-toast';
 
 interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
@@ -42,16 +43,16 @@ const AuthFormField = <T extends keyof AuthFormData>({
     const nowValue: string = getValues(fieldName);
 
     if (!nowValue) {
-      alert(`${fieldName === AUTH.EMAIL ? LABEL.EMAIL : LABEL.NICKNAME}을 먼저 입력해주세요`);
+      authToast(fieldName === AUTH.EMAIL ? ERROR_MESSAGE.NONE_EMAIL : ERROR_MESSAGE.NONE_NICKNAME);
       return;
     }
 
     const data = await getDuplicateCheckData(fieldName, nowValue);
 
     if (data) {
-      alert(`이미 사용 중인 ${fieldName === AUTH.EMAIL ? LABEL.EMAIL : LABEL.NICKNAME}입니다`);
+      authToast(fieldName === AUTH.EMAIL ? ERROR_MESSAGE.CHECK_EMAIL_FAIL : ERROR_MESSAGE.CHECK_NICKNAME_FAIL);
     } else {
-      alert('사용 가능합니다');
+      alert(SUCCESS_MESSAGE);
       setDuplicateCheck(true);
     }
   };
