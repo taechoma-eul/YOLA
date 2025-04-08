@@ -10,24 +10,14 @@ interface MypageProgressBarProps {
 const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
 
-  const levelStepMap = {
-    [USER_LEVELS.START]: 0,
-    [USER_LEVELS.BEGINNER]: 1,
-    [USER_LEVELS.NOVICE]: 2,
-    [USER_LEVELS.INTERMEDIATE]: 3,
-    [USER_LEVELS.EXPERT]: 4,
-    [USER_LEVELS.MASTER]: 5
-  } as const;
-
-  type LevelKey = keyof typeof levelStepMap;
-
-  useEffect(() => {
-    setCurrentStep(levelStepMap[level as LevelKey] ?? 0);
-  }, [level]);
-
   const totalSteps = 5;
   const progressWidth = `${(currentStep / totalSteps) * 100}%`;
-  const stepLabels = Object.values(USER_LEVELS);
+  const stepLabels = Object.values(USER_LEVELS) as string[];
+
+  useEffect(() => {
+    const index = stepLabels.indexOf(level);
+    setCurrentStep(index === -1 ? 0 : index);
+  }, [level]);
 
   return (
     <div className="gap-3 rounded-md border border-slate-200 p-10">
