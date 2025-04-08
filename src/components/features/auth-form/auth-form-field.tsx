@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { AuthFormData } from '@/lib/utils/validation/auth-validate';
 import { UseFormReturn } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
 
 interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
