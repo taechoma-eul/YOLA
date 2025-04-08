@@ -1,7 +1,11 @@
-import { ImageSwiper } from '@/components/ui/card-detail-image-swiper';
-import type { LifePostWithImageUrls } from '@/types/life-post';
-import { ChevronsRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { ChevronsRight } from 'lucide-react';
+import EditDeleteDropdown from '@/components/common/edit-delete-dropdown';
+import { ImageSwiper } from '@/components/ui/card-detail-image-swiper';
+import { PATH } from '@/constants/page-path';
+import { useDeleteLifePost } from '@/lib/hooks/mutations/use-delete-life-post';
+import type { LifePostWithImageUrls } from '@/types/life-post';
+import { useRouter } from 'next/navigation';
 
 /**
   step 1. 모달을 호출할 파일에 이 코드를 추가해주세요
@@ -39,20 +43,25 @@ export const PostDetailModal = ({
   post: LifePostWithImageUrls | null;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const deleteLifePost = useDeleteLifePost();
+  const router = useRouter();
 
   if (!post) return;
 
   const createdDate = post.created_at.slice(0, 10);
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout; // ID 저장 변수
+
     if (showModal) {
-      setTimeout(() => setIsVisible(true), SET_TIME_OUT_SHOW_MODAL);
+      timeoutId = setTimeout(() => setIsVisible(true), SET_TIME_OUT_SHOW_MODAL);
       document.body.style.overflow = 'hidden'; //모달이 클릭되면 배경에 스크롤 막음
     } else {
       setIsVisible(false);
       document.body.style.overflow = '';
     }
     return () => {
+      clearTimeout(timeoutId); // 클린업 시 타이머 제거
       document.body.style.overflow = '';
     };
   }, [showModal]);
@@ -62,6 +71,25 @@ export const PostDetailModal = ({
     setTimeout(() => {
       clickModal(false);
     }, SET_TIME_OUT_CLOSE);
+  };
+
+  // 미션id 유무로 미션인증 작성 페이지로 보낼지, 하루일기 작성 페이지로 보낼지 결정
+  const handleEdit = () => {
+    {
+      post.mission_id
+        ? router.push(`${PATH.LIFE_POST}?mission_id=${post.mission_id}`)
+        : router.push(`${PATH.LIFE_POST}?post_id=${post.id}`);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteLifePost.mutateAsync(post);
+      handleClose();
+      alert('삭제되었습니다!');
+    } catch (error) {
+      alert('삭제에 실패했습니다.');
+    }
   };
 
   return (
@@ -98,6 +126,7 @@ export const PostDetailModal = ({
             )}
           </div>
           <p>{post.title}</p>
+          <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
           <h1>{post.content}</h1>
           <div className="mb-2 mt-auto space-x-2 text-[12px] text-gray-700">
             {post.tags?.map((tag, idx) => (
