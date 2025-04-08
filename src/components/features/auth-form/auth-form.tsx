@@ -9,7 +9,7 @@ import LoginFormButton from '@/components/features/auth-form/login-form-button';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
 import { Form } from '@/components/ui/form';
 import type { AuthFormMode, FieldData } from '@/types/components/auth-form';
-import { AUTH } from '@/constants/auth-form';
+import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 
 type FormFieldData = Omit<FieldData, 'isSubmitting'>;
 
@@ -20,15 +20,27 @@ const AuthForm = ({ mode }: AuthFormMode) => {
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
 
   const signupFieldData: FormFieldData[] = [
-    { fieldName: 'email', placeholder: '이메일을 입력하세요.', isCheckButton: true, form: form, inputType: 'email' },
-    { fieldName: 'nickname', placeholder: '닉네임을 입력하세요.', isCheckButton: true, form: form, inputType: 'text' },
-    { fieldName: 'password', placeholder: '비밀번호를 입력하세요.', form: form, inputType: 'password' },
-    { fieldName: 'checkPassword', placeholder: '비밀번호를 한번 더 입력하세요.', form: form, inputType: 'password' }
+    {
+      fieldName: AUTH.EMAIL,
+      placeholder: PLACEHOLDER.EMAIL,
+      isCheckButton: true,
+      form: form,
+      inputType: 'email'
+    },
+    {
+      fieldName: AUTH.NICKNAME,
+      placeholder: PLACEHOLDER.NICKNAME,
+      isCheckButton: true,
+      form: form,
+      inputType: 'text'
+    },
+    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: form, inputType: 'password' },
+    { fieldName: AUTH.CHECK_PASSWORD, placeholder: PLACEHOLDER.CHECK_PASSWORD, form: form, inputType: 'password' }
   ];
 
   const loginFieldData: FormFieldData[] = [
-    { fieldName: 'email', placeholder: '이메일을 입력하세요.', form: form, inputType: 'email' },
-    { fieldName: 'password', placeholder: '비밀번호를 입력하세요.', form: form, inputType: 'password' }
+    { fieldName: AUTH.EMAIL, placeholder: PLACEHOLDER.EMAIL, form: form, inputType: 'email' },
+    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: form, inputType: 'password' }
   ];
 
   const renderingData: FormFieldData[] = mode === AUTH.SIGNUP ? signupFieldData : loginFieldData;

@@ -7,7 +7,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
-import { AUTH } from '@/constants/auth-form';
+import { AUTH, LABEL } from '@/constants/auth-form';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -17,28 +17,28 @@ interface FieldProps {
 
 const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) => {
   const { watch, getValues } = useFormContext();
-  const nicknameValue = watch('nickname');
+  const nicknameValue = watch(AUTH.EMAIL);
 
   useEffect(() => {
     setDuplicateCheck(false); // 값 변경 시 중복확인 상태 초기화
 
-    if (initNickname === getValues('nickname')) setDuplicateCheck(true); // 기존 닉네임과 같으면 중복검사 pass
+    if (initNickname === getValues(AUTH.EMAIL)) setDuplicateCheck(true); // 기존 닉네임과 같으면 중복검사 pass
   }, [nicknameValue, setDuplicateCheck]);
 
   const handleDuplicateCheck = async () => {
-    const nowValue: string = getValues('nickname');
+    const nowValue: string = getValues(AUTH.EMAIL);
 
     if (initNickname === nowValue) setDuplicateCheck(true);
 
     if (!nowValue) {
-      alert(`${AUTH.NICKNAME_LABEL}을 먼저 입력해주세요`);
+      alert(`${LABEL.NICKNAME}을 먼저 입력해주세요`);
       return;
     }
 
-    const data = await getDuplicateCheckData('nickname', nowValue);
+    const data = await getDuplicateCheckData(AUTH.EMAIL, nowValue);
 
     if (data) {
-      alert(`이미 사용 중인 ${AUTH.NICKNAME_LABEL}입니다`);
+      alert(`이미 사용 중인 ${LABEL.NICKNAME}입니다`);
     } else {
       alert('사용 가능합니다');
       setDuplicateCheck(true);

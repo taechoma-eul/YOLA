@@ -3,11 +3,11 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useFormContext, UseFormReturn } from 'react-hook-form';
 import { getDuplicateCheckData } from '@/lib/utils/api/auth-action';
-import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { AUTH } from '@/constants/auth-form';
+import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
+import { AUTH, LABEL } from '@/constants/auth-form';
 
 interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
@@ -41,14 +41,14 @@ const AuthFormField = <T extends keyof AuthFormData>({
     const nowValue: string = getValues(fieldName);
 
     if (!nowValue) {
-      alert(`${fieldName === AUTH.EMAIL ? AUTH.EMAIL_LABEL : AUTH.NICKNAME_LABEL}을 먼저 입력해주세요`);
+      alert(`${fieldName === AUTH.EMAIL ? LABEL.EMAIL : LABEL.NICKNAME}을 먼저 입력해주세요`);
       return;
     }
 
     const data = await getDuplicateCheckData(fieldName, nowValue);
 
     if (data) {
-      alert(`이미 사용 중인 ${fieldName === AUTH.EMAIL ? AUTH.EMAIL_LABEL : AUTH.NICKNAME_LABEL}입니다`);
+      alert(`이미 사용 중인 ${fieldName === AUTH.EMAIL ? LABEL.EMAIL : LABEL.NICKNAME}입니다`);
     } else {
       alert('사용 가능합니다');
       setDuplicateCheck(true);
