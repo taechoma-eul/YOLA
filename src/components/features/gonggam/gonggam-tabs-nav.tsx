@@ -28,6 +28,7 @@ export function TabsNav() {
           key={tab.slug}
           href={`/gonggam/${tab.slug}`}
           className={clsx(
+            '-mb-2 pb-2',
             pathname?.startsWith(`/gonggam/${tab.slug}`)
               ? 'border-b-2 border-black font-bold'
               : 'text-gray-400 hover:text-black'
