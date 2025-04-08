@@ -15,6 +15,8 @@ interface GonggamPaginationProps {
   baseHref: string; // e.g. /gonggam/daily
 }
 
+const MAX_PAGE_LINKS = 5; // 화면에 표시할 페이지 버튼 수
+
 export const GonggamPagination = ({ currentPage, totalPages, baseHref }: GonggamPaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,7 +27,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
     router.push(`${baseHref}?${newParams.toString()}`);
   };
 
-  const pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1).slice(0, 5);
+  const pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1).slice(0, MAX_PAGE_LINKS);
 
   return (
     <Pagination>
