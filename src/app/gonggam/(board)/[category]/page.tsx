@@ -1,13 +1,16 @@
+import { GonggamPagination } from '@/components/features/gonggam/gonggam-pagination';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam-board.api';
 import Image from 'next/image';
 
 interface GonggamCategoryBoardProps {
   params: { category: string };
+  searchParams: { page?: string };
 }
 
-const GonggamCategoryBoard = async ({ params: { category } }: GonggamCategoryBoardProps) => {
-  const { posts, pagination } = await getPaginatedGonggamPosts(slugToCategory[category]);
+const GonggamCategoryBoard = async ({ params: { category }, searchParams }: GonggamCategoryBoardProps) => {
+  const currentPage = Number(searchParams.page) || 1;
+  const { posts, pagination } = await getPaginatedGonggamPosts(slugToCategory[category], currentPage);
 
   return (
     <div className="space-y-4">
@@ -41,10 +44,11 @@ const GonggamCategoryBoard = async ({ params: { category } }: GonggamCategoryBoa
           ))
         )}
       </ul>
-
-      <div className="text-sm text-gray-500">
-        페이지 {pagination.currentPage} / {pagination.totalPages} (총 {pagination.totalCount}개)
-      </div>
+      <GonggamPagination
+        currentPage={pagination.currentPage}
+        totalPages={pagination.totalPages}
+        baseHref={`/gonggam/${category}`}
+      />
     </div>
   );
 };
