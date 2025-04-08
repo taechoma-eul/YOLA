@@ -1,8 +1,8 @@
 import { TABLE } from '@/constants/supabase-tables-name';
+import { MSG } from '@/constants/messages';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import type { LifePost } from '@/types/life-post';
-import { MSG } from '@/constants/messages';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 /**
