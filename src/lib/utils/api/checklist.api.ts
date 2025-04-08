@@ -1,5 +1,4 @@
 'use server';
-import { DEFAULT_LEVEL } from '@/constants/magic-number';
 import { MSG } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { TABLE } from '@/constants/supabase-tables-name';
@@ -43,12 +42,12 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
     throw new Error(`${MSG.INVALID_MISSION_TYPE}: ${decodedMission}`);
   }
   const { data, error } = (await supabase.from(TABLE.USER_LEVEL).select(col).eq('user_id', userId).single()) as {
-    data: Pick<UserLevel, typeof col> | null;
+    data: Pick<UserLevel, typeof col>;
     error: any;
   };
   if (error) throw new Error(error.message);
 
-  return String(data?.[col] ?? DEFAULT_LEVEL);
+  return String(data[col]);
 };
 
 /** getMissionListByLevel: 미션 리스트 데이터 불러오기 (미션 타입 + 유저 레벨 기반)
