@@ -8,7 +8,7 @@ interface GonggamPostDetailProps {
 const page = ({ params: { category, postId } }: GonggamPostDetailProps) => {
   return (
     <div>
-      {category}, {postId} 상세 콘텐츠입니다.
+      {category} / {postId}번 글 콘텐츠입니다.
     </div>
   );
 };
