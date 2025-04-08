@@ -1,14 +1,50 @@
-import { UseFormReturn } from 'react-hook-form';
+'use client';
+
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useFormContext, UseFormReturn } from 'react-hook-form';
+import { getDuplicateCheckData } from '@/lib/utils/api/auth-action';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
+import { AUTH } from '@/constants/auth-form';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
+  setDuplicateCheck: Dispatch<SetStateAction<boolean>>;
+  initNickname: string;
 }
 
-const NicknameField = ({ form }: FieldProps) => {
+const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) => {
+  const { watch, getValues } = useFormContext();
+  const nicknameValue = watch('nickname');
+
+  useEffect(() => {
+    setDuplicateCheck(false); // 값 변경 시 중복확인 상태 초기화
+
+    if (initNickname === getValues('nickname')) setDuplicateCheck(true); // 기존 닉네임과 같으면 중복검사 pass
+  }, [nicknameValue, setDuplicateCheck]);
+
+  const handleDuplicateCheck = async () => {
+    const nowValue: string = getValues('nickname');
+
+    if (initNickname === nowValue) setDuplicateCheck(true);
+
+    if (!nowValue) {
+      alert(`${AUTH.NICKNAME_LABEL}을 먼저 입력해주세요`);
+      return;
+    }
+
+    const data = await getDuplicateCheckData('nickname', nowValue);
+
+    if (data) {
+      alert(`이미 사용 중인 ${AUTH.NICKNAME_LABEL}입니다`);
+    } else {
+      alert('사용 가능합니다');
+      setDuplicateCheck(true);
+    }
+  };
+
   return (
     <FormField
       control={form.control}
@@ -27,7 +63,7 @@ const NicknameField = ({ form }: FieldProps) => {
             </FormControl>
             <FormMessage />
           </div>
-          <Button type="button" className="h-full w-[70px]">
+          <Button type="button" className="h-full w-[70px]" onClick={handleDuplicateCheck}>
             중복확인
           </Button>
         </FormItem>

@@ -1,8 +1,13 @@
-import { UseFormReturn } from 'react-hook-form';
+'use client';
+
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useFormContext, UseFormReturn } from 'react-hook-form';
+import { getDuplicateCheckData } from '@/lib/utils/api/auth-action';
+import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
+import { AUTH } from '@/constants/auth-form';
 
 interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
@@ -10,6 +15,8 @@ interface FieldProps<T extends keyof AuthFormData> {
   placeholder: string;
   isCheckButton?: boolean;
   form: UseFormReturn<AuthFormData, any, undefined>;
+  setNicknameDuplicateCheck: Dispatch<SetStateAction<boolean>>;
+  setEmailDuplicateCheck: Dispatch<SetStateAction<boolean>>;
 }
 
 const AuthFormField = <T extends keyof AuthFormData>({
@@ -17,8 +24,36 @@ const AuthFormField = <T extends keyof AuthFormData>({
   fieldName,
   placeholder,
   isCheckButton = false,
-  form
+  form,
+  setNicknameDuplicateCheck,
+  setEmailDuplicateCheck
 }: FieldProps<T>) => {
+  const { watch, getValues } = useFormContext();
+  const fieldValue = watch(fieldName);
+  const setDuplicateCheck: Dispatch<SetStateAction<boolean>> =
+    fieldName === AUTH.EMAIL ? setEmailDuplicateCheck : setNicknameDuplicateCheck;
+
+  useEffect(() => {
+    setDuplicateCheck(false); // 값 변경 시 중복확인 상태 초기화\
+  }, [fieldValue, setDuplicateCheck]);
+
+  const handleDuplicateCheck = async () => {
+    const nowValue: string = getValues(fieldName);
+
+    if (!nowValue) {
+      alert(`${fieldName === AUTH.EMAIL ? AUTH.EMAIL_LABEL : AUTH.NICKNAME_LABEL}을 먼저 입력해주세요`);
+      return;
+    }
+
+    const data = await getDuplicateCheckData(fieldName, nowValue);
+
+    if (data) {
+      alert(`이미 사용 중인 ${fieldName === AUTH.EMAIL ? AUTH.EMAIL_LABEL : AUTH.NICKNAME_LABEL}입니다`);
+    } else {
+      alert('사용 가능합니다');
+      setDuplicateCheck(true);
+    }
+  };
   return (
     <FormField
       control={form.control}
@@ -33,7 +68,7 @@ const AuthFormField = <T extends keyof AuthFormData>({
               <FormMessage />
             </div>
             {isCheckButton && (
-              <Button type="button" className="h-11 w-[70px]">
+              <Button type="button" className="h-11 w-[70px]" onClick={handleDuplicateCheck}>
                 중복확인
               </Button>
             )}
