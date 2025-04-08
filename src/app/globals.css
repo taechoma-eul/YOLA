@@ -76,4 +76,28 @@
 .fc-daygrid-day {
   cursor: pointer;
   user-select: none;
+  border: none !important;
+  justify-items: center;
+}
+/* 전체 캘린더 테이블의 테두리 제거 */
+.fc-theme-standard td,
+.fc-theme-standard th,
+.fc-theme-standard .fc-scrollgrid {
+  border: none !important;
+}
+
+/* 헤더 아래 선 없애기 */
+.fc-theme-standard .fc-scrollgrid-section-header td {
+  border-bottom: none !important;
+}
+
+/* 셀 사이 테두리 제거 */
+.fc-theme-standard .fc-daygrid-day {
+  border: none !important;
+}
+
+/* 셀 hover 시 생기는 테두리 제거 */
+.fc-daygrid-day-frame {
+  border: none !important;
+  box-shadow: none !important;
 }
