@@ -53,7 +53,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
       };
       updateProfile(updatedData);
     } catch (error) {
-      alert('사용자 정보 변경에 실패했습니다.');
+      authToast('사용자 정보 변경에 실패했습니다.');
     }
   };
 
