@@ -1,7 +1,8 @@
+import { PATH } from '@/constants/page-path';
 import { redirect } from 'next/navigation';
 
 const GonggamPage = () => {
-  redirect('/gonggam/daily');
+  redirect(PATH.GONGGAM_DAILY);
 };
 
 export default GonggamPage;
