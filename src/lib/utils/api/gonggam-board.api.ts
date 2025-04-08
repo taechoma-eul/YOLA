@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { Enums } from '@/types/supabase';
+import type { GonggamCategory, PaginatedPostsResponse } from '@/types/gonggam';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -13,7 +13,10 @@ const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
  * @returns posts: 해당 페이지의 게시글 목록
  *          pagination: 현재 페이지, 전체 페이지 수, 전체 게시글 수
  */
-export const getPaginatedGonggamPosts = async (category: Enums<'categorys'>, page: number = 1) => {
+export const getPaginatedGonggamPosts = async (
+  category: GonggamCategory,
+  page: number = 1
+): Promise<PaginatedPostsResponse> => {
   const supabase = await createClient();
 
   // Step 1: 전체 개수 카운트

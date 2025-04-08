@@ -1,10 +1,10 @@
-import type { Enums } from '@/types/supabase';
+import type { CategoryMapType, GonggamCategory, slugToCategoryType } from '@/types/gonggam';
 
 /** categoryMap: 단일 source of truth
  * Supabase 'categorys' Enum (한글 카테고리명) → URL에서 사용하는 slug 값 매핑
  * 예: '일상공유' → 'daily'
  */
-export const categoryMap: Record<Enums<'categorys'>, string> = {
+export const categoryMap: CategoryMapType = {
   일상공유: 'daily',
   꿀팁공유: 'tip',
   여기추천: 'place',
@@ -15,16 +15,15 @@ export const categoryMap: Record<Enums<'categorys'>, string> = {
  * URL slug → Supabase 'categorys' Enum (한글 카테고리명) 변환
  * 예: 'daily' → '일상공유'
  */
-export const slugToCategory = Object.fromEntries(Object.entries(categoryMap).map(([k, v]) => [v, k])) as Record<
-  string,
-  Enums<'categorys'>
->;
+export const slugToCategory = Object.fromEntries(
+  Object.entries(categoryMap).map(([k, v]) => [v, k])
+) as slugToCategoryType;
 
 /**  tabs: TabsNav 컴포넌트 등에서 반복 렌더링에 사용
  * 공감 게시판 카테고리 탭 네비게이션 구성용 데이터 배열
  * 예: { label: '밋업', slug: 'meetup' }
  */
 export const tabs = Object.entries(categoryMap).map(([label, slug]) => ({
-  label: label as Enums<'categorys'>,
+  label: label as GonggamCategory,
   slug
 }));
