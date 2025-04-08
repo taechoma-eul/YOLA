@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useProfileForm } from '@/lib/hooks/use-profile-form';
 import { processedImage } from '@/lib/utils/processed-image';
+import { authToast } from '@/lib/utils/auth-toast';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
@@ -16,6 +18,7 @@ import type { Tables } from '@/types/supabase';
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const { profile, isProfileError } = useUserProfile();
   const updateProfile = useUpdateProfileMutate();
+  const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
 
   const form = useProfileForm(initProfile.nickname ? initProfile.nickname : '');
 
@@ -30,6 +33,11 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
   };
 
   const handleUpdateProfile = async (formData: EditFormData) => {
+    if (!duplicateCheck) {
+      authToast('닉네임 중복확인을 해주세요.');
+      return;
+    }
+
     try {
       const imageUrl = await handleProfileImageUpload();
       const updatedData = {
@@ -53,7 +61,11 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
           <ProfileImageField form={form} profileImage={displayProfile.profile_image} />
           <div className="flex w-[500px] flex-col items-start justify-center gap-4 self-stretch">
             <EmailField email={displayProfile.email} />
-            <NicknameField form={form} />
+            <NicknameField
+              form={form}
+              setDuplicateCheck={setDuplicateCheck}
+              initNickname={displayProfile.nickname ? displayProfile.nickname : ''}
+            />
           </div>
         </div>
         <Button type="submit">수정하기</Button>
