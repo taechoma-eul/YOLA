@@ -23,7 +23,8 @@ export async function updateSession(request: NextRequest) {
     PATH.TRAVEL_CHECKLIST,
     PATH.GOD_LIFE_CHECKLIST,
     PATH.GONGGAM,
-    PATH.ERROR
+    PATH.ERROR,
+    '/api/auth/callback'
   ];
 
   // 루트 경로는 정확한 매칭, 나머지는 startsWith
