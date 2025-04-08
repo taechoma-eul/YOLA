@@ -1,4 +1,4 @@
-import type { Enums } from './supabase';
+import type { Enums } from '@/types/supabase';
 
 export type GonggamCategory = Enums<'categorys'>;
 
