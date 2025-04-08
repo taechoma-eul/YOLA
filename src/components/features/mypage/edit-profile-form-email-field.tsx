@@ -1,12 +1,10 @@
-const ProfileEmailField = ({ email }: { email: string }) => {
+const EmailField = ({ email }: { email: string }) => {
   return (
-    <div className="flex items-center space-x-5">
-      <p className="w-20 text-end text-lg">이메일</p>
-      <div className="flex-1">
-        <p className="mb-3 text-lg">{email}</p>
-      </div>
+    <div className="flex h-8 items-center justify-start gap-10 self-stretch">
+      <p className="justify-start text-lg">이메일</p>
+      <p className="justify-start text-lg">{email}</p>
     </div>
   );
 };
 
-export default ProfileEmailField;
+export default EmailField;

@@ -1,31 +1,23 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
-import { processedImage } from '@/lib/utils/processed-image';
-import { editProfileSchema } from '@/lib/utils/validation/auth-validate';
-import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
+import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
+import { useProfileForm } from '@/lib/hooks/use-profile-form';
+import { processedImage } from '@/lib/utils/processed-image';
 import { Button } from '@/components/ui/button';
-import { Form, FormField } from '@/components/ui/form';
-import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
-import ProfileEmailField from '@/components/features/mypage/edit-profile-form-email-field';
+import { Form } from '@/components/ui/form';
+import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
 import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
+import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
 import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
+import type { Tables } from '@/types/supabase';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
-  const { profile, isProfileError } = useUserProfile(initProfile);
+  const { profile, isProfileError } = useUserProfile();
   const updateProfile = useUpdateProfileMutate();
 
-  const form = useForm<EditFormData>({
-    resolver: zodResolver(editProfileSchema),
-    defaultValues: {
-      nickname: initProfile.nickname as string,
-      profile_image_file: null,
-      profile_image: ''
-    }
-  });
+  const form = useProfileForm(initProfile.nickname ? initProfile.nickname : '');
 
   const handleProfileImageUpload = async () => {
     const file = form.getValues('profile_image_file')?.[0];
@@ -33,7 +25,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
     if (!file) return null;
 
     const processedFile = await processedImage(file);
-    const newImageUrl = await profileImageUpload(processedFile, profile);
+    const newImageUrl = await profileImageUpload(processedFile, initProfile);
     return newImageUrl;
   };
 
@@ -46,30 +38,25 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
       };
       updateProfile(updatedData);
     } catch (error) {
-      console.log('사용자 정보 변경에 실패했습니다.');
+      alert('사용자 정보 변경에 실패했습니다.');
     }
   };
 
   if (isProfileError) return;
 
+  const displayProfile: Tables<'users'> = profile ? profile : initProfile;
+
   return (
     <Form {...form}>
-      <form className="w-[500px] space-y-5 border-2 p-5" onSubmit={form.handleSubmit(handleUpdateProfile)}>
-        <FormField
-          control={form.control}
-          name="profile_image"
-          render={() => <ProfileImageField form={form} profileImage={profile.profile_image} />}
-        />
-        <ProfileEmailField email={profile.email} />
-        <FormField
-          control={form.control}
-          name="nickname"
-          render={({ field }) => <NicknameField field={field} nickname={profile.nickname ? profile.nickname : ''} />}
-        />
-        <div className="h-[30px]" />
-        <Button type="submit" className="w-full">
-          저장하기
-        </Button>
+      <form className="justify-items-end space-y-[48px]" onSubmit={form.handleSubmit(handleUpdateProfile)}>
+        <div className="flex w-full items-start justify-start gap-10 rounded-xl bg-white p-8 outline outline-1 outline-offset-[-1px] outline-neutral-300">
+          <ProfileImageField form={form} profileImage={displayProfile.profile_image} />
+          <div className="flex w-[500px] flex-col items-start justify-center gap-4 self-stretch">
+            <EmailField email={displayProfile.email} />
+            <NicknameField form={form} />
+          </div>
+        </div>
+        <Button type="submit">수정하기</Button>
       </form>
     </Form>
   );
