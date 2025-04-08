@@ -3,12 +3,12 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useFormContext, UseFormReturn } from 'react-hook-form';
 import { getDuplicateCheckData } from '@/lib/utils/api/auth-action';
+import { toastAlert } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
-import { AUTH, ERROR_MESSAGE, LABEL, SUCCESS_MESSAGE } from '@/constants/auth-form';
-import { authToast } from '@/lib/utils/auth-toast';
+import { AUTH, ERROR_MESSAGE, SUCCESS_MESSAGE } from '@/constants/auth-form';
 
 interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
@@ -43,16 +43,19 @@ const AuthFormField = <T extends keyof AuthFormData>({
     const nowValue: string = getValues(fieldName);
 
     if (!nowValue) {
-      authToast(fieldName === AUTH.EMAIL ? ERROR_MESSAGE.NONE_EMAIL : ERROR_MESSAGE.NONE_NICKNAME);
+      toastAlert(fieldName === AUTH.EMAIL ? ERROR_MESSAGE.NONE_EMAIL : ERROR_MESSAGE.NONE_NICKNAME, 'destructive');
       return;
     }
 
     const data = await getDuplicateCheckData(fieldName, nowValue);
 
     if (data) {
-      authToast(fieldName === AUTH.EMAIL ? ERROR_MESSAGE.CHECK_EMAIL_FAIL : ERROR_MESSAGE.CHECK_NICKNAME_FAIL);
+      toastAlert(
+        fieldName === AUTH.EMAIL ? ERROR_MESSAGE.CHECK_EMAIL_FAIL : ERROR_MESSAGE.CHECK_NICKNAME_FAIL,
+        'destructive'
+      );
     } else {
-      alert(SUCCESS_MESSAGE);
+      toastAlert(SUCCESS_MESSAGE, 'default');
       setDuplicateCheck(true);
     }
   };

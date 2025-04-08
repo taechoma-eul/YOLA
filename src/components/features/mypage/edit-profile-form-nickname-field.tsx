@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
 import { AUTH, ERROR_MESSAGE, LABEL, PLACEHOLDER, SUCCESS_MESSAGE } from '@/constants/auth-form';
-import { authToast } from '@/lib/utils/auth-toast';
+import { toastAlert } from '@/lib/utils/toast';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -32,16 +32,16 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
     if (initNickname === nowValue) setDuplicateCheck(true);
 
     if (!nowValue) {
-      authToast(ERROR_MESSAGE.NONE_NICKNAME);
+      toastAlert(ERROR_MESSAGE.NONE_NICKNAME, 'destructive');
       return;
     }
 
     const data = await getDuplicateCheckData(AUTH.NICKNAME, nowValue);
 
     if (data) {
-      authToast(ERROR_MESSAGE.CHECK_NICKNAME_FAIL);
+      toastAlert(ERROR_MESSAGE.CHECK_NICKNAME_FAIL, 'destructive');
     } else {
-      alert(SUCCESS_MESSAGE);
+      toastAlert(SUCCESS_MESSAGE, 'default');
       setDuplicateCheck(true);
     }
   };

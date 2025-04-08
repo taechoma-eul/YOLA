@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { login, signup } from '@/lib/utils/api/auth-action';
 import { useAuthForm } from '@/lib/hooks/use-auth-form';
-import { authToast } from '@/lib/utils/auth-toast';
+import { toastAlert } from '@/lib/utils/toast';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import LoginFormButton from '@/components/features/auth-form/login-form-button';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
@@ -49,7 +49,7 @@ const AuthForm = ({ mode }: AuthFormMode) => {
 
   const handleFormAction = async (formData: FormData) => {
     if (!isValid) {
-      authToast(ERROR_MESSAGE.FIELD_CHECK);
+      toastAlert(ERROR_MESSAGE.FIELD_CHECK, 'destructive');
       return;
     }
 
@@ -57,23 +57,25 @@ const AuthForm = ({ mode }: AuthFormMode) => {
       startTransition(async () => {
         try {
           await login(formData);
+          toastAlert('로그인이 완료되었습니다.', 'success');
         } catch (error) {
-          if (error instanceof Error) authToast(error.message);
+          if (error instanceof Error) toastAlert(error.message, 'destructive');
         }
       });
       return;
     }
     if (!emailDuplicateCheck) {
-      authToast(ERROR_MESSAGE.EMAIL_CHECK);
+      toastAlert(ERROR_MESSAGE.EMAIL_CHECK, 'destructive');
       return;
     }
     if (!nicknameDuplicateCheck) {
-      authToast(ERROR_MESSAGE.NICKNAME_CHECK);
+      toastAlert(ERROR_MESSAGE.NICKNAME_CHECK, 'destructive');
       return;
     }
 
     startTransition(async () => {
       await signup(formData);
+      toastAlert('회원가입이 완료되었습니다. 자동 로그인 됩니다.', 'success');
     });
   };
 

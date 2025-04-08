@@ -6,7 +6,7 @@ import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useProfileForm } from '@/lib/hooks/use-profile-form';
 import { processedImage } from '@/lib/utils/processed-image';
-import { authToast } from '@/lib/utils/auth-toast';
+import { toastAlert } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
@@ -36,12 +36,12 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
   const handleUpdateProfile = async (formData: EditFormData) => {
     if (!duplicateCheck) {
-      authToast(ERROR_MESSAGE.NICKNAME_CHECK);
+      toastAlert(ERROR_MESSAGE.NICKNAME_CHECK, 'destructive');
       return;
     }
 
     if (!isValid) {
-      authToast(ERROR_MESSAGE.FIELD_CHECK);
+      toastAlert(ERROR_MESSAGE.FIELD_CHECK, 'destructive');
       return;
     }
 
@@ -52,8 +52,9 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         profile_image: imageUrl || formData.profile_image // 업로드 없으면 기존 값 유지
       };
       updateProfile(updatedData);
+      toastAlert('프로필 변경이 완료되었습니다.', 'success');
     } catch (error) {
-      authToast('사용자 정보 변경에 실패했습니다.');
+      toastAlert('사용자 정보 변경에 실패했습니다.', 'destructive');
     }
   };
 
