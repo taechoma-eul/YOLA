@@ -4,7 +4,9 @@ export const AUTH = {
   PASSWORD: 'password',
   CHECK_PASSWORD: 'checkPassword',
   NICKNAME: 'nickname',
-  EMAIL: 'email'
+  EMAIL: 'email',
+  PROFILE_IMAGE: 'profile_image',
+  PROFILE_IMAGE_FILE: 'profile_image_file'
 } as const;
 
 export const LABEL = {

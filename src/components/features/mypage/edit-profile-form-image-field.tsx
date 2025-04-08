@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
+import { AUTH } from '@/constants/auth-form';
 
 const ProfileImageField = ({
   form,
@@ -31,7 +32,7 @@ const ProfileImageField = ({
     if (!selectedFile) return;
 
     // Form에 파일 설정
-    form.setValue('profile_image_file', e.target.files);
+    form.setValue(AUTH.PROFILE_IMAGE_FILE, e.target.files);
 
     const url = await processedImagePreview(selectedFile);
     setPreviewUrl(url);
@@ -40,14 +41,13 @@ const ProfileImageField = ({
   return (
     <FormField
       control={form.control}
-      name="profile_image"
+      name={AUTH.PROFILE_IMAGE}
       render={() => (
         <div className="relative flex w-44 flex-col items-end justify-start">
           <ProfileAvatar src={previewUrl ? previewUrl : profileImage} />
           <FormControl>
             <Input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
           </FormControl>
-
           <Button
             type="button"
             onClick={triggerFileInput}

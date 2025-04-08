@@ -21,7 +21,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
   const { profile, isProfileError } = useUserProfile();
   const updateProfile = useUpdateProfileMutate();
-  const form = useProfileForm(initProfile.nickname ? initProfile.nickname : '');
+  const form = useProfileForm(initProfile.nickname);
   const { isValid } = form.formState;
 
   const handleProfileImageUpload = async () => {
@@ -68,11 +68,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
           <ProfileImageField form={form} profileImage={displayProfile.profile_image} />
           <div className="flex w-[500px] flex-col items-start justify-center gap-4 self-stretch">
             <EmailField email={displayProfile.email} />
-            <NicknameField
-              form={form}
-              setDuplicateCheck={setDuplicateCheck}
-              initNickname={displayProfile.nickname ? displayProfile.nickname : ''}
-            />
+            <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={displayProfile.nickname} />
           </div>
         </div>
         <Button type="submit">수정하기</Button>

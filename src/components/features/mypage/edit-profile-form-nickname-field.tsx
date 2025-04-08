@@ -7,7 +7,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
-import { AUTH, LABEL } from '@/constants/auth-form';
+import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -48,15 +48,15 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
   return (
     <FormField
       control={form.control}
-      name="nickname"
+      name={AUTH.NICKNAME}
       render={({ field }) => (
         <FormItem className="flex h-8 items-center justify-start gap-10 self-stretch">
-          <FormLabel className="justify-start text-lg font-normal">닉네임</FormLabel>
+          <FormLabel className="justify-start text-lg font-normal">{LABEL.NICKNAME}</FormLabel>
           <div className="flex-1">
             <FormControl>
               <Input
                 className="flex h-full w-full items-center justify-start gap-2.5 rounded p-2.5 shadow-none outline outline-1 outline-offset-[-1px] outline-stone-300"
-                placeholder="닉네임 입력"
+                placeholder={PLACEHOLDER.NICKNAME}
                 type="text"
                 {...field}
               />
