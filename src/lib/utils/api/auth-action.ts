@@ -7,6 +7,7 @@ import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { Tables } from '@/types/supabase';
+import { NEXT_SERVER_SOCIAL_LOGIN } from '@/constants/api-url';
 
 const LAYOUT = 'layout';
 
@@ -101,7 +102,7 @@ export const signInWithGoogle = async (): Promise<never> => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'http://localhost:3000/api/auth/callback' // 서버 측 콜백 경로
+      redirectTo: NEXT_SERVER_SOCIAL_LOGIN // 서버 측 콜백 경로
     }
   });
 
@@ -117,7 +118,7 @@ export const signInWithKakao = async () => {
     provider: 'kakao',
     options: {
       scopes: 'profile_nickname profile_image account_email',
-      redirectTo: 'http://localhost:3000/api/auth/callback' // 리다이렉트 URL
+      redirectTo: NEXT_SERVER_SOCIAL_LOGIN // 리다이렉트 URL
     }
   });
 
