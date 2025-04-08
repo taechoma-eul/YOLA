@@ -1,5 +1,6 @@
 import { GonggamPagination } from '@/components/features/gonggam/gonggam-pagination';
 import { slugToCategory } from '@/constants/gonggam-category';
+import { PATH } from '@/constants/page-path';
 import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam-board.api';
 import Image from 'next/image';
 
@@ -47,7 +48,7 @@ const GonggamCategoryBoard = async ({ params: { category }, searchParams }: Gong
       <GonggamPagination
         currentPage={pagination.currentPage}
         totalPages={pagination.totalPages}
-        baseHref={`/gonggam/${category}`}
+        baseHref={`${PATH.GONGGAM}/${category}`}
       />
     </div>
   );
