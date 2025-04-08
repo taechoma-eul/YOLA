@@ -1,9 +1,16 @@
 interface GonggamPostDetailProps {
-  params: { postId: string };
+  params: {
+    category: string;
+    postId: string;
+  };
 }
 
-const page = ({ params: { postId } }: GonggamPostDetailProps) => {
-  return <div>{postId} 상세 콘텐츠입니다.</div>;
+const page = ({ params: { category, postId } }: GonggamPostDetailProps) => {
+  return (
+    <div>
+      {category}, {postId} 상세 콘텐츠입니다.
+    </div>
+  );
 };
 
 export default page;
