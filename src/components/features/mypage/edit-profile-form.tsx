@@ -14,13 +14,15 @@ import NicknameField from '@/components/features/mypage/edit-profile-form-nickna
 import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
 import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
 import type { Tables } from '@/types/supabase';
+import { ERROR_MESSAGE } from '@/constants/auth-form';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
-  const { profile, isProfileError } = useUserProfile();
-  const updateProfile = useUpdateProfileMutate();
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
 
+  const { profile, isProfileError } = useUserProfile();
+  const updateProfile = useUpdateProfileMutate();
   const form = useProfileForm(initProfile.nickname ? initProfile.nickname : '');
+  const { isValid } = form.formState;
 
   const handleProfileImageUpload = async () => {
     const file = form.getValues('profile_image_file')?.[0];
@@ -34,7 +36,12 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
   const handleUpdateProfile = async (formData: EditFormData) => {
     if (!duplicateCheck) {
-      authToast('닉네임 중복확인을 해주세요.');
+      authToast(ERROR_MESSAGE.NICKNAME_CHECK);
+      return;
+    }
+
+    if (!isValid) {
+      authToast(ERROR_MESSAGE.FIELD_CHECK);
       return;
     }
 

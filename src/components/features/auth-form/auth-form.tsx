@@ -9,15 +9,17 @@ import LoginFormButton from '@/components/features/auth-form/login-form-button';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
 import { Form } from '@/components/ui/form';
 import type { AuthFormMode, FieldData } from '@/types/components/auth-form';
-import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
+import { AUTH, ERROR_MESSAGE, PLACEHOLDER } from '@/constants/auth-form';
 
-type FormFieldData = Omit<FieldData, 'isSubmitting'>;
+type FormFieldData = Omit<FieldData, 'isSubmitting'> & { isSignup?: boolean };
 
 const AuthForm = ({ mode }: AuthFormMode) => {
-  const form = useAuthForm();
   const [isPending, startTransition] = useTransition();
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<boolean>(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
+
+  const form = useAuthForm();
+  const { isValid } = form.formState;
 
   const signupFieldData: FormFieldData[] = [
     {
@@ -25,7 +27,8 @@ const AuthForm = ({ mode }: AuthFormMode) => {
       placeholder: PLACEHOLDER.EMAIL,
       isCheckButton: true,
       form: form,
-      inputType: 'email'
+      inputType: 'email',
+      isSignup: true
     },
     {
       fieldName: AUTH.NICKNAME,
@@ -47,10 +50,15 @@ const AuthForm = ({ mode }: AuthFormMode) => {
 
   const handleFormAction = async (formData: FormData) => {
     if (!emailDuplicateCheck) {
-      authToast('이메일 중복확인을 해주세요.');
+      authToast(ERROR_MESSAGE.EMAIL_CHECK);
       return;
     } else if (!nicknameDuplicateCheck) {
-      authToast('닉네임 중복확인을 해주세요.');
+      authToast(ERROR_MESSAGE.NICKNAME_CHECK);
+      return;
+    }
+
+    if (!isValid) {
+      authToast(ERROR_MESSAGE.FIELD_CHECK);
       return;
     }
 
@@ -72,6 +80,7 @@ const AuthForm = ({ mode }: AuthFormMode) => {
             isCheckButton={data.isCheckButton}
             form={data.form}
             inputType={data.inputType}
+            isSignup={data.isSignup}
           />
         ))}
         {mode === AUTH.SIGNUP ? (

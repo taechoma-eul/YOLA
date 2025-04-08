@@ -17,6 +17,7 @@ interface FieldProps<T extends keyof AuthFormData> {
   form: UseFormReturn<AuthFormData, any, undefined>;
   setNicknameDuplicateCheck: Dispatch<SetStateAction<boolean>>;
   setEmailDuplicateCheck: Dispatch<SetStateAction<boolean>>;
+  isSignup?: boolean;
 }
 
 const AuthFormField = <T extends keyof AuthFormData>({
@@ -26,7 +27,8 @@ const AuthFormField = <T extends keyof AuthFormData>({
   isCheckButton = false,
   form,
   setNicknameDuplicateCheck,
-  setEmailDuplicateCheck
+  setEmailDuplicateCheck,
+  isSignup = false
 }: FieldProps<T>) => {
   const { watch, getValues } = useFormContext();
   const fieldValue = watch(fieldName);
@@ -35,6 +37,7 @@ const AuthFormField = <T extends keyof AuthFormData>({
 
   useEffect(() => {
     setDuplicateCheck(false); // 값 변경 시 중복확인 상태 초기화\
+    !isSignup && setDuplicateCheck(true);
   }, [fieldValue, setDuplicateCheck]);
 
   const handleDuplicateCheck = async () => {
