@@ -1,11 +1,11 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
-import { PATH } from '@/constants/page-path';
-import { validMissionTags } from '@/constants/mission';
-import { DEFAULT_LEVEL } from '@/constants/magic-number';
-import type { Level, MissionTag } from '@/types/checklist';
 import { getUserSessionState } from '@/lib/utils/api/auth-action';
+import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
+import { validMissionTags } from '@/constants/mission';
+import MissionListClient from '@/components/features/checklist/mission-list-client';
+import type { Level, MissionTag } from '@/types/checklist';
+
+let userLevel = '1'; // default level (for 비로그인 사용자)
 
 const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decoded = decodeURIComponent(params.mission);
@@ -16,7 +16,6 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
   const decodedMission = decoded as MissionTag;
 
   /** 레벨 세팅 */
-  let userLevel = DEFAULT_LEVEL; // default level (for 비로그인 사용자)
   const { userId } = await getUserSessionState();
   if (userId) {
     userLevel = await getUserLevelByMission({ userId, decodedMission });
@@ -92,23 +91,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
           </div>
         </div>
       </div>
-
-      {/* 미션 리스트 */}
-      <ul className="mt-10 grid grid-cols-5 gap-4 rounded-md border p-3 shadow-sm">
-        {missionListWithStatus.map((mission, idx) => (
-          <li key={idx}>
-            <Link
-              href={userId ? `${PATH.CHECKLIST_POST}/${mission.type}/${mission.content}` : `${PATH.LOGIN}`}
-              className={`relative flex min-h-[150px] items-center justify-center border p-10 ${
-                mission.completed ? 'bg-gray-300' : ''
-              }`}
-            >
-              <div className="text-center">{mission.content}</div>
-              <span className="absolute bottom-2 text-xs">인증하기 &gt;</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <MissionListClient missionList={missionListWithStatus} {...(userId && { userId })} />
     </section>
   );
 };

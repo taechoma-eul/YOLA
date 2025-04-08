@@ -10,13 +10,16 @@ import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { useLifePost } from '@/lib/hooks/mutations/useLifePost';
 import { v4 as uuidv4 } from 'uuid';
 import { PATH } from '@/constants/page-path';
-import { getToday } from '@/app/(life)/life/page';
+import { getToday } from '@/lib/utils/get-date';
 import DatePicker from './date-picker';
+import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
+import type { MissionType } from '@/types/checklist';
 
-type LifeInputFormProps = {
-  userId: string;
+interface LifeInputFormProps {
   missionId: string | null;
-};
+  dropdownMissions?: MissionType[];
+  completedIds?: number[];
+}
 
 const lifeRecordSchema = z.object({
   title: z.string().optional(),
@@ -33,16 +36,20 @@ type UploadedImage = {
 
 const IMAGE_STORAGE_BUCKET = 'life-post-images';
 
-const PostInputForm = ({ userId, missionId }: LifeInputFormProps) => {
+const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputFormProps) => {
   const router = useRouter();
   const { mutate, isPending } = useLifePost();
 
   const [selectedDate, setSelectedDate] = useState<string>(getToday());
   const [images, setImages] = useState<File[]>([]);
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
+  const [selectedMissionId, setSelectedMissionId] = useState<number | null>(missionId ? +missionId : null);
 
   const isMission = !!missionId;
-  const DEFAULT_TITLE = `${selectedDate}의 혼자 라이프 기록`;
+  const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
+
+  const DEFAULT_TITLE = isMission ? (selectedMission?.content ?? '미션 인증') : `${selectedDate}의 혼자 라이프 기록`;
+
   const {
     register,
     handleSubmit,
@@ -146,18 +153,27 @@ const PostInputForm = ({ userId, missionId }: LifeInputFormProps) => {
         className="mx-auto w-full max-w-2xl space-y-6 rounded-2xl border border-gray-200 bg-white p-8 shadow-lg"
       >
         <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-black">{isMission ? '미션 인증 기록' : '나의 일기 작성'}</h1>
+          <h1 className="text-2xl font-bold text-black">{!isMission && '나의 일기 작성'}</h1>
+          {isMission && dropdownMissions && (
+            <ChecklistPostDropdown
+              missions={dropdownMissions}
+              completedIds={completedIds}
+              selectedId={selectedMissionId}
+              onSelect={setSelectedMissionId}
+            />
+          )}
           <DatePicker date={selectedDate} setDate={setSelectedDate} />
         </div>
 
         {/* 제목 입력 */}
-        <input
-          type="text"
-          {...register('title')}
-          placeholder={DEFAULT_TITLE}
-          className="w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
-        />
-
+        {!isMission && (
+          <input
+            type="text"
+            {...register('title')}
+            placeholder={DEFAULT_TITLE}
+            className="w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
+          />
+        )}
         {/* 내용 입력 */}
         <div>
           <textarea
