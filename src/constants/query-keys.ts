@@ -1,3 +1,4 @@
 export const QUERY_KEY = {
-  PROFILE: ['profile']
+  PROFILE: ['profile'],
+  LIFE_POSTS_INFINITE: ['life-posts-infinite']
 };

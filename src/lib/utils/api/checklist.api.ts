@@ -1,5 +1,4 @@
 'use server';
-import { DEFAULT_LEVEL } from '@/constants/magic-number';
 import { MSG } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { TABLE } from '@/constants/supabase-tables-name';
@@ -22,7 +21,7 @@ export const getUniqueMissionType = async (): Promise<string[]> => {
     return [];
   }
 
-  const uniqueTypes = Array.from(new Set<string>(data.map((item) => item.type)));
+  const uniqueTypes: string[] = Array.from(new Set<string>(data.map((item: { type: string }) => item.type)));
   return uniqueTypes;
 };
 
@@ -43,12 +42,12 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
     throw new Error(`${MSG.INVALID_MISSION_TYPE}: ${decodedMission}`);
   }
   const { data, error } = (await supabase.from(TABLE.USER_LEVEL).select(col).eq('user_id', userId).single()) as {
-    data: Pick<UserLevel, typeof col> | null;
+    data: Pick<UserLevel, typeof col>;
     error: any;
   };
   if (error) throw new Error(error.message);
 
-  return String(data?.[col] ?? DEFAULT_LEVEL);
+  return String(data[col]);
 };
 
 /** getMissionListByLevel: 미션 리스트 데이터 불러오기 (미션 타입 + 유저 레벨 기반)
@@ -98,5 +97,5 @@ export const getCompletedMissionIds = async ({
     .in('completed_id', missionIds);
 
   if (error) throw new Error(error.message);
-  return data.map((item) => item.completed_id);
+  return data.map((item: { completed_id: number }) => item.completed_id);
 };
