@@ -8,6 +8,7 @@ import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { Tables } from '@/types/supabase';
 import { NEXT_SERVER_SOCIAL_LOGIN } from '@/constants/api-url';
+import { AuthError } from '@supabase/supabase-js';
 
 const LAYOUT = 'layout';
 
@@ -20,7 +21,10 @@ export const login = async (formData: FormData) => {
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error) throw error;
+  if (error) {
+    if (error.message === 'Invalid login credentials') throw new Error('이메일 또는 비밀번호 오류입니다.');
+    return;
+  }
 
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
