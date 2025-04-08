@@ -17,16 +17,16 @@ interface FieldProps {
 
 const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) => {
   const { watch, getValues } = useFormContext();
-  const nicknameValue = watch(AUTH.EMAIL);
+  const nicknameValue = watch(AUTH.NICKNAME);
 
   useEffect(() => {
     setDuplicateCheck(false); // 값 변경 시 중복확인 상태 초기화
 
-    if (initNickname === getValues(AUTH.EMAIL)) setDuplicateCheck(true); // 기존 닉네임과 같으면 중복검사 pass
+    if (initNickname === getValues(AUTH.NICKNAME)) setDuplicateCheck(true); // 기존 닉네임과 같으면 중복검사 pass
   }, [nicknameValue, setDuplicateCheck]);
 
   const handleDuplicateCheck = async () => {
-    const nowValue: string = getValues(AUTH.EMAIL);
+    const nowValue: string = getValues(AUTH.NICKNAME);
 
     if (initNickname === nowValue) setDuplicateCheck(true);
 
@@ -35,7 +35,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
       return;
     }
 
-    const data = await getDuplicateCheckData(AUTH.EMAIL, nowValue);
+    const data = await getDuplicateCheckData(AUTH.NICKNAME, nowValue);
 
     if (data) {
       alert(`이미 사용 중인 ${LABEL.NICKNAME}입니다`);
