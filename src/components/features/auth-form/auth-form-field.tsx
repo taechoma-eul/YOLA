@@ -30,8 +30,9 @@ const AuthFormField = <T extends keyof AuthFormData>({
 }: FieldProps<T>) => {
   const { watch, getValues } = useFormContext();
   const fieldValue = watch(fieldName);
+
   const setDuplicateCheck: Dispatch<SetStateAction<boolean>> =
-    fieldName === AUTH.EMAIL ? setEmailDuplicateCheck : setNicknameDuplicateCheck;
+    fieldName === AUTH.EMAIL ? setEmailDuplicateCheck : setNicknameDuplicateCheck; // 필드에 따른 중복검사 체크를 위한 할당
 
   useEffect(() => {
     setDuplicateCheck(false); // 값 변경 시 중복확인 상태 초기화\
@@ -54,6 +55,7 @@ const AuthFormField = <T extends keyof AuthFormData>({
       setDuplicateCheck(true);
     }
   };
+
   return (
     <FormField
       control={form.control}
