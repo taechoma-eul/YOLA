@@ -8,7 +8,7 @@ import LoginFormButton from '@/components/features/auth-form/login-form-button';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
 import { Form } from '@/components/ui/form';
 import type { AuthFormMode, FieldData } from '@/types/components/auth-form';
-import { MODE } from '@/constants/auth-form';
+import { AUTH } from '@/constants/auth-form';
 
 type FormFieldData = Omit<FieldData, 'isSubmitting'>;
 
@@ -28,11 +28,11 @@ const AuthForm = ({ mode }: AuthFormMode) => {
     { fieldName: 'password', placeholder: '비밀번호를 입력하세요.', form: form, inputType: 'password' }
   ];
 
-  const renderingData: FormFieldData[] = mode === MODE.SIGNUP ? signupFieldData : loginFieldData;
+  const renderingData: FormFieldData[] = mode === AUTH.SIGNUP ? signupFieldData : loginFieldData;
 
   const handleFormAction = async (formData: FormData) => {
     startTransition(async () => {
-      mode === MODE.SIGNUP ? await signup(formData) : await login(formData);
+      mode === AUTH.SIGNUP ? await signup(formData) : await login(formData);
     });
   };
 
@@ -49,7 +49,7 @@ const AuthForm = ({ mode }: AuthFormMode) => {
             inputType={data.inputType}
           />
         ))}
-        {mode === MODE.SIGNUP ? (
+        {mode === AUTH.SIGNUP ? (
           <SignupFormButton isSubmitting={isPending} />
         ) : (
           <LoginFormButton isSubmitting={isPending} />

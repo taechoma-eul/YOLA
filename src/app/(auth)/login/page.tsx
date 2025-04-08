@@ -1,8 +1,8 @@
 import AuthFormViewUi from '@/components/features/auth-form/auth-page-ui';
-import { MODE } from '@/constants/auth-form';
+import { AUTH } from '@/constants/auth-form';
 
 const LoginPage = async () => {
-  return <AuthFormViewUi mode={MODE.LOGIN} />;
+  return <AuthFormViewUi mode={AUTH.LOGIN} />;
 };
 
 export default LoginPage;
