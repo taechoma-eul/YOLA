@@ -8,7 +8,6 @@ interface MypageProgressBarProps {
 }
 
 const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
-  //progress bar 시작위치 : 초기값 0
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const levelStepMap = {
@@ -26,24 +25,50 @@ const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
     setCurrentStep(levelStepMap[level as LevelKey] ?? 0);
   }, [level]);
 
-  // 진행 상태에 맞는 색상 채우기
-  const progressWidth = `${(currentStep / 5) * 100}%`;
+  const totalSteps = 5;
+  const progressWidth = `${(currentStep / totalSteps) * 100}%`;
+  const stepLabels = Object.values(USER_LEVELS);
 
   return (
-    <div className="mx-auto w-full max-w-lg">
+    <div className="gap-3 rounded-md border border-slate-200 p-10">
       <div className="relative flex items-center justify-between">
-        {/* 레벨 현황 bar*/}
-        <div className="relative h-2 w-full rounded-md bg-gray-300">
-          <div className="absolute left-0 top-0 h-full rounded-md bg-orange-500" style={{ width: progressWidth }}></div>
+        {/* Progress Bar */}
+        <div className="relative h-2 w-full rounded-full bg-gray-300">
+          {/* 채워지는 부분 */}
+          <div
+            className="absolute left-0 top-0 h-full rounded-full bg-orange-500 transition-all duration-300"
+            style={{ width: progressWidth }}
+          />
+
+          {/* 카테고리 사이 세로 구분선 */}
+          {[...Array(totalSteps + 1)].map((_, idx) => (
+            <div
+              key={idx}
+              className="absolute top-[-6px] h-6 w-px bg-white"
+              style={{ left: `${(idx / totalSteps) * 100}%` }}
+            />
+          ))}
+
+          {/* 현재 단계 circle 표시 */}
+          <div
+            className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `calc(${(currentStep / totalSteps) * 100}% )` }}
+          >
+            <div className="flex h-6 w-6 items-center justify-center rounded-full border-4 border-orange-500 bg-white" />
+          </div>
         </div>
       </div>
 
-      {/* 유저 레벨 라벨 */}
-      <div className="mt-2 flex justify-between">
-        {Object.values(USER_LEVELS).map((level) => (
-          <span key={level} className="text-sm">
-            {level}
-          </span>
+      {/* 라벨 - 동그라미와 수직 정렬 */}
+      <div className="relative mt-3 h-5">
+        {[...Array(totalSteps + 1)].map((_, idx) => (
+          <div
+            key={idx}
+            className="absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap text-sm text-gray-700"
+            style={{ left: `${(idx / totalSteps) * 100}%` }}
+          >
+            {stepLabels[idx]}
+          </div>
         ))}
       </div>
     </div>
