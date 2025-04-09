@@ -1,24 +1,24 @@
-import Link from 'next/link';
-import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
-import type { MenuItem } from '@/types/components/header';
+import NavLinkItem from '@/components/layout/header/header-nav-link-item';
+import NavChallengeMenu from '@/components/layout/header/header-nav-challenge-menu';
 import { PATH } from '@/constants/page-path';
 
+interface NavList {
+  href: string;
+  label: string;
+}
+
 const HeaderNav = () => {
-  const challengeMenuItem: MenuItem[] = [
-    { path: PATH.MEAL_CHECKLIST, label: '혼밥' },
-    { path: PATH.TRAVEL_CHECKLIST, label: '혼여' },
-    { path: PATH.GOD_LIFE_CHECKLIST, label: '갓생' },
-    { path: PATH.CLEAN_CHECKLIST, label: '청소' },
-    { path: PATH.PLAY_CHECKLIST, label: '혼놀', isLine: false }
+  const navList: NavList[] = [
+    { href: PATH.LIFE, label: '혼자라이프 기록' },
+    { href: PATH.GONGGAM, label: '공감게시판' }
   ];
 
   return (
-    <nav className="flex items-center justify-center gap-[38px]">
-      <Link href={PATH.LIFE}>혼자라이프 기록</Link>
-      <Link href={PATH.GONGGAM}>공감게시판</Link>
-      <HeaderDropdownMenu menuItems={challengeMenuItem} align="center">
-        챌린지
-      </HeaderDropdownMenu>
+    <nav className="flex items-center justify-center gap-4">
+      {navList.map((item) => (
+        <NavLinkItem key={item.label} href={item.href} children={item.label} />
+      ))}
+      <NavChallengeMenu />
     </nav>
   );
 };
