@@ -1,4 +1,4 @@
-import { Tables } from '../supabase';
+import type { Tables } from '@/types/supabase';
 
 export interface EditFormData {
   nickname: string;
