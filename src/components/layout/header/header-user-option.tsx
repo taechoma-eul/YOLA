@@ -10,9 +10,7 @@ const UserOptionMenu = () => {
   ];
   return (
     <HeaderDropdownMenu menuItems={userMenuItem} align="end">
-      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-300">
-        <User color="#ffffff" />
-      </div>
+      <User color="#2E3135" size={24} />
     </HeaderDropdownMenu>
   );
 };
