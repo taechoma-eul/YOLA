@@ -22,8 +22,8 @@ const GonggamCategoryBoard = async ({ params: { category }, searchParams }: Gong
           <li className="py-3 text-sm text-gray-500">게시글이 없습니다.</li>
         ) : (
           posts.map((post) => (
-            <Link href={`${PATH.GONGGAM}/${post.category}/${post.id}`}>
-              <GonggamPostCard key={post.id} post={post} />
+            <Link key={post.id} href={`${PATH.GONGGAM}/${post.category}/${post.id}`}>
+              <GonggamPostCard post={post} />
             </Link>
           ))
         )}
