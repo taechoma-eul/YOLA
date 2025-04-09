@@ -5,8 +5,8 @@ import { PATH } from '@/constants/page-path';
 
 const UserOptionMenu = () => {
   const userMenuItem: MenuItem[] = [
-    { path: PATH.MYPAGE, label: '마이페이지' },
-    { path: '', label: '로그아웃', isLine: false, isButton: true }
+    { href: PATH.MYPAGE, label: '마이페이지', path: PATH.MYPAGE },
+    { href: '', label: '로그아웃', isLine: false, isButton: true }
   ];
   return (
     <HeaderDropdownMenu menuItems={userMenuItem} align="end">
