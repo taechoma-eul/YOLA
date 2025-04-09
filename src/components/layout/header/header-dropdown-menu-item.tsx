@@ -1,34 +1,38 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { logout } from '@/lib/utils/api/auth-action';
-import { DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { toastAlert } from '@/lib/utils/toast';
 import type { MenuItem } from '@/types/components/header';
 
-const HeaderDropdownMenuItem = ({ path, label, href, isLine = true, isButton = false }: MenuItem) => {
+const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathName }: MenuItem) => {
   const queryClient = useQueryClient();
-  const pathName: string = usePathname();
 
-  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const isSelect: boolean = decodeURIComponent(pathName!).includes(href);
+
+  const handleLogout = async () => {
     try {
       await logout();
       queryClient.clear();
-    } catch (error) {}
+    } catch (error) {
+      toastAlert('로그아웃에 실패했습니다. 다시 시도해주세요.', 'default');
+      return;
+    }
   };
+
   return (
     <>
-      <DropdownMenuItem
+      <div
         className={clsx(
-          'justify-center px-3.5 py-4 text-base font-normal leading-snug focus:bg-white focus:text-[#DC6803]',
-          path === pathName ? 'text-[#DC6803]' : 'text-zinc-80'
+          'flex h-[47px] items-center justify-center bg-white hover:text-[#DC6803]',
+          isSelect ? 'text-[#DC6803]' : 'text-zinc-80'
         )}
       >
         {isButton ? <button onClick={handleLogout}>{label}</button> : <Link href={href}>{label}</Link>}
-      </DropdownMenuItem>
-      {isLine && <DropdownMenuSeparator className="m-0 w-[60px] bg-gray-300" />}
+      </div>
+      {isLine && <div className="m-0 h-px w-[60px] bg-gray-300" />}
     </>
   );
 };

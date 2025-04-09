@@ -112,23 +112,3 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
-[data-radix-popper-content-wrapper] {
-  pointerevents: auto !important; /* 드롭다운 메뉴 이벤트 유지 */
-}
-
-.dropdown-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 100%; /* 트리거 바로 아래 */
-  left: 0;
-  width: 100%;
-  height: 8px; /* sideOffset과 동일한 간격 */
-  pointer-events: auto; /* 간격 영역에서 이벤트 유지 */
-  z-index: 1; /* 드롭다운 메뉴 위에 위치 */
-}
