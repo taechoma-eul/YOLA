@@ -1,4 +1,6 @@
-import { getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import Image from 'next/image';
+import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
+import { getPostImagesByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import type { GonggamPost } from '@/types/gonggam';
 
@@ -11,6 +13,9 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
   const nickname = await getWriterProfile(post.user_id);
 
   /** 이미지 불러오기 */
+  const images = await getPostImagesByPostId(post.id);
+  const imagePreview = images[0] ?? DEFAULT_LIFE_IMAGE_URL;
+
   /** like, comments 불러오기 */
 
   return (
@@ -27,7 +32,9 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
             <p>{formatRelativeDate(post.created_at)}</p>
           </div>
 
-          <div className="flex h-20 w-20 items-center justify-center border text-[11px] text-gray-400">이미지</div>
+          <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-md">
+            <Image src={imagePreview} alt={post.title} fill className="object-cover" />
+          </div>
         </div>
       </div>
 

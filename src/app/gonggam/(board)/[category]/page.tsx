@@ -4,7 +4,6 @@ import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam-board.api';
 import Link from 'next/link';
-import Image from 'next/image';
 
 interface GonggamCategoryBoardProps {
   params: { category: string };

@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { GonggamCategory, PaginatedPostsResponse } from '@/types/gonggam';
+import type { GonggamCategory, GonggamPost, PaginatedPostsResponse } from '@/types/gonggam';
 import type { User } from '@/types/user';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
@@ -67,4 +67,20 @@ export const getWriterProfile = async (writerId: User['token']) => {
   const { data: profile, error: userErr } = await supabase.from('users').select('*').eq('id', writerId).single();
   if (userErr) throw new Error(userErr.message);
   return profile.nickname;
+};
+
+/**
+ * getPostImagesByPostId
+ * 특정 게시글(post_id)에 연결된 이미지 URL 배열을 조회합니다.
+ *
+ * @param postId 게시글 ID
+ * @returns 이미지 URL 문자열 배열 (없으면 빈 배열)
+ */
+export const getPostImagesByPostId = async (postId: GonggamPost['id']): Promise<string[]> => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from('gonggam_post_image_path').select('image_url').eq('post_id', postId);
+
+  if (error || !data) return [];
+
+  return data.map((item) => item.image_url);
 };
