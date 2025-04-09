@@ -19,10 +19,12 @@ import { ERROR_MESSAGE } from '@/constants/auth-form';
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
 
-  const { profile, isProfileError } = useUserProfile();
+  const { profile, isProfileError, profileFetchingError } = useUserProfile();
   const updateProfile = useUpdateProfileMutate();
   const form = useProfileForm(initProfile.nickname);
   const { isValid } = form.formState;
+
+  const displayProfile: Tables<'users'> = profile ? profile : initProfile;
 
   const handleProfileImageUpload = async () => {
     const file = form.getValues('profile_image_file')?.[0];
@@ -58,9 +60,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
     }
   };
 
-  if (isProfileError) return;
-
-  const displayProfile: Tables<'users'> = profile ? profile : initProfile;
+  if (isProfileError) throw profileFetchingError;
 
   return (
     <Form {...form}>

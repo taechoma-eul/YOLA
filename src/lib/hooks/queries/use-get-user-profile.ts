@@ -6,11 +6,12 @@ export const useUserProfile = () => {
   const {
     data: profile,
     isPending: isProfilePending,
-    isError: isProfileError
+    isError: isProfileError,
+    error: profileFetchingError
   } = useQuery({
     queryFn: () => getUserProfile(),
     queryKey: QUERY_KEY.PROFILE
   });
 
-  return { profile, isProfilePending, isProfileError };
+  return { profile, isProfilePending, isProfileError, profileFetchingError };
 };
