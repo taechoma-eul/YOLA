@@ -27,10 +27,16 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, 
       <div
         className={clsx(
           'flex h-[47px] items-center justify-center bg-white hover:text-[#DC6803]',
-          isSelect ? 'text-[#DC6803]' : 'text-zinc-80'
+          isSelect && href !== '' ? 'text-[#DC6803]' : 'text-zinc-80'
         )}
       >
-        {isButton ? <button onClick={handleLogout}>{label}</button> : <Link href={href}>{label}</Link>}
+        {isButton ? (
+          <button className="text-zinc-80" onClick={handleLogout}>
+            {label}
+          </button>
+        ) : (
+          <Link href={href}>{label}</Link>
+        )}
       </div>
       {isLine && <div className="m-0 h-px w-[60px] bg-gray-300" />}
     </>
