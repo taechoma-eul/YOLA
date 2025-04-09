@@ -10,13 +10,8 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
   const MAX_LEVEL_COUNT = 5;
 
   //각 타입별로 레벨 1~5까지 완료한 미션 수를 저장할 배열
-  const levelMap: Record<UsedTags, number[]> = {
-    혼밥: [0, 0, 0, 0, 0],
-    혼자여행: [0, 0, 0, 0, 0],
-    혼놀: [0, 0, 0, 0, 0],
-    청소: [0, 0, 0, 0, 0],
-    갓생: [0, 0, 0, 0, 0]
-  };
+  const usedTags: UsedTags[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
+  const levelMap = Object.fromEntries(usedTags.map((tag) => [tag, Array(5).fill(0)])) as Record<UsedTags, number[]>;
 
   //미션 데이터를 순회하면서 각 타입의 레벨별 개수 카운트
   missionList.forEach(({ type, level }) => {
