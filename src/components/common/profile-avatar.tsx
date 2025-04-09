@@ -1,12 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import DefaultProfileImage from './default-image.svg';
+import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
+import Image from 'next/image';
 
 const ProfileAvatar = ({ src }: { src: string | null }) => {
   return (
     <Avatar className="h-[172px] w-[172px] rounded-2xl border-2 border-[#EFF1F3]">
-      <AvatarImage src={src ? src : ''} />
+      <AvatarImage src={''} />
       <AvatarFallback className="rounded-2xl">
-        <DefaultProfileImage />
+        <Image src={DEFAULT_AVATAR_URL} alt="디폴트 프로필 이미지" width={172} height={172} />
       </AvatarFallback>
     </Avatar>
   );
