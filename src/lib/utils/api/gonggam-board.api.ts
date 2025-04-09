@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { GonggamCategory, PaginatedPostsResponse } from '@/types/gonggam';
+import type { User } from '@/types/user';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -51,4 +52,19 @@ export const getPaginatedGonggamPosts = async (
       totalCount
     }
   };
+};
+
+/** getWriterProfile
+ * 작성자의 프로필 정보를 조회하는 함수
+ *
+ * @param writerId - 조회할 작성자의 고유 ID
+ * @returns profile: 닉네임(nickname)을 포함한 작성자 정보 (현재는 nickname만 반환)
+ *
+ * @note 추후 프로필 이미지 등 확장 가능성을 고려하여 함수명을 getWriterProfile로 유지
+ */
+export const getWriterProfile = async (writerId: User['token']) => {
+  const supabase = await createClient();
+  const { data: profile, error: userErr } = await supabase.from('users').select('*').eq('id', writerId).single();
+  if (userErr) throw new Error(userErr.message);
+  return profile.nickname;
 };

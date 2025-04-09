@@ -1,12 +1,19 @@
+import { getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
 import type { GonggamPost } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
   post: GonggamPost;
 }
 
-const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
+const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
+  /** 작성자 닉네임 불러오기 */
+  const nickname = await getWriterProfile(post.user_id);
+
+  /** 이미지 불러오기 */
+  /** like, comments 불러오기 */
+
   return (
-    <li key={post.id} className="py-3">
+    <li className="py-3">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <h3 className="text-base font-medium">{post.title}</h3>
@@ -15,7 +22,7 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
 
         <div className="ml-3 flex items-center gap-3 text-center">
           <div className="space-y-0.5 text-center text-[11px] text-gray-400">
-            <p>작성자</p>
+            <p>{nickname}</p>
             <p>{new Date(post.created_at).toLocaleDateString()}</p>
           </div>
 
