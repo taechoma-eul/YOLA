@@ -1,5 +1,6 @@
 'use server';
 
+import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { GonggamCategory, GonggamPost, GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 import type { User } from '@/types/user';
@@ -22,7 +23,7 @@ export const getPaginatedGonggamPosts = async (
 
   // Step 1: 전체 개수 카운트
   const { count, error: countError } = await supabase
-    .from('gonggam_posts')
+    .from(TABLE.GONGGAM_POSTS)
     .select('*', { count: 'exact', head: true }) // count만 select
     .eq('category', category);
 
@@ -36,7 +37,7 @@ export const getPaginatedGonggamPosts = async (
   const to = from + PAGE_SIZE - 1;
 
   const { data: posts, error: postsError } = await supabase
-    .from('gonggam_posts')
+    .from(TABLE.GONGGAM_POSTS)
     .select('*')
     .eq('category', category)
     .order('created_at', { ascending: false })
@@ -64,7 +65,7 @@ export const getPaginatedGonggamPosts = async (
  */
 export const getWriterProfile = async (writerId: User['token']) => {
   const supabase = await createClient();
-  const { data: profile, error: userErr } = await supabase.from('users').select('*').eq('id', writerId).single();
+  const { data: profile, error: userErr } = await supabase.from(TABLE.USERS).select('*').eq('id', writerId).single();
   if (userErr) throw new Error(userErr.message);
   return profile.nickname;
 };
@@ -77,7 +78,7 @@ export const getWriterProfile = async (writerId: User['token']) => {
  */
 export const getPostImagesByPostId = async (postId: GonggamPost['id']): Promise<string[]> => {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('gonggam_post_image_path').select('image_url').eq('post_id', postId);
+  const { data, error } = await supabase.from(TABLE.GONGGAM_POST_IMAGE_PATH).select('image_url').eq('post_id', postId);
 
   if (error || !data) return [];
 
@@ -95,13 +96,13 @@ export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<Go
 
   // 좋아요 수
   const { count: likeCnt } = await supabase
-    .from('likes')
+    .from(TABLE.LIKES)
     .select('*', { count: 'exact', head: true })
     .eq('post_id', postId);
 
   // 댓글 수
   const { count: commentCnt } = await supabase
-    .from('comments')
+    .from(TABLE.COMMENTS)
     .select('*', { count: 'exact', head: true })
     .eq('post_id', postId);
 
