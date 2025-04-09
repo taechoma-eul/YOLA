@@ -76,6 +76,7 @@ export const getUserSessionState = async (): Promise<{
   const {
     data: { user }
   } = await supabase.auth.getUser();
+
   const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
 
   const isLogin = !!userId;
@@ -88,17 +89,20 @@ export const getUserSessionState = async (): Promise<{
  * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
  * @returns { Tables<'users'> } - 현재 세션에 해당하는 users 테이블 row
  */
-export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
+export const getUserProfile = async (): Promise<Tables<'users'>> => {
   const supabase = await createClient();
-  const { userId } = await getUserSessionState();
+  try {
+    const { userId } = await getUserSessionState();
+    if (userId === null) throw new Error('사용자 세션 정보가 존재하지 않습니다.');
 
-  if (!userId) return null;
+    const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
 
-  const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
+    if (error) throw new Error('사용자 프로필 정보를 받아오는 데 실패했습니다.');
 
-  if (error) throw error;
-
-  return data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const signInWithGoogle = async (): Promise<never> => {
