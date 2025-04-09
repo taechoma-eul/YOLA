@@ -1,7 +1,7 @@
 import { EllipsisVertical } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import DeleteConfirmModal from '../features/modals/delete-confirm';
+import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
 
 const SET_TIME_OUT = 150;
 
