@@ -1,19 +1,8 @@
-import { login, signup, logout } from './action';
+import AuthFormViewUi from '@/components/features/auth-form/auth-page-ui';
+import { AUTH } from '@/constants/auth-form';
 
-export default function LoginPage() {
-  return (
-    <div>
-      <form>
-        <label htmlFor="email">Email:</label>
-        <input id="email" name="email" type="email" required />
-        <label htmlFor="password">Password:</label>
-        <input id="password" name="password" type="password" required />
-        <button formAction={login}>Log in</button>
-        <button formAction={signup}>Sign up</button>
-      </form>
-      <form action={logout} className="flex">
-        <button type="submit">로그아웃</button>
-      </form>
-    </div>
-  );
-}
+const LoginPage = async () => {
+  return <AuthFormViewUi mode={AUTH.LOGIN} />;
+};
+
+export default LoginPage;
