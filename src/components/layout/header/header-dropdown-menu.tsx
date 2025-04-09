@@ -23,22 +23,18 @@ const HeaderDropdownMenu = ({ menuItems, children, align }: MenuProps) => {
   };
 
   return (
-    <div
-      className="dropdown-wrapper relative inline-block"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="dropdown-wrapper" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <DropdownMenu open={isOpen}>
         <DropdownMenuTrigger
           asChild
           className="text-md font-normal focus:bg-transparent data-[state=open]:bg-transparent"
         >
-          <div className="">{children}</div>
+          <button>{children}</button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align={align}
           sideOffset={8}
-          className="inline-flex w-[140px] flex-col items-center gap-3 rounded-xl bg-white p-5 shadow-none"
+          className="flex w-[100px] min-w-0 flex-col items-center justify-center self-stretch overflow-hidden rounded-xl p-0"
           style={{ pointerEvents: 'auto' }}
         >
           {menuItems.map((item, index) => (
@@ -48,6 +44,7 @@ const HeaderDropdownMenu = ({ menuItems, children, align }: MenuProps) => {
               path={item.path}
               isLine={item.isLine}
               isButton={item.isButton}
+              href={item.href}
             />
           ))}
         </DropdownMenuContent>

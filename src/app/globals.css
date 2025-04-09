@@ -119,6 +119,7 @@ body {
 
 .dropdown-wrapper {
   position: relative;
+  display: inline-block;
 }
 
 .dropdown-wrapper::before {
