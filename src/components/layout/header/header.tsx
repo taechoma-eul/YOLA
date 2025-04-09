@@ -8,7 +8,7 @@ const Header = async () => {
   const { isLogin } = await getUserSessionState();
 
   return (
-    <header className="fixed left-0 top-0 inline-flex h-24 w-full flex-col items-start justify-center gap-2.5 bg-white px-10 outline outline-1 outline-offset-[-1px] outline-gray-200">
+    <header className="fixed left-0 top-0 z-10 inline-flex h-24 w-full flex-col items-start justify-center gap-2.5 bg-white px-10 outline outline-1 outline-offset-[-1px] outline-gray-200">
       <div className="mx-auto flex h-[120px] w-full max-w-[1280px] items-center justify-between px-6">
         <div className="flex items-center justify-start gap-[60px]">
           <MainLogo />

@@ -14,7 +14,7 @@ const HeaderNav = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-center gap-4">
+    <nav className="flex items-center justify-center gap-1">
       {navList.map((item) => (
         <NavLinkItem key={item.label} href={item.href} children={item.label} />
       ))}
