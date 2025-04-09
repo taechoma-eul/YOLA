@@ -7,7 +7,7 @@ import type { Mission, UsedTags } from '@/types/my-missions';
  */
 export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[] }) => {
   //각 레벨당 미션 5개를 채워야 다음 레벨로 올라갈 수 있음
-  const maxLevelCount = 5;
+  const MAX_LEVEL_COUNT = 5;
 
   //각 타입별로 레벨 1~5까지 완료한 미션 수를 저장할 배열
   const levelMap: Record<UsedTags, number[]> = {
@@ -35,7 +35,7 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
 
     //각 레벨마다 미션 5개 이상 완료했는지 확인하여 레벨 상승
     for (let i = 0; i < 5; i++) {
-      if (levels[i] >= maxLevelCount) {
+      if (levels[i] >= MAX_LEVEL_COUNT) {
         currentLevel = i + 2; // ex. LV.1을 다 채웠다면 -> LV.2
       } else {
         break; // 못 채운 레벨이 나오면 중단
@@ -49,7 +49,7 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
       type: type as UsedTags,
       currentLevel: isMaster ? 'master' : currentLevel,
       currentLevelDone: levels[activeLevelIndex],
-      nextLevelLeft: isMaster ? 0 : maxLevelCount - levels[activeLevelIndex]
+      nextLevelLeft: isMaster ? 0 : MAX_LEVEL_COUNT - levels[activeLevelIndex]
     };
   });
 
