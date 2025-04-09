@@ -8,10 +8,10 @@ interface ItemProps {
 }
 
 const GonggamItem = ({ post }: ItemProps) => {
-  const { title, content, id, comments, likes } = post;
+  const { title, content, id, comments, likes, category } = post;
 
   return (
-    <ItemContainer postId={id}>
+    <ItemContainer postId={id} category={category}>
       <ContentsContainer>
         <h2 className="justify-start self-stretch text-sm">{title}</h2>
         <p className="w-80 justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs">{content}</p>
