@@ -366,7 +366,23 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_popular_posts: {
+        Args: { limit_count: number };
+        Returns: {
+          id: number;
+          category: Enums<'categorys'>;
+          content: string;
+          created_at: string;
+          title: string;
+          updated_at: string;
+          user_id: string;
+          likes_count: number;
+          comments_count: number;
+          total_interactions: number;
+          likes: Tables<'likes'>[];
+          comments: Tables<'comments'>[];
+        }[];
+      };
     };
     Enums: {
       categorys: '일상공유' | '꿀팁공유' | '여기추천' | '밋업';
