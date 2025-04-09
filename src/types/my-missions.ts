@@ -1,4 +1,4 @@
-import { Database } from './supabase';
+import { Database } from '@/types/supabase';
 
 /**
  * 우리가 사용하는 5개의 미션 카테고리만 명시적으로 타입화
