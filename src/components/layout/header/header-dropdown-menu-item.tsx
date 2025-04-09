@@ -7,10 +7,10 @@ import { logout } from '@/lib/utils/api/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import type { MenuItem } from '@/types/components/header';
 
-const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathName }: MenuItem) => {
+const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathname }: MenuItem) => {
   const queryClient = useQueryClient();
 
-  const isSelect: boolean = decodeURIComponent(pathName!).includes(href);
+  const isSelect: boolean = decodeURIComponent(pathname!).includes(href);
 
   const handleLogout = async () => {
     try {
