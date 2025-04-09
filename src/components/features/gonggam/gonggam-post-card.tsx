@@ -1,4 +1,5 @@
 import { getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import { formatRelativeDate } from '@/lib/utils/date-format';
 import type { GonggamPost } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
@@ -23,7 +24,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
         <div className="ml-3 flex items-center gap-3 text-center">
           <div className="space-y-0.5 text-center text-[11px] text-gray-400">
             <p>{nickname}</p>
-            <p>{new Date(post.created_at).toLocaleDateString()}</p>
+            <p>{formatRelativeDate(post.created_at)}</p>
           </div>
 
           <div className="flex h-20 w-20 items-center justify-center border text-[11px] text-gray-400">이미지</div>
