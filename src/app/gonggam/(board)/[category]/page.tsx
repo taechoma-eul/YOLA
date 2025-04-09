@@ -3,6 +3,7 @@ import GonggamPostCard from '@/components/features/gonggam/gonggam-post-card';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam-board.api';
+import Link from 'next/link';
 import Image from 'next/image';
 
 interface GonggamCategoryBoardProps {
@@ -20,7 +21,11 @@ const GonggamCategoryBoard = async ({ params: { category }, searchParams }: Gong
         {posts.length === 0 ? (
           <li className="py-3 text-sm text-gray-500">게시글이 없습니다.</li>
         ) : (
-          posts.map((post) => <GonggamPostCard key={post.id} post={post} />)
+          posts.map((post) => (
+            <Link href={`${PATH.GONGGAM}/${post.category}/${post.id}`}>
+              <GonggamPostCard key={post.id} post={post} />
+            </Link>
+          ))
         )}
       </ul>
       <GonggamPagination
