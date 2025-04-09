@@ -17,6 +17,7 @@ export async function updateSession(request: NextRequest) {
     PATH.LOGIN,
     PATH.SIGNUP,
     PATH.HOME,
+    PATH.CHECKLIST,
     PATH.MEAL_CHECKLIST,
     PATH.PLAY_CHECKLIST,
     PATH.CLEAN_CHECKLIST,
