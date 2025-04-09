@@ -6,8 +6,6 @@ import { PATH } from '@/constants/page-path';
 const MypageSideBar = async () => {
   const initProfile = await getUserProfile();
 
-  if (!initProfile) return;
-
   return (
     <aside className="flex h-[calc(100vh-150px)] w-full flex-col items-center gap-5 p-5 md:fixed md:w-60">
       {/* 내 프로필 보기 */}
