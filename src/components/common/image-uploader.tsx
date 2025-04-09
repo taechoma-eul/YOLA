@@ -1,6 +1,6 @@
 'use client';
 
-import { CirclePlusIcon, CrosshairIcon } from 'lucide-react';
+import { CirclePlusIcon } from 'lucide-react';
 import Image from 'next/image';
 import { ChangeEvent } from 'react';
 
@@ -31,11 +31,27 @@ const ImageUploader = ({ images, onChange, maxCount = 3 }: ImageUploaderProps) =
   };
 
   return (
-    <div className="rounded-md bg-gray-50 px-4 py-4">
-      <p className="mb-1 text-sm font-semibold text-gray-700">이미지등록</p>
-      <p className="mb-3 text-xs text-gray-500">이미지는 최대 {maxCount}개까지 등록됩니다.</p>
+    <div className="flex items-start gap-40 rounded-md bg-gray-50 px-6 py-4">
+      {/* 왼쪽 텍스트 영역 */}
+      <div className="w-50 flex flex-col items-start justify-center">
+        <p className="mb-1 mt-5 text-xl font-semibold text-gray-700">이미지등록</p>
+        <p className="text-xs text-gray-500">이미지는 최대 {maxCount}개까지 등록됩니다.</p>
+      </div>
 
+      {/* 오른쪽 이미지 + 추가 버튼 */}
       <div className="flex flex-wrap gap-3">
+        {/* 추가하기 버튼 먼저 */}
+        {images.length < maxCount && (
+          <label className="flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 bg-white text-sm text-gray-400 hover:bg-gray-100">
+            <span className="text-4xl">
+              <CirclePlusIcon />
+            </span>
+            <span className="text-xs">추가하기</span>
+            <input type="file" multiple className="hidden" onChange={handleUpload} />
+          </label>
+        )}
+
+        {/* 이미지 목록 */}
         {images.map((img, idx) => (
           <div key={idx} className="relative h-24 w-24 overflow-hidden rounded-md border border-gray-300">
             <Image
@@ -54,16 +70,6 @@ const ImageUploader = ({ images, onChange, maxCount = 3 }: ImageUploaderProps) =
             </button>
           </div>
         ))}
-
-        {images.length < maxCount && (
-          <label className="flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 bg-white text-sm text-gray-400 hover:bg-gray-100">
-            <span className="text-4xl">
-              <CirclePlusIcon />
-            </span>
-            <span className="text-xs">추가하기</span>
-            <input type="file" multiple className="hidden" onChange={handleUpload} />
-          </label>
-        )}
       </div>
     </div>
   );
