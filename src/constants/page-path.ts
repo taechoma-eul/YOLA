@@ -17,11 +17,5 @@ export const PATH = {
   PLAY_CHECKLIST: '/checklist/혼놀',
   CLEAN_CHECKLIST: '/checklist/청소',
   CHECKLIST_POST: '/checklist/post',
-  ERROR: '/error',
-
-  MEAL: '/checklist/%ED%98%BC%EB%B0%A5',
-  TRAVEL: '/checklist/%ED%98%BC%EC%9E%90%EC%97%AC%ED%96%89',
-  GOD_LIFE: '/checklist/%EA%B0%93%EC%83%9D',
-  PLAY: '/checklist/%ED%98%BC%EB%86%80',
-  CLEAN: '/checklist/%EC%B2%AD%EC%86%8C'
+  ERROR: '/error'
 };

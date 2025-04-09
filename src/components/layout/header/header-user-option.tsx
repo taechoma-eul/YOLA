@@ -5,11 +5,11 @@ import { PATH } from '@/constants/page-path';
 
 const UserOptionMenu = () => {
   const userMenuItem: MenuItem[] = [
-    { href: PATH.MYPAGE, label: '마이페이지', path: PATH.MYPAGE },
-    { href: '', label: '로그아웃', isLine: false, isButton: true, path: '' }
+    { href: PATH.MYPAGE, label: '마이페이지' },
+    { href: '', label: '로그아웃', isLine: false, isButton: true }
   ];
   return (
-    <HeaderDropdownMenu menuItems={userMenuItem} align="end">
+    <HeaderDropdownMenu menuItems={userMenuItem}>
       <User color="#2E3135" size={24} />
     </HeaderDropdownMenu>
   );
