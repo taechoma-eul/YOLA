@@ -11,11 +11,9 @@ export const useUpdateProfileMutate = () => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEY.PROFILE
       });
-      alert('프로필 업데이트 완료');
     },
     onError: (error) => {
-      alert('프로필 업데이트 실패');
-      throw error;
+      throw new Error('사용자 정보 변경에 실패했습니다.');
     }
   });
 
