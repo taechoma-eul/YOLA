@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { GonggamCategory, GonggamPost, PaginatedPostsResponse } from '@/types/gonggam';
+import type { GonggamCategory, GonggamPost, GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 import type { User } from '@/types/user';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
@@ -69,8 +69,7 @@ export const getWriterProfile = async (writerId: User['token']) => {
   return profile.nickname;
 };
 
-/**
- * getPostImagesByPostId
+/** getPostImagesByPostId
  * 특정 게시글(post_id)에 연결된 이미지 URL 배열을 조회합니다.
  *
  * @param postId 게시글 ID
@@ -83,4 +82,31 @@ export const getPostImagesByPostId = async (postId: GonggamPost['id']): Promise<
   if (error || !data) return [];
 
   return data.map((item) => item.image_url);
+};
+
+/** getPostMetaByPostId
+ * 특정 post_id에 대한 좋아요 수와 댓글 수를 반환합니다.
+ *
+ * @param postId - 게시글 ID
+ * @returns { likeCnt, commentCnt }
+ */
+export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<GonggamPostMeta> => {
+  const supabase = await createClient();
+
+  // 좋아요 수
+  const { count: likeCnt } = await supabase
+    .from('likes')
+    .select('*', { count: 'exact', head: true })
+    .eq('post_id', postId);
+
+  // 댓글 수
+  const { count: commentCnt } = await supabase
+    .from('comments')
+    .select('*', { count: 'exact', head: true })
+    .eq('post_id', postId);
+
+  return {
+    likeCnt: likeCnt ?? 0,
+    commentCnt: commentCnt ?? 0
+  };
 };

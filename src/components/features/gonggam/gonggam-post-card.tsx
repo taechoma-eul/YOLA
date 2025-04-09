@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
-import { getPostImagesByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import { getPostImagesByPostId, getPostMetaByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
+import { Heart, MessageSquare } from 'lucide-react';
 import type { GonggamPost } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
@@ -17,29 +18,39 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
   const imagePreview = images[0] ?? DEFAULT_LIFE_IMAGE_URL;
 
   /** like, comments 불러오기 */
+  const { likeCnt, commentCnt } = await getPostMetaByPostId(post.id);
 
   return (
     <li className="py-3">
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
+      <article className="flex items-start justify-between">
+        {/* 게시글 제목 / 내용 */}
+        <section className="flex-1">
           <h3 className="text-base font-medium">{post.title}</h3>
           <p className="mt-0.5 text-sm text-gray-600">{post.content}</p>
-        </div>
+        </section>
 
-        <div className="ml-3 flex items-center gap-3 text-center">
+        {/* 게시글 정보 (작성자, 작성일, previewImage) */}
+        <aside className="ml-3 flex items-center gap-3 text-center">
           <div className="space-y-0.5 text-center text-[11px] text-gray-400">
             <p>{nickname}</p>
-            <p>{formatRelativeDate(post.created_at)}</p>
+            <time dateTime={post.created_at}>{formatRelativeDate(post.created_at)}</time>
           </div>
 
-          <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-md">
+          <figure className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-md">
             <Image src={imagePreview} alt={post.title} fill className="object-cover" />
-          </div>
-        </div>
-      </div>
+          </figure>
+        </aside>
+      </article>
 
-      {/* 하단: 좋아요 / 댓글란 */}
-      <div className="mt-1 text-[11px] text-gray-400">좋아요 / 댓글란</div>
+      {/* 좋아요 / 댓글 현황 */}
+      <footer className="flex gap-3 text-[12px] text-gray-400">
+        <div className="flex items-center gap-1">
+          <Heart size={12} /> {likeCnt}
+        </div>
+        <div className="flex items-center gap-1">
+          <MessageSquare size={12} /> {commentCnt}
+        </div>
+      </footer>
     </li>
   );
 };

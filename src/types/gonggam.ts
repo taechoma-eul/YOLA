@@ -24,3 +24,8 @@ export interface PaginatedPostsResponse {
   posts: GonggamPost[];
   pagination: PaginationInfo;
 }
+
+export interface GonggamPostMeta {
+  likeCnt: number;
+  commentCnt: number;
+}
