@@ -4,29 +4,38 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
 import { v4 as uuidv4 } from 'uuid';
+import ImageUploader from '@/components/common/image-uploader';
+import TagInput from '@/components/common/tag-input';
+import DatePicker from '@/components/common/date-picker';
+import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
+import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { PATH } from '@/constants/page-path';
 import { getToday } from '@/lib/utils/get-date';
-import DatePicker from './date-picker';
-import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
 import type { MissionType } from '@/types/checklist';
-import TagInput from './tag-input';
-import ImageUploader from './image-uploader';
+import { useUpdateLifePost } from '@/lib/hooks/mutations/ues-update-life-post';
 
 interface LifeInputFormProps {
   missionId: string | null;
   dropdownMissions?: MissionType[];
   completedIds?: number[];
+  isEditMode?: boolean;
+  defaultValues?: {
+    id: number;
+    title: string;
+    content: string;
+    tags: string[];
+    date: string;
+    imageUrls: string[];
+    missionId?: number;
+  };
 }
 
 const lifeRecordSchema = z.object({
   title: z.string().optional(),
-  content: z.string().min(1, '내용은 필수입니다'),
-  tags: z.string().optional()
+  content: z.string().min(1, '내용은 필수입니다')
 });
 
 type FormData = z.infer<typeof lifeRecordSchema>;
@@ -38,19 +47,29 @@ type UploadedImage = {
 
 const IMAGE_STORAGE_BUCKET = 'life-post-images';
 
-const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputFormProps) => {
+const PostInputForm = ({
+  missionId,
+  dropdownMissions,
+  completedIds,
+  isEditMode = false,
+  defaultValues
+}: LifeInputFormProps) => {
   const router = useRouter();
   const { mutate, isPending } = useLifePost();
+  const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateLifePost();
 
-  const [tags, setTags] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>(getToday());
+  const [tags, setTags] = useState<string[]>(defaultValues?.tags || []);
+  const [selectedDate, setSelectedDate] = useState<string>(defaultValues?.date || getToday());
   const [images, setImages] = useState<File[]>([]);
-  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
-  const [selectedMissionId, setSelectedMissionId] = useState<number | null>(missionId ? +missionId : null);
+  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>(
+    defaultValues?.imageUrls?.map((url) => ({ publicUrl: url, storagePath: '' })) || []
+  );
+  const [selectedMissionId, setSelectedMissionId] = useState<number | null>(
+    defaultValues?.missionId ?? (missionId ? +missionId : null)
+  );
 
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
-
   const DEFAULT_TITLE = isMission ? (selectedMission?.content ?? '미션 인증') : `${selectedDate}의 혼자 라이프 기록`;
 
   const {
@@ -58,7 +77,11 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>({
-    resolver: zodResolver(lifeRecordSchema)
+    resolver: zodResolver(lifeRecordSchema),
+    defaultValues: {
+      title: defaultValues?.title ?? '',
+      content: defaultValues?.content ?? ''
+    }
   });
 
   const uploadImages = async (files: File[]): Promise<UploadedImage[]> => {
@@ -91,35 +114,42 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
     if (error) throw new Error('이미지 삭제 실패: ' + error.message);
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImages([...images, ...Array.from(e.target.files)]);
-    }
-  };
-
-  const handleImageRemove = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
-
   const onSubmit = async (data: FormData) => {
     const title = data.title?.trim() || DEFAULT_TITLE;
     const content = data.content.trim();
-    const rawTags = data.tags?.trim() ?? '';
 
     try {
-      const uploaded = await uploadImages(images);
-      setUploadedImages(uploaded);
+      const newUploads = await uploadImages(images);
+      const imageUrls = [...uploadedImages.map((img) => img.publicUrl), ...newUploads.map((img) => img.publicUrl)];
 
-      mutate(
-        {
-          title,
-          content,
-          rawTags,
-          missionId,
-          imageUrls: uploaded.map((img) => img.publicUrl),
-          date: selectedDate
-        },
-        {
+      const payload = {
+        title,
+        content,
+        rawTags: tags.join(','),
+        imageUrls,
+        missionId: selectedMissionId?.toString() ?? null,
+        date: selectedDate
+      };
+
+      if (isEditMode && defaultValues) {
+        updateMutate(
+          { id: defaultValues.id, ...payload },
+          {
+            onSuccess: () => {
+              alert('수정되었습니다!');
+              router.push(PATH.LIFE);
+            },
+            onError: (err: unknown) => {
+              if (err instanceof Error) {
+                alert(err.message);
+              } else {
+                alert('수정 중 알 수 없는 오류가 발생했습니다.');
+              }
+            }
+          }
+        );
+      } else {
+        mutate(payload, {
           onSuccess: () => {
             alert('저장되었습니다!');
             router.push(PATH.LIFE);
@@ -127,8 +157,8 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
           onError: (err) => {
             alert(err instanceof Error ? err.message : '저장 중 오류가 발생했습니다.');
           }
-        }
-      );
+        });
+      }
     } catch (err) {
       alert(err instanceof Error ? err.message : '알 수 없는 오류');
     }
@@ -139,7 +169,7 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
     if (!confirm) return;
 
     try {
-      const pathsToDelete = uploadedImages.map((img) => img.storagePath);
+      const pathsToDelete = uploadedImages.map((img) => img.storagePath).filter(Boolean);
       if (pathsToDelete.length > 0) {
         await deleteImages(pathsToDelete);
       }
@@ -151,10 +181,11 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
 
   return (
     <div className="min-h-screen w-full bg-white px-4 py-10 text-black">
-      <h1 className="mb-5 text-2xl font-bold text-black">{!isMission && '나의 일기 작성'}</h1>
+      <h1 className="mb-5 text-2xl font-bold text-black">
+        {isEditMode ? '기록 수정' : !isMission && '나의 일기 작성'}
+      </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <div className="mb-4 rounded-xl border border-gray-200 bg-white p-8">
-          {/* 제목 입력 */}
           <div className="mb-4 flex items-center gap-4">
             {isMission && dropdownMissions && (
               <ChecklistPostDropdown
@@ -174,7 +205,7 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
             )}
             <DatePicker date={selectedDate} setDate={setSelectedDate} />
           </div>
-          {/* 내용 입력 */}
+
           <div>
             <textarea
               {...register('content')}
@@ -184,13 +215,21 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
             {errors.content && <p className="mt-1 text-sm text-red-500">{errors.content.message}</p>}
           </div>
         </div>
-        {/* 해시태그 입력 */}
+
         <TagInput value={tags} onChange={setTags} />
 
-        {/* 이미지 업로드 */}
-        <ImageUploader images={images} onChange={setImages} />
+        <ImageUploader
+          images={images}
+          onChange={setImages}
+          defaultImageUrls={uploadedImages.map((img) => img.publicUrl)}
+          onRemoveDefaultImage={(idx) => {
+            const updated = [...uploadedImages];
+            updated.splice(idx, 1);
+            setUploadedImages(updated);
+          }}
+        />
+
         <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
-          {/* 작성 취소 */}
           <button
             type="button"
             onClick={handleCancel}
@@ -198,13 +237,18 @@ const PostInputForm = ({ missionId, dropdownMissions, completedIds }: LifeInputF
           >
             작성 취소
           </button>
-          {/* 저장 버튼 */}
           <button
             type="submit"
-            disabled={isPending}
+            disabled={isPending || isUpdatePending}
             className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5"
           >
-            {isPending ? '등록중...' : '등록하기'}
+            {isPending || isUpdatePending
+              ? isEditMode
+                ? '수정중...'
+                : '등록중...'
+              : isEditMode
+                ? '수정하기'
+                : '등록하기'}
           </button>
         </div>
       </form>

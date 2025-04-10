@@ -31,3 +31,28 @@ export const getAllLifePostsById = async (): Promise<LifePost[]> => {
   }
   return MyLifePosts;
 };
+
+// lib/utils/api/life-post.api.ts
+
+export const getLifePostById = async (id: number) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from(LIFE_POSTS_TABLE)
+    .select(
+      `*, life_post_image_path (
+        image_url
+      )`
+    )
+    .eq('id', id)
+    .single();
+
+  if (error) throw new Error(error.message);
+  if (!data) throw new Error('No data found');
+
+  const processed = {
+    ...data,
+    image_urls: data.life_post_image_path?.map((img) => img.image_url) ?? []
+  };
+
+  return processed;
+};
