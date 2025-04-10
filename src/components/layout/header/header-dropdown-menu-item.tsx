@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logout } from '@/lib/utils/api/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import type { MenuItem } from '@/types/components/header';
+import { FAIL_LOGOUT } from '@/constants/messages';
 
 const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathname }: MenuItem) => {
   const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, 
       await logout();
       queryClient.clear();
     } catch (error) {
-      toastAlert('로그아웃에 실패했습니다. 다시 시도해주세요.', 'default');
+      toastAlert(FAIL_LOGOUT, 'default');
       return;
     }
   };

@@ -6,3 +6,5 @@ export const MSG = {
   INVALID_MISSION_TYPE: '유효하지 않은 미션 이름입니다',
   NOTFOUND_MISSION_INFO: '해당 미션 정보를 찾을 수 없습니다.'
 };
+
+export const FAIL_LOGOUT = '로그아웃에 실패했습니다. 다시 시도해주세요.';
