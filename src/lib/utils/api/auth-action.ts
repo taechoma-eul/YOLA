@@ -7,8 +7,6 @@ import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { Tables } from '@/types/supabase';
-import { NEXT_SERVER_SOCIAL_LOGIN } from '@/constants/api-url';
-import { AuthError } from '@supabase/supabase-js';
 
 const LAYOUT = 'layout';
 
@@ -103,36 +101,6 @@ export const getUserProfile = async (): Promise<Tables<'users'>> => {
   } catch (error) {
     throw error;
   }
-};
-
-export const signInWithGoogle = async (): Promise<never> => {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: NEXT_SERVER_SOCIAL_LOGIN // 서버 측 콜백 경로
-    }
-  });
-
-  if (error) throw new Error(error.message);
-
-  // Supabase가 리다이렉션 URL을 반환하면 클라이언트로 전달
-  redirect(data.url); // OAuth 흐름 시작
-};
-
-export const signInWithKakao = async () => {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'kakao',
-    options: {
-      scopes: 'profile_nickname profile_image account_email',
-      redirectTo: NEXT_SERVER_SOCIAL_LOGIN // 리다이렉트 URL
-    }
-  });
-
-  if (error) throw new Error(error.message);
-
-  redirect(data.url); // OAuth 흐름 시작
 };
 
 export const getDuplicateCheckData = async (field: string, value: string) => {

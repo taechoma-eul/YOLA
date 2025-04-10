@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { PATH } from '@/constants/page-path';
+import { API } from '@/constants/api-path';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -25,7 +26,9 @@ export async function updateSession(request: NextRequest) {
     PATH.GOD_LIFE_CHECKLIST,
     PATH.GONGGAM,
     PATH.ERROR,
-    '/api/auth/callback'
+    API.GOOGLE_LOGIN,
+    API.KAKAO_LOGIN,
+    API.SOCIAL_LOGIN_CALL_BACK
   ];
 
   // 루트 경로는 정확한 매칭, 나머지는 startsWith

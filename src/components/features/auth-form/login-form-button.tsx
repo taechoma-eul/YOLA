@@ -1,14 +1,19 @@
+'use client';
+
 import Link from 'next/link';
-import { signInWithGoogle, signInWithKakao } from '@/lib/utils/api/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
 import type { FieldData } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
+import { useRouter } from 'next/navigation';
+import { API } from '@/constants/api-path';
 
 const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
-  const handleSignInWithOAuth = (signAction: () => Promise<never>) => {
+  const router = useRouter();
+
+  const handleSignInWithOAuth = (apiPath: string) => {
     try {
-      signAction();
+      router.push(apiPath);
     } catch (error) {
       toastAlert('소셜 로그인에 실패했습니다.', 'destructive');
     }
@@ -26,10 +31,10 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
       </div>
       <hr className="h-[30px] border-b border-t-0 border-gray-300" />
       <div className="flex gap-5">
-        <Button type="submit" className="h-[42px] w-full" formAction={() => handleSignInWithOAuth(signInWithGoogle)}>
+        <Button type="button" className="h-[42px] w-full" onClick={() => handleSignInWithOAuth(API.GOOGLE_LOGIN)}>
           구글
         </Button>
-        <Button type="submit" className="h-[42px] w-full" formAction={() => handleSignInWithOAuth(signInWithKakao)}>
+        <Button type="button" className="h-[42px] w-full" onClick={() => handleSignInWithOAuth(API.KAKAO_LOGIN)}>
           카카오
         </Button>
       </div>
