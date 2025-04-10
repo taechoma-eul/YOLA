@@ -1,6 +1,7 @@
 export interface MenuItem {
   label: string;
-  path: string;
+  href: string;
   isLine?: boolean;
   isButton?: boolean;
+  pathname?: string;
 }
