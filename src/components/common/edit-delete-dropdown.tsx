@@ -1,16 +1,19 @@
 import { EllipsisVertical } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
 
 const SET_TIME_OUT = 150;
 
 /**
  * 수정/삭제를 할 수 있는 드롭다운입니다
- * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 넣어주면 사용이 가능합니다
+ * 삭제 시 '삭제하시겠습니까?' 모달까지 연결되어 있습니다
+ * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
-const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: Function; handleDelete: Function }) => {
+const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
   const [isOpen, setIsopen] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handlePointerEnter = () => {
     if (timeoutRef.current) {
@@ -48,10 +51,13 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: Function
         <DropdownMenuContent className="pointer-events-auto z-[52]">
           <div className="flex w-10 flex-col">
             <button onClick={() => handleEdit()}>수정</button>
-            <button onClick={() => handleDelete()}>삭제</button>
+            <button onClick={() => setShowModal(!showModal)}>삭제</button>
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
+      {showModal && (
+        <DeleteConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />
+      )}
     </div>
   );
 };
