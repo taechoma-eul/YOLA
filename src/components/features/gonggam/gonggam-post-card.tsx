@@ -11,7 +11,7 @@ interface GonggamPostCardProps {
 
 const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
   /** 작성자 닉네임 불러오기 */
-  const nickname = await getWriterProfile(post.user_id);
+  const { nickname } = await getWriterProfile(post.user_id);
 
   /** 이미지 불러오기 */
   const images = await getPostImagesByPostId(post.id);

@@ -56,18 +56,23 @@ export const getPaginatedGonggamPosts = async (
 };
 
 /** getWriterProfile
- * 작성자의 프로필 정보를 조회하는 함수
+ * 작성자의 프로필 정보를 조회하는 함수(닉네임, 프로필 이미지)
  *
  * @param writerId - 조회할 작성자의 고유 ID
- * @returns profile: 닉네임(nickname)을 포함한 작성자 정보 (현재는 nickname만 반환)
- *
- * @note 추후 프로필 이미지 등 확장 가능성을 고려하여 함수명을 getWriterProfile로 유지
+ * @returns nickname, profile_image_url
  */
 export const getWriterProfile = async (writerId: User['token']) => {
   const supabase = await createClient();
-  const { data: profile, error: userErr } = await supabase.from(TABLE.USERS).select('*').eq('id', writerId).single();
+  const { data: profile, error: userErr } = await supabase
+    .from(TABLE.USERS)
+    .select('nickname, profile_image')
+    .eq('id', writerId)
+    .single();
   if (userErr) throw new Error(userErr.message);
-  return profile.nickname;
+  return {
+    nickname: profile.nickname,
+    profileImageUrl: profile.profile_image
+  };
 };
 
 /** getPostImagesByPostId
