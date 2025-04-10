@@ -13,7 +13,7 @@ export const useUpdateProfileMutate = () => {
       });
     },
     onError: (error) => {
-      throw new Error('사용자 정보 변경에 실패했습니다.');
+      throw error;
     }
   });
 
