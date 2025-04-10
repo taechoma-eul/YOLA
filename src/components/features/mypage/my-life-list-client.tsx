@@ -17,8 +17,6 @@ const MyLifeListClient = () => {
     isFetchingNextPage
   } = useGetLifePostsInfiniteQuery();
 
-  console.log(posts);
-
   const { ref, inView } = useInView({
     threshold: 0.5
   });
@@ -52,18 +50,26 @@ const MyLifeListClient = () => {
   return (
     <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {parsedList.length === 0 ? (
-        <div className="col-span-full text-center text-gray-500">이 날 작성된 혼자 라이프가 없어요.</div>
+        <div className="col-span-full flex h-screen flex-col items-center justify-center whitespace-normal bg-slate-100 text-center text-gray-500">
+          <p>앗 아직 기록이 없어요</p>
+          <p>오늘의 혼자 라이프를 기록해보세요!</p>
+        </div>
       ) : (
-        parsedList.map((post) => <SoloLifeCard key={post.id} {...post} />)
+        <>
+          {parsedList.map((post) => (
+            <SoloLifeCard key={post.id} {...post} />
+          ))}
+
+          {/* 무한 스크롤 로딩 및 종료 메세지 */}
+          <div className="col-span-full flex items-center justify-center py-4 text-sm text-slate-400">
+            {hasNextPage ? (
+              <div ref={ref}>{isFetchingNextPage && '불러오는 중...'}</div>
+            ) : (
+              '작성하신 라이프글을 전부 불러왔어요.'
+            )}
+          </div>
+        </>
       )}
-      {/* 무한 스크롤 로딩 및 종료 메세지 */}
-      <div className="col-span-full flex items-center justify-center py-4 text-sm text-slate-400">
-        {hasNextPage ? (
-          <div ref={ref}>{isFetchingNextPage && '불러오는 중...'}</div>
-        ) : (
-          '작성하신 라이프글을 전부 불러왔어요.'
-        )}
-      </div>
     </div>
   );
 };

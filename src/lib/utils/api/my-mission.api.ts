@@ -1,5 +1,6 @@
-import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { TABLE } from '@/constants/supabase-tables-name';
+import { MSG } from '@/constants/messages';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { getUserSessionState } from '@/lib/utils/api/auth-action';
 
 /**
@@ -13,7 +14,7 @@ export const getUserMission = async () => {
   const supabase = await createClient();
   //로그인한 유저 id 조회
   const { userId } = await getUserSessionState();
-  if (!userId) throw new Error('로그인 한 유저의 아이디가 존재하지 않습니다');
+  if (!userId) throw new Error(MSG.NEED_LOGIN);
 
   // 로그인한 유저의 완료 미션과, mission_list 테이블에서 id와 type을 조인하여 조회
   const { data: UserMissions, error } = await supabase
@@ -22,7 +23,7 @@ export const getUserMission = async () => {
     .eq('user_id', userId);
 
   if (error) throw new Error(error.message);
-  return UserMissions;
+  return UserMissions ?? [];
 };
 
 /**
@@ -36,28 +37,11 @@ export const getUserMissionLevels = async () => {
   const supabase = await createClient();
   //로그인한 유저 id 조회
   const { userId } = await getUserSessionState();
-  if (!userId) throw new Error('로그인 한 유저의 아이디가 존재하지 않습니다');
+  if (!userId) throw new Error(MSG.NEED_LOGIN);
 
   // 로그인한 유저의 레벨 조회
   const { data: UserMissionsLevels, error } = await supabase.from(TABLE.USER_LEVEL).select('*').eq('user_id', userId);
 
   if (error) throw new Error(error.message);
-  return UserMissionsLevels[0];
-};
-
-/**
- * User의 로그인 상태 (Boolean) 판단
- *
- * @function checkIsLoggedIn
- * @returns - true, false
- */
-
-export const checkIsLoggedIn = async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error
-  } = await supabase.auth.getUser();
-  if (error || !user) return false;
-  return true;
+  return UserMissionsLevels[0] ?? [];
 };

@@ -9,7 +9,7 @@ const MypageSideBar = async () => {
   return (
     <aside className="flex h-[calc(100vh-150px)] w-full flex-col items-center gap-5 p-5 md:fixed md:w-60">
       {/* 내 프로필 보기 */}
-      <ProfileBox initProfile={initProfile!} />
+      <ProfileBox initProfile={initProfile} />
       {/* 유저 메뉴 */}
       <section className="flex w-full flex-col items-center gap-3 rounded-md border p-3">
         <strong className="w-full rounded-md bg-slate-700 p-1 text-center text-white">USER MENU</strong>
