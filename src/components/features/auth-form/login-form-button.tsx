@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 import { toastAlert } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
 import type { FieldData } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
 import { API } from '@/constants/api-path';
-import { useTransition } from 'react';
 
 const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
   const router = useRouter();
@@ -22,11 +22,11 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
       }
     });
   };
-  console.log('isPending', isPending);
+
   return (
     <>
       <div className="space-y-3 pt-3">
-        <Button disabled={isSubmitting || isPending ? true : false} type="submit" className="h-[42px] w-full">
+        <Button disabled={isSubmitting || !isPending ? false : true} type="submit" className="h-[42px] w-full">
           {isSubmitting || !isPending ? '이메일로 로그인' : '로그인 중...'}
         </Button>
         <Button asChild className="h-[42px] w-full">
