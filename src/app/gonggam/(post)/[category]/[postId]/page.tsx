@@ -17,7 +17,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
   const displayDate = updated_at ?? created_at;
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
+    <article className="space-y-4">
       {/* 게시글 헤더 */}
       <header className="mb-6">
         <h1 className="mb-2 text-2xl font-bold">{title}</h1>
@@ -59,9 +59,10 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
           <span>10</span> {/* 좋아요 수 하드코딩 예시 */}
         </button>
       </section>
+
       {/* 태그 영역 */}
       <section className="mt-4">
-        <div className="flex flex-wrap gap-1 text-sm text-muted-foreground">
+        <div className="mb-6 flex flex-wrap gap-1 text-sm text-muted-foreground">
           <p className="rounded-md border px-2 py-1">#태그1</p>
           <p className="rounded-md border px-2 py-1">#태그2</p>
         </div>
