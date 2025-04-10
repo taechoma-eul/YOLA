@@ -3,10 +3,11 @@
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
+import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import type { Tables } from '@/types/supabase';
 import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
-import type { Tables } from '@/types/supabase';
 
 const LAYOUT = 'layout';
 
@@ -59,27 +60,6 @@ export const logout = async () => {
   }
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
-};
-
-/**
- * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 user_id(auth.uid)와 로그인 상태를 불러옵니다.
- * 세션이 존재하지 않는 경우 userId는 null을 반환하고, isLogin은 false를 반환합니다.
- * @returns { string | null, boolean } userId, isLogin
- */
-export const getUserSessionState = async (): Promise<{
-  userId: string | null;
-  isLogin: boolean;
-}> => {
-  const supabase = await createClient();
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
-  const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
-
-  const isLogin = !!userId;
-
-  return { userId, isLogin };
 };
 
 /**
