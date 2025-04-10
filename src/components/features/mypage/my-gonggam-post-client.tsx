@@ -5,8 +5,8 @@ import { useInView } from 'react-intersection-observer';
 import { QUERY_KEY } from '@/constants/query-keys';
 import { useQueryClient } from '@tanstack/react-query';
 import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
+import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
-import MypageGonggamItem from './mypage-gonggam-item';
 
 const MyGonggamPostClient = () => {
   const [sortBy, setSortBy] = useState<'latest' | 'comments' | 'likes'>('latest');
