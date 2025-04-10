@@ -1,7 +1,7 @@
-import type { GonggamPost } from '@/types/gonggam';
-import { createClient } from '../supabase/supabase-server';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { getPostImagesByPostId, getWriterProfile } from './gonggam-board.api';
+import { getPostImagesByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import type { GonggamPost, GonggamPostDetail } from '@/types/gonggam';
 
 /** getGonggamPostDetail
  * postId를 기반으로 공감 게시글 내용을 조회합니다.
@@ -9,7 +9,7 @@ import { getPostImagesByPostId, getWriterProfile } from './gonggam-board.api';
  * @param postId - 게시글 고유 ID
  * @returns 게시글 본문, 이미지 배열, 작성자 닉네임 등 포함된 상세 정보
  */
-export const getGonggamPostDetail = async (postId: GonggamPost['id']) => {
+export const getGonggamPostDetail = async (postId: GonggamPost['id']): Promise<GonggamPostDetail> => {
   const supabase = await createClient();
 
   // 1. 게시글 기본 정보 조회
@@ -19,7 +19,7 @@ export const getGonggamPostDetail = async (postId: GonggamPost['id']) => {
     .eq('id', postId)
     .single();
 
-  if (postError || !post) throw new Error(postError?.message ?? '게시글을 찾을 수 없습니다.');
+  if (postError || !post) throw new Error(postError.message);
 
   // 2. 작성자 닉네임 조회
   const profile = await getWriterProfile(post.user_id);
