@@ -1,6 +1,8 @@
-import { useState } from 'react';
+'use client';
+import { Tables } from '@/types/supabase';
 import { X } from 'lucide-react';
-import { useMissions } from '@/lib/hooks/queries/use-missions';
+import { useEffect, useState } from 'react';
+import { FadeLoader } from 'react-spinners';
 
 /*
 사용할 곳에서
@@ -11,21 +13,50 @@ const clickModal = () => setShowModal(!showModal);
 {showModal && <RandomMissionModal clickModal={clickModal} isLogin={isLogin} />}
 을 통해 모달을 끌 수 있도록 setter 함수와 로그인 여부를 알려주는 isLogin을 넘겨주면 사용할 수 있습니다
  */
-const RandomMissionModal = ({ clickModal, isLogin }: { clickModal: Function; isLogin: boolean }) => {
+interface Props {
+  missions: Tables<'mission_list'>[];
+  clickModal: Function;
+  isLogin: boolean;
+}
+
+const TIME_OUT = 1250;
+const RandomMissionModal = ({ missions, clickModal, isLogin }: Props) => {
   const [randomMission, setRandomMission] = useState<string>('');
 
-  const { data: missionsData, isPending, isError } = useMissions();
-
-  if (isPending) {
-    return <div>...불러오는 중</div>;
-  }
-  if (isError) {
-    return <div>문제가 생겼어요!</div>;
-  }
   const handleRandomMission = () => {
-    const randomIndex = Math.floor(Math.random() * missionsData.length);
-    const randomMissionData = missionsData[randomIndex];
+    const randomIndex = Math.floor(Math.random() * missions.length);
+    const randomMissionData = missions[randomIndex];
     setRandomMission(randomMissionData.content);
+  };
+  const RandomMissionWithLoadingSpinner = () => {
+    const [showContent, setShowContent] = useState(false);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setShowContent(true);
+      }, TIME_OUT);
+
+      return () => clearTimeout(timer);
+    }, []);
+
+    if (!showContent) {
+      return (
+        <div className="relative h-44 w-[462px] rounded-2xl">
+          <div className="absolute left-0 top-[69px] inline-flex w-[462px] items-center justify-center gap-2.5 p-2.5">
+            <FadeLoader />
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="relative h-44 w-[462px] rounded-2xl bg-gray-50">
+        <div className="absolute left-0 top-[69px] inline-flex w-[462px] items-center justify-center gap-2.5 p-2.5">
+          <div className="justify-start text-center font-['Pretendard'] text-2xl font-semibold leading-loose text-zinc-800">
+            {randomMission}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -48,27 +79,24 @@ const RandomMissionModal = ({ clickModal, isLogin }: { clickModal: Function; isL
             <div className="justify-start self-stretch text-center font-['Pretendard'] text-base font-normal leading-snug text-zinc-800">
               {isLogin ? <p>두근두근 뭐가 나올까?</p> : <p>더 많은 미션을 원하시면 회원가입하세요!</p>}
             </div>
-            {/**TODO - 사진 / 로딩 스피너 삽입 */}
           </div>
-          <div className="relative h-44 w-[462px] rounded-xl">
-            {randomMission ? (
-              <div className="flex flex-col items-center justify-center gap-2">{randomMission}</div>
-            ) : (
-              <div className="absolute left-0 top-0 h-44 w-[462px] rounded-2xl bg-gray-200" />
-            )}
-          </div>
+          {randomMission ? (
+            <RandomMissionWithLoadingSpinner />
+          ) : (
+            <div className="relative h-44 w-[462px] overflow-hidden"></div>
+          )}
           <div
             data-priority="Primary"
             data-size="Medium"
             data-status="Default"
-            className="pointer-cursor inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-amber-300 px-4 py-2.5"
+            className="inline-flex w-56 cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-amber-400 px-4 py-2.5"
             onClick={() => handleRandomMission()}
           >
             <button
               type="button"
               className="justify-start font-['Pretendard'] text-base font-semibold leading-snug text-zinc-800"
             >
-              뽑기
+              {randomMission ? '다시 뽑기' : '뽑기'}
             </button>
           </div>
         </div>
