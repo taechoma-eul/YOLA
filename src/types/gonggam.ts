@@ -1,18 +1,11 @@
-import type { Enums } from '@/types/supabase';
+import type { Enums, Tables } from '@/types/supabase';
 
 export type GonggamCategory = Enums<'categorys'>;
 
 export type CategoryMapType = Record<GonggamCategory, string>;
 export type SlugToCategoryType = Record<string, GonggamCategory>;
 
-export interface GonggamPost {
-  id: number;
-  user_id: string;
-  category: GonggamCategory;
-  title: string;
-  content: string;
-  created_at: string;
-}
+export type GonggamPost = Tables<'gonggam_posts'>;
 
 export interface PaginationInfo {
   currentPage: number;
