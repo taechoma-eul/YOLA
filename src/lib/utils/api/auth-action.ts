@@ -83,6 +83,20 @@ export const getUserProfile = async (): Promise<Tables<'users'>> => {
   }
 };
 
+export const updateUserProfile = async (formData: { nickname: string; profile_image: string }): Promise<void> => {
+  const supabase = await createClient();
+  const { userId } = await getUserSessionState();
+
+  if (userId === null) throw new Error('사용자 세션 정보가 존재하지 않습니다.');
+
+  const { error } = await supabase
+    .from('users')
+    .update({ nickname: formData.nickname, profile_image: formData.profile_image })
+    .eq('id', userId);
+
+  if (error) throw new Error(error.message);
+};
+
 export const getDuplicateCheckData = async (field: string, value: string) => {
   const supabase = await createClient();
 
