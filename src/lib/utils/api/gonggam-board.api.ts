@@ -99,20 +99,28 @@ export const getPostImagesByPostId = async (postId: GonggamPost['id']): Promise<
 export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<GonggamPostMeta> => {
   const supabase = await createClient();
 
-  // 좋아요 수
-  const { count: likeCnt } = await supabase
-    .from(TABLE.LIKES)
-    .select('*', { count: 'exact', head: true })
-    .eq('post_id', postId);
+  const { data, error } = await supabase.rpc('get_post_meta', { post_id: postId });
 
-  // 댓글 수
-  const { count: commentCnt } = await supabase
-    .from(TABLE.COMMENTS)
-    .select('*', { count: 'exact', head: true })
-    .eq('post_id', postId);
+  if (error || !data || data.length === 0) {
+    return { likeCnt: 0, commentCnt: 0 };
+  }
+
+  //   const { likes_count: like_cnt, comments_count: comment_cnt } = data[0];
+
+  //   // 좋아요 수
+  //   const { count: likeCnt } = await supabase
+  //     .from(TABLE.LIKES)
+  //     .select('*', { count: 'exact', head: true })
+  //     .eq('post_id', postId);
+
+  //   // 댓글 수
+  //   const { count: commentCnt } = await supabase
+  //     .from(TABLE.COMMENTS)
+  //     .select('*', { count: 'exact', head: true })
+  //     .eq('post_id', postId);
 
   return {
-    likeCnt: likeCnt ?? 0,
-    commentCnt: commentCnt ?? 0
+    likeCnt: data[0].likes_count ?? 0,
+    commentCnt: data[0].comments_count ?? 0
   };
 };
