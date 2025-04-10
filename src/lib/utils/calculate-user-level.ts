@@ -15,7 +15,7 @@ export const calculateUserLevel = (totalCount: number): string => {
 };
 
 export const USER_LEVELS = {
-  START: '',
+  START: 'START',
   BEGINNER: '입문',
   NOVICE: '초보',
   INTERMEDIATE: '중수',

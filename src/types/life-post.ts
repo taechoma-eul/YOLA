@@ -10,7 +10,7 @@ export interface SoloLifeCardType {
   thumbnail: string; // 대표 이미지 (보통 첫 번째 이미지)
   imageUrls: string[]; // 전체 이미지 목록
   isMission: boolean;
-  tags: string[]; // 해시태그 목록
+  tags: string[];
 }
 
 export interface LifePostWithImageUrls extends LifePost {

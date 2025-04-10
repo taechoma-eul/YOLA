@@ -2,12 +2,14 @@
 
 import { useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { Camera } from 'lucide-react';
 import { processedImagePreview } from '@/lib/utils/processed-image';
 import ProfileAvatar from '@/components/common/profile-avatar';
 import { Button } from '@/components/ui/button';
-import { FormControl } from '@/components/ui/form';
+import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
+import { AUTH } from '@/constants/auth-form';
 
 const ProfileImageField = ({
   form,
@@ -30,22 +32,32 @@ const ProfileImageField = ({
     if (!selectedFile) return;
 
     // Form에 파일 설정
-    form.setValue('profile_image_file', e.target.files);
+    form.setValue(AUTH.PROFILE_IMAGE_FILE, e.target.files);
 
     const url = await processedImagePreview(selectedFile);
     setPreviewUrl(url);
   };
 
   return (
-    <div className="mx-auto mb-10 flex w-[150px] flex-col justify-center gap-5">
-      <ProfileAvatar src={previewUrl ? previewUrl : profileImage} />
-      <FormControl>
-        <Input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
-      </FormControl>
-      <Button type="button" onClick={triggerFileInput}>
-        이미지 업로드
-      </Button>
-    </div>
+    <FormField
+      control={form.control}
+      name={AUTH.PROFILE_IMAGE}
+      render={() => (
+        <div className="relative flex w-44 flex-col items-end justify-start">
+          <ProfileAvatar src={previewUrl ? previewUrl : profileImage} />
+          <FormControl>
+            <Input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
+          </FormControl>
+          <Button
+            type="button"
+            onClick={triggerFileInput}
+            className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-neutral-600 p-0"
+          >
+            <Camera />
+          </Button>
+        </div>
+      )}
+    />
   );
 };
 
