@@ -15,7 +15,7 @@ import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { PATH } from '@/constants/page-path';
 import { getToday } from '@/lib/utils/get-date';
 import type { MissionType } from '@/types/checklist';
-import { useUpdateLifePost } from '@/lib/hooks/mutations/ues-update-life-post';
+import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 
 interface LifeInputFormProps {
   missionId: string | null;
