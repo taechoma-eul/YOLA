@@ -1,21 +1,17 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { GetMyGonggamPostsResponse } from '@/types/gonggam-posts';
 import { QUERY_KEY } from '@/constants/query-keys';
 import { getMyGonggamPostsAll } from '@/lib/utils/api/my-gonggam-client.api';
-import { GetMyGonggamPostsResponse } from '@/types/gonggam-posts';
+
 /**
  * @function useGetGonggamPostsInfiniteQuery
  * @returns - pageParams, pages 을 반환,
  */
-const useGetGonggamPostsInfiniteQuery = () => {
+export const useGetGonggamPostsInfiniteQuery = (sortBy: 'latest' | 'comments' | 'likes') => {
   return useInfiniteQuery<GetMyGonggamPostsResponse>({
-    queryKey: QUERY_KEY.GONGGAM_POSTS_INFINITE,
-    queryFn: ({ pageParam }) => getMyGonggamPostsAll({ page: pageParam as number }),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.page < lastPage.totalPages) {
-        return lastPage.page + 1;
-      }
-      return undefined;
-    },
+    queryKey: QUERY_KEY.GONGGAM_POSTS_INFINITE(sortBy),
+    queryFn: async ({ pageParam = 1 }) => getMyGonggamPostsAll({ page: pageParam as number, sortBy }),
+    getNextPageParam: (lastPage) => (lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined),
     initialPageParam: 1
   });
 };
