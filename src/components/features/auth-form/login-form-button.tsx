@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import type { FieldData } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
 import { API } from '@/constants/api-path';
+import { FAIL } from '@/constants/messages';
 
 const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
       try {
         router.push(apiPath);
       } catch (error) {
-        toastAlert('소셜 로그인에 실패했습니다.', 'destructive');
+        toastAlert(FAIL.SOCIAL_LOGIN, 'destructive');
       }
     });
   };

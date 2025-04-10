@@ -8,6 +8,7 @@ import type { Tables } from '@/types/supabase';
 import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
+import { FAIL } from '@/constants/messages';
 
 const LAYOUT = 'layout';
 
@@ -21,7 +22,7 @@ export const login = async (formData: FormData) => {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    if (error.message === 'Invalid login credentials') throw new Error('이메일 또는 비밀번호 오류입니다.');
+    if (error.message === 'Invalid login credentials') throw new Error(FAIL.LOGIN);
     return;
   }
 
@@ -71,11 +72,11 @@ export const getUserProfile = async (): Promise<Tables<'users'>> => {
   const supabase = await createClient();
   try {
     const { userId } = await getUserSessionState();
-    if (userId === null) throw new Error('사용자 세션 정보가 존재하지 않습니다.');
+    if (userId === null) throw new Error(FAIL.SESSION);
 
     const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
 
-    if (error) throw new Error('사용자 프로필 정보를 받아오는 데 실패했습니다.');
+    if (error) throw new Error(FAIL.GET_PROFILE);
 
     return data;
   } catch (error) {
@@ -93,10 +94,10 @@ export const updateUserProfile = async (formData: { nickname: string; profile_im
   const supabase = await createClient();
   const { userId } = await getUserSessionState();
 
-  if (userId === null) throw new Error('사용자 세션 정보가 존재하지 않습니다.');
+  if (userId === null) throw new Error(FAIL.SESSION);
 
   const { error } = await supabase
-    .from('users')
+    .from(TABLE.USERS)
     .update({ nickname: formData.nickname, profile_image: formData.profile_image })
     .eq('id', userId);
 
@@ -106,7 +107,7 @@ export const updateUserProfile = async (formData: { nickname: string; profile_im
 export const getDuplicateCheckData = async (field: string, value: string) => {
   const supabase = await createClient();
 
-  const { data } = await supabase.from('users').select(field).eq(field, value).single();
+  const { data } = await supabase.from(TABLE.USERS).select(field).eq(field, value).single();
 
   return data;
 };

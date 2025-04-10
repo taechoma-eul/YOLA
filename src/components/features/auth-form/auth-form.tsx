@@ -9,7 +9,8 @@ import LoginFormButton from '@/components/features/auth-form/login-form-button';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
 import { Form } from '@/components/ui/form';
 import type { AuthFormMode, FieldData } from '@/types/components/auth-form';
-import { AUTH, ERROR_MESSAGE, PLACEHOLDER } from '@/constants/auth-form';
+import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
+import { AUTH_ERROR, SUCCESS } from '@/constants/messages';
 
 type FormFieldData = Omit<FieldData, 'isSubmitting'>;
 
@@ -49,7 +50,7 @@ const AuthForm = ({ mode }: AuthFormMode) => {
 
   const handleFormAction = async (formData: FormData) => {
     if (!isValid) {
-      toastAlert(ERROR_MESSAGE.FIELD_CHECK, 'destructive');
+      toastAlert(AUTH_ERROR.FIELD_CHECK, 'destructive');
       return;
     }
 
@@ -57,7 +58,7 @@ const AuthForm = ({ mode }: AuthFormMode) => {
       startTransition(async () => {
         try {
           await login(formData);
-          toastAlert('로그인이 완료되었습니다.', 'success');
+          toastAlert(SUCCESS.LOGIN, 'success');
         } catch (error) {
           if (error instanceof Error) toastAlert(error.message, 'destructive');
         }
@@ -65,17 +66,17 @@ const AuthForm = ({ mode }: AuthFormMode) => {
       return;
     }
     if (!emailDuplicateCheck) {
-      toastAlert(ERROR_MESSAGE.EMAIL_CHECK, 'destructive');
+      toastAlert(AUTH_ERROR.EMAIL_CHECK, 'destructive');
       return;
     }
     if (!nicknameDuplicateCheck) {
-      toastAlert(ERROR_MESSAGE.NICKNAME_CHECK, 'destructive');
+      toastAlert(AUTH_ERROR.NICKNAME_CHECK, 'destructive');
       return;
     }
 
     startTransition(async () => {
       await signup(formData);
-      toastAlert('회원가입이 완료되었습니다. 자동 로그인 됩니다.', 'success');
+      toastAlert(SUCCESS.SIGNUP, 'success');
     });
   };
 

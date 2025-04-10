@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logout } from '@/lib/utils/api/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import type { MenuItem } from '@/types/components/header';
-import { FAIL_LOGOUT } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 
 const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathname }: MenuItem) => {
   const queryClient = useQueryClient();
@@ -18,7 +18,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, 
       await logout();
       queryClient.clear();
     } catch (error) {
-      toastAlert(FAIL_LOGOUT, 'default');
+      toastAlert(FAIL.LOGOUT, 'default');
       return;
     }
   };

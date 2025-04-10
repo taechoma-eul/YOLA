@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { AuthFormData } from '@/lib/utils/validation/auth-validate';
-import { AUTH, ERROR_MESSAGE, SUCCESS_MESSAGE } from '@/constants/auth-form';
+import { AUTH, LABEL } from '@/constants/auth-form';
+import { AUTH_ERROR, SUCCESS } from '@/constants/messages';
 
 interface FieldProps<T extends keyof AuthFormData> {
   inputType: string;
@@ -43,7 +44,7 @@ const AuthFormField = <T extends keyof AuthFormData>({
     const nowValue: string = getValues(fieldName);
 
     if (!nowValue) {
-      toastAlert(fieldName === AUTH.EMAIL ? ERROR_MESSAGE.NONE_EMAIL : ERROR_MESSAGE.NONE_NICKNAME, 'destructive');
+      toastAlert(fieldName === AUTH.EMAIL ? AUTH_ERROR.NONE_EMAIL : AUTH_ERROR.NONE_NICKNAME, 'destructive');
       return;
     }
 
@@ -51,11 +52,11 @@ const AuthFormField = <T extends keyof AuthFormData>({
 
     if (data) {
       toastAlert(
-        fieldName === AUTH.EMAIL ? ERROR_MESSAGE.CHECK_EMAIL_FAIL : ERROR_MESSAGE.CHECK_NICKNAME_FAIL,
+        fieldName === AUTH.EMAIL ? AUTH_ERROR.CHECK_EMAIL_FAIL : AUTH_ERROR.CHECK_NICKNAME_FAIL,
         'destructive'
       );
     } else {
-      toastAlert(SUCCESS_MESSAGE, 'default');
+      toastAlert(`${SUCCESS.CHECK} ${fieldName === AUTH.EMAIL ? LABEL.EMAIL : LABEL.NICKNAME}입니다.`, 'default');
       setDuplicateCheck(true);
     }
   };
