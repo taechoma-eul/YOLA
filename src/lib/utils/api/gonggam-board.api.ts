@@ -105,20 +105,6 @@ export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<Go
     return { likeCnt: 0, commentCnt: 0 };
   }
 
-  //   const { likes_count: like_cnt, comments_count: comment_cnt } = data[0];
-
-  //   // 좋아요 수
-  //   const { count: likeCnt } = await supabase
-  //     .from(TABLE.LIKES)
-  //     .select('*', { count: 'exact', head: true })
-  //     .eq('post_id', postId);
-
-  //   // 댓글 수
-  //   const { count: commentCnt } = await supabase
-  //     .from(TABLE.COMMENTS)
-  //     .select('*', { count: 'exact', head: true })
-  //     .eq('post_id', postId);
-
   return {
     likeCnt: data[0].likes_count ?? 0,
     commentCnt: data[0].comments_count ?? 0
