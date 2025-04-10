@@ -7,6 +7,8 @@ import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { Tables } from '@/types/supabase';
+import { NEXT_SERVER_SOCIAL_LOGIN } from '@/constants/api-url';
+import { AuthError } from '@supabase/supabase-js';
 
 const LAYOUT = 'layout';
 
@@ -20,8 +22,8 @@ export const login = async (formData: FormData) => {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    console.log(error.message);
-    redirect(PATH.ERROR);
+    if (error.message === 'Invalid login credentials') throw new Error('이메일 또는 비밀번호 오류입니다.');
+    return;
   }
 
   revalidatePath(PATH.HOME, LAYOUT);
@@ -42,10 +44,7 @@ export const signup = async (formData: FormData) => {
 
   const { error } = await supabase.auth.signUp(data);
 
-  if (error) {
-    console.log(error.message);
-    redirect(PATH.ERROR);
-  }
+  if (error) throw error;
 
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
@@ -77,6 +76,7 @@ export const getUserSessionState = async (): Promise<{
   const {
     data: { user }
   } = await supabase.auth.getUser();
+
   const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
 
   const isLogin = !!userId;
@@ -89,25 +89,28 @@ export const getUserSessionState = async (): Promise<{
  * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
  * @returns { Tables<'users'> } - 현재 세션에 해당하는 users 테이블 row
  */
-export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
+export const getUserProfile = async (): Promise<Tables<'users'>> => {
   const supabase = await createClient();
-  const { userId } = await getUserSessionState();
+  try {
+    const { userId } = await getUserSessionState();
+    if (userId === null) throw new Error('사용자 세션 정보가 존재하지 않습니다.');
 
-  if (!userId) return null;
+    const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
 
-  const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
+    if (error) throw new Error('사용자 프로필 정보를 받아오는 데 실패했습니다.');
 
-  if (error) throw error;
-
-  return data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const signInWithGoogle = async () => {
+export const signInWithGoogle = async (): Promise<never> => {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'http://localhost:3000/api/auth/callback' // 서버 측 콜백 경로
+      redirectTo: NEXT_SERVER_SOCIAL_LOGIN // 서버 측 콜백 경로
     }
   });
 
@@ -115,4 +118,27 @@ export const signInWithGoogle = async () => {
 
   // Supabase가 리다이렉션 URL을 반환하면 클라이언트로 전달
   redirect(data.url); // OAuth 흐름 시작
+};
+
+export const signInWithKakao = async () => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'kakao',
+    options: {
+      scopes: 'profile_nickname profile_image account_email',
+      redirectTo: NEXT_SERVER_SOCIAL_LOGIN // 리다이렉트 URL
+    }
+  });
+
+  if (error) throw new Error(error.message);
+
+  redirect(data.url); // OAuth 흐름 시작
+};
+
+export const getDuplicateCheckData = async (field: string, value: string) => {
+  const supabase = await createClient();
+
+  const { data } = await supabase.from('users').select(field).eq(field, value).single();
+
+  return data;
 };
