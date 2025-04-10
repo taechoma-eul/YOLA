@@ -5,13 +5,13 @@ import { getKoreanDate } from '@/lib/utils/utc-to-kst';
  * 주어진 날짜와 현재 시간의 차이를 계산하여 KST 상대 시간 문자열로 반환합니다.
  *
  * - 1분 미만: "지금"
- * - 1시간 이내: "N분 전"
- * - 24시간 이내: "N시간 전"
- * - 1일 이상 4일 미만: "N일 전"
- * - 4일 이상: 날짜 출력
+ * - 1시간 미만: "N분 전"
+ * - 24시간 미만: "N시간 전"
+ * - 2일 미만: "N일 전"
+ * - 2일 이상: "MM/DD" 형식의 날짜 문자열
  *
  * @param dateInput - 날짜 문자열 또는 Date 객체
- * @returns KST 기준 상대 시간 문자열 (예: "지금", "3시간 전", "2일 전", "2025-04-01")
+ * @returns KST 기준 상대 시간 문자열 (예: "지금",  "15분 전", "3시간 전", "1일 전", "4/1")
  */
 export const formatRelativeDate = (dateInput: string | Date): string => {
   const now = getKoreanDate();
@@ -34,13 +34,9 @@ export const formatRelativeDate = (dateInput: string | Date): string => {
     return `${diffHours}시간 전`;
   }
 
-  if (diffDays < 4) {
+  if (diffDays < 2) {
     return `${diffDays}일 전`;
   }
-
-  // YYYY-MM-DD 형식으로 반환
-  //   return `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
-
   // MM/DD 형식으로 반환
   return `${target.getMonth() + 1}/${target.getDate()}`;
 };
