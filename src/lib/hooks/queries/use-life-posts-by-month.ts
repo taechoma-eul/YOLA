@@ -6,7 +6,7 @@ import { QUERY_KEY } from '@/constants/query-keys';
 
 export const useLifePostsByMonth = (month: string) => {
   return useQuery<LifePostWithImageUrls[]>({
-    queryKey: [QUERY_KEY.LIFE_POSTS, month],
+    queryKey: QUERY_KEY.LIFE_POSTS(month),
     queryFn: () => getLifePostsByMonth(month)
   });
 };
