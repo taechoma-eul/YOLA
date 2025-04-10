@@ -1,6 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
+import { getUserSessionState } from '@/lib/utils/api/auth-client.api';
 import type { GetLifePostsResponse } from '@/types/life-post';
 import { MSG } from '@/constants/messages';
 

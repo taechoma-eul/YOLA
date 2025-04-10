@@ -1,4 +1,4 @@
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
+import { getUserSessionState } from '@/lib/utils/api/auth.api';
 import GuestOptionMenu from '@/components/layout/header/header-guest-option';
 import HeaderNav from '@/components/layout/header/header-nav';
 import MainLogo from '@/components/layout/header/header-main-logo';
