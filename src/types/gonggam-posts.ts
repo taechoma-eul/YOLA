@@ -1,4 +1,4 @@
-import { Database, Tables } from '@/types/supabase';
+import type { Database, Tables } from '@/types/supabase';
 
 export interface GonggamPost extends Tables<'gonggam_posts'> {
   likes: Tables<'likes'>[];
