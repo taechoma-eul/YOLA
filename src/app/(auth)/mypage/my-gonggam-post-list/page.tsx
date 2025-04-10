@@ -6,7 +6,9 @@ const MyGonggamPostListPage = async () => {
   const profile = await getUserProfile();
   return (
     <div>
-      <strong>{profile.nickname}님이 작성한 공감 게시글</strong>
+      <section className="flex flex-row justify-between">
+        <strong>{profile.nickname}님이 작성한 공감 게시글</strong>
+      </section>
       <MyGonggamPostClient />
     </div>
   );
