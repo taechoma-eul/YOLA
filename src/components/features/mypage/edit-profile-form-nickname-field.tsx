@@ -7,8 +7,9 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
-import { AUTH, ERROR_MESSAGE, LABEL, PLACEHOLDER, SUCCESS_MESSAGE } from '@/constants/auth-form';
+import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
 import { toastAlert } from '@/lib/utils/toast';
+import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -32,16 +33,16 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
     if (initNickname === nowValue) setDuplicateCheck(true);
 
     if (!nowValue) {
-      toastAlert(ERROR_MESSAGE.NONE_NICKNAME, 'destructive');
+      toastAlert(AUTH_ERROR.NONE_NICKNAME, 'destructive');
       return;
     }
 
     const data = await getDuplicateCheckData(AUTH.NICKNAME, nowValue);
 
     if (data) {
-      toastAlert(ERROR_MESSAGE.CHECK_NICKNAME_FAIL, 'destructive');
+      toastAlert(AUTH_ERROR.CHECK_NICKNAME_FAIL, 'destructive');
     } else {
-      toastAlert(SUCCESS_MESSAGE, 'default');
+      toastAlert(`${SUCCESS.CHECK} ${LABEL.NICKNAME}입니다.`, 'default');
       setDuplicateCheck(true);
     }
   };
