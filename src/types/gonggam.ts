@@ -22,3 +22,13 @@ export interface GonggamPostMeta {
   likeCnt: number;
   commentCnt: number;
 }
+
+export interface WriterProfileResponse {
+  nickname: string;
+  profileImage: string | null;
+}
+
+export interface GonggamPostDetail extends GonggamPost {
+  profile: WriterProfileResponse;
+  images: string[];
+}
