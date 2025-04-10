@@ -9,9 +9,10 @@ import type { MenuItem } from '@/types/components/header';
 
 interface MenuProps extends Children {
   menuItems: MenuItem[];
+  isUserMenu?: boolean;
 }
 
-const HeaderDropdownMenu = ({ menuItems, children }: MenuProps) => {
+const HeaderDropdownMenu = ({ menuItems, children, isUserMenu = false }: MenuProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -22,7 +23,22 @@ const HeaderDropdownMenu = ({ menuItems, children }: MenuProps) => {
 
   return (
     <div className="group relative flex h-11 items-center">
-      <button className={clsx(isSelect || isMission ? 'text-[#DC6803]' : 'text-zinc-80')}>{children}</button>
+      <button
+        className={clsx(
+          'text-zinc-80 group: text-lg group-hover:font-semibold',
+          isSelect || isMission ? 'font-semibold' : 'font-normal'
+        )}
+      >
+        {children}
+        {!isUserMenu && (
+          <div
+            className={clsx(
+              'absolute h-0.5 w-[47px] self-stretch rounded-[1px] bg-amber-500 group-hover:visible',
+              isSelect || isMission ? 'visible' : 'invisible'
+            )}
+          />
+        )}
+      </button>
       <div className="invisible absolute right-0 top-11 flex w-[100px] transform flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-0 opacity-0 shadow-[0px_0px_3px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-gray-300 transition-all duration-150 ease-in-out group-hover:visible group-hover:opacity-100">
         {menuItems.map((item, index) => (
           <HeaderDropdownMenuItem

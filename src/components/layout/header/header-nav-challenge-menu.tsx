@@ -14,7 +14,7 @@ const NavChallengeMenu = () => {
   return (
     <div data-state="Dropdown" className="inline-flex h-11 items-center justify-center gap-2.5 py-2.5">
       <HeaderDropdownMenu menuItems={challengeMenuItem}>
-        <div className="flex w-[69px] justify-between text-center">
+        <div className="flex w-[71px] justify-between text-center">
           챌린지
           <ChevronDown color="#6F757B" />
         </div>
