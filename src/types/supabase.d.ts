@@ -37,6 +37,13 @@ export type Database = {
             foreignKeyName: 'comments_post_id_fkey';
             columns: ['post_id'];
             isOneToOne: false;
+            referencedRelation: 'gonggam_posts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'comments_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
             referencedRelation: 'gonggam_posts_with_counts';
             referencedColumns: ['id'];
           },
@@ -258,6 +265,13 @@ export type Database = {
             foreignKeyName: 'likes_post_id_fkey';
             columns: ['post_id'];
             isOneToOne: false;
+            referencedRelation: 'gonggam_posts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'likes_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
             referencedRelation: 'gonggam_posts_with_counts';
             referencedColumns: ['id'];
           },
@@ -439,6 +453,23 @@ export type Database = {
     Functions: {
       get_popular_posts: {
         Args: { limit_count: number };
+        Returns: {
+          id: number;
+          category: Database['public']['Enums']['categorys'];
+          content: string;
+          created_at: string;
+          title: string;
+          updated_at: string;
+          user_id: string;
+          likes_count: number;
+          comments_count: number;
+          total_interactions: number;
+          likes: Json;
+          comments: Json;
+        }[];
+      };
+      get_post_meta: {
+        Args: { post_id: number };
         Returns: {
           id: number;
           category: Database['public']['Enums']['categorys'];
