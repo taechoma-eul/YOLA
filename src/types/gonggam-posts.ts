@@ -1,4 +1,4 @@
-import type { Database, Tables } from '@/types/supabase';
+import type { Database, Enums, Tables } from '@/types/supabase';
 
 export interface GonggamPost extends Tables<'gonggam_posts'> {
   likes: Tables<'likes'>[];
@@ -15,7 +15,7 @@ export interface GetMyGonggamPostsResponse {
 //gonggam_posts_with_counts 뷰 타입 정의
 export type GonggamPostWithCounts = {
   id: number;
-  category: Database['public']['Enums']['categorys'];
+  category: Enums<'categorys'>;
   content: string | null;
   created_at: string;
   updated_at: string;
