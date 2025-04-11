@@ -39,9 +39,9 @@ export const getLifePostsByMonth = async (month: string): Promise<LifePostWithIm
 
   if (error) throw new Error(error.message);
 
-  const processed = (data ?? []).map((post: any) => ({
+  const processed = (data ?? []).map((post) => ({
     ...post,
-    image_urls: post.life_post_image_path?.map((img: any) => img.image_url) ?? []
+    image_urls: post.life_post_image_path?.map((img) => img.image_url) ?? []
   }));
 
   return processed;
