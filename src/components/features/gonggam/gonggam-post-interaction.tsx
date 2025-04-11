@@ -4,22 +4,39 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { Heart } from 'lucide-react';
-import type { GonggamPostMeta } from '@/types/gonggam';
+import { useEffect, useState } from 'react';
+import { getPostMetaClient } from '@/lib/utils/api/gonggam-detail-client.api';
 
 interface PostInteractionProps {
   postId: number;
-  postMeta: GonggamPostMeta;
   tags: string[];
 }
 
-const GonggamPostInteraction = ({ postId, postMeta: { likeCnt, commentCnt }, tags }: PostInteractionProps) => {
+const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
+  const [likeCnt, setLikeCnt] = useState<number>(0);
+  const [commentCnt, setCommentCnt] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchPostMeta = async () => {
+      try {
+        const { likeCnt, commentCnt } = await getPostMetaClient(postId);
+        setLikeCnt(likeCnt);
+        setCommentCnt(commentCnt);
+      } catch (err) {
+        console.error('포스트 메타데이터를 가져오는 데 실패했습니다:', err);
+      }
+    };
+
+    fetchPostMeta();
+  }, [postId]);
+
   return (
     <section>
       {/* 좋아요(하트) 버튼 */}
       <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
         <button className="flex items-center gap-2 rounded-md border border-gray-500 p-2 transition-colors hover:text-primary">
           <Heart size={14} />
-          <span>{likeCnt}</span> {/* 좋아요 수 하드코딩 예시 */}
+          <span>{likeCnt}</span>
         </button>
       </div>
       {/* 태그 영역 */}

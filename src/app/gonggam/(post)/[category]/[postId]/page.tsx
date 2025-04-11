@@ -16,7 +16,6 @@ interface GonggamPostDetailProps {
 const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDetailProps) => {
   const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
   const displayDate = updated_at ?? created_at;
-  const postMeta = await getPostMetaByPostId(postId); // 좋아요, 댓글 개수
 
   return (
     <article className="space-y-4">
@@ -54,7 +53,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
         <p>{content}</p>
       </section>
       {/* 좋아요/태그/댓글 영역 */}
-      <GonggamPostInteraction postId={postId} postMeta={postMeta} tags={tags ?? []} />
+      <GonggamPostInteraction postId={postId} tags={tags ?? []} />
     </article>
   );
 };
