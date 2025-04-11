@@ -11,11 +11,11 @@ import TagInput from '@/components/common/tag-input';
 import DatePicker from '@/components/common/date-picker';
 import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
 import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
+import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { PATH } from '@/constants/page-path';
 import { getToday } from '@/lib/utils/get-date';
 import type { MissionType } from '@/types/checklist';
-import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 
 interface LifeInputFormProps {
   missionId: string | null;
@@ -39,11 +39,7 @@ const lifeRecordSchema = z.object({
 });
 
 type FormData = z.infer<typeof lifeRecordSchema>;
-
-type UploadedImage = {
-  publicUrl: string;
-  storagePath: string;
-};
+type UploadedImage = { publicUrl: string; storagePath: string };
 
 const IMAGE_STORAGE_BUCKET = 'life-post-images';
 
@@ -58,8 +54,12 @@ const PostInputForm = ({
   const { mutate, isPending } = useLifePost();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateLifePost();
 
-  const [tags, setTags] = useState<string[]>(defaultValues?.tags || []);
-  const [selectedDate, setSelectedDate] = useState<string>(defaultValues?.date || getToday());
+  const isLoading = isPending || isUpdatePending;
+  const action = isEditMode ? '수정' : '등록';
+  const buttonLabel = `${action}${isLoading ? '중...' : '하기'}`;
+
+  const [tags, setTags] = useState(defaultValues?.tags || []);
+  const [selectedDate, setSelectedDate] = useState(defaultValues?.date || getToday());
   const [images, setImages] = useState<File[]>([]);
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>(
     defaultValues?.imageUrls?.map((url) => ({ publicUrl: url, storagePath: '' })) || []
@@ -92,17 +92,12 @@ const PostInputForm = ({
       const fileName = `${uuidv4()}.${fileExt}`;
       const filePath = `diary/${fileName}`;
 
-      const { error } = await supabase.storage.from(IMAGE_STORAGE_BUCKET).upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false
-      });
-
+      const { error } = await supabase.storage.from(IMAGE_STORAGE_BUCKET).upload(filePath, file);
       if (error) throw new Error('이미지 업로드 실패: ' + error.message);
 
       const {
         data: { publicUrl }
       } = supabase.storage.from(IMAGE_STORAGE_BUCKET).getPublicUrl(filePath);
-
       uploaded.push({ publicUrl, storagePath: filePath });
     }
 
@@ -131,34 +126,21 @@ const PostInputForm = ({
         date: selectedDate
       };
 
-      if (isEditMode && defaultValues) {
-        updateMutate(
-          { id: defaultValues.id, ...payload },
-          {
-            onSuccess: () => {
-              alert('수정되었습니다!');
-              router.push(PATH.LIFE);
-            },
-            onError: (err: unknown) => {
-              if (err instanceof Error) {
-                alert(err.message);
-              } else {
-                alert('수정 중 알 수 없는 오류가 발생했습니다.');
-              }
-            }
-          }
-        );
-      } else {
-        mutate(payload, {
-          onSuccess: () => {
-            alert('저장되었습니다!');
-            router.push(PATH.LIFE);
-          },
-          onError: (err) => {
-            alert(err instanceof Error ? err.message : '저장 중 오류가 발생했습니다.');
-          }
-        });
-      }
+      const mutationFn =
+        isEditMode && defaultValues
+          ? () => updateMutate({ id: defaultValues.id, ...payload }, { onSuccess: onSuccess, onError: onError })
+          : () => mutate(payload, { onSuccess: onSuccess, onError: onError });
+
+      const onSuccess = () => {
+        alert(`${action}되었습니다!`);
+        router.push(PATH.LIFE);
+      };
+
+      const onError = (err: unknown) => {
+        alert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`);
+      };
+
+      mutationFn();
     } catch (err) {
       alert(err instanceof Error ? err.message : '알 수 없는 오류');
     }
@@ -170,9 +152,7 @@ const PostInputForm = ({
 
     try {
       const pathsToDelete = uploadedImages.map((img) => img.storagePath).filter(Boolean);
-      if (pathsToDelete.length > 0) {
-        await deleteImages(pathsToDelete);
-      }
+      if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
       alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
@@ -181,9 +161,7 @@ const PostInputForm = ({
 
   return (
     <div className="min-h-screen w-full bg-white px-4 py-10 text-black">
-      <h1 className="mb-5 text-2xl font-bold text-black">
-        {isEditMode ? '기록 수정' : !isMission && '나의 일기 작성'}
-      </h1>
+      <h1 className="mb-5 text-2xl font-bold">{isEditMode ? '기록 수정' : !isMission && '나의 일기 작성'}</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <div className="mb-4 rounded-xl border border-gray-200 bg-white p-8">
           <div className="mb-4 flex items-center gap-4">
@@ -206,18 +184,15 @@ const PostInputForm = ({
             <DatePicker date={selectedDate} setDate={setSelectedDate} />
           </div>
 
-          <div>
-            <textarea
-              {...register('content')}
-              placeholder="내용을 입력하세요..."
-              className="h-[300px] w-full resize-none bg-white p-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            {errors.content && <p className="mt-1 text-sm text-red-500">{errors.content.message}</p>}
-          </div>
+          <textarea
+            {...register('content')}
+            placeholder="내용을 입력하세요..."
+            className="h-[300px] w-full resize-none bg-white p-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          {errors.content && <p className="mt-1 text-sm text-red-500">{errors.content.message}</p>}
         </div>
 
         <TagInput value={tags} onChange={setTags} />
-
         <ImageUploader
           images={images}
           onChange={setImages}
@@ -239,16 +214,10 @@ const PostInputForm = ({
           </button>
           <button
             type="submit"
-            disabled={isPending || isUpdatePending}
+            disabled={isLoading}
             className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5"
           >
-            {isPending || isUpdatePending
-              ? isEditMode
-                ? '수정중...'
-                : '등록중...'
-              : isEditMode
-                ? '수정하기'
-                : '등록하기'}
+            {buttonLabel}
           </button>
         </div>
       </form>
