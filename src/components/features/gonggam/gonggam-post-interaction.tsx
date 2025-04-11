@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getCommentsByPostId, getPostMetaClient } from '@/lib/utils/api/gonggam-detail-client.api';
-import type { CommentWithUser } from '@/types/gonggam';
+import { getPostMetaClient } from '@/lib/utils/api/gonggam-detail-client.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
+import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 
 interface PostInteractionProps {
   postId: number;
@@ -19,6 +19,7 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
   const [likeCnt, setLikeCnt] = useState<number>(0);
   const [commentCnt, setCommentCnt] = useState<number>(0);
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
+  const { profile, isProfilePending, profileFetchingError } = useUserProfile();
 
   useEffect(() => {
     const fetchPostMeta = async () => {
@@ -33,8 +34,9 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
     fetchPostMeta();
   }, [postId]);
 
-  if (isCommentsPending) return null;
-  if (commentsErr) throw Error(commentsErr.message);
+  if (isCommentsPending || isProfilePending) return null;
+  const err = commentsErr ?? profileFetchingError;
+  if (err) throw new Error(err.message);
 
   return (
     <section>
@@ -66,7 +68,7 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
             <div className="relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full">
               <Image
                 src={comment.writer.profileImage || DEFAULT_AVATAR_URL}
-                alt={`${comment.writer.nickname}의 프로필 이미지`}
+                alt={`${comment.writer.nickname}`}
                 fill
                 sizes="40px"
                 className="object-cover"
@@ -86,11 +88,10 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
 
         {/* 댓글 입력창 */}
         <form className="flex items-center gap-2">
-          {/* TODO: 로그인 사용자의 프로필 이미지 */}
           <div className="relative h-[40px] w-[40px] overflow-hidden rounded-full">
             <Image
-              src={DEFAULT_AVATAR_URL}
-              alt={`로그인유저의 프로필 이미지`}
+              src={profile!.profile_image || DEFAULT_AVATAR_URL}
+              alt={`${profile?.nickname}`}
               fill
               sizes="40px"
               className="object-cover"
