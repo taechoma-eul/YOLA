@@ -3,5 +3,6 @@ export const NEXT_SERVER_BASE_URL = process.env.VERCEL_URL ?? 'http://localhost:
 export const API = {
   SOCIAL_LOGIN_CALL_BACK: '/api/auth/callback',
   GOOGLE_LOGIN: '/api/auth/google',
-  KAKAO_LOGIN: '/api/auth/kakao'
+  KAKAO_LOGIN: '/api/auth/kakao',
+  DUPLICATE: '/api/auth/check-duplicate'
 };

@@ -103,11 +103,3 @@ export const updateUserProfile = async (formData: { nickname: string; profile_im
 
   if (error) throw new Error(error.message);
 };
-
-export const getDuplicateCheckData = async (field: string, value: string) => {
-  const supabase = await createClient();
-
-  const { data } = await supabase.from(TABLE.USERS).select(field).eq(field, value).single();
-
-  return data;
-};
