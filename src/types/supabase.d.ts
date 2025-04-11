@@ -40,6 +40,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "gonggam_posts_with_counts"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "comments_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -72,30 +79,11 @@ export type Database = {
             referencedRelation: "gonggam_posts"
             referencedColumns: ["id"]
           },
-        ]
-      }
-      gonggam_post_tags: {
-        Row: {
-          id: number
-          post_id: number
-          selected_tags: Database["public"]["Enums"]["tags"]
-        }
-        Insert: {
-          id?: number
-          post_id: number
-          selected_tags: Database["public"]["Enums"]["tags"]
-        }
-        Update: {
-          id?: number
-          post_id?: number
-          selected_tags?: Database["public"]["Enums"]["tags"]
-        }
-        Relationships: [
           {
-            foreignKeyName: "gonggam_post_tags_post_id_fkey"
+            foreignKeyName: "gonggam_post_image_path_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
-            referencedRelation: "gonggam_posts"
+            referencedRelation: "gonggam_posts_with_counts"
             referencedColumns: ["id"]
           },
         ]
@@ -106,6 +94,7 @@ export type Database = {
           content: string
           created_at: string
           id: number
+          tags: string[] | null
           title: string
           updated_at: string | null
           user_id: string
@@ -115,6 +104,7 @@ export type Database = {
           content: string
           created_at?: string
           id?: number
+          tags?: string[] | null
           title: string
           updated_at?: string | null
           user_id?: string
@@ -124,6 +114,7 @@ export type Database = {
           content?: string
           created_at?: string
           id?: number
+          tags?: string[] | null
           title?: string
           updated_at?: string | null
           user_id?: string
@@ -237,6 +228,13 @@ export type Database = {
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "gonggam_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "gonggam_posts_with_counts"
             referencedColumns: ["id"]
           },
           {
@@ -369,7 +367,50 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      gonggam_posts_with_counts: {
+        Row: {
+          category: Database["public"]["Enums"]["categorys"] | null
+          comment_count: number | null
+          content: string | null
+          created_at: string | null
+          id: number | null
+          like_count: number | null
+          title: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["categorys"] | null
+          comment_count?: never
+          content?: string | null
+          created_at?: string | null
+          id?: number | null
+          like_count?: never
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["categorys"] | null
+          comment_count?: never
+          content?: string | null
+          created_at?: string | null
+          id?: number | null
+          like_count?: never
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gonggam_posts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       get_popular_posts: {
