@@ -1,31 +1,41 @@
 'use client';
 
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { Heart } from 'lucide-react';
-import Image from 'next/image';
+import type { GonggamPostMeta } from '@/types/gonggam';
 
-const GonggamPostInteraction = ({ postId }: { postId: number }) => {
+interface PostInteractionProps {
+  postId: number;
+  postMeta: GonggamPostMeta;
+  tags: string[];
+}
+
+const GonggamPostInteraction = ({ postId, postMeta: { likeCnt, commentCnt }, tags }: PostInteractionProps) => {
   return (
     <section>
       {/* 좋아요(하트) 버튼 */}
       <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
         <button className="flex items-center gap-2 rounded-md border border-gray-500 p-2 transition-colors hover:text-primary">
           <Heart size={14} />
-          <span>10</span> {/* 좋아요 수 하드코딩 예시 */}
+          <span>{likeCnt}</span> {/* 좋아요 수 하드코딩 예시 */}
         </button>
       </div>
       {/* 태그 영역 */}
       <div className="mt-4">
-        <div className="mb-6 flex flex-wrap gap-1 text-sm text-muted-foreground">
-          <p className="rounded-md border px-2 py-1">#태그1</p>
-          <p className="rounded-md border px-2 py-1">#태그2</p>
-        </div>
+        <ul className="mb-6 flex flex-wrap gap-2 text-sm text-muted-foreground">
+          {tags?.map((tag) => (
+            <li key={tag} className="rounded-md border border-gray-300 bg-muted px-2 py-1 text-xs text-gray-600">
+              # {tag}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* 댓글 영역 */}
       <div className="mt-8">
-        <h2 className="mb-4 text-base font-medium">댓글 1개</h2>
+        <h2 className="mb-4 text-base font-medium">댓글 {commentCnt}개</h2>
 
         {/* 댓글 목록 */}
         <div className="mb-6 flex items-start gap-2 border-b pb-6 text-sm">
