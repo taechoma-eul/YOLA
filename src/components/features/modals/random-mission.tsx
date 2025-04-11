@@ -5,29 +5,56 @@ import { useEffect, useState } from 'react';
 import { FadeLoader } from 'react-spinners';
 
 /*
-사용할 곳에서
+Step 1. 사용할 페이지 서버컴포넌트에서 이 코드를 추가해주세요
+const missionsData = await getMissions();
+
+Step 2. 호출할 클라이언트 컴포넌트로 missionsData와 isLogin을 props로 넘겨주세요
+
+Step 3. 클라이언트 컴포넌트에서 이 코드를 추가해주세요
 const [showModal, setShowModal] = useState(false);
 const clickModal = () => setShowModal(!showModal);
-을 선언해주시고,
+
+Step 4. 클릭하는 부분에 이 코드를 추가해주세요
 <button onClick={clickModal}>랜덤 미션 뽑기</button>
-{showModal && <RandomMissionModal clickModal={clickModal} isLogin={isLogin} />}
-을 통해 모달을 끌 수 있도록 setter 함수와 로그인 여부를 알려주는 isLogin을 넘겨주면 사용할 수 있습니다
+
+Step 5. 4번의 버튼 바깥에 이 코드를 추가해주세요
+{showModal && <RandomMissionModal missions={missions} clickModal={clickModal} showModal={showModal} isLogin={isLogin} />}
  */
-interface Props {
-  missions: Tables<'mission_list'>[];
+interface RandomMissionModalProps {
+  missionsData: Tables<'mission_list'>[];
   clickModal: Function;
+  showModal: boolean;
   isLogin: boolean;
 }
 
 const TIME_OUT = 1250;
-const RandomMissionModal = ({ missions, clickModal, isLogin }: Props) => {
+const RandomMissionModal = ({ missionsData, clickModal, showModal, isLogin }: RandomMissionModalProps) => {
   const [randomMission, setRandomMission] = useState<string>('');
 
+  useEffect(() => {
+    const preventScroll = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
+    if (showModal) {
+      document.body.style.overflow = 'hidden'; //모달이 클릭되면 배경에 스크롤 막음
+      document.documentElement.style.overflow = 'hidden';
+      document.addEventListener('touchmove', preventScroll, { passive: false }); //모바일에서도 막음
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('touchmove', preventScroll);
+    };
+  }, [showModal]);
+
   const handleRandomMission = () => {
-    const randomIndex = Math.floor(Math.random() * missions.length);
-    const randomMissionData = missions[randomIndex];
+    const randomIndex = Math.floor(Math.random() * missionsData.length);
+    const randomMissionData = missionsData[randomIndex];
     setRandomMission(randomMissionData.content);
   };
+
   const RandomMissionWithLoadingSpinner = () => {
     const [showContent, setShowContent] = useState(false);
 
@@ -48,6 +75,7 @@ const RandomMissionModal = ({ missions, clickModal, isLogin }: Props) => {
         </div>
       );
     }
+
     return (
       <div className="relative h-44 w-[462px] rounded-2xl bg-gray-50">
         <div className="absolute left-0 top-[69px] inline-flex w-[462px] items-center justify-center gap-2.5 p-2.5">
