@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/utils/supabase/supabase-client';
+import type { CheckField } from '@/types/components/auth-form';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
-import { Field } from '@/types/auth-form-field';
 
 /**
  * 클라이언트 호출용입니다.(클라이언트에서 호출하는 함수 내부 선언 포함)
@@ -32,7 +32,7 @@ export const getUserSessionState = async (): Promise<{
  * @param { string } value  - 중복 체크 할 값(바꾸고자 하는 데이터)
  * @returns { boolean } - 해당 하는 값이 이미 users 테이블에 있으면 true, 없으면 false
  */
-export const fetchDuplicateCheck = async (field: Field, value: string): Promise<boolean> => {
+export const fetchDuplicateCheck = async (field: string, value: string): Promise<boolean> => {
   try {
     const res = await fetch(
       `${NEXT_SERVER_BASE_URL}${API.DUPLICATE}?field=${field}&value=${encodeURIComponent(value)}`,

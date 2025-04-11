@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDuplicateCheckData } from '@/lib/utils/api/auth.api';
-import type { Field } from '@/types/auth-form-field';
 
 /**
  * 클라이언트에서 supabase ssr 데이터를 조회하기 위한 라우트 핸들러입니다.
@@ -17,7 +16,7 @@ export const GET = async (request: NextRequest) => {
       return NextResponse.json({ error: '필드와 값이 필요합니다.' }, { status: 400 });
     }
 
-    const data = await getDuplicateCheckData(field as Field, value);
+    const data = await getDuplicateCheckData(field, value);
 
     return NextResponse.json({ data });
   } catch (error) {
