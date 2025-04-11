@@ -3,11 +3,11 @@
 import PostInputForm from '@/components/common/post-input-form';
 import { getLifePostById } from '@/lib/utils/api/my-life.api';
 
-interface PageProps {
+interface EditPageProps {
   params: { post_id: string };
 }
 
-const Page = async ({ params }: PageProps) => {
+const EditPage = async ({ params }: EditPageProps) => {
   const postId = Number(params.post_id);
   const post = await getLifePostById(postId);
 
@@ -28,4 +28,4 @@ const Page = async ({ params }: PageProps) => {
   );
 };
 
-export default Page;
+export default EditPage;
