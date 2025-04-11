@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getCommentsByPostId, getPostMetaClient } from '@/lib/utils/api/gonggam-detail-client.api';
 import type { CommentWithUser } from '@/types/gonggam';
 import { formatRelativeDate } from '@/lib/utils/date-format';
+import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 
 interface PostInteractionProps {
   postId: number;
@@ -17,7 +18,7 @@ interface PostInteractionProps {
 const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
   const [likeCnt, setLikeCnt] = useState<number>(0);
   const [commentCnt, setCommentCnt] = useState<number>(0);
-  const [comments, setComments] = useState<CommentWithUser[]>([]);
+  const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
 
   useEffect(() => {
     const fetchPostMeta = async () => {
@@ -29,18 +30,11 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
         console.error('포스트 메타데이터를 가져오는 데 실패했습니다:', err);
       }
     };
-    const fetchComments = async () => {
-      try {
-        const data = await getCommentsByPostId(postId);
-        setComments(data);
-      } catch (err) {
-        console.error('댓글을 불러오는 데 실패했습니다:', err);
-      }
-    };
-
     fetchPostMeta();
-    fetchComments();
   }, [postId]);
+
+  if (isCommentsPending) return null;
+  if (commentsErr) throw Error(commentsErr.message);
 
   return (
     <section>
