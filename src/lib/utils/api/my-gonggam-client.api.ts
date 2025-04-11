@@ -2,7 +2,7 @@ import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { MSG } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
-import type { GetMyGonggamPostsResponse, GonggamPostWithCounts } from '@/types/gonggam-posts';
+import type { GetMyGonggamPostsResponse, GonggamPostWithCounts, SortBy } from '@/types/gonggam-posts';
 
 /**
  * Supabase에서 `gonggam_posts` 테이블의 유저가 작성한 게시글 전체 조회 및 `comments`댓글, `likes`종아요를 같이 join 해서 가져오는 함수
@@ -16,7 +16,7 @@ export const getMyGonggamPostsAll = async ({
   sortBy
 }: {
   page: number;
-  sortBy: 'latest' | 'comments' | 'likes';
+  sortBy: SortBy;
 }): Promise<GetMyGonggamPostsResponse> => {
   const { userId } = await getUserSessionState();
   if (!userId) throw new Error(MSG.NEED_LOGIN);

@@ -23,3 +23,5 @@ export type GonggamPostWithCounts = {
   like_count: number | null;
   comment_count: number | null;
 };
+
+export type SortBy = 'latest' | 'comments' | 'likes';
