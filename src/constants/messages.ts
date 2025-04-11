@@ -8,7 +8,8 @@ export const MSG = {
 };
 
 export const SUCCESS = {
-  CHECK: '사용 가능한',
+  EMAIL_CHECK: '사용 가능한 이메일입니다.',
+  NICKNAME_CHECK: '사용 가능한 닉네임입니다.',
   UPDATE_PROFILE: '프로필 변경이 완료되었습니다.',
   LOGIN: '로그인이 완료되었습니다.',
   SIGNUP: '회원가입이 완료되었습니다. 자동 로그인 됩니다.'
@@ -20,7 +21,8 @@ export const FAIL = {
   UPDATE_PROFILE: '사용자 정보 변경에 실패했습니다.',
   LOGIN: '이메일 또는 비밀번호 오류입니다.',
   SESSION: '사용자 세션 정보가 존재하지 않습니다.',
-  GET_PROFILE: '사용자 프로필 정보를 받아오는 데 실패했습니다.'
+  GET_PROFILE: '사용자 프로필 정보를 받아오는 데 실패했습니다.',
+  DUPLICATE: '중복확인에 실패했습니다. 다시 시도해주세요.'
 } as const;
 
 export const AUTH_ERROR = {

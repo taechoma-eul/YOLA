@@ -4,13 +4,13 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFormContext, UseFormReturn } from 'react-hook-form';
 import clsx from 'clsx';
 import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
+import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
 import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
-import DuplicateCheckMessage from '../auth-form/duplicate-check-message';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -51,7 +51,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
         setErrorMessage(AUTH_ERROR.CHECK_NICKNAME_FAIL);
         return;
       }
-      setSuccessMessage(`${SUCCESS.CHECK} ${LABEL.NICKNAME}입니다.`);
+      setSuccessMessage(SUCCESS.NICKNAME_CHECK);
       setDuplicateCheck(true);
       return;
     } catch (error) {
@@ -75,7 +75,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
             <FormControl>
               <Input
                 className={clsx(
-                  'flex h-full w-full items-center justify-start gap-2.5 rounded p-2.5 shadow-none',
+                  'flex h-full w-full items-center justify-start gap-2.5 rounded p-2.5',
                   errorMessage ? 'border-[#FF5E3A]' : 'border-stone-300'
                 )}
                 placeholder={PLACEHOLDER.NICKNAME}
