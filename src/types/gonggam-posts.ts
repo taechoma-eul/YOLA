@@ -12,7 +12,7 @@ export interface GetMyGonggamPostsResponse {
   totalPages: number;
 }
 
-//gonggam_posts_with_counts 테이블 타입 정의
+//gonggam_posts_with_counts 뷰 타입 정의
 export type GonggamPostWithCounts = {
   id: number;
   category: Database['public']['Enums']['categorys'];
