@@ -9,6 +9,8 @@ import { getPostMetaClient } from '@/lib/utils/api/gonggam-detail-client.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
+import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
+import { Input } from '@/components/ui/input';
 
 interface PostInteractionProps {
   postId: number;
@@ -20,6 +22,8 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
   const [commentCnt, setCommentCnt] = useState<number>(0);
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
   const { profile, isProfilePending, profileFetchingError } = useUserProfile();
+  const [newComment, setNewComment] = useState<string>('');
+  const { mutate: uploadComment, isPending: isUploading } = useUploadComment(postId);
 
   useEffect(() => {
     const fetchPostMeta = async () => {
@@ -34,9 +38,23 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
     fetchPostMeta();
   }, [postId]);
 
-  if (isCommentsPending || isProfilePending) return null;
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    uploadComment(newComment, {
+      onSuccess: () => {
+        setNewComment('');
+      },
+      onError: (err) => {
+        console.error('댓글 등록 실패:', err);
+      }
+    });
+  };
+
   const err = commentsErr ?? profileFetchingError;
   if (err) throw new Error(err.message);
+  if (isCommentsPending || isProfilePending) return null;
 
   return (
     <section>
@@ -87,7 +105,7 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
         ))}
 
         {/* 댓글 입력창 */}
-        <form className="flex items-center gap-2">
+        <form className="flex items-center gap-2" onSubmit={handleSubmit}>
           <div className="relative h-[40px] w-[40px] overflow-hidden rounded-full">
             <Image
               src={profile!.profile_image || DEFAULT_AVATAR_URL}
@@ -97,12 +115,15 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
               className="object-cover"
             />
           </div>
-          <input
+          <Input
             type="text"
             placeholder="댓글을 작성해보세요."
-            className="flex-1 rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
           />
-          <Button type="submit">등록하기</Button>
+          <Button type="submit" disabled={isUploading}>
+            등록하기
+          </Button>
         </form>
       </div>
     </section>

@@ -36,3 +36,8 @@ export interface GonggamPostDetail extends GonggamPost {
 export interface CommentWithUser extends Omit<GonggamComments, 'post_id' | 'user_id'> {
   writer: WriterProfileResponse;
 }
+
+export interface UploadGonggamCommentParams {
+  postId: number;
+  comment: string;
+}
