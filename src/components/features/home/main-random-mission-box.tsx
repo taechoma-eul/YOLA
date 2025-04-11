@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import RandomMissionContainer from '@/components/features/home/main-random-mission-container';
-import RandomMissionModal from '@/components/features/modals/random-mission';
 import TitleBox from '@/components/features/home/main-random-title-box';
+import type { Tables } from '@/types/supabase';
+import RandomMissionModal from '@/components/features/modals/random-mission';
 
-const RandomMissionBox = ({ isLogin }: { isLogin: boolean }) => {
+const RandomMissionBox = ({ missionsData, isLogin }: { missionsData: Tables<'mission_list'>[]; isLogin: boolean }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const clickModal = () => setShowModal(!showModal);
 
@@ -17,7 +18,14 @@ const RandomMissionBox = ({ isLogin }: { isLogin: boolean }) => {
         <Button onClick={clickModal} className="w-full border-2 bg-white text-xs text-black shadow-none">
           랜덤미션 뽑기
         </Button>
-        {showModal && <RandomMissionModal clickModal={clickModal} isLogin={isLogin} />}
+        {showModal && (
+          <RandomMissionModal
+            missionsData={missionsData}
+            clickModal={clickModal}
+            showModal={showModal}
+            isLogin={isLogin}
+          />
+        )}
       </div>
       <div className="h-64 w-56 bg-zinc-300">뽑기 이미지</div>
     </RandomMissionContainer>

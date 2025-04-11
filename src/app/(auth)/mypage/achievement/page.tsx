@@ -12,11 +12,15 @@ import TRAVEL_ICON from '@images/images/travel-icon.svg';
 import GOAT_ICON from '@images/images/goat-icon.svg';
 import CLEAN_ICON from '@images/images/clean-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
+import { getMissionsData } from '@/lib/utils/api/missions.api';
 
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회
   const profile = await getUserProfile();
   const { isLogin } = await getUserSessionState();
+
+  // 미션리스트 가져오기
+  const missionsData = await getMissionsData();
 
   //유저 전체 레벨 계산 로직 -> progressBar 에 Props 전달
   const rawMissionsFromSupabase = await getUserMission();
@@ -75,7 +79,7 @@ const AchievementPage = async () => {
       {/* 렌덤 미션 뽑기 */}
       <div className="flex justify-between">
         <strong>오늘의 랜덤 미션</strong>
-        <ButtonClientComponent isLogin={isLogin} />
+        <ButtonClientComponent missionsData={missionsData} isLogin={isLogin} />
       </div>
       <section className="rounded-md border-none bg-slate-100 p-3">
         <p>혼자서 보내는 시간이 지루하게 느껴질 때, 다양한 주제의 랜덤 미션을 통해 매일 색다른 하루를 만들어보세요.</p>
