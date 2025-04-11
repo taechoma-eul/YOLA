@@ -6,6 +6,7 @@ export type CategoryMapType = Record<GonggamCategory, string>;
 export type SlugToCategoryType = Record<string, GonggamCategory>;
 
 export type GonggamPost = Tables<'gonggam_posts'>;
+type GonggamComments = Tables<'comments'>;
 
 export interface PaginationInfo {
   currentPage: number;
@@ -31,4 +32,7 @@ export interface WriterProfileResponse {
 export interface GonggamPostDetail extends GonggamPost {
   profile: WriterProfileResponse;
   images: string[];
+}
+export interface CommentWithUser extends Omit<GonggamComments, 'post_id' | 'user_id'> {
+  writer: WriterProfileResponse;
 }

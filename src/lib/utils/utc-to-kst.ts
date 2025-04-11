@@ -23,7 +23,7 @@ export const getKoreanDate = (date: Date = new Date()): Date => {
  * "YY.MM.DD. HH:mm" 형식으로 출력합니다 (띄어쓰기 없음)
  *
  * @param date - 변환할 날짜 (Date 객체 또는 ISO 문자열)
- * @returns 포맷된 KST 기준 날짜 문자열 (예: "25.04.1015:30")
+ * @returns 포맷된 KST 기준 날짜 문자열 (예: "25.04.10 15:30")
  */
 export const getKoreanDateTime = (date: Date | string): string => {
   const kstDate = getKoreanDate(new Date(date));
