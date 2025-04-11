@@ -11,6 +11,8 @@ import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { Input } from '@/components/ui/input';
+import { toastAlert } from '@/lib/utils/toast';
+import { MSG } from '@/constants/messages';
 
 interface PostInteractionProps {
   postId: number;
@@ -32,7 +34,7 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
         setLikeCnt(likeCnt);
         setCommentCnt(commentCnt);
       } catch (err) {
-        console.error('포스트 메타데이터를 가져오는 데 실패했습니다:', err);
+        console.error(MSG.FAIL_TO_GET_POST_META, err);
       }
     };
     fetchPostMeta();
@@ -44,10 +46,12 @@ const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
 
     uploadComment(newComment, {
       onSuccess: () => {
+        toastAlert(MSG.SUCCESS_UPLOAD_COMMENT, 'default');
         setNewComment('');
       },
       onError: (err) => {
-        console.error('댓글 등록 실패:', err);
+        toastAlert(MSG.FAIL_TO_UPLOAD_COMMENT, 'default');
+        throw Error(err.message);
       }
     });
   };

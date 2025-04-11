@@ -67,5 +67,4 @@ export const getCommentsByPostId = async (postId: number): Promise<CommentWithUs
 export const uploadGonggamComment = async ({ postId, comment }: UploadGonggamCommentParams) => {
   const { error } = await supabase.from('comments').insert([{ post_id: postId, comment }]);
   if (error) throw new Error(error.message);
-  return null;
 };
