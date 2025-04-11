@@ -5,7 +5,7 @@ import { TABLE } from '@/constants/supabase-tables-name';
 import type { GetMyGonggamPostsResponse, GonggamPostWithCounts, SortBy } from '@/types/gonggam-posts';
 
 /**
- * Supabase에서 `gonggam_posts` 테이블의 유저가 작성한 게시글 전체 조회 및 `comments`댓글, `likes`종아요를 같이 join 해서 가져오는 함수
+ * Supabase에서 `gonggam_posts_with_counts` 뷰 전체 조회하는 함수
  *
  * @function getMyGonggamPostsAll - 무한스크롤 구현을 위한 페이지네이션 데이터 조회
  * @returns {Promise<GetMyGonggamPostsResponse>} - data, page, totalPages
