@@ -9,7 +9,7 @@ import { Form, FormField } from '@/components/ui/form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import LoginFormButton from '@/components/features/auth-form/login-form-button';
 import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
-import { AUTH_ERROR, SUCCESS } from '@/constants/messages';
+import { SUCCESS } from '@/constants/messages';
 
 interface LoginField {
   fieldName: 'email' | 'password';
@@ -33,11 +33,6 @@ const LoginForm = () => {
   ];
 
   const handleFormAction = async (formData: FormData) => {
-    if (!isValid) {
-      toastAlert(AUTH_ERROR.FIELD_CHECK, 'destructive');
-      return;
-    }
-
     startTransition(async () => {
       try {
         await login(formData);

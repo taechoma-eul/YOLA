@@ -12,7 +12,8 @@ export const SUCCESS = {
   NICKNAME_CHECK: '사용 가능한 닉네임입니다.',
   UPDATE_PROFILE: '프로필 변경이 완료되었습니다.',
   LOGIN: '로그인이 완료되었습니다.',
-  SIGNUP: '회원가입이 완료되었습니다. 자동 로그인 됩니다.'
+  SIGNUP: '회원가입이 완료되었습니다. 자동 로그인 됩니다.',
+  PASSWORD: '비밀번호가 일치합니다.'
 } as const;
 
 export const FAIL = {
@@ -28,9 +29,6 @@ export const FAIL = {
 export const AUTH_ERROR = {
   EMAIL_CHECK: '이메일 중복확인을 해주세요.',
   NICKNAME_CHECK: '닉네임 중복확인을 해주세요.',
-  FIELD_CHECK: '모든 정보를 올바르게 입력해주세요.',
   CHECK_NICKNAME_FAIL: '이미 사용 중인 닉네임입니다.',
-  NONE_NICKNAME: '닉네임을 먼저 입력해주세요.',
-  CHECK_EMAIL_FAIL: '이미 사용 중인 이메일입니다.',
-  NONE_EMAIL: '이메일을 먼저 입력해주세요.'
+  CHECK_EMAIL_FAIL: '이미 사용 중인 이메일입니다.'
 } as const;

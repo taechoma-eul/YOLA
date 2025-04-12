@@ -37,12 +37,6 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
   const handleDuplicateCheck = async () => {
     const nowValue: string = getValues(AUTH.NICKNAME);
 
-    // 값 없으면 리턴
-    if (!nowValue) {
-      setErrorMessage(AUTH_ERROR.NONE_NICKNAME);
-      return;
-    }
-
     try {
       const isDuplication = await fetchDuplicateCheck(AUTH.NICKNAME, nowValue);
 

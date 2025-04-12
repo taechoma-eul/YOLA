@@ -39,11 +39,6 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
       return;
     }
 
-    if (!isValid) {
-      toastAlert(AUTH_ERROR.FIELD_CHECK, 'destructive');
-      return;
-    }
-
     try {
       const imageUrl = await handleProfileImageUpload();
       const updatedData = {
@@ -69,7 +64,9 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
             <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={profile.nickname} />
           </div>
         </div>
-        <Button type="submit">수정하기</Button>
+        <Button type="submit" disabled={!isValid}>
+          수정하기
+        </Button>
       </form>
     </Form>
   );
