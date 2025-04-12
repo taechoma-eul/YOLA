@@ -6,7 +6,7 @@ import { PATH } from '@/constants/page-path';
 const SignupFormButton = ({ isValid, isSignupPending }: AuthFormButtonProps) => {
   return (
     <div className="space-y-3 pt-3">
-      <Button disabled={isValid && !isSignupPending ? false : true} type="submit" className="h-[42px] w-full">
+      <Button disabled={!isValid || isSignupPending} type="submit" className="h-[42px] w-full">
         {!isSignupPending ? '가입하기' : '회원등록 중...'}
       </Button>
       <Button asChild className="h-[42px] w-full">

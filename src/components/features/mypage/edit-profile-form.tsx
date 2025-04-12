@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
@@ -17,6 +17,7 @@ import { FAIL, SUCCESS } from '@/constants/messages';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition();
 
   const { profile, isProfileError, profileFetchingError } = useUserProfile(initProfile);
   const updateProfile = useUpdateProfileMutate();
@@ -34,17 +35,19 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
   };
 
   const handleUpdateProfile = async (formData: EditFormData) => {
-    try {
-      const imageUrl = await handleProfileImageUpload();
-      const updatedData = {
-        ...formData,
-        profile_image: imageUrl || formData.profile_image // 업로드 없으면 기존 값 유지
-      };
-      updateProfile(updatedData);
-      toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
-    } catch (error) {
-      toastAlert(FAIL.UPDATE_PROFILE, 'destructive');
-    }
+    startTransition(async () => {
+      try {
+        const imageUrl = await handleProfileImageUpload();
+        const updatedData = {
+          ...formData,
+          profile_image: imageUrl || formData.profile_image // 업로드 없으면 기존 값 유지
+        };
+        updateProfile(updatedData);
+        toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
+      } catch (error) {
+        toastAlert(FAIL.UPDATE_PROFILE, 'destructive');
+      }
+    });
   };
 
   if (isProfileError) throw profileFetchingError;
@@ -59,8 +62,8 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
             <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={profile.nickname} />
           </div>
         </div>
-        <Button type="submit" disabled={!isValid || !duplicateCheck}>
-          수정하기
+        <Button type="submit" disabled={!isValid || !duplicateCheck || isPending}>
+          {isPending ? '저장 중...' : '수정하기'}
         </Button>
       </form>
     </Form>

@@ -27,11 +27,7 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
   return (
     <>
       <div className="space-y-3 pt-3">
-        <Button
-          disabled={isValid && !isPending && !isLoginPending ? false : true}
-          type="submit"
-          className="h-[42px] w-full"
-        >
+        <Button disabled={!isValid || isPending || isLoginPending} type="submit" className="h-[42px] w-full">
           {!isPending && !isLoginPending ? '이메일로 로그인' : '로그인 중...'}
         </Button>
         <Button asChild className="h-[42px] w-full">
