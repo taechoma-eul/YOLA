@@ -5,5 +5,6 @@ export const API = {
   GOOGLE_LOGIN: '/api/auth/google',
   KAKAO_LOGIN: '/api/auth/kakao',
   DUPLICATE: '/api/auth/check-duplicate',
-  PROFILE: '/api/auth/profile'
+  PROFILE: '/api/auth/profile',
+  VIEW_COUNT: '/api/view-count'
 };
