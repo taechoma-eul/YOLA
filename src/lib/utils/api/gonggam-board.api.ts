@@ -3,7 +3,8 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { GonggamCategory, GonggamPost, GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
-import type { User } from '@/types/user';
+import type { GonggamPostWithReaction } from '@/types/gonggam-posts';
+import { Tables } from '@/types/supabase';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -61,7 +62,7 @@ export const getPaginatedGonggamPosts = async (
  * @param writerId - 조회할 작성자의 고유 ID
  * @returns nickname, profile_image_url
  */
-export const getWriterProfile = async (writerId: User['token']) => {
+export const getWriterProfile = async (writerId: Tables<'users'>['id']) => {
   const supabase = await createClient();
   const { data: profile, error: userErr } = await supabase
     .from(TABLE.USERS)
@@ -109,4 +110,22 @@ export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<Go
     likeCnt: data[0].likes_count ?? 0,
     commentCnt: data[0].comments_count ?? 0
   };
+};
+
+/**
+ * public.gonggam_posts 테이블에서 조회수 높은순 3개의 공감 게시글을 불러옵니다.
+ * @returns { Promise<GonggamPost[]> } 공감 게시글 배열
+ */
+export const getGonggamPreviewList = async (): Promise<GonggamPostWithReaction[]> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from(TABLE.GONGGAM_POSTS)
+    .select('*, likes(*), comments(*)')
+    .order('view_count', { ascending: false })
+    .limit(3);
+
+  if (error) throw error;
+
+  return data ?? [];
 };
