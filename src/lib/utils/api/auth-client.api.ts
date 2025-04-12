@@ -49,7 +49,7 @@ export const fetchDuplicateCheck = async (field: string, value: string): Promise
       throw new Error(errorData.error || FAIL.DUPLICATE);
     }
 
-    const { data }: { data: boolean } = await res.json();
+    const { data }: { data: { nickname: string } | { email: string } | null } = await res.json();
 
     return !!data;
   } catch (error) {

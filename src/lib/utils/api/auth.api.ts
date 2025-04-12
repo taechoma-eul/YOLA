@@ -31,7 +31,7 @@ export const getUserSessionState = async (): Promise<{
  * 검색한 데이터가 이미 존재하면 { 컬럼 이름 : 검색 시도한 데이터 값 } 형태로 반환되고, 없으면 null이 반환됩니다.
  * @param { string } field - 중복 체크 할 항목(field 이름)
  * @param { string } value  - 중복 체크 할 값(바꾸고자 하는 데이터)
- * @returns { Promise<{ email: string } | { nickname: string } | null> } - 해당 하는 값이 이미 users 테이블에 있으면 true, 없으면 false
+ * @returns { Promise<{ field: string } | null> } - 값이 이미 있으면 객체 형태 반환, 없으면 null 반환
  */
 export const getDuplicateCheckData = async (field: string, value: string) => {
   const supabase = await createClient();
