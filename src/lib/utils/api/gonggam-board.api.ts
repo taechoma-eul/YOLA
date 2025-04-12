@@ -129,3 +129,18 @@ export const getGonggamPreviewList = async (): Promise<GonggamPostWithReaction[]
 
   return data ?? [];
 };
+
+/**
+ * 선택한 게시글의 조회수를 서버에서 받아오는 api 함수입니다.
+ * @param { string } postId - 선택한 게시글의 id
+ * @returns { number } - 선택한 게시글의 조회수
+ */
+export const getViewCount = async (postId: string): Promise<number> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from('gonggam_posts').select('view_count').eq('id', Number(postId)).single();
+
+  if (error) throw error;
+
+  return data.view_count;
+};
