@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { getUserSessionState } from '@/lib/utils/api/auth.api';
-import type { Tables } from '@/types/supabase';
 import { AUTH } from '@/constants/auth-form';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
@@ -61,27 +60,6 @@ export const logout = async () => {
   }
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
-};
-
-/**
- * public.users 테이블에서 현재 로그인 된 사용자의 프로필 정보를 불러옵니다.
- * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
- * @returns { Tables<'users'> } - 현재 세션에 해당하는 users 테이블 row
- */
-export const getUserProfile = async (): Promise<Tables<'users'>> => {
-  const supabase = await createClient();
-  try {
-    const { userId } = await getUserSessionState();
-    if (userId === null) throw new Error(FAIL.SESSION);
-
-    const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
-
-    if (error) throw new Error(FAIL.GET_PROFILE);
-
-    return data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 /**
