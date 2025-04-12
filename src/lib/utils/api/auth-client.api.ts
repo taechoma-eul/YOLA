@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { CheckField } from '@/types/components/auth-form';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
 

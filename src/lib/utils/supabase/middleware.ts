@@ -28,7 +28,8 @@ export async function updateSession(request: NextRequest) {
     PATH.ERROR,
     API.GOOGLE_LOGIN,
     API.KAKAO_LOGIN,
-    API.SOCIAL_LOGIN_CALL_BACK
+    API.SOCIAL_LOGIN_CALL_BACK,
+    API.DUPLICATE
   ];
 
   // 루트 경로는 정확한 매칭, 나머지는 startsWith
