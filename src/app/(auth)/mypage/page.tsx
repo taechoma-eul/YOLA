@@ -1,4 +1,4 @@
-import { getUserProfile } from '@/lib/utils/api/auth-action';
+import { getUserProfile } from '@/lib/utils/api/auth.api';
 import EditProfileForm from '@/components/features/mypage/edit-profile-form';
 
 const MyPage = async () => {
