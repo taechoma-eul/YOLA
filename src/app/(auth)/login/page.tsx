@@ -1,8 +1,9 @@
-import AuthFormViewUi from '@/components/features/auth-form/auth-page-ui';
+import AuthContent from '@/components/features/auth-form/auth-content';
+import LoginForm from '@/components/features/auth-form/login-form';
 import { AUTH } from '@/constants/auth-form';
 
 const LoginPage = async () => {
-  return <AuthFormViewUi mode={AUTH.LOGIN} />;
+  return <AuthContent title={AUTH.SIGNUP} form={<LoginForm />} />;
 };
 
 export default LoginPage;

@@ -1,6 +1,6 @@
 export const AUTH = {
-  LOGIN: 'login',
-  SIGNUP: 'signup',
+  LOGIN: '로그인',
+  SIGNUP: '회원가입',
   PASSWORD: 'password',
   CHECK_PASSWORD: 'checkPassword',
   NICKNAME: 'nickname',
