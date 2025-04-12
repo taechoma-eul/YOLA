@@ -4,7 +4,7 @@ import GonggamPreviewContainer from '@/components/features/home/main-gonggam-pre
 import ListContainer from '@/components/features/home/main-gonggam-preview-list-container';
 import TitleSection from '@/components/features/home/main-gonggam-preview-title-section';
 
-const GonggamPreviewBox = async () => {
+const GonggamPreviewSection = async () => {
   try {
     const postList = await getGonggamPreviewList();
 
@@ -34,4 +34,4 @@ const GonggamPreviewBox = async () => {
 
 export const revalidate = 86400; // 24시간 주기로 인기글 업데이트
 
-export default GonggamPreviewBox;
+export default GonggamPreviewSection;
