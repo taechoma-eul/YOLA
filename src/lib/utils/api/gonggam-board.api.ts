@@ -4,7 +4,7 @@ import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { GonggamCategory, GonggamPost, GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 import type { GonggamPostWithReaction } from '@/types/gonggam-posts';
-import { Tables } from '@/types/supabase';
+import type { Tables } from '@/types/supabase';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
