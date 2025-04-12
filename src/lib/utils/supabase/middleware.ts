@@ -40,9 +40,17 @@ export async function updateSession(request: NextRequest) {
         : request.nextUrl.pathname.startsWith(path) // 나머지는 startsWith
   );
 
+  // 로그인하지 않은 사용자가 비공개 경로에 접근하려는 경우
   if (!user && !isPublicPath) {
     const url = request.nextUrl.clone();
     url.pathname = PATH.LOGIN;
+    return NextResponse.redirect(url);
+  }
+
+  // 로그인한 사용자가 login 또는 signup 페이지에 접근하려는 경우
+  if (user && (request.nextUrl.pathname === PATH.LOGIN || request.nextUrl.pathname === PATH.SIGNUP)) {
+    const url = request.nextUrl.clone();
+    url.pathname = PATH.HOME;
     return NextResponse.redirect(url);
   }
 
