@@ -1,6 +1,6 @@
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
+import { Tables } from '@/types/supabase';
 
 /**
  * user-session-state 라우트 핸들러에서 값을 fetching 해오는 api 함수입니다.
@@ -17,7 +17,7 @@ export const fetchUserSessionState = async (): Promise<{
       credentials: 'include'
     });
 
-    const { data } = await res.json();
+    const { data }: { data: { userId: string | null; isLogin: boolean } } = await res.json();
     return data;
   } catch (error) {
     throw error;
@@ -49,9 +49,27 @@ export const fetchDuplicateCheck = async (field: string, value: string): Promise
       throw new Error(errorData.error || FAIL.DUPLICATE);
     }
 
-    const { data } = await res.json();
+    const { data }: { data: boolean } = await res.json();
 
     return !!data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * profile 라우트 핸들러에서 값을 fetching 해오는 api 함수입니다.
+ * 현재 로그인 되어 있는 사용자의 프로필 정보를 반홥합니다.
+ * @returns { Tables<'users'> } - 현재 로그인 되어있는 사용자의 프로필 정보
+ */
+export const fetchUserProfile = async (): Promise<Tables<'users'>> => {
+  try {
+    const res = await fetch(`${NEXT_SERVER_BASE_URL}/api/auth/profile`, {
+      method: 'GET'
+    });
+
+    const { data }: { data: Tables<'users'> } = await res.json();
+    return data;
   } catch (error) {
     throw error;
   }
