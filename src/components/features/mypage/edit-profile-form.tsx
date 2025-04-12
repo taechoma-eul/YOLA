@@ -13,7 +13,7 @@ import EmailField from '@/components/features/mypage/edit-profile-form-email-fie
 import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
 import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
 import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
-import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
+import { FAIL, SUCCESS } from '@/constants/messages';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
@@ -34,11 +34,6 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
   };
 
   const handleUpdateProfile = async (formData: EditFormData) => {
-    if (!duplicateCheck) {
-      toastAlert(AUTH_ERROR.NICKNAME_CHECK, 'destructive');
-      return;
-    }
-
     try {
       const imageUrl = await handleProfileImageUpload();
       const updatedData = {
@@ -64,7 +59,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
             <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={profile.nickname} />
           </div>
         </div>
-        <Button type="submit" disabled={!isValid}>
+        <Button type="submit" disabled={!isValid || !duplicateCheck}>
           수정하기
         </Button>
       </form>
