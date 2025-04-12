@@ -464,8 +464,8 @@ export type Database = {
           likes_count: number;
           comments_count: number;
           total_interactions: number;
-          likes: Json;
-          comments: Json;
+          likes: Tables<'likes'>[];
+          comments: Tables<'comments'>[];
         }[];
       };
       get_post_meta: {
