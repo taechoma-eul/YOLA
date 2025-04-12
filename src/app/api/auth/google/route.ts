@@ -12,7 +12,6 @@ export const GET = async () => {
   });
 
   if (error) {
-    console.error('Google OAuth Error:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 

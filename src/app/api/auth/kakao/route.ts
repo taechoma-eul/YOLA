@@ -14,7 +14,6 @@ export const GET = async () => {
   });
 
   if (error) {
-    console.error('Kakao OAuth Error:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
