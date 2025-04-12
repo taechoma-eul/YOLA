@@ -1,7 +1,7 @@
-import { Children } from '@/types/children';
+import type { Children } from '@/types/children';
 
 const RandomMissionContainer = ({ children }: Children) => {
-  return <div className="inline-flex items-center justify-start gap-12">{children}</div>;
+  return <div className="inline-flex items-start justify-start gap-[68px]">{children}</div>;
 };
 
 export default RandomMissionContainer;

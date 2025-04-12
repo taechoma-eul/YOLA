@@ -1,25 +1,19 @@
-'use client';
-
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { getUserSessionState } from '@/lib/utils/api/auth-action';
+import ImageSection from '@/components/features/home/main-random-mission-image';
+import MissionButton from '@/components/features/home/main-random-mission-button';
 import RandomMissionContainer from '@/components/features/home/main-random-mission-container';
-import RandomMissionModal from '@/components/features/modals/random-mission';
-import TitleBox from '@/components/features/home/main-random-title-box';
+import TitleSection from '@/components/features/home/main-random-title-box';
 
-const RandomMissionSection = ({ isLogin }: { isLogin: boolean }) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const clickModal = () => setShowModal(!showModal);
+const RandomMissionSection = async () => {
+  const { isLogin } = await getUserSessionState();
 
   return (
     <RandomMissionContainer>
-      <div className="inline-flex w-60 flex-col items-start justify-start gap-24">
-        <TitleBox />
-        <Button onClick={clickModal} className="w-full border-2 bg-white text-xs text-black shadow-none">
-          랜덤미션 뽑기
-        </Button>
-        {showModal && <RandomMissionModal clickModal={clickModal} isLogin={isLogin} />}
+      <div className="flex h-full w-60 flex-col gap-[71px]">
+        <TitleSection />
+        <MissionButton isLogin={isLogin} />
       </div>
-      <div className="h-64 w-56 bg-zinc-300">뽑기 이미지</div>
+      <ImageSection />
     </RandomMissionContainer>
   );
 };
