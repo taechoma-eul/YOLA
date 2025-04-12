@@ -64,7 +64,7 @@ export const fetchDuplicateCheck = async (field: string, value: string): Promise
  */
 export const fetchUserProfile = async (): Promise<Tables<'users'>> => {
   try {
-    const res = await fetch(`${NEXT_SERVER_BASE_URL}/api/auth/profile`, {
+    const res = await fetch(`${NEXT_SERVER_BASE_URL}${API.PROFILE}`, {
       method: 'GET'
     });
 
