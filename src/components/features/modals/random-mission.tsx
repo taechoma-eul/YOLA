@@ -1,5 +1,5 @@
 'use client';
-import { Tables } from '@/types/supabase';
+import type { Tables } from '@/types/supabase';
 import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { FadeLoader } from 'react-spinners';
