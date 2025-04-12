@@ -3,24 +3,25 @@ import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
 
 /**
- * 클라이언트 호출용입니다.(클라이언트에서 호출하는 함수 내부 선언 포함)
- * supabase의 auth.getUser를 통해 현재 로그인 된 사용자의 user_id(auth.uid)와 로그인 상태를 불러옵니다.
- * 세션이 존재하지 않는 경우 userId는 null을 반환하고, isLogin은 false를 반환합니다.
+ * user-session-state 라우트 핸들러에서 값을 fetching 해오는 api 함수입니다.
+ * 현재 세션 정보에 따라 사용자의 아이디와 로그인 상태를 반환합니다.
  * @returns { string | null, boolean } userId, isLogin
  */
-export const getUserSessionState = async (): Promise<{
+export const fetchUserSessionState = async (): Promise<{
   userId: string | null;
   isLogin: boolean;
 }> => {
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
+  try {
+    const res = await fetch(`${NEXT_SERVER_BASE_URL}/api/auth/user-session-state`, {
+      method: 'GET',
+      credentials: 'include'
+    });
 
-  const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
-
-  const isLogin = !!userId;
-
-  return { userId, isLogin };
+    const { data } = await res.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
