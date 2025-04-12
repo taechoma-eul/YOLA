@@ -46,7 +46,10 @@ const AuthFormField = <T extends FieldValues>({
       setSuccessMessage(null);
       setErrorMessage(null);
     }
-  }, [fieldValue, setDuplicateCheck, fieldName]);
+    if (fieldName === AUTH.CHECK_PASSWORD) {
+      isValid ? setSuccessMessage(SUCCESS.PASSWORD) : setSuccessMessage(null);
+    }
+  }, [fieldValue, setDuplicateCheck, fieldName, isValid]);
 
   // -------------------------------------------------
 

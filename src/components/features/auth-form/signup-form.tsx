@@ -51,15 +51,16 @@ const SignupForm = () => {
       isValid: form.formState.dirtyFields.nickname && !form.formState.errors.nickname
     },
     { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: form, inputType: 'password' },
-    { fieldName: AUTH.CHECK_PASSWORD, placeholder: PLACEHOLDER.CHECK_PASSWORD, form: form, inputType: 'password' }
+    {
+      fieldName: AUTH.CHECK_PASSWORD,
+      placeholder: PLACEHOLDER.CHECK_PASSWORD,
+      form: form,
+      inputType: 'password',
+      isValid: form.formState.dirtyFields.checkPassword && !form.formState.errors.checkPassword
+    }
   ];
 
   const handleFormAction = async (formData: FormData) => {
-    if (!isValid) {
-      toastAlert(AUTH_ERROR.FIELD_CHECK, 'destructive');
-      return;
-    }
-
     if (!emailDuplicateCheck) {
       toastAlert(AUTH_ERROR.EMAIL_CHECK, 'destructive');
       return;

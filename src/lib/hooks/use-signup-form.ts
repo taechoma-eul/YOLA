@@ -11,7 +11,7 @@ export const useSignupForm = () => {
       checkPassword: '',
       nickname: ''
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   return form;
