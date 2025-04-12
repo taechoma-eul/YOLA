@@ -1,7 +1,7 @@
 import { getGonggamPreviewList } from '@/lib/utils/api/gonggam-posts.api';
 import GonggamItem from '@/components/features/home/main-gonggam-item';
 import GonggamPreviewContainer from '@/components/features/home/main-gonggam-preview-container';
-import TitleBox from '@/components/features/home/main-gonggam-preview-title-box';
+import TitleSection from '@/components/features/home/main-gonggam-preview-title-section';
 
 const GonggamPreviewBox = async () => {
   try {
@@ -9,7 +9,7 @@ const GonggamPreviewBox = async () => {
 
     return (
       <GonggamPreviewContainer>
-        <TitleBox />
+        <TitleSection />
         {postList.length > 0 ? (
           postList.map((item) => <GonggamItem key={item.id} post={item} />)
         ) : (
@@ -20,7 +20,7 @@ const GonggamPreviewBox = async () => {
   } catch (error) {
     return (
       <GonggamPreviewContainer>
-        <TitleBox />
+        <TitleSection />
         <p className="my-auto">게시글 불러오기에 실패했습니다.</p>
       </GonggamPreviewContainer>
     );

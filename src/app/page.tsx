@@ -3,7 +3,7 @@ import { getUniqueMissionType } from '@/lib/utils/api/checklist.api';
 import CheckListCard from '@/components/features/home/main-checklist-card';
 import GonggamPreviewBox from '@/components/features/home/main-gonggam-preview';
 import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
-import RandomMissionBox from '@/components/features/home/main-random-mission-box';
+import RandomMissionSection from '@/components/features/home/main-random-mission-section';
 
 const HomePage = async () => {
   const checkListTypes = await getUniqueMissionType();
@@ -22,7 +22,7 @@ const HomePage = async () => {
       </section>
       <hr className="mx-auto w-full max-w-[1280px] outline-neutral-300" />
       <section className="relative grid max-w-[1280px] grid-cols-2 place-content-evenly items-center justify-items-center gap-4">
-        <RandomMissionBox isLogin={isLogin} />
+        <RandomMissionSection isLogin={isLogin} />
         <div className="absolute left-[50%] h-72 w-0 outline outline-1 outline-neutral-200" />
         <GonggamPreviewBox />
       </section>

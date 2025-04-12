@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PATH } from '@/constants/page-path';
 
-const TitleBox = () => {
+const TitleSection = () => {
   return (
     <div className="mb-4 flex w-full items-end justify-between">
       <strong className="text-xl font-semibold">1인 가구 공감 게시판</strong>
@@ -12,4 +12,4 @@ const TitleBox = () => {
   );
 };
 
-export default TitleBox;
+export default TitleSection;

@@ -6,7 +6,7 @@ import RandomMissionContainer from '@/components/features/home/main-random-missi
 import RandomMissionModal from '@/components/features/modals/random-mission';
 import TitleBox from '@/components/features/home/main-random-title-box';
 
-const RandomMissionBox = ({ isLogin }: { isLogin: boolean }) => {
+const RandomMissionSection = ({ isLogin }: { isLogin: boolean }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const clickModal = () => setShowModal(!showModal);
 
@@ -24,4 +24,4 @@ const RandomMissionBox = ({ isLogin }: { isLogin: boolean }) => {
   );
 };
 
-export default RandomMissionBox;
+export default RandomMissionSection;
