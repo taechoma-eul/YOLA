@@ -41,9 +41,8 @@ export const signupSchema = z
 
 export const loginSchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
-  checkPassword: z.string().optional(), // 로그인 시 불필요
-  nickname: z.string().optional() // 로그인 시 불필요
+  password: passwordSchema
 });
 
-export type AuthFormData = z.infer<typeof signupSchema>;
+export type SignupFormData = z.infer<typeof signupSchema>;
+export type LoginFormData = z.infer<typeof loginSchema>;
