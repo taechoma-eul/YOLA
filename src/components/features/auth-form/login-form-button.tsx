@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { toastAlert } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
-import type { FieldData } from '@/types/components/auth-form';
+import type { AuthFormButtonProps } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
 import { API } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
 
-const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
+const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -27,8 +27,12 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
   return (
     <>
       <div className="space-y-3 pt-3">
-        <Button disabled={isSubmitting || !isPending ? false : true} type="submit" className="h-[42px] w-full">
-          {isSubmitting || !isPending ? '이메일로 로그인' : '로그인 중...'}
+        <Button
+          disabled={isValid && !isPending && !isLoginPending ? false : true}
+          type="submit"
+          className="h-[42px] w-full"
+        >
+          {!isPending && !isLoginPending ? '이메일로 로그인' : '로그인 중...'}
         </Button>
         <Button asChild className="h-[42px] w-full">
           <Link href={PATH.SIGNUP}>회원가입</Link>
@@ -47,4 +51,4 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
   );
 };
 
-export default LoginFormButton;
+export default AuthFormButton;
