@@ -17,6 +17,7 @@ const CheckListCard = ({ checkListType }: { checkListType: string }) => {
           alt={`${checkListType} 체크리스트 이미지`}
           width={221}
           height={142}
+          priority
         />
       </div>
     </Link>
