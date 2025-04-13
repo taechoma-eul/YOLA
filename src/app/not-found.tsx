@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import ErrorBlock from '@/components/common/error-block';
 import { PATH } from '@/constants/page-path';
 
-export default function ErrorPage() {
+const NotFoundPage = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -19,12 +19,14 @@ export default function ErrorPage() {
 
   return (
     <ErrorBlock
-      errorImage={<Image src={'/images/error-image.svg'} alt="에러페이지" width={240} height={184} />}
-      errorMessage="이런!! 오류가 발생했어요."
+      errorImage={<Image src={'/images/not-found-image.svg'} alt="에러페이지" width={240} height={184} />}
+      errorMessage="여기선 볼 수 있는 내용이 없어요."
     >
-      <Button value="default" size="error-page" onClick={handleBackHome} disabled={isPending}>
+      <Button value="default" size="error-page" disabled={isPending} onClick={handleBackHome}>
         {isPending ? '이동 중...' : '홈으로 돌아가기'}
       </Button>
     </ErrorBlock>
   );
-}
+};
+
+export default NotFoundPage;
