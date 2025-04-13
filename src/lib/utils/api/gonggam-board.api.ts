@@ -138,7 +138,11 @@ export const getGonggamPreviewList = async (): Promise<GonggamPostWithReaction[]
 export const getViewCount = async (postId: string): Promise<number> => {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from('gonggam_posts').select('view_count').eq('id', Number(postId)).single();
+  const { data, error } = await supabase
+    .from(TABLE.GONGGAM_POSTS)
+    .select('view_count')
+    .eq('id', Number(postId))
+    .single();
 
   if (error) throw error;
 
