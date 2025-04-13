@@ -34,6 +34,20 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'comments_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
+            referencedRelation: 'gonggam_posts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'comments_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
+            referencedRelation: 'gonggam_posts_with_counts';
+            referencedColumns: ['id'];
+          },
+          {
             foreignKeyName: 'comments_user_id_fkey';
             columns: ['user_id'];
             isOneToOne: false;
@@ -65,6 +79,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'gonggam_posts';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'gonggam_post_image_path_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
+            referencedRelation: 'gonggam_posts_with_counts';
+            referencedColumns: ['id'];
           }
         ];
       };
@@ -90,6 +111,13 @@ export type Database = {
             columns: ['post_id'];
             isOneToOne: false;
             referencedRelation: 'gonggam_posts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'gonggam_post_tags_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
+            referencedRelation: 'gonggam_posts_with_counts';
             referencedColumns: ['id'];
           }
         ];
@@ -234,6 +262,20 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'likes_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
+            referencedRelation: 'gonggam_posts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'likes_post_id_fkey';
+            columns: ['post_id'];
+            isOneToOne: false;
+            referencedRelation: 'gonggam_posts_with_counts';
+            referencedColumns: ['id'];
+          },
+          {
             foreignKeyName: 'likes_user_id_fkey';
             columns: ['user_id'];
             isOneToOne: false;
@@ -363,14 +405,57 @@ export type Database = {
       };
     };
     Views: {
-      [_ in never]: never;
+      gonggam_posts_with_counts: {
+        Row: {
+          category: Database['public']['Enums']['categorys'] | null;
+          comment_count: number | null;
+          content: string | null;
+          created_at: string | null;
+          id: number | null;
+          like_count: number | null;
+          title: string | null;
+          updated_at: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          category?: Database['public']['Enums']['categorys'] | null;
+          comment_count?: never;
+          content?: string | null;
+          created_at?: string | null;
+          id?: number | null;
+          like_count?: never;
+          title?: string | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          category?: Database['public']['Enums']['categorys'] | null;
+          comment_count?: never;
+          content?: string | null;
+          created_at?: string | null;
+          id?: number | null;
+          like_count?: never;
+          title?: string | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'gonggam_posts_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
     };
     Functions: {
       get_popular_posts: {
         Args: { limit_count: number };
         Returns: {
           id: number;
-          category: Enums<'categorys'>;
+          category: Database['public']['Enums']['categorys'];
           content: string;
           created_at: string;
           title: string;
@@ -379,8 +464,32 @@ export type Database = {
           likes_count: number;
           comments_count: number;
           total_interactions: number;
-          likes: Tables<'likes'>[];
-          comments: Tables<'comments'>[];
+          likes: Json;
+          comments: Json;
+        }[];
+      };
+      get_post_meta: {
+        Args: { post_id: number };
+        Returns: {
+          id: number;
+          category: Database['public']['Enums']['categorys'];
+          content: string;
+          created_at: string;
+          title: string;
+          updated_at: string;
+          user_id: string;
+          likes_count: number;
+          comments_count: number;
+          total_interactions: number;
+          likes: Json;
+          comments: Json;
+        }[];
+      };
+      get_post_meta: {
+        Args: { post_id: number };
+        Returns: {
+          likes_count: number;
+          comments_count: number;
         }[];
       };
     };
