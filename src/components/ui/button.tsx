@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils/utils';
 
 const buttonVariants = cva(
-  'inline-flex justify-center items-center gap-2.5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex text-base leading-snug justify-center items-center gap-2.5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -13,14 +13,14 @@ const buttonVariants = cva(
           'bg-primary-orange-400 text-secondary-900 hover:bg-primary-orange-200 active:bg-primary-orange-500 disabled:bg-secondary-grey-300 disabled:text-secondary-grey-600',
         outline:
           'bg-white text-primary-orange-600 hover:bg-primary-orange-50 active:bg-primary-orange-200 border-[1px] border-primary-orange-600 disabled:bg-secondary-grey-200 disabled:text-secondary-grey-500 disabled:border-secondary-grey-600',
-        grey: 'bg-white text-secondary-grey-900 hover:bg-secondary-grey-100 active:bg-secondary-grey-300 border-[1px] border-secondary-grey-900 disabled:bg-secondary-grey-200 disabled:text-secondary-grey-400 disabled:border-secondary-grey-400'
+        grey: 'bg-white text-secondary-grey-800 hover:bg-secondary-grey-50 active:bg-secondary-grey-200 border-[1px] border-secondary-grey-700 disabled:bg-secondary-grey-200 disabled:text-secondary-grey-400 disabled:border-secondary-grey-400'
       },
       size: {
-        default: 'w-[230px] h-[42px] py-[10px] rounded-xl',
-        'error-page': 'w-[240px] h-[42px] py-[10px] rounded-xl',
+        default: 'w-[230px] h-[42px] py-[10px] rounded-xl font-semibold',
+        'error-page': 'w-[240px] h-[42px] py-[10px] rounded-xl font-semibold',
         'comment-submit': 'w-[80px] h-[46px] py-[12px] rounded-lg',
         'gonggam-write': 'w-[100px] h-[38px] py-[8px] rounded-lg',
-        'auth-submit': 'w-[360px] h-[42px] py-[10px] rounded-lg ',
+        'auth-submit': 'w-[360px] h-[42px] py-[10px] rounded-lg',
         sm: 'w-[66px] h-[38px] py-[8px] rounded-lg rounded-lg '
       }
     },
