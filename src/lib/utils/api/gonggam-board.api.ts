@@ -1,5 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
+<<<<<<< HEAD
 import type {
   GonggamCategory,
   GonggamPost,
@@ -8,6 +9,11 @@ import type {
   WriterProfileResponse
 } from '@/types/gonggam';
 import type { User } from '@/types/user';
+=======
+import type { GonggamCategory, GonggamPost, GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
+import type { GonggamPostWithReaction } from '@/types/gonggam-posts';
+import type { Tables } from '@/types/supabase';
+>>>>>>> e03d5265c39c2744e50af1a27630359723051944
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -65,7 +71,11 @@ export const getPaginatedGonggamPosts = async (
  * @param writerId - 조회할 작성자의 고유 ID
  * @returns id, nickname, profile_image_url
  */
+<<<<<<< HEAD
 export const getWriterProfile = async (writerId: User['token']): Promise<WriterProfileResponse> => {
+=======
+export const getWriterProfile = async (writerId: Tables<'users'>['id']) => {
+>>>>>>> e03d5265c39c2744e50af1a27630359723051944
   const supabase = await createClient();
   const { data: profile, error: userErr } = await supabase
     .from(TABLE.USERS)
@@ -114,4 +124,41 @@ export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<Go
     likeCnt: data[0].likes_count ?? 0,
     commentCnt: data[0].comments_count ?? 0
   };
+};
+
+/**
+ * public.gonggam_posts 테이블에서 조회수 높은순 3개의 공감 게시글을 불러옵니다.
+ * @returns { Promise<GonggamPost[]> } 공감 게시글 배열
+ */
+export const getGonggamPreviewList = async (): Promise<GonggamPostWithReaction[]> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from(TABLE.GONGGAM_POSTS)
+    .select('*, likes(*), comments(*)')
+    .order('view_count', { ascending: false })
+    .limit(3);
+
+  if (error) throw error;
+
+  return data ?? [];
+};
+
+/**
+ * 선택한 게시글의 조회수를 서버에서 받아오는 api 함수입니다.
+ * @param { string } postId - 선택한 게시글의 id
+ * @returns { number } - 선택한 게시글의 조회수
+ */
+export const getViewCount = async (postId: string): Promise<number> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from(TABLE.GONGGAM_POSTS)
+    .select('view_count')
+    .eq('id', Number(postId))
+    .single();
+
+  if (error) throw error;
+
+  return data.view_count;
 };

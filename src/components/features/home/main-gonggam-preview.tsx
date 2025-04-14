@@ -1,4 +1,4 @@
-import { getGonggamPreviewList } from '@/lib/utils/api/gonggam-posts.api';
+import { getGonggamPreviewList } from '@/lib/utils/api/gonggam-board.api';
 import GonggamItem from '@/components/features/home/main-gonggam-item';
 import GonggamPreviewContainer from '@/components/features/home/main-gonggam-preview-container';
 import ListContainer from '@/components/features/home/main-gonggam-preview-list-container';
