@@ -1,8 +1,8 @@
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { MSG } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { GetMyGonggamPostsResponse, GonggamPostWithCounts, SortBy } from '@/types/gonggam-posts';
+import { fetchUserSessionState } from './auth-client.api';
 
 /**
  * Supabase에서 `gonggam_posts_with_counts` 뷰 전체 조회하는 함수
@@ -18,14 +18,17 @@ export const getMyGonggamPostsAll = async ({
   page: number;
   sortBy: SortBy;
 }): Promise<GetMyGonggamPostsResponse> => {
-  const { userId } = await getUserSessionState();
+  const { userId } = await fetchUserSessionState();
   if (!userId) throw new Error(MSG.NEED_LOGIN);
 
   const postsPerPage = 4;
   const from = (page - 1) * postsPerPage;
   const to = from + postsPerPage - 1;
 
-  let query = supabase.from(TABLE.GONGGAM_POSTS_WITH_COUNTS).select('*', { count: 'exact' }).eq('user_id', userId);
+  let query = supabase
+    .from(TABLE.GONGGAM_POSTS_WITH_COUNTS)
+    .select('*,users(nickname)', { count: 'exact' })
+    .eq('user_id', userId);
 
   if (sortBy === 'comments') {
     query = query.order('comment_count', { ascending: false });

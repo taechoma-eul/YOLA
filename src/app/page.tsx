@@ -4,10 +4,12 @@ import GonggamPreviewBox from '@/components/features/home/main-gonggam-preview';
 import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
 import RandomMissionBox from '@/components/features/home/main-random-mission-box';
 import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getMissionsData } from '@/lib/utils/api/missions.api';
 
 const HomePage = async () => {
   const checkListTypes = await getUniqueMissionType();
   const { isLogin } = await getUserSessionState();
+  const missionsData = await getMissionsData();
 
   return (
     <div className="space-y-14">
@@ -22,7 +24,7 @@ const HomePage = async () => {
       </section>
       <hr className="mx-auto w-full max-w-[1280px] outline-neutral-300" />
       <section className="relative grid max-w-[1280px] grid-cols-2 place-content-evenly items-center justify-items-center gap-4">
-        <RandomMissionBox isLogin={isLogin} />
+        <RandomMissionBox missionsData={missionsData} isLogin={isLogin} />
         <div className="absolute left-[50%] h-72 w-0 outline outline-1 outline-neutral-200" />
         <GonggamPreviewBox />
       </section>
