@@ -9,6 +9,7 @@ import type { CommentWithUser, UploadGonggamCommentParams } from '@/types/gongga
  * @param postId 게시글 ID
  * @returns { likeCnt, commentCnt } 좋아요 수와 댓글 수
  */
+/** @deprecated -- refactor: 로직 분리 */
 export const getPostMetaClient = async (postId: number) => {
   const { data, error } = await supabase
     .from('gonggam_posts_with_counts')
@@ -23,6 +24,31 @@ export const getPostMetaClient = async (postId: number) => {
     commentCnt: data.comment_count ?? 0
   };
 };
+
+/** Refactor */
+// 좋아요 수 조회
+export const getLikeCountClient = async (postId: number) => {
+  const { data, error } = await supabase
+    .from('gonggam_posts_with_counts')
+    .select('like_count')
+    .eq('id', postId)
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data.like_count ?? 0;
+};
+
+// // 댓글 수 조회
+// export const getCommentCountClient = async (postId: number) => {
+//   const { data, error } = await supabase
+//     .from('gonggam_posts_with_counts')
+//     .select('comment_count')
+//     .eq('id', postId)
+//     .single();
+
+//   if (error) throw new Error(error.message);
+//   return data.comment_count ?? 0;
+// };
 
 /** getCommentsByPostId
  * 특정 게시글(postId)에 대한 댓글 목록을 조회합니다.

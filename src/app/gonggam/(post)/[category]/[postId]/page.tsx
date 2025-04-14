@@ -1,4 +1,6 @@
-import GonggamPostInteraction from '@/components/features/gonggam/gonggam-post-interaction';
+import GonggamCommentForm from '@/components/features/gonggam/gonggam-comment-form';
+import GonggamCommentList from '@/components/features/gonggam/gonggam-comment-list';
+import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { getUserProfile } from '@/lib/utils/api/auth.api';
 import { getGonggamPostDetail } from '@/lib/utils/api/gonggam-detail.api';
@@ -54,8 +56,19 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
       <section className="prose prose-sm sm:prose lg:prose-lg max-w-none">
         <p>{content}</p>
       </section>
-      {/* 좋아요/태그/댓글 영역 */}
-      <GonggamPostInteraction postId={postId} tags={tags ?? []} initProfile={initProfile} />
+      {/* 좋아요 영역 */}
+      <GonggamLikes postId={postId} initProfile={initProfile} />
+      {/* 태그 영역 */}
+      <ul className="mb-6 mt-4 flex flex-wrap gap-2 text-sm text-muted-foreground">
+        {tags?.map((tag) => (
+          <li key={tag} className="rounded-md border border-gray-300 bg-muted px-2 py-1 text-xs text-gray-600">
+            # {tag}
+          </li>
+        ))}
+      </ul>
+      {/* 댓글 영역 */}
+      <GonggamCommentList postId={postId} />
+      <GonggamCommentForm postId={postId} initProfile={initProfile} />
     </article>
   );
 };
