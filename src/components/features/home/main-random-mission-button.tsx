@@ -2,8 +2,14 @@
 
 import { useState } from 'react';
 import RandomMissionModal from '@/components/features/modals/random-mission';
+import type { Tables } from '@/types/supabase';
 
-const MissionButton = ({ isLogin }: { isLogin: boolean }) => {
+interface ButtonProps {
+  isLogin: boolean;
+  missionData: Tables<'mission_list'>[];
+}
+
+const MissionButton = ({ isLogin, missionData }: ButtonProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const clickModal = () => setShowModal(!showModal);
   return (
@@ -17,7 +23,14 @@ const MissionButton = ({ isLogin }: { isLogin: boolean }) => {
       >
         미션뽑기
       </button>
-      {showModal && <RandomMissionModal clickModal={clickModal} isLogin={isLogin} />}
+      {showModal && (
+        <RandomMissionModal
+          showModal={showModal}
+          clickModal={clickModal}
+          missionsData={missionData}
+          isLogin={isLogin}
+        />
+      )}
     </>
   );
 };

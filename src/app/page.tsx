@@ -3,7 +3,7 @@ import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
 import RandomMissionSection from '@/components/features/home/main-random-mission';
 import GonggamPreviewSection from '@/components/features/home/main-gonggam-preview';
 
-const HomePage = () => {
+const HomePage = async () => {
   const checkListTypes: string[] = ['혼밥', '혼자여행', '갓생', '청소', '혼놀'];
 
   return (
