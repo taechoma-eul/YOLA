@@ -128,27 +128,33 @@ export type Database = {
           content: string;
           created_at: string;
           id: number;
+          tags: string[] | null;
           title: string;
           updated_at: string | null;
           user_id: string;
+          view_count: number;
         };
         Insert: {
           category: Database['public']['Enums']['categorys'];
           content: string;
           created_at?: string;
           id?: number;
+          tags?: string[] | null;
           title: string;
           updated_at?: string | null;
           user_id?: string;
+          view_count?: number;
         };
         Update: {
           category?: Database['public']['Enums']['categorys'];
           content?: string;
           created_at?: string;
           id?: number;
+          tags?: string[] | null;
           title?: string;
           updated_at?: string | null;
           user_id?: string;
+          view_count?: number;
         };
         Relationships: [
           {
@@ -451,23 +457,6 @@ export type Database = {
       };
     };
     Functions: {
-      get_popular_posts: {
-        Args: { limit_count: number };
-        Returns: {
-          id: number;
-          category: Database['public']['Enums']['categorys'];
-          content: string;
-          created_at: string;
-          title: string;
-          updated_at: string;
-          user_id: string;
-          likes_count: number;
-          comments_count: number;
-          total_interactions: number;
-          likes: Tables<'likes'>[];
-          comments: Tables<'comments'>[];
-        }[];
-      };
       get_post_meta: {
         Args: { post_id: number };
         Returns: {
@@ -491,6 +480,10 @@ export type Database = {
           likes_count: number;
           comments_count: number;
         }[];
+      };
+      increment_view_count: {
+        Args: { post_id: number };
+        Returns: undefined;
       };
     };
     Enums: {
