@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 // components/calendar/CalendarCell.tsx
 const CalendarCell = ({
   date,
@@ -19,14 +21,16 @@ const CalendarCell = ({
     >
       <button onClick={onClick} className="flex h-full w-full flex-col items-center justify-start gap-2.5">
         <div
-          className={`flex h-7 w-7 flex-col items-center justify-center gap-2.5 ${
-            isSelected ? 'rounded-2xl bg-amber-500 p-0.5' : ''
-          }`}
+          className={clsx(
+            'flex h-7 w-7 flex-col items-center justify-center gap-2.5',
+            isSelected && 'rounded-2xl bg-amber-500 p-0.5'
+          )}
         >
           <div
-            className={`text-center text-base ${
+            className={clsx(
+              'text-center text-base',
               isSelected ? 'font-bold text-white' : isOutside ? 'text-gray-300' : 'text-black'
-            }`}
+            )}
           >
             {date.getDate()}
           </div>
