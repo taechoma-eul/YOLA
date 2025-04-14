@@ -87,11 +87,11 @@ const GonggamPostInteraction = ({ postId, tags, initProfile }: PostInteractionPr
 
     uploadComment(newComment, {
       onSuccess: () => {
-        toastAlert(MSG.SUCCESS_UPLOAD_COMMENT, 'default');
+        toastAlert(MSG.SUCCESS_UPLOAD_COMMENT);
         setNewComment('');
       },
       onError: (err) => {
-        toastAlert(MSG.FAIL_TO_UPLOAD_COMMENT, 'default');
+        toastAlert(MSG.FAIL_TO_UPLOAD_COMMENT);
         throw Error(err.message);
       }
     });
