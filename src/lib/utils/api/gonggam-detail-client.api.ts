@@ -38,17 +38,17 @@ export const getLikeCountClient = async (postId: number) => {
   return data.like_count ?? 0;
 };
 
-// // 댓글 수 조회
-// export const getCommentCountClient = async (postId: number) => {
-//   const { data, error } = await supabase
-//     .from('gonggam_posts_with_counts')
-//     .select('comment_count')
-//     .eq('id', postId)
-//     .single();
+// 댓글 수 조회
+export const getCommentCountClient = async (postId: number) => {
+  const { data, error } = await supabase
+    .from('gonggam_posts_with_counts')
+    .select('comment_count')
+    .eq('id', postId)
+    .single();
 
-//   if (error) throw new Error(error.message);
-//   return data.comment_count ?? 0;
-// };
+  if (error) throw new Error(error.message);
+  return data.comment_count ?? 0;
+};
 
 /** getCommentsByPostId
  * 특정 게시글(postId)에 대한 댓글 목록을 조회합니다.

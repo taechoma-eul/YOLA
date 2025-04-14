@@ -25,6 +25,7 @@ export interface GonggamPostMeta {
 }
 
 export interface WriterProfileResponse {
+  id: string;
   nickname: string;
   profileImage: string | null;
 }

@@ -60,20 +60,21 @@ export const getPaginatedGonggamPosts = async (
 };
 
 /** getWriterProfile
- * 작성자의 프로필 정보를 조회하는 함수(닉네임, 프로필 이미지)
+ * 작성자의 프로필 정보를 조회하는 함수(id, 닉네임, 프로필 이미지)
  *
  * @param writerId - 조회할 작성자의 고유 ID
- * @returns nickname, profile_image_url
+ * @returns id, nickname, profile_image_url
  */
 export const getWriterProfile = async (writerId: User['token']): Promise<WriterProfileResponse> => {
   const supabase = await createClient();
   const { data: profile, error: userErr } = await supabase
     .from(TABLE.USERS)
-    .select('nickname, profile_image')
+    .select('id,nickname, profile_image')
     .eq('id', writerId)
     .single();
   if (userErr) throw new Error(userErr.message);
   return {
+    id: profile.id,
     nickname: profile.nickname,
     profileImage: profile.profile_image
   };
