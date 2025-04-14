@@ -9,7 +9,7 @@ import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item'
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
 import type { SortBy } from '@/types/gonggam-posts';
 
-const MyGonggamPostClient = () => {
+const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   const [sortBy, setSortBy] = useState<SortBy>('latest');
   const queryClient = useQueryClient();
 
@@ -43,11 +43,12 @@ const MyGonggamPostClient = () => {
 
   return (
     <div>
-      <div className="mb-4 flex justify-end">
+      <section className="mb-[35px] flex flex-row items-center justify-between">
+        <strong className="text-xl">{nickname}님이 작성한 공감 게시글</strong>
         <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
-      </div>
+      </section>
 
-      <div className="grid gap-3 md:grid-cols-1 lg:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
         {allPosts.length === 0 ? (
           <div className="col-span-full flex h-screen flex-col items-center justify-center whitespace-normal bg-slate-100 text-center text-gray-500">
             <p>앗 아직 기록이 없어요</p>
