@@ -1,32 +1,13 @@
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { CommentWithUser, UploadGonggamCommentParams } from '@/types/gonggam';
 
-/** getPostMetaClient
- * 클라이언트 컴포넌트에서 사용할 게시글 메타데이터 조회 함수
- * - Supabase 클라이언트 사용
- * - `gonggam_posts_with_counts` 뷰에서 좋아요 수, 댓글 수를 가져옴
+/** getLikeCountClient
+ * 클라이언트에서 특정 게시글의 좋아요 수를 조회하는 함수입니다.
  *
- * @param postId 게시글 ID
- * @returns { likeCnt, commentCnt } 좋아요 수와 댓글 수
+ * @param postId - 조회할 게시글의 고유 ID
+ * @returns 해당 게시글의 좋아요 수 (없을 경우 0 반환)
+ * @throws Supabase 요청 중 오류가 발생하면 에러를 throw합니다.
  */
-/** @deprecated -- refactor: 로직 분리 */
-export const getPostMetaClient = async (postId: number) => {
-  const { data, error } = await supabase
-    .from('gonggam_posts_with_counts')
-    .select('like_count, comment_count')
-    .eq('id', postId)
-    .single();
-
-  if (error) throw new Error(error.message);
-
-  return {
-    likeCnt: data.like_count ?? 0,
-    commentCnt: data.comment_count ?? 0
-  };
-};
-
-/** Refactor */
-// 좋아요 수 조회
 export const getLikeCountClient = async (postId: number) => {
   const { data, error } = await supabase
     .from('gonggam_posts_with_counts')
@@ -36,18 +17,6 @@ export const getLikeCountClient = async (postId: number) => {
 
   if (error) throw new Error(error.message);
   return data.like_count ?? 0;
-};
-
-// 댓글 수 조회
-export const getCommentCountClient = async (postId: number) => {
-  const { data, error } = await supabase
-    .from('gonggam_posts_with_counts')
-    .select('comment_count')
-    .eq('id', postId)
-    .single();
-
-  if (error) throw new Error(error.message);
-  return data.comment_count ?? 0;
 };
 
 /** getCommentsByPostId
