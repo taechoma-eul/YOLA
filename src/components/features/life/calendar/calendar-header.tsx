@@ -14,7 +14,7 @@ const CalendarHeader = ({ calendarMonth, onMoveMonth, onResetToToday }: Calendar
         <button onClick={() => onMoveMonth(-1)} className="flex h-6 w-6 items-center justify-center">
           <ChevronLeft className="h-5 w-5 text-zinc-800 sm:h-6 sm:w-6" />
         </button>
-        <div className="text-basefont-semibold text-center leading-6 text-zinc-800 sm:text-lg">
+        <div className="text-center text-base font-semibold leading-6 text-zinc-800 sm:text-lg">
           {calendarMonth.replace('-', '.')}
         </div>
         <button onClick={() => onMoveMonth(1)} className="flex h-6 w-6 items-center justify-center">
