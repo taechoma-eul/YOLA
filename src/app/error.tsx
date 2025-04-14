@@ -22,7 +22,7 @@ export default function ErrorPage() {
       errorImage={<Image src={'/images/error-image.svg'} alt="에러페이지" width={240} height={184} />}
       errorMessage="이런!! 오류가 발생했어요."
     >
-      <Button value="default" size="error-page" onClick={handleBackHome} disabled={isPending}>
+      <Button onClick={handleBackHome} disabled={isPending}>
         {isPending ? '이동 중...' : '홈으로 돌아가기'}
       </Button>
     </ErrorBlock>
