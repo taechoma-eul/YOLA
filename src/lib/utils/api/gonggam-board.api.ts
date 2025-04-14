@@ -1,6 +1,5 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-<<<<<<< HEAD
 import type {
   GonggamCategory,
   GonggamPost,
@@ -8,12 +7,8 @@ import type {
   PaginatedPostsResponse,
   WriterProfileResponse
 } from '@/types/gonggam';
-import type { User } from '@/types/user';
-=======
-import type { GonggamCategory, GonggamPost, GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 import type { GonggamPostWithReaction } from '@/types/gonggam-posts';
 import type { Tables } from '@/types/supabase';
->>>>>>> e03d5265c39c2744e50af1a27630359723051944
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -71,11 +66,7 @@ export const getPaginatedGonggamPosts = async (
  * @param writerId - 조회할 작성자의 고유 ID
  * @returns id, nickname, profile_image_url
  */
-<<<<<<< HEAD
-export const getWriterProfile = async (writerId: User['token']): Promise<WriterProfileResponse> => {
-=======
-export const getWriterProfile = async (writerId: Tables<'users'>['id']) => {
->>>>>>> e03d5265c39c2744e50af1a27630359723051944
+export const getWriterProfile = async (writerId: Tables<'users'>['id']): Promise<WriterProfileResponse> => {
   const supabase = await createClient();
   const { data: profile, error: userErr } = await supabase
     .from(TABLE.USERS)
