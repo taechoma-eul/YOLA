@@ -25,6 +25,7 @@ export async function updateSession(request: NextRequest) {
     PATH.TRAVEL_CHECKLIST,
     PATH.GOD_LIFE_CHECKLIST,
     PATH.GONGGAM,
+    `${PATH.GONGGAM}/:category/:postId`,
     PATH.ERROR,
     API.GOOGLE_LOGIN,
     API.KAKAO_LOGIN,
@@ -32,13 +33,17 @@ export async function updateSession(request: NextRequest) {
     API.DUPLICATE
   ];
 
-  // 루트 경로는 정확한 매칭, 나머지는 startsWith
-  const isPublicPath = publicPaths.some(
-    (path) =>
-      path === PATH.HOME
-        ? request.nextUrl.pathname === path // 루트 경로는 정확한 매칭
-        : request.nextUrl.pathname.startsWith(path) // 나머지는 startsWith
-  );
+  // 루트 경로는 정확한 매칭, /gonggam/[category]/[postId]는 정규식으로 체크, 나머지는 startsWith
+  const isPublicPath = publicPaths.some((path) => {
+    if (path === PATH.HOME) {
+      return request.nextUrl.pathname === path; // 루트 경로는 정확한 매칭
+    }
+    if (path === `${PATH.GONGGAM}/:category/:postId`) {
+      // /gonggam/[category]/[postId] 패턴 체크
+      return request.nextUrl.pathname.match(new RegExp(`^${PATH.GONGGAM}/[^/]+/[^/]+$`));
+    }
+    return request.nextUrl.pathname.startsWith(path); // 나머지는 startsWith
+  });
 
   // 로그인하지 않은 사용자가 비공개 경로에 접근하려는 경우
   if (!user && !isPublicPath) {
