@@ -20,7 +20,7 @@ const HomePage = async () => {
         </div>
       </section>
       <hr className="mx-auto mt-[57px] w-[1200px] outline-neutral-300" />
-      <section className="mx-auto mt-[61px] flex w-[1200px] items-center justify-between self-stretch">
+      <section className="mx-auto mb-[71px] mt-[61px] flex w-[1200px] items-center justify-between self-stretch">
         <RandomMissionSection />
         <div className="h-60 w-0 origin-top-left outline outline-1 outline-offset-[-0.50px] outline-gray-200" />
         <GonggamPreviewSection />
