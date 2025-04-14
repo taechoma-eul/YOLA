@@ -68,3 +68,30 @@ export const uploadGonggamComment = async ({ postId, comment }: UploadGonggamCom
   const { error } = await supabase.from('comments').insert([{ post_id: postId, comment }]);
   if (error) throw new Error(error.message);
 };
+
+/** getUserLikedPost
+ * 현재 사용자가 해당 게시글에 좋아요했는지 여부
+ */
+export const getUserLikedStatus = async ({ postId, userId }: { postId: number; userId: string }) => {
+  const { data, error } = await supabase
+    .from('likes')
+    .select('id')
+    .eq('post_id', postId)
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return !!data;
+};
+
+/** 좋아요 등록 (Insert) */
+export const likePost = async ({ postId }: { postId: number }) => {
+  const { error } = await supabase.from('likes').insert([{ post_id: postId }]);
+  if (error) throw new Error(error.message);
+};
+
+/** 좋아요 취소 (Delete) */
+export const dislikePost = async ({ postId, userId }: { postId: number; userId: string }) => {
+  const { error } = await supabase.from('likes').delete().eq('post_id', postId).eq('user_id', userId);
+  if (error) throw new Error(error.message);
+};

@@ -5,7 +5,12 @@ import { Button } from '@/components/ui/button';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getPostMetaClient } from '@/lib/utils/api/gonggam-detail-client.api';
+import {
+  dislikePost,
+  getPostMetaClient,
+  getUserLikedStatus,
+  likePost
+} from '@/lib/utils/api/gonggam-detail-client.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
@@ -13,6 +18,7 @@ import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { Input } from '@/components/ui/input';
 import { MSG } from '@/constants/messages';
 import { toastAlert } from '@/lib/utils/toast';
+import clsx from 'clsx';
 import type { Tables } from '@/types/supabase';
 
 interface PostInteractionProps {
@@ -24,6 +30,8 @@ interface PostInteractionProps {
 const GonggamPostInteraction = ({ postId, tags, initProfile }: PostInteractionProps) => {
   const [likeCnt, setLikeCnt] = useState<number>(0);
   const [commentCnt, setCommentCnt] = useState<number>(0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLikePending, setIsLikePending] = useState<boolean>(false);
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
   const { profile, isProfilePending, profileFetchingError } = useUserProfile(initProfile);
   const [newComment, setNewComment] = useState<string>('');
@@ -39,8 +47,39 @@ const GonggamPostInteraction = ({ postId, tags, initProfile }: PostInteractionPr
         console.error(MSG.FAIL_TO_GET_POST_META, err);
       }
     };
+    const fetchLikeStatus = async () => {
+      if (!initProfile.id) return;
+      try {
+        const liked = await getUserLikedStatus({ postId, userId: initProfile.id });
+        setIsLiked(liked);
+      } catch (err) {
+        console.error('좋아요 상태 조회 실패:', err);
+      }
+    };
+    fetchLikeStatus();
     fetchPostMeta();
-  }, [postId]);
+  }, [postId, initProfile.id]);
+
+  const handleLikeToggle = async () => {
+    if (!initProfile.id) return;
+    setIsLikePending(true);
+    try {
+      if (isLiked) {
+        await dislikePost({ postId, userId: initProfile.id });
+        setLikeCnt((prev) => prev - 1);
+        setIsLiked(false);
+      } else {
+        await likePost({ postId });
+        setLikeCnt((prev) => prev + 1);
+        setIsLiked(true);
+      }
+    } catch (err) {
+      toastAlert(MSG.FAIL_TO_UPDATE_LIKE, 'destructive');
+      console.error(err);
+    } finally {
+      setIsLikePending(false);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,8 +105,18 @@ const GonggamPostInteraction = ({ postId, tags, initProfile }: PostInteractionPr
     <section>
       {/* 좋아요(하트) 버튼 */}
       <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-        <button className="flex items-center gap-2 rounded-md border border-gray-500 p-2 transition-colors hover:text-primary">
-          <Heart size={14} />
+        <button
+          onClick={handleLikeToggle}
+          disabled={isLikePending}
+          className="flex items-center gap-2 rounded-md border border-gray-500 p-2 transition-colors hover:text-primary"
+        >
+          <Heart
+            size={14}
+            className={clsx('transition-colors', {
+              'fill-red-500 text-red-500': isLiked,
+              'text-gray-400': !isLiked
+            })}
+          />
           <span>{likeCnt}</span>
         </button>
       </div>

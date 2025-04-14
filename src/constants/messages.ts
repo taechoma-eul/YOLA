@@ -9,7 +9,8 @@ export const MSG = {
   // 공감게시판
   FAIL_TO_GET_POST_META: '포스트 메타데이터를 가져오는 데 실패했습니다:',
   SUCCESS_UPLOAD_COMMENT: '댓글이 등록되었습니다.',
-  FAIL_TO_UPLOAD_COMMENT: '댓글 등록에 실패했습니다.'
+  FAIL_TO_UPLOAD_COMMENT: '댓글 등록에 실패했습니다.',
+  FAIL_TO_UPDATE_LIKE: '좋아요 업데이트에 실패했습니다.'
 };
 
 export const SUCCESS = {
