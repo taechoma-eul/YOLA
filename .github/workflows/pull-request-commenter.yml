@@ -15,7 +15,7 @@ jobs:
       - name: Add comment about P-N rule
         uses: peter-evans/create-or-update-comment@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.AUTO_ACTIONS }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ## About P-N comment rule
