@@ -1,9 +1,9 @@
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import { getUniqueMissionType } from '@/lib/utils/api/checklist.api';
 import CheckListCard from '@/components/features/home/main-checklist-card';
 import GonggamPreviewBox from '@/components/features/home/main-gonggam-preview';
 import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
 import RandomMissionBox from '@/components/features/home/main-random-mission-box';
+import { getUserSessionState } from '@/lib/utils/api/auth.api';
 import { getMissionsData } from '@/lib/utils/api/missions.api';
 
 const HomePage = async () => {

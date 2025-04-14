@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import clsx from 'clsx';
-import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth-action';
 import { getUserMission } from '@/lib/utils/api/my-mission.api';
 import { calculateUserLevel } from '@/lib/utils/calculate-user-level';
 import { getLevelsByTypes } from '@/lib/utils/get-level-by-types';
@@ -12,6 +11,7 @@ import TRAVEL_ICON from '@images/images/travel-icon.svg';
 import GOAT_ICON from '@images/images/goat-icon.svg';
 import CLEAN_ICON from '@images/images/clean-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
+import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth.api';
 import { getMissionsData } from '@/lib/utils/api/missions.api';
 
 const AchievementPage = async () => {

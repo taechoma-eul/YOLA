@@ -1,6 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
+import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
 import type { GetLifePostsResponse } from '@/types/life-post';
 import { MSG } from '@/constants/messages';
 
@@ -15,7 +15,7 @@ import { MSG } from '@/constants/messages';
  * @to - .range(from,to) 의 to
  */
 export const getLifePostsAll = async ({ page }: { page: number }): Promise<GetLifePostsResponse> => {
-  const { userId } = await getUserSessionState();
+  const { userId } = await fetchUserSessionState();
   if (!userId) throw new Error(MSG.NEED_LOGIN);
 
   // 페이지당 게시물 수
