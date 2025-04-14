@@ -65,7 +65,7 @@ export const getCommentsByPostId = async (postId: number): Promise<CommentWithUs
       id,
       created_at,
       comment,
-      writer:users (
+      writer:users (id,
         nickname,
         profile_image
       )
