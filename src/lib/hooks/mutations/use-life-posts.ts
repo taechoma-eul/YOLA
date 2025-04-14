@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { parseTags } from '@/lib/utils/parse-tags';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 const USER_MISSION = TABLE.USER_MISSION;
@@ -15,14 +16,6 @@ interface NewLifePostParams {
   imageUrls: string[];
   date: string; // 'YYYY-MM-DD' 형식
 }
-
-// 해시태그 문자열 → 배열 변환 함수
-const parseTags = (raw: string): string[] => {
-  return raw
-    .split(/[\s,]+/) // 공백 또는 쉼표로 분리
-    .map((tag) => tag.trim().replace(/^#/, '')) // 앞의 # 제거
-    .filter((tag) => tag.length > 0);
-};
 
 export const useLifePost = () => {
   const queryClient = useQueryClient();
