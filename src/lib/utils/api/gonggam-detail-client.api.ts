@@ -46,7 +46,7 @@ export const getCommentsByPostId = async (postId: number): Promise<CommentWithUs
     `
     )
     .eq('post_id', postId)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: true });
 
   if (error) throw new Error(error.message);
   return data.map((comment) => ({
