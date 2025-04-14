@@ -22,6 +22,10 @@ export type GonggamPostWithCounts = {
   user_id: string;
   like_count: number | null;
   comment_count: number | null;
+  // 조인된 users 테이블 필드 추가 (닉네임만)
+  users: {
+    nickname: string;
+  };
 };
 
 export type SortBy = 'latest' | 'comments' | 'likes';
