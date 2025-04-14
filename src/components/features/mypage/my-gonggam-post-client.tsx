@@ -10,7 +10,6 @@ import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam
 import type { SortBy } from '@/types/gonggam-posts';
 
 const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
-  //주석 테스트
   const [sortBy, setSortBy] = useState<SortBy>('latest');
   const queryClient = useQueryClient();
 
