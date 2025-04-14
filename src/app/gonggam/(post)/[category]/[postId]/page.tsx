@@ -1,6 +1,6 @@
 import GonggamPostInteraction from '@/components/features/gonggam/gonggam-post-interaction';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
-import { getPostMetaByPostId } from '@/lib/utils/api/gonggam-board.api';
+import { getUserProfile } from '@/lib/utils/api/auth.api';
 import { getGonggamPostDetail } from '@/lib/utils/api/gonggam-detail.api';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 import { Dot } from 'lucide-react';
@@ -14,7 +14,9 @@ interface GonggamPostDetailProps {
 }
 
 const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDetailProps) => {
+  const initProfile = await getUserProfile();
   const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
+
   const displayDate = updated_at ?? created_at;
 
   return (
@@ -53,7 +55,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
         <p>{content}</p>
       </section>
       {/* 좋아요/태그/댓글 영역 */}
-      <GonggamPostInteraction postId={postId} tags={tags ?? []} />
+      <GonggamPostInteraction postId={postId} tags={tags ?? []} initProfile={initProfile} />
     </article>
   );
 };

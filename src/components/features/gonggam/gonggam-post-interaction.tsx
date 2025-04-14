@@ -11,19 +11,21 @@ import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { Input } from '@/components/ui/input';
-import { toastAlert } from '@/lib/utils/toast';
 import { MSG } from '@/constants/messages';
+import { toastAlert } from '@/lib/utils/toast';
+import type { Tables } from '@/types/supabase';
 
 interface PostInteractionProps {
   postId: number;
   tags: string[];
+  initProfile: Tables<'users'>;
 }
 
-const GonggamPostInteraction = ({ postId, tags }: PostInteractionProps) => {
+const GonggamPostInteraction = ({ postId, tags, initProfile }: PostInteractionProps) => {
   const [likeCnt, setLikeCnt] = useState<number>(0);
   const [commentCnt, setCommentCnt] = useState<number>(0);
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
-  const { profile, isProfilePending, profileFetchingError } = useUserProfile();
+  const { profile, isProfilePending, profileFetchingError } = useUserProfile(initProfile);
   const [newComment, setNewComment] = useState<string>('');
   const { mutate: uploadComment, isPending: isUploading } = useUploadComment(postId);
 
