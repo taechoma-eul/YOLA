@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getUserProfile } from '@/lib/utils/api/auth-action';
+import { getUserProfile } from '@/lib/utils/api/auth.api';
 import ProfileBox from '@/components/features/mypage/mypage-sidebar-profile';
 import { PATH } from '@/constants/page-path';
 

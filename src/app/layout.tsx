@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <TQProvider>
           <Header />
-          <main className="mx-auto flex min-h-[calc(100vh-150px)] w-full max-w-[1280px] flex-col items-center pt-[150px]">
+          <main className="mx-auto flex min-h-[calc(100vh-150px)] w-full max-w-[1280px] flex-col items-center pt-24">
             {children}
           </main>
           <Toaster />
