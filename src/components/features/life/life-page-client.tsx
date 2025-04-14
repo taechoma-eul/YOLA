@@ -1,7 +1,7 @@
 'use client';
 
 import { useLifePostsByMonthRange } from '@/lib/hooks/queries/use-life-posts-by-month-range';
-import Calendar from '@/components/features/life/calendar';
+import Calendar from '@/components/features/life/calendar/calendar';
 import SoloLifeList from '@/components/features/life/solo-life-list';
 import { getNextMonth, getPrevMonth, getToday } from '@/lib/utils/get-date';
 import Link from 'next/link';
@@ -34,7 +34,7 @@ const LifePageClient = ({ nickname }: Props) => {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <div className="ml-auto mr-auto min-h-[750px] w-[90%] text-center">
+      <div className="flex w-full justify-start px-4 sm:justify-center sm:px-0">
         <Calendar
           setDate={setSelectedDate}
           selectedDate={selectedDate}
