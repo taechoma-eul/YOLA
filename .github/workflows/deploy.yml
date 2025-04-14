@@ -11,7 +11,7 @@ jobs:
     container: pandoc/latex
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Install mustache (to update the date)
 
@@ -35,7 +35,7 @@ jobs:
 
           destination-github-username: 'SuimKim'
 
-          destination-repository-name: 'yola'
+          destination-repository-name: 'you_only_live_alone'
 
           user-email: ${{ secrets.EMAIL }}
 
