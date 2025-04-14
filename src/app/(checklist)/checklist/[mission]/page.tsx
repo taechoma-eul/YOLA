@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
-import { getUserSessionState } from '@/lib/utils/api/auth-action';
 import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
 import { validMissionTags } from '@/constants/mission';
 import MissionListClient from '@/components/features/checklist/mission-list-client';
 import type { Level, MissionTag } from '@/types/checklist';
+import { getUserSessionState } from '@/lib/utils/api/auth.api';
 
 let userLevel = '1'; // default level (for 비로그인 사용자)
 

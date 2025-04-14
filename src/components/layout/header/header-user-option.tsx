@@ -1,11 +1,11 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
 import { User } from 'lucide-react';
 import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
 import type { MenuItem } from '@/types/components/header';
 import { PATH } from '@/constants/page-path';
-import { usePathname } from 'next/navigation';
-import clsx from 'clsx';
 
 const UserOptionMenu = () => {
   const pathname = usePathname();
@@ -31,6 +31,3 @@ const UserOptionMenu = () => {
 };
 
 export default UserOptionMenu;
-
-// lassName = 'text-amber-500';
-// className = 'text-zinc-800 hover:text-amber-500';

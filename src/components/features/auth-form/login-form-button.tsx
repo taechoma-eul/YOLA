@@ -1,24 +1,34 @@
+'use client';
+
 import Link from 'next/link';
-import { signInWithGoogle, signInWithKakao } from '@/lib/utils/api/auth-action';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 import { toastAlert } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
-import type { FieldData } from '@/types/components/auth-form';
+import type { AuthFormButtonProps } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
+import { API } from '@/constants/api-path';
+import { FAIL } from '@/constants/messages';
 
-const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
-  const handleSignInWithOAuth = (signAction: () => Promise<never>) => {
-    try {
-      signAction();
-    } catch (error) {
-      toastAlert('소셜 로그인에 실패했습니다.', 'destructive');
-    }
+const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const handleSignInWithOAuth = (apiPath: string) => {
+    startTransition(() => {
+      try {
+        router.push(apiPath);
+      } catch (error) {
+        toastAlert(FAIL.SOCIAL_LOGIN, 'destructive');
+      }
+    });
   };
 
   return (
     <>
       <div className="space-y-3 pt-3">
-        <Button type="submit" className="h-[42px] w-full">
-          {!isSubmitting ? '이메일로 로그인' : '로그인 중...'}
+        <Button disabled={!isValid || isPending || isLoginPending} type="submit" className="h-[42px] w-full">
+          {!isPending && !isLoginPending ? '이메일로 로그인' : '로그인 중...'}
         </Button>
         <Button asChild className="h-[42px] w-full">
           <Link href={PATH.SIGNUP}>회원가입</Link>
@@ -26,10 +36,10 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
       </div>
       <hr className="h-[30px] border-b border-t-0 border-gray-300" />
       <div className="flex gap-5">
-        <Button type="submit" className="h-[42px] w-full" formAction={() => handleSignInWithOAuth(signInWithGoogle)}>
+        <Button type="button" className="h-[42px] w-full" onClick={() => handleSignInWithOAuth(API.GOOGLE_LOGIN)}>
           구글
         </Button>
-        <Button type="submit" className="h-[42px] w-full" formAction={() => handleSignInWithOAuth(signInWithKakao)}>
+        <Button type="button" className="h-[42px] w-full" onClick={() => handleSignInWithOAuth(API.KAKAO_LOGIN)}>
           카카오
         </Button>
       </div>
@@ -37,4 +47,4 @@ const LoginFormButton = ({ isSubmitting }: Pick<FieldData, 'isSubmitting'>) => {
   );
 };
 
-export default LoginFormButton;
+export default AuthFormButton;
