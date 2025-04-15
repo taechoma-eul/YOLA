@@ -45,22 +45,24 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form className="mt-10 w-[365px] space-y-8" action={handleFormAction}>
-        {loginFieldData.map((data, index) => (
-          <FormField
-            key={index}
-            control={form.control}
-            name={data.fieldName}
-            render={({ field }) => (
-              <AuthFormField
-                fieldName={data.fieldName}
-                placeholder={data.placeholder}
-                inputType={data.inputType}
-                field={field}
-              />
-            )}
-          />
-        ))}
+      <form className="mt-[37px] w-[360px]" action={handleFormAction}>
+        <div className="mb-[28px] flex flex-col gap-[17px]">
+          {loginFieldData.map((data, index) => (
+            <FormField
+              key={index}
+              control={form.control}
+              name={data.fieldName}
+              render={({ field }) => (
+                <AuthFormField
+                  fieldName={data.fieldName}
+                  placeholder={data.placeholder}
+                  inputType={data.inputType}
+                  field={field}
+                />
+              )}
+            />
+          ))}
+        </div>
         <LoginFormButton isValid={isValid} isLoginPending={isPending} />
       </form>
     </Form>

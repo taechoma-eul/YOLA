@@ -5,8 +5,10 @@ interface ContentProps {
 
 const AuthContent = ({ title, form }: ContentProps) => {
   return (
-    <div className="w-full justify-items-center">
-      <h1 className="mb-4 text-center text-2xl font-bold">{title}</h1>
+    <div className="mt-[60px] w-full justify-items-center">
+      <h1 className="text-secondary-grey-900 justify-start text-center text-xl font-semibold leading-relaxed">
+        {title}
+      </h1>
       {form}
     </div>
   );
