@@ -36,7 +36,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
           <PaginationLink
             href="#"
             onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
-            className="cursor-pointer"
+            className="cursor-pointer text-gray-500 hover:text-black"
           >
             &lt;
           </PaginationLink>
@@ -57,7 +57,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
           <PaginationLink
             href="#"
             onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
-            className="cursor-pointer"
+            className="cursor-pointer text-gray-500 hover:text-black"
           >
             &gt;
           </PaginationLink>
