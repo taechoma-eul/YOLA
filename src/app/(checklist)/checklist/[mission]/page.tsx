@@ -40,7 +40,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
   const progress = completedIds.length;
 
   return (
-    <section className="w-full p-10">
+    <section className="w-full pl-[37px] pr-[39px] pt-[59px]">
       <div className="flex w-full flex-col gap-[34px]">
         <h1 className="whitespace-nowrap text-2xl font-bold">{decodedMission} 체크리스트</h1>
         <ChecklistProgress progress={progress} userLevel={userLevel as Level} />
