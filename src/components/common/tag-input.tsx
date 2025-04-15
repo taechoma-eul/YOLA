@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface TagInputProps {
   value?: string[];
@@ -13,9 +13,17 @@ const TagInput = ({ value = [], onChange, maxTags = 5 }: TagInputProps) => {
   const [inputValue, setInputValue] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setTags(value);
   }, [value]);
+
+  useEffect(() => {
+    if (inputVisible) {
+      inputRef.current?.focus();
+    }
+  }, [inputVisible]);
 
   const addTag = (tag: string) => {
     const cleaned = tag.trim().replace(/^#/, '');
@@ -54,6 +62,7 @@ const TagInput = ({ value = [], onChange, maxTags = 5 }: TagInputProps) => {
 
       {inputVisible && (
         <input
+          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
