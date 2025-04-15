@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils/utils';
 
 const buttonVariants = cva(
-  'inline-flex text-base leading-snug justify-center items-center gap-2.5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'text-base font-normal text-center leading-snug gap-2.5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none',
   {
     variants: {
       variant: {
@@ -18,9 +18,11 @@ const buttonVariants = cva(
         default: 'w-[230px] py-[10px] rounded-xl font-semibold',
         'error-page': 'w-[240px] py-[10px] rounded-xl font-semibold',
         'comment-submit': 'w-[80px] py-[12px] rounded-lg',
-        'gonggam-write': 'w-[100px] h-[38px] py-[8px] rounded-lg',
+        'gonggam-write': 'w-[100px] h-[38px]  rounded-lg',
         'auth-submit': 'w-[360px] py-[10px] rounded-lg',
-        sm: 'px-[12px] py-[8px] rounded-lg rounded-lg '
+        login: 'px-[12px] py-[8px] min-w-[66px] rounded-lg',
+        check: 'py-[8px] w-[72px] rounded-lg',
+        'edit-profile': 'py-[8px] w-[172px] rounded-lg'
       }
     },
     defaultVariants: {
@@ -32,7 +34,7 @@ const buttonVariants = cva(
 
 /**
  * @example
- * 커스텀 사용법: <CustomButton variant={'default'} size={'default'}>디폴트 버튼</CustomButton>
+ * 커스텀 버튼 사용법: <CustomButton variant={'default'} size={'default'}>디폴트 버튼</CustomButton>
  * 아무 속성을 내리지 않으면 default 테마의 default 크기로 지정 돼요.
  *
  * 테마 속성: hover, active, disabled까지 모두 적용되어있어요. 테마만 설정하면 돼요!
@@ -46,7 +48,9 @@ const buttonVariants = cva(
  * comment-submit - 댓글 달기 버튼 크기예요.
  * gonggam-write - 공감게시판 글 작성하기 버튼 크기예요.
  * auth-submit - 로그인 / 회원가입 폼에 사용하는 버튼 크기예요.
- * sm - 가장 작은 크기의 버튼이예요. 로그인 페이지 이동 버튼과 중복확인에 쓰여요.
+ * login - 비회원에게 노출되는 헤더의 로그인 버튼 크기예요.
+ * check - 회원가입 폼과 프로필 수정 폼에 사용되는 중복체크 버튼 크기예요.
+ * edit-profile - 마이페이지 사이드 메뉴의 프로필 수정 버튼 크기예요.
  */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
