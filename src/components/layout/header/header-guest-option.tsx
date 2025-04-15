@@ -4,7 +4,7 @@ import { PATH } from '@/constants/page-path';
 
 const GuestOptionMenu = () => {
   return (
-    <CustomButton asChild variant="default" size="sm">
+    <CustomButton asChild variant="default" size="login">
       <Link href={PATH.LOGIN}>로그인</Link>
     </CustomButton>
   );
