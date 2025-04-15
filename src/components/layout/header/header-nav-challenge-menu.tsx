@@ -1,4 +1,3 @@
-import { ChevronDown } from 'lucide-react';
 import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
 import type { MenuItem } from '@/types/components/header';
 import { PATH } from '@/constants/page-path';
