@@ -1,4 +1,4 @@
-import { Enums, Tables } from '@/types/supabase';
+import type { Enums, Tables } from '@/types/supabase';
 
 export type MissionType = Tables<'mission_list'>;
 
