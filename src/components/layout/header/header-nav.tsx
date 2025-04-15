@@ -10,7 +10,7 @@ interface NavList {
 const HeaderNav = () => {
   const navList: NavList[] = [
     { href: PATH.LIFE, label: '혼자라이프 달력' },
-    { href: PATH.GONGGAM, label: '공감게시판' }
+    { href: PATH.GONGGAM, label: '공감 게시판' }
   ];
 
   return (

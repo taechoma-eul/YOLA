@@ -13,7 +13,7 @@ const NavChallengeMenu = () => {
   return (
     <div data-state="Dropdown" className="inline-flex h-11 items-center justify-center gap-2.5 py-2.5">
       <HeaderDropdownMenu menuItems={challengeMenuItem}>
-        <div className="flex w-[72px] justify-between text-center">
+        <div className="flex h-[25px] w-[72px] justify-between text-center">
           챌린지
           <svg width="14" height="26" viewBox="0 0 14 26" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
