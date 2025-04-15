@@ -13,8 +13,10 @@ const GonggamItem = ({ post }: ItemProps) => {
   return (
     <ItemContainer postId={id} category={category}>
       <ContentsContainer>
-        <h2 className="justify-start self-stretch text-sm">{title}</h2>
-        <p className="w-80 justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs">{content}</p>
+        <p className="w-full justify-start self-stretch text-base leading-snug">{title}</p>
+        <p className="min-h-[17px] w-full justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-none">
+          {content}
+        </p>
       </ContentsContainer>
       <ReactionBox likes={likes.length} comments={comments.length} />
     </ItemContainer>
