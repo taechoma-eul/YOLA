@@ -51,7 +51,6 @@ export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
   const supabase = await createClient();
   try {
     const { userId } = await getUserSessionState();
-    // if (userId === null) throw new Error(FAIL.SESSION);
     if (userId === null) return null;
 
     const { data, error } = await supabase.from(TABLE.USERS).select('*').eq('id', userId).single();
