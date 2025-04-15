@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { MSG } from '@/constants/messages';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
-import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { toastAlert } from '@/lib/utils/toast';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -12,11 +11,11 @@ import { useState } from 'react';
 interface GonggamCommentFormProps {
   postId: number;
   isLogin: boolean;
+  profileImage?: string;
 }
 
-const GonggamCommentForm = ({ postId, isLogin }: GonggamCommentFormProps) => {
+const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL }: GonggamCommentFormProps) => {
   const [newComment, setNewComment] = useState<string>('');
-  const { profile, isProfilePending, profileFetchingError } = useUserProfile();
   const { mutate: uploadComment, isPending: isUploading } = useUploadComment(postId);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,26 +33,18 @@ const GonggamCommentForm = ({ postId, isLogin }: GonggamCommentFormProps) => {
     });
   };
 
-  if (profileFetchingError) throw Error(profileFetchingError.message);
-  if (isProfilePending) return null;
-
   return (
     <div>
       <form className="flex items-center gap-2" onSubmit={handleSubmit}>
         <div className="relative h-[40px] w-[40px] overflow-hidden rounded-full">
-          <Image
-            src={profile?.profile_image || DEFAULT_AVATAR_URL}
-            alt={`${profile?.nickname}`}
-            fill
-            sizes="40px"
-            className="object-cover"
-          />
+          <Image src={profileImage} alt="profile" fill sizes="40px" className="object-cover" />
         </div>
         <Input
           type="text"
           placeholder={isLogin ? '댓글을 작성해보세요.' : '댓글을 작성하려면 로그인 해주세요.'}
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
+          disabled={!isLogin}
         />
         <Button type="submit" disabled={isUploading || !isLogin}>
           등록하기

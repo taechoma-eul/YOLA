@@ -17,7 +17,7 @@ interface GonggamPostDetailProps {
 }
 
 const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDetailProps) => {
-  const userId = await getUserProfile().then((res) => res?.id);
+  const userData = await getUserProfile();
   const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
 
   const displayDate = updated_at ?? created_at;
@@ -42,7 +42,8 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
             <Dot size={12} />
             <time dateTime={displayDate}>{getKoreanDateTime(displayDate)}</time>
           </div>
-          {userId === profile.id && <GonggamMyPostDropdown />}
+          {/* {userId === profile.id && <GonggamMyPostDropdown />} */}
+          {userData?.id === profile.id && <GonggamMyPostDropdown />}
         </div>
       </header>
 
@@ -62,7 +63,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
       </section>
 
       {/* 좋아요 영역 */}
-      <GonggamLikes postId={postId} userId={userId} />
+      <GonggamLikes postId={postId} userId={userData?.id} />
 
       {/* 태그 영역 */}
       <ul className="mb-6 mt-4 flex flex-wrap gap-2 text-sm text-muted-foreground">
@@ -75,7 +76,11 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
 
       {/* 댓글 영역 */}
       <GonggamCommentList postId={postId} />
-      <GonggamCommentForm postId={postId} isLogin={!!userId} />
+      <GonggamCommentForm
+        postId={postId}
+        isLogin={!!userData?.id}
+        {...(userData?.profile_image && { profileImage: userData.profile_image })}
+      />
     </article>
   );
 };

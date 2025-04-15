@@ -11,7 +11,6 @@ import {
   getUserLikedStatus,
   likePost
 } from '@/lib/utils/api/gonggam-detail-client.api';
-import type { Tables } from '@/types/supabase';
 
 interface GonggamLikesProps {
   postId: number;
@@ -46,7 +45,10 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
   }, []);
 
   const handleLikeToggle = async () => {
-    if (!userId) return;
+    if (!userId) {
+      toastAlert('공감을 남기려면 로그인이 필요합니다.', 'destructive');
+      return;
+    }
     setIsLikePending(true);
     try {
       if (isLiked) {
