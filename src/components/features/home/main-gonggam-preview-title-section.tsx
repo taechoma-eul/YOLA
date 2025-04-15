@@ -4,8 +4,9 @@ import { PATH } from '@/constants/page-path';
 const TitleSection = () => {
   return (
     <div className="inline-flex items-center justify-between self-stretch">
-      <strong className="justify-start text-xl font-semibold leading-7 text-zinc-800">1인가구 공감 게시판</strong>
-
+      <strong className="text-secondary-grey-900 justify-start text-xl font-semibold leading-7">
+        1인가구 공감 게시판
+      </strong>
       <Link href={PATH.GONGGAM} className="text-secondary-grey-900 flex h-[28px] items-center text-sm font-normal">
         <p className="h-[17px] w-[49px]">전체보기</p>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

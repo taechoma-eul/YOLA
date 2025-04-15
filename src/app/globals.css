@@ -114,19 +114,21 @@ body {
   box-shadow: none !important;
 }
 
+/* 스와이프 커스텀 페이지 네이션 */
 .custom-pagination .custom-bullet {
-  width: 0.375rem; /* w-1.5 */
-  height: 0.375rem; /* h-1.5 */
-  border-radius: 9999px; /* rounded-full */
-  border: 1px solid #8d939a; /* border-neutral-400 */
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid #8d939a;
   background: transparent;
   cursor: pointer;
 }
 
+/* 스와이프 커스텀 페이지 네이션 액티브 상태 */
 .custom-pagination .custom-bullet-active {
-  width: 1.5rem; /* w-6 */
-  height: 0.375rem; /* h-1.5 */
-  border-radius: 0.75rem; /* rounded-xl */
+  width: 1.5rem;
+  height: 0.375rem;
+  border-radius: 0.75rem;
   border: none;
-  background: #2e3135; /* bg-neutral-800 */
+  background: #2e3135;
 }
