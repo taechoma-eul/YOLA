@@ -24,8 +24,8 @@ const config: Config = {
           900: '#652104'
         },
         'secondary-grey': {
-          50: '#F8F9FA',
-          100: '#EFF1F3',
+          100: '#F8F9FA',
+          150: '#EFF1F3',
           200: '#E3E6EA',
           300: '#D3D8DD',
           400: '#C1C7CD',
