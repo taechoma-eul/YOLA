@@ -31,18 +31,18 @@ const ChecklistProgress = async ({ progress, userLevel }: ChecklistProgressProps
 
               if (bar.type === 'partial') {
                 return (
-                  <div key={idx} className="flex flex-1 gap-[2px] bg-[#E3E6EA] px-[2px]">
+                  <div key={idx} className="flex flex-1 gap-[2px] bg-secondary-grey-200 px-[2px]">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <div
                         key={i}
-                        className={`flex-1 rounded-sm ${i < Math.min(bar.completed, 5) ? 'bg-[#2E3135]' : 'bg-[#A6ACB2]'}`}
+                        className={`flex-1 rounded-sm ${i < Math.min(bar.completed, 5) ? 'bg-secondary-grey-900' : 'bg-secondary-grey-500'}`}
                       />
                     ))}
                   </div>
                 );
               }
 
-              return <div key={idx} className="flex-1 bg-gray-200" />;
+              return <div key={idx} className="flex-1 bg-secondary-grey-200" />;
             })}
           </div>
 
@@ -70,8 +70,8 @@ const ChecklistProgress = async ({ progress, userLevel }: ChecklistProgressProps
                     <span
                       className={`inline-flex items-center gap-1 ${
                         isCurrent
-                          ? 'rounded-lg bg-gray-800 px-3 py-2.5 text-[16px] text-white'
-                          : 'rounded-[12px] border border-[#C1C7CD] bg-white px-3 py-2.5 text-[12px] font-normal text-[#555A60]'
+                          ? 'rounded-lg bg-secondary-grey-900 px-3 py-2.5 text-[16px] text-white'
+                          : 'rounded-[12px] border border-secondary-grey-400 px-3 py-2.5 text-[12px] font-normal text-secondary-grey-800'
                       }`}
                     >
                       {label}
