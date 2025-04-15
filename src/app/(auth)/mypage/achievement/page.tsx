@@ -99,7 +99,7 @@ const AchievementPage = async () => {
           </div>
           <ButtonClientComponent missionsData={missionsData} isLogin={isLogin} />
         </div>
-        <div className="flex min-h-[55px] items-center justify-start rounded-[] border-none bg-secondary-grey-100 p-2.5 text-sm leading-tight text-secondary-grey-900">
+        <div className="flex min-h-[55px] items-center justify-start rounded-[8px] border-none bg-secondary-grey-100 p-2.5 text-sm leading-tight text-secondary-grey-900">
           <p>
             혼자서 보내는 시간이 지루하게 느껴질 때, 다양한 주제의 랜덤 미션을 통해 매일 색다른 하루를 만들어보세요.
           </p>
