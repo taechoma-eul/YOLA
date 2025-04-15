@@ -3,7 +3,7 @@ import { fetchUserProfile } from '@/lib/utils/api/auth-client.api';
 import type { Tables } from '@/types/supabase';
 import { QUERY_KEY } from '@/constants/query-keys';
 
-export const useUserProfile = (initProfile: Tables<'users'>) => {
+export const useUserProfile = (initProfile?: Tables<'users'>) => {
   const {
     data: profile,
     isPending: isProfilePending,

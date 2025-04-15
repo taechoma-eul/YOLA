@@ -15,10 +15,10 @@ import type { Tables } from '@/types/supabase';
 
 interface GonggamLikesProps {
   postId: number;
-  initProfile: Tables<'users'>;
+  userId?: string;
 }
 
-const GonggamLikes = ({ postId, initProfile }: GonggamLikesProps) => {
+const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
   const [likeCnt, setLikeCnt] = useState<number>(0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isLikePending, setIsLikePending] = useState<boolean>(false);
@@ -34,9 +34,9 @@ const GonggamLikes = ({ postId, initProfile }: GonggamLikesProps) => {
     };
     fetchMeta();
     const fetchLikeStatus = async () => {
-      if (!initProfile.id) return;
+      if (!userId) return;
       try {
-        const liked = await getUserLikedStatus({ postId, userId: initProfile.id });
+        const liked = await getUserLikedStatus({ postId, userId });
         setIsLiked(liked);
       } catch (err) {
         console.error('좋아요 상태 조회 실패:', err);
@@ -46,11 +46,11 @@ const GonggamLikes = ({ postId, initProfile }: GonggamLikesProps) => {
   }, []);
 
   const handleLikeToggle = async () => {
-    if (!initProfile.id) return;
+    if (!userId) return;
     setIsLikePending(true);
     try {
       if (isLiked) {
-        await dislikePost({ postId, userId: initProfile.id });
+        await dislikePost({ postId, userId });
         setLikeCnt((prev) => prev - 1);
         setIsLiked(false);
       } else {

@@ -6,18 +6,17 @@ import { MSG } from '@/constants/messages';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { toastAlert } from '@/lib/utils/toast';
-import type { Tables } from '@/types/supabase';
 import Image from 'next/image';
 import { useState } from 'react';
 
 interface GonggamCommentFormProps {
   postId: number;
-  initProfile: Tables<'users'>;
+  isLogin: boolean;
 }
 
-const GonggamCommentForm = ({ postId, initProfile }: GonggamCommentFormProps) => {
+const GonggamCommentForm = ({ postId, isLogin }: GonggamCommentFormProps) => {
   const [newComment, setNewComment] = useState<string>('');
-  const { profile, isProfilePending, profileFetchingError } = useUserProfile(initProfile);
+  const { profile, isProfilePending, profileFetchingError } = useUserProfile();
   const { mutate: uploadComment, isPending: isUploading } = useUploadComment(postId);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ const GonggamCommentForm = ({ postId, initProfile }: GonggamCommentFormProps) =>
       <form className="flex items-center gap-2" onSubmit={handleSubmit}>
         <div className="relative h-[40px] w-[40px] overflow-hidden rounded-full">
           <Image
-            src={profile!.profile_image || DEFAULT_AVATAR_URL}
+            src={profile?.profile_image || DEFAULT_AVATAR_URL}
             alt={`${profile?.nickname}`}
             fill
             sizes="40px"
@@ -52,11 +51,11 @@ const GonggamCommentForm = ({ postId, initProfile }: GonggamCommentFormProps) =>
         </div>
         <Input
           type="text"
-          placeholder="댓글을 작성해보세요."
+          placeholder={isLogin ? '댓글을 작성해보세요.' : '댓글을 작성하려면 로그인 해주세요.'}
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <Button type="submit" disabled={isUploading}>
+        <Button type="submit" disabled={isUploading || !isLogin}>
           등록하기
         </Button>
       </form>
