@@ -37,13 +37,6 @@ export type Database = {
             foreignKeyName: 'comments_post_id_fkey';
             columns: ['post_id'];
             isOneToOne: false;
-            referencedRelation: 'gonggam_posts';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'comments_post_id_fkey';
-            columns: ['post_id'];
-            isOneToOne: false;
             referencedRelation: 'gonggam_posts_with_counts';
             referencedColumns: ['id'];
           },
@@ -82,39 +75,6 @@ export type Database = {
           },
           {
             foreignKeyName: 'gonggam_post_image_path_post_id_fkey';
-            columns: ['post_id'];
-            isOneToOne: false;
-            referencedRelation: 'gonggam_posts_with_counts';
-            referencedColumns: ['id'];
-          }
-        ];
-      };
-      gonggam_post_tags: {
-        Row: {
-          id: number;
-          post_id: number;
-          selected_tags: Database['public']['Enums']['tags'];
-        };
-        Insert: {
-          id?: number;
-          post_id: number;
-          selected_tags: Database['public']['Enums']['tags'];
-        };
-        Update: {
-          id?: number;
-          post_id?: number;
-          selected_tags?: Database['public']['Enums']['tags'];
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'gonggam_post_tags_post_id_fkey';
-            columns: ['post_id'];
-            isOneToOne: false;
-            referencedRelation: 'gonggam_posts';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'gonggam_post_tags_post_id_fkey';
             columns: ['post_id'];
             isOneToOne: false;
             referencedRelation: 'gonggam_posts_with_counts';
@@ -260,13 +220,6 @@ export type Database = {
           user_id?: string;
         };
         Relationships: [
-          {
-            foreignKeyName: 'likes_post_id_fkey';
-            columns: ['post_id'];
-            isOneToOne: false;
-            referencedRelation: 'gonggam_posts';
-            referencedColumns: ['id'];
-          },
           {
             foreignKeyName: 'likes_post_id_fkey';
             columns: ['post_id'];
@@ -457,23 +410,6 @@ export type Database = {
       };
     };
     Functions: {
-      get_post_meta: {
-        Args: { post_id: number };
-        Returns: {
-          id: number;
-          category: Database['public']['Enums']['categorys'];
-          content: string;
-          created_at: string;
-          title: string;
-          updated_at: string;
-          user_id: string;
-          likes_count: number;
-          comments_count: number;
-          total_interactions: number;
-          likes: Json;
-          comments: Json;
-        }[];
-      };
       get_post_meta: {
         Args: { post_id: number };
         Returns: {

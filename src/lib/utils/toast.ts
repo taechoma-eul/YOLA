@@ -10,7 +10,7 @@ type Variant = 'default' | 'destructive' | 'success' | 'warning' | 'info' | null
  * default - 기본 알림 / destructive - 경고, 오류(빨강) / success - 성공(초록) / warning - 경고(노랑) / info - 정보(파랑)
  * @returns 토스트 알림창이 생성될 거예요!
  */
-export const toastAlert = (message: string, variant: Variant) => {
+export const toastAlert = (message: string, variant: Variant = 'default') => {
   return toast({
     description: message,
     variant: variant

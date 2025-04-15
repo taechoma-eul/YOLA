@@ -1,4 +1,3 @@
-'use server';
 import { MSG } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { TABLE } from '@/constants/supabase-tables-name';
