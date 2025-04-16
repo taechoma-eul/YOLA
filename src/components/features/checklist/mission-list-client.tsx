@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/lib/hooks/use-toast';
 import { PATH } from '@/constants/page-path';
-import { MSG } from '@/constants/messages';
 import type { MissionType } from '@/types/checklist';
 import DONE from '@images/images/checklist-done.svg';
 import UNDO from '@images/images/checklist-undo.svg';
 import Image from 'next/image';
+import { MSG } from '@/constants/messages';
 
 type MissionWithStatus = MissionType & { completed: boolean };
 interface ClientMissionListProps {
