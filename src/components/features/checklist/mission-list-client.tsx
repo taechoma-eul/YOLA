@@ -33,32 +33,22 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
     }
   };
 
-  const handleCompletedMissionClick = () => {
-    toast({
-      title: MSG.ALREADY_CLEAR,
-      description: MSG.ALREADY_CLEAR_CHOOSE_OTHER,
-      variant: 'default'
-    });
-  };
+  const handleCompletedMissionClick = () => {};
 
   return (
     <ul className="mt-[129px] flex w-full max-w-[1200px] items-center gap-[24px]">
       {missionList.map((mission) => {
         const isCompleted = mission.completed;
-
-        const href = isCompleted
-          ? '#' // TODO: 완료된 미션 보러가기
-          : userId
-            ? `${PATH.LIFE_POST}?mission_id=${mission.id}` // 진행 전 + 로그인 O → 인증 페이지 이동
-            : '#'; // 진행 전 + 로그인 X → 이동 X
-
         const baseClasses = `h-[248px] w-[221px] rounded-[20px] border border-secondary-grey-300 bg-white flex flex-col items-start`;
-
         const handleClick = isCompleted ? handleCompletedMissionClick : !userId ? handleMissionClick : undefined;
 
         return (
           <li key={mission.id} className="">
-            <Link href={href} onClick={handleClick} className={baseClasses}>
+            <Link
+              href={!isCompleted && userId ? `${PATH.LIFE_POST}?mission_id=${mission.id}` : '#'}
+              onClick={handleClick}
+              className={baseClasses}
+            >
               <strong className="flex w-[221px] items-start gap-[10px] px-[20px] py-[20px] pb-0 pt-[20px]">
                 <span className="flex-1 grow basis-0 text-[16px] font-semibold leading-[1.4] text-primary-orange-900">
                   {mission.content}
