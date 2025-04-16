@@ -1,7 +1,13 @@
-import { EllipsisVertical } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
+import Image from 'next/image';
+import dropdown from '@images/images/post-dropdown.svg';
 
 const SET_TIME_OUT = 150;
 
@@ -11,7 +17,7 @@ const SET_TIME_OUT = 150;
  * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
 const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
-  const [isOpen, setIsopen] = useState<boolean>(false);
+  const [isOpen, setIsopen] = useState<boolean>(true);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -40,19 +46,31 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
 
   return (
     <div onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave} className="inline-block">
-      <DropdownMenu open={isOpen} onOpenChange={setIsopen} modal={false}>
+      <DropdownMenu open={isOpen} modal={false}>
         {/** 직접 넘긴 컴포넌트를 중첩 없이 그대로 사용하기 위해 asChild 필요 */}
         <DropdownMenuTrigger asChild>
           <div className="cursor-pointer">
-            {/** 아이콘 */}
-            <EllipsisVertical />
+            <Image src={dropdown} alt="수정/삭제를 담고 있는 드롭다운 메뉴" />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="pointer-events-auto z-[52]">
-          <div className="flex w-10 flex-col">
-            <button onClick={() => handleEdit()}>수정</button>
-            <button onClick={() => setShowModal(!showModal)}>삭제</button>
-          </div>
+        <DropdownMenuContent className="pointer-events-auto z-[52] flex !h-[95px] min-w-[88px] flex-col justify-center rounded-[12px] text-center">
+          <DropdownMenuItem className="flex p-0">
+            <button
+              onClick={() => handleEdit()}
+              className="text-md flex w-full justify-center px-[16px] py-[12px] text-center"
+            >
+              수정
+            </button>
+          </DropdownMenuItem>
+          <hr className="w-full border-t border-gray-300 px-[10px]" />
+          <DropdownMenuItem className="p-0">
+            <button
+              onClick={() => setShowModal(!showModal)}
+              className="text-md flex w-full justify-center px-[16px] py-[12px] text-center"
+            >
+              삭제
+            </button>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       {showModal && (

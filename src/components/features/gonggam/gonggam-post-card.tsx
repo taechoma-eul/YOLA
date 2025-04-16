@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import { getPostImagesByPostId, getPostMetaByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import { Heart, MessageSquare } from 'lucide-react';
+import { Dot, Eye, Heart, MessageSquare } from 'lucide-react';
 import type { GonggamPost } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
@@ -21,37 +21,42 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
   const { likeCnt, commentCnt } = await getPostMetaByPostId(post.id);
 
   return (
-    <li className="py-3">
-      <article className="flex items-start justify-between">
-        {/* 게시글 제목 / 내용 */}
-        <section className="flex-1">
-          <h3 className="text-base font-medium">{post.title}</h3>
-          <p className="mt-0.5 text-sm text-gray-600">{post.content}</p>
-        </section>
+    <article className="flex max-w-[1200px] items-start justify-between gap-[10px] border-b border-secondary-grey-200 px-[10px] py-[12px]">
+      <section className="flex flex-col items-start gap-1 self-stretch">
+        {/* 작성자 영역 */}
+        <div className="mt-[11px] flex h-[17px] items-center gap-[4px] text-[12px] font-normal leading-[140%] text-secondary-grey-800">
+          <p>{nickname}</p>
+          <Dot size={12} className="translate-y-[-2px]" />
+          <time dateTime={post.created_at}>{formatRelativeDate(post.created_at)}</time>
+        </div>
 
-        {/* 게시글 정보 (작성자, 작성일, previewImage) */}
-        <aside className="ml-3 flex items-center gap-3 text-center">
-          <div className="space-y-0.5 text-center text-[11px] text-gray-400">
-            <p>{nickname}</p>
-            <time dateTime={post.created_at}>{formatRelativeDate(post.created_at)}</time>
+        {/* 텍스트 영역 */}
+        <div className="mb-[13px] mt-[4px] flex flex-col items-start gap-1 self-stretch">
+          <h3 className="flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">{post.title}</h3>
+          <p className="overflow-hidden truncate text-[12px] font-normal leading-[140%] text-secondary-grey-900">
+            {post.content}
+          </p>
+        </div>
+
+        {/* 좋아요/댓글 */}
+        <footer className="mb-[11px] flex gap-[12px] self-stretch">
+          <div className="flex items-center gap-[3px] overflow-hidden truncate text-[12px] font-normal leading-normal text-secondary-grey-900">
+            <Heart size={12} /> {likeCnt}
           </div>
+          <div className="flex items-center gap-[3px] overflow-hidden truncate text-[12px] font-normal leading-normal text-secondary-grey-900">
+            <MessageSquare size={12} /> {commentCnt}
+          </div>
+          <div className="flex items-center gap-[3px] overflow-hidden truncate text-[12px] font-normal leading-normal text-secondary-grey-900">
+            <Eye size={12} /> 0
+          </div>
+        </footer>
+      </section>
 
-          <figure className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-md">
-            <Image src={imagePreview} alt={post.title} fill className="object-cover" />
-          </figure>
-        </aside>
-      </article>
-
-      {/* 좋아요 / 댓글 현황 */}
-      <footer className="flex gap-3 text-[12px] text-gray-400">
-        <div className="flex items-center gap-1">
-          <Heart size={12} /> {likeCnt}
-        </div>
-        <div className="flex items-center gap-1">
-          <MessageSquare size={12} /> {commentCnt}
-        </div>
-      </footer>
-    </li>
+      {/* 이미지 */}
+      <figure className="relative h-[110px] w-[110px] overflow-hidden rounded-[16px]">
+        <Image src={imagePreview} alt={post.title} fill sizes="110px" className="object-cover" priority />
+      </figure>
+    </article>
   );
 };
 

@@ -6,7 +6,7 @@ import Link from 'next/link';
 const MainLogo = () => {
   return (
     <Link href={PATH.HOME}>
-      <Image src={MAIN_LOGO_URL} alt="YOLA 로고" width={83} height={23} />
+      <Image src={MAIN_LOGO_URL} alt="YOLA 로고" width={84} height={23} />
     </Link>
   );
 };

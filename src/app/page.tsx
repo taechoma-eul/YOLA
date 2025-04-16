@@ -9,8 +9,8 @@ const HomePage = async () => {
   return (
     <>
       <MainBannerSwiper />
-      <section className="mt-14 w-[1200px] space-y-[26px]">
-        <strong className="justify-start self-stretch text-xl font-semibold leading-7 text-zinc-800">
+      <section className="mt-[46px] flex w-[1200px] flex-col gap-[26px]">
+        <strong className="text-secondary-grey-900 justify-start self-stretch text-xl font-semibold leading-7">
           YOLA 챌린지
         </strong>
         <div className="flex items-center justify-between self-stretch">
@@ -19,8 +19,8 @@ const HomePage = async () => {
           ))}
         </div>
       </section>
-      <hr className="mx-auto mt-[57px] w-[1200px] outline-neutral-300" />
-      <section className="mx-auto mb-[71px] mt-[61px] flex w-[1200px] items-center justify-between self-stretch">
+      <hr className="outline-secondary-grey-200 mx-auto mt-[57px] w-[1200px]" />
+      <section className="mx-auto mb-[73px] mt-[61px] flex w-[1200px] items-center justify-between self-stretch">
         <RandomMissionSection />
         <div className="h-60 w-0 origin-top-left outline outline-1 outline-offset-[-0.50px] outline-gray-200" />
         <GonggamPreviewSection />

@@ -15,8 +15,8 @@ const GonggamCategoryBoard = async ({ params: { category }, searchParams }: Gong
   const { posts, pagination } = await getPaginatedGonggamPosts(slugToCategory[category], currentPage);
 
   return (
-    <div className="space-y-4">
-      <ul className="divide-y divide-gray-200">
+    <div>
+      <ul className="mb-[2px]">
         {posts.length === 0 ? (
           <li className="py-3 text-sm text-gray-500">게시글이 없습니다.</li>
         ) : (

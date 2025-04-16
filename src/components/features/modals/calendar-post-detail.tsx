@@ -6,6 +6,10 @@ import { PATH } from '@/constants/page-path';
 import { useDeleteLifePost } from '@/lib/hooks/mutations/use-delete-life-post';
 import type { LifePostWithImageUrls } from '@/types/life-post';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import divider from '@images/images/post-detail-divider.svg';
+import missionIcon from '@images/images/post-mission.svg';
+import diaryIcon from '@images/images/post-diary.svg';
 
 /**
   step 1. 모달을 호출할 파일에 이 코드를 추가해주세요
@@ -49,6 +53,7 @@ export const PostDetailModal = ({
   if (!post) return;
 
   const createdDate = post.created_at.slice(0, 10);
+  const date = createdDate.split('-').join('.');
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout; // ID 저장 변수
@@ -82,9 +87,7 @@ export const PostDetailModal = ({
   // 미션id 유무로 미션인증 작성 페이지로 보낼지, 하루일기 작성 페이지로 보낼지 결정
   const handleEdit = () => {
     {
-      post.mission_id
-        ? router.push(`${PATH.LIFE_POST}?mission_id=${post.mission_id}`)
-        : router.push(`${PATH.LIFE_POST}?post_id=${post.id}`);
+      router.push(`${PATH.LIFE_POST}/edit/${post.id}`);
     }
   };
 
@@ -109,38 +112,35 @@ export const PostDetailModal = ({
       {/** 모달 */}
       <div
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫기 방지
-        className={`fixed right-0 top-0 h-screen w-2/5 transform overflow-auto bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 h-screen w-[650px] transform overflow-auto bg-white shadow-lg transition-transform duration-300 ease-in-out ${
           isVisible ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="h-full overflow-y-auto p-4">
-          <ChevronsRight onClick={() => handleClose()} className="m-3 cursor-pointer" />
+        <div className="ml-[40px] h-full overflow-y-auto">
+          <ChevronsRight onClick={() => handleClose()} className="mb-[34px] mt-[42px] cursor-pointer" />
           {/** 사진 슬라이드 */}
           <ImageSwiper image_urls={post.image_urls} />
-          <div className="flex">
-            <p>{createdDate}</p>
-            {post.mission_id ? (
-              <>
-                <span className="m-2 h-1.5 w-1.5 rounded-full bg-rose-300" />
-                <p className="text-gray-400">| 미션인증</p>
-              </>
-            ) : (
-              <>
-                <span className="m-2 h-1.5 w-1.5 rounded-full bg-black" />
-                <p className="text-gray-400">| 하루일기</p>
-              </>
-            )}
+          <div className="mb-[10px] flex gap-[12px] text-center">
+            <p className="text-md font-(family-name:Comfortaa) font-normal text-secondary-grey-900">{date}</p>
+            <Image src={divider} alt="날짜와 미션인증/하루일기 사이의 영역을 나누는 막대" />
+            {post.mission_id ? <Image src={missionIcon} alt="미션인증" /> : <Image src={diaryIcon} alt="하루일기" />}
           </div>
-          <p>{post.title}</p>
-          <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
-          <h1>{post.content}</h1>
-          <div className="mb-2 mt-auto space-x-2 text-[12px] text-gray-700">
+          <div className="mb-[8px] flex min-h-[28px] w-[542px] justify-between">
+            <h1>{post.title}</h1>
+            <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+          </div>
+          <div className="flex gap-[8px] pb-[20px]">
             {post.tags?.map((tag, idx) => (
-              <span key={`detail_${idx}`} className="text-blue-600">
-                #{tag}
+              <span
+                key={`detail_${idx}`}
+                className="h-auto w-auto gap-[10px] rounded-[8px] bg-secondary-grey-150 px-[8px] py-[4px] text-secondary-grey-900"
+              >
+                # {tag}
               </span>
             ))}
           </div>
+          <hr className="w-[542px] border-t border-gray-300 px-[10px] py-[10px]" />
+          <p className="text-md font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
     </div>

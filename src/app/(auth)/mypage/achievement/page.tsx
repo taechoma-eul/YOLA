@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import clsx from 'clsx';
 import { getUserMission } from '@/lib/utils/api/my-mission.api';
-import { calculateUserLevel } from '@/lib/utils/calculate-user-level';
+import { getMissionsData } from '@/lib/utils/api/missions.api';
 import { getLevelsByTypes } from '@/lib/utils/get-level-by-types';
+import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth.api';
 import { parseUserMissions } from '@/lib/utils/parse-user-mission';
+import { calculateUserLevel } from '@/lib/utils/calculate-user-level';
 import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
 import ButtonClientComponent from '@/components/features/mypage/button-client-component';
 import MEAL_ICON from '@images/images/meal-icon.svg';
@@ -11,12 +12,12 @@ import TRAVEL_ICON from '@images/images/travel-icon.svg';
 import GOAT_ICON from '@images/images/goat-icon.svg';
 import CLEAN_ICON from '@images/images/clean-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
-import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth.api';
-import { getMissionsData } from '@/lib/utils/api/missions.api';
+import TOOLTIP_BOX from '@images/images/tooltip-box.svg';
 
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회
   const profile = await getUserProfile();
+  if (!profile) throw new Error();
   const { isLogin } = await getUserSessionState();
 
   // 미션리스트 가져오기
@@ -43,46 +44,67 @@ const AchievementPage = async () => {
   }));
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-[86px]">
       {/* 전체 레벨 5단계 */}
-      <strong>{profile?.nickname}님의 혼자 라이프 레벨</strong>
-      <MypageProgressBar level={userLevel} />
+      <section className="mt-[72px] flex flex-col gap-[20px]">
+        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+          {profile.nickname}님의 혼자 라이프 레벨
+        </div>
+        <MypageProgressBar level={userLevel} />
+      </section>
 
       {/* 각각의 미션 카테고리 level 현황 */}
-      <strong>{profile?.nickname}님의 체크리스트 달성도</strong>
-      <section className="relative flex gap-3 rounded-md border border-slate-200 p-3">
-        {categories.map(({ type, level, description, icon }, index) => (
-          <div
-            key={type}
-            className={clsx(
-              `group relative flex flex-1 flex-col items-center justify-center p-3 transition-colors duration-200 hover:bg-gray-100`,
-              { 'border-l border-slate-300 p-3': index !== 0 }
-            )}
-          >
-            {/* 카테고리명 */}
-            <div className="flex cursor-pointer whitespace-nowrap">
-              <figure>
-                <Image src={icon} alt={type} height={20} width={20} />
-              </figure>
-              {type}
+      <section className="flex flex-col gap-[20px]">
+        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+          {profile.nickname}님의 체크리스트 달성도
+        </div>
+        <div className="relative flex rounded-[12px] border border-secondary-grey-400 py-[12px]">
+          {categories.map(({ type, level, description, icon }, index) => (
+            <div
+              key={type}
+              className="group relative flex flex-1 flex-col items-center justify-center px-[20px] py-[20px] transition-colors duration-200 hover:bg-gray-100"
+            >
+              {/* 왼쪽 세로 구분선 */}
+              {index !== 0 && (
+                <div className="absolute left-0 top-1/2 h-[62px] w-[1px] -translate-y-1/2 bg-secondary-grey-300" />
+              )}
+
+              {/* 카테고리명 */}
+              <div className="flex cursor-pointer flex-row whitespace-nowrap text-base font-semibold">
+                <figure className="h-[24px]flex mr-[4px] w-[24px]">
+                  <Image src={icon} alt={type} height={24} width={24} />
+                </figure>
+                {type}
+              </div>
+              {/* 레벨 표시 */}
+              <strong className="mt-[15px] text-xl font-semibold">{formatLevel(level)}</strong>
+              {/* Hover 시 나타나는 툴팁 */}
+              <div className="item-center absolute -bottom-20 hidden w-48 justify-center group-hover:block">
+                <figure className="relative">
+                  <Image src={TOOLTIP_BOX} alt="tooltip-box 이미지" className="h-auto w-full" />
+                  <figcaption className="item-center absolute left-1/2 top-[65%] w-[85%] -translate-x-1/2 -translate-y-1/2 justify-center text-center text-sm text-white">
+                    {description}
+                  </figcaption>
+                </figure>
+              </div>
             </div>
-            {/* 레벨 표시 */}
-            <strong>{formatLevel(level)}</strong>
-            {/* Hover 시 나타나는 툴팁 */}
-            <div className="absolute -bottom-14 hidden w-48 rounded-md bg-orange-600 p-2 text-center text-sm text-white shadow-lg group-hover:block">
-              {description}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
       {/* 렌덤 미션 뽑기 */}
-      <div className="flex justify-between">
-        <strong>오늘의 랜덤 미션</strong>
-        <ButtonClientComponent missionsData={missionsData} isLogin={isLogin} />
-      </div>
-      <section className="rounded-md border-none bg-slate-100 p-3">
-        <p>혼자서 보내는 시간이 지루하게 느껴질 때, 다양한 주제의 랜덤 미션을 통해 매일 색다른 하루를 만들어보세요.</p>
+      <section className="flex flex-col gap-[20px]">
+        <div className="flex justify-between">
+          <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+            오늘의 랜덤 미션
+          </div>
+          <ButtonClientComponent missionsData={missionsData} isLogin={isLogin} />
+        </div>
+        <div className="mb-[227px] flex min-h-[55px] items-center justify-start rounded-[8px] border-none bg-secondary-grey-100 p-2.5 text-sm leading-tight text-secondary-grey-900">
+          <p>
+            혼자서 보내는 시간이 지루하게 느껴질 때, 다양한 주제의 랜덤 미션을 통해 매일 색다른 하루를 만들어보세요.
+          </p>
+        </div>
       </section>
     </div>
   );

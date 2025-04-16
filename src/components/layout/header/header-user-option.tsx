@@ -20,11 +20,11 @@ const UserOptionMenu = () => {
     <HeaderDropdownMenu menuItems={userMenuItem} isUserMenu>
       <div
         className={clsx(
-          'flex size-[36px] items-center justify-center rounded-full hover:bg-amber-300',
-          isSelect ? 'bg-amber-300' : 'bg-none'
+          'hover:bg-primary-orange-400 flex size-[36px] items-center justify-center rounded-full hover:text-white',
+          isSelect ? 'bg-primary-orange-400 text-white' : 'text-secondary-grey-900 bg-none'
         )}
       >
-        <User size={24} color="#2E3135" />
+        <User size={24} />
       </div>
     </HeaderDropdownMenu>
   );

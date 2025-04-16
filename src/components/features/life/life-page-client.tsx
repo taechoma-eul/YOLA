@@ -33,7 +33,7 @@ const LifePageClient = ({ nickname }: Props) => {
   }, [posts]);
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="mt-5 flex w-full flex-col gap-4">
       <div className="flex w-full justify-start px-4 sm:justify-center sm:px-0">
         <Calendar
           setDate={setSelectedDate}

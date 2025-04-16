@@ -1,5 +1,3 @@
-'use server';
-
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { getCompletedMissionIds, getMissionListByLevel } from '@/lib/utils/api/checklist.api';

@@ -1,9 +1,16 @@
+'use client';
+
 import { AnimatePresence, motion } from 'framer-motion';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
-import type { SoloLifeCardType } from '@/types/life-post';
+import type { LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';
+import { useState } from 'react';
+import { PostDetailModal } from '../modals/calendar-post-detail';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
+
   const selectedMonth = selectedDate.slice(0, 7);
   const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
 
@@ -23,6 +30,15 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
       };
     });
 
+  const handleClickCard = (id: string) => {
+    const post = posts.find((post) => post.id === +id);
+    if (!post) {
+      return;
+    }
+    setSelectedPost(post);
+    setShowModal(true);
+  };
+
   if (isLoading) return <div className="p-4">로딩 중...</div>;
   if (error) return <div className="p-4 text-red-500">에러 발생</div>;
 
@@ -39,7 +55,10 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
         {parsedList.length === 0 ? (
           <div className="col-span-full text-center text-gray-500">이 날 작성된 혼자 라이프가 없어요.</div>
         ) : (
-          parsedList.map((data) => <SoloLifeCard key={data.id} {...data} />)
+          parsedList.map((data) => <SoloLifeCard onClick={() => handleClickCard(data.id)} key={data.id} {...data} />)
+        )}
+        {showModal && (
+          <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
         )}
       </motion.div>
     </AnimatePresence>
