@@ -4,7 +4,12 @@ export const QUERY_KEY = {
   PROFILE: ['profile'],
   LIFE_POSTS_INFINITE: ['life-posts-infinite'],
   GONGGAM_POSTS_INFINITE: (sortBy: SortBy) => ['gonggam-posts-infinite', sortBy],
-  LIFE_POSTS: (month?: string) => (month ? ['life-posts', month] : ['life-posts']),
+  LIFE_POSTS: (month?: string, missionId?: string) => {
+    const key = ['life-posts'];
+    if (month) key.push(month);
+    if (missionId) key.push(missionId);
+    return key;
+  },
   GONGGAM_COMMENTS: (postId: number) => ['gonggam-comments', postId],
   MISSIONS: () => ['missions']
 };
