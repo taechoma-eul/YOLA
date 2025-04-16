@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { PATH } from '@/constants/page-path';
-import { Button } from '@/components/ui/button';
 import ProfileAvatar from '@/components/common/profile-avatar';
 import type { InitProfile } from '@/types/components/edit-profile-form';
+import { CustomButton } from '@/components/ui/custom-button';
 
 const ProfileBox = ({ initProfile }: InitProfile) => {
   //현재 경로 가져오기
@@ -24,9 +24,9 @@ const ProfileBox = ({ initProfile }: InitProfile) => {
 
       {/* 프로필 수정 버튼 */}
       <Link href={PATH.MYPAGE}>
-        <Button variant="outline" className="mb-[37px]">
+        <CustomButton variant="grey" size="edit-profile" className="mb-[37px] h-[36px]">
           프로필 수정
-        </Button>
+        </CustomButton>
       </Link>
 
       {/* 구분선 */}
