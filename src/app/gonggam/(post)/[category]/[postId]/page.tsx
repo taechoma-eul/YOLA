@@ -46,7 +46,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
             <time dateTime={displayDate}>{getKoreanDateTime(displayDate)}</time>
           </div>
           {/* {userId === profile.id && <GonggamMyPostDropdown />} */}
-          {userData?.id === profile.id && <GonggamMyPostDropdown />}
+          {userData?.id === profile.id && <GonggamMyPostDropdown postId={postId} />}
         </section>
       </header>
 

@@ -1,19 +1,24 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import ImageUploader from '@/components/common/image-uploader';
+import TagInput from '@/components/common/tag-input';
+import GonggamSelectBox from '@/components/features/gonggam/gonggam-select-box';
+import { categoryMap, reverseCategoryMap } from '@/constants/gonggam-category';
+import { PATH } from '@/constants/page-path';
+import { QUERY_KEY } from '@/constants/query-keys';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
+import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
-import { PATH } from '@/constants/page-path';
 import type { Tables } from '@/types/supabase';
-import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
-import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
-import GonggamSelectBox from '@/components/features/gonggam/gonggam-select-box';
-import TagInput from '@/components/common/tag-input';
-import { usePathname, useRouter } from 'next/navigation';
+import backIcon from '@images/images/go-back-icon.svg';
 
 interface GonggamPostInputFormProps {
   isEditMode?: boolean;
@@ -27,11 +32,12 @@ interface GonggamPostInputFormProps {
   };
 }
 export type Category = Tables<'gonggam_posts'>['category'];
+const categoryKeys = Object.keys(categoryMap) as [keyof typeof categoryMap];
 
 const postSchema = z.object({
   title: z.string().min(1, '내용은 필수입니다'),
   content: z.string().min(1, '내용은 필수입니다'),
-  category: z.string()
+  category: z.enum(categoryKeys)
 });
 
 type FormData = z.infer<typeof postSchema>;
@@ -42,16 +48,18 @@ const IMAGE_STORAGE_BUCKET = 'gonggam-post-images';
 const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPostInputFormProps) => {
   const router = useRouter();
   const pathName = usePathname();
-  const categoryName = pathName.split('/').filter(Boolean).pop(); //TODO - pathname이 어떻게 올지에 따라서 달라질 듯
+  const categoryName = pathName.split('/').filter(Boolean).pop();
 
   const { mutate, isPending } = useGonggamPost();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateGonggamPost();
+  const queryClient = useQueryClient();
 
   const isLoading = isPending || isUpdatePending;
   const action = isEditMode ? '수정' : '등록';
-  const buttonLabel = `${action}${isLoading ? ' 중...' : '하기'}`;
 
-  const [category, setCategory] = useState<Category>('일상공유');
+  const [category, setCategory] = useState<Category>(
+    categoryName && !isEditMode ? (reverseCategoryMap[categoryName] as Category) : defaultValues!.category
+  );
   const [tags, setTags] = useState(defaultValues?.tags || []);
   const [images, setImages] = useState<File[]>([]);
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>(
@@ -113,8 +121,11 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
       };
 
       const onSuccess = () => {
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEY.GONGGAM_POSTS()
+        });
         alert(`${action}되었습니다!`);
-        router.push(PATH.GONGGAM); //TODO - 들어온 게시판에 따라 다르게 보내기
+        router.push(`${PATH.GONGGAM}/${categoryMap[category]}`); //작성한 글의 카테고리 게시판으로 이동
       };
 
       const onError = (err: unknown) => {
@@ -147,10 +158,17 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
   return (
     <div className="min-h-screen w-full bg-white px-4 py-10 text-black">
-      <h1 className="mb-5 text-2xl font-bold">{isEditMode ? '게시글 수정' : '게시글 작성'}</h1>
+      <button
+        type="button"
+        onClick={handleCancel}
+        className="mb-[32px] inline-flex h-auto w-auto items-center justify-center gap-[12px] py-[4px] text-sm font-normal text-secondary-grey-700"
+      >
+        <Image src={backIcon} alt="뒤로가기 아이콘" />
+        뒤로가기
+      </button>
+      <GonggamSelectBox value={category} onChange={(value) => setCategory(value as typeof category)} />
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <div className="mb-4 rounded-xl border border-gray-200 bg-white p-8">
-          <GonggamSelectBox value={category} onChange={(value) => setCategory(value as typeof category)} />
           <input
             type="text"
             {...register('title')}
@@ -181,18 +199,11 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
         <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
           <button
-            type="button"
-            onClick={handleCancel}
-            className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl border bg-white px-4 py-2.5"
-          >
-            작성 취소
-          </button>
-          <button
             type="submit"
             disabled={isLoading}
             className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5 text-white"
           >
-            {buttonLabel}
+            등록하기
           </button>
         </div>
       </form>
