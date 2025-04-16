@@ -11,7 +11,7 @@ const MypageItemContainer = ({ children, postId, category }: ContainerProps) => 
   return (
     <Link
       href={`${PATH.GONGGAM}/${category}/${postId}`}
-      className="flex flex-col items-end justify-between self-stretch rounded-md border border-stone-300 p-4"
+      className="flex flex-col items-start rounded-[8px] border border-secondary-grey-300 px-[20px] py-[20px]"
     >
       {children}
     </Link>

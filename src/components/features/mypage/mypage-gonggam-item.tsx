@@ -12,13 +12,15 @@ const MypageGonggamItem = ({ post }: ItemProps) => {
   return (
     <MypageItemContainer postId={post.id} category={post.category}>
       <ContentsContainer>
-        <h2 className="justify-start self-stretch text-sm">{post.category}</h2>
-        <p className="w-80 justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs">{post.content}</p>
-        <time className="mt-3 flex text-xs text-neutral-400" dateTime={post.created_at}>
-          <div className="text-black">{post.users.nickname}</div> · {formatRelativeDate(post.created_at)}
-        </time>
-        <ReactionBox likes={post.like_count ?? 0} comments={post.comment_count ?? 0} />
+        <h2 className="justify-start self-stretch text-sm text-secondary-grey-900">{post.category}</h2>
+        <p className="w-80 justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs text-secondary-grey-900">
+          {post.content}
+        </p>
       </ContentsContainer>
+      <time className="mb-[10px] mt-[20px] flex text-xs text-secondary-grey-600" dateTime={post.created_at}>
+        <div className="text-secondary-grey-900">{post.users.nickname}</div> · {formatRelativeDate(post.created_at)}
+      </time>
+      <ReactionBox likes={post.like_count ?? 0} comments={post.comment_count ?? 0} />
     </MypageItemContainer>
   );
 };

@@ -8,7 +8,7 @@ const Layout = ({ children }: Children) => {
       <MypageSideBar />
 
       {/* 우측 콘텐츠 (모바일에서는 아래) */}
-      <main className="flex-1 p-5 md:ml-60">{children}</main>
+      <section className="flex-1 p-5">{children}</section>
     </div>
   );
 };
