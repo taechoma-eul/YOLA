@@ -37,6 +37,6 @@ export const formatRelativeDate = (dateInput: string | Date): string => {
   if (diffDays < 2) {
     return `${diffDays}일 전`;
   }
-  // MM/DD 형식으로 반환
-  return `${target.getMonth() + 1}/${target.getDate()}`;
+
+  return `${String(target.getFullYear()).slice(-2)}.${String(target.getMonth() + 1).padStart(2, '0')}.${String(target.getDate()).padStart(2, '0')}`; // 디자인 시안 반영
 };
