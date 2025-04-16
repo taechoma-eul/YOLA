@@ -4,7 +4,7 @@ import MissionListClient from '@/components/features/checklist/mission-list-clie
 import ChecklistProgress from '@/components/features/checklist/checklist-progress';
 import type { Level, MissionWithStatus } from '@/types/checklist';
 import { useEffect, useState } from 'react';
-import { PostDetailModal } from '../modals/calendar-post-detail';
+import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
 
 interface ChecklistClientProps {
