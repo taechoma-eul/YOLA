@@ -54,8 +54,8 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
   return (
     <Form {...form}>
-      <form className="justify-items-end space-y-[48px]" onSubmit={form.handleSubmit(handleUpdateProfile)}>
-        <div className="flex w-full items-start justify-start gap-10 rounded-xl bg-white p-8 outline outline-1 outline-offset-[-1px] outline-secondary-grey-400">
+      <form className="w-[941px] justify-items-end space-y-[38px]" onSubmit={form.handleSubmit(handleUpdateProfile)}>
+        <div className="flex h-[236px] w-full items-start justify-start gap-10 rounded-xl bg-white p-8 outline outline-1 outline-offset-[-1px] outline-secondary-grey-400">
           <ProfileImageField form={form} profileImage={profile.profile_image} />
           <div className="flex w-[500px] flex-col items-start justify-center gap-4 self-stretch">
             <EmailField email={profile.email} />
