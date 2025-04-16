@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ControllerRenderProps, FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
-import { Button } from '@/components/ui/button';
+import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
 import { FormControl, FormItem, FormMessage } from '@/components/ui/form';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
@@ -55,6 +55,10 @@ const AuthFormField = <T extends FieldValues>({
 
   const handleDuplicateCheck = async () => {
     if (setDuplicateCheck) {
+      if (!isValid) {
+        setErrorMessage(fieldName === AUTH.EMAIL ? AUTH_ERROR.EMPTY_EMAIL : AUTH_ERROR.EMPTY_NICKNAME);
+        return;
+      }
       const nowValue: string = getValues(fieldName);
 
       try {
@@ -80,7 +84,7 @@ const AuthFormField = <T extends FieldValues>({
         <div className="relative flex-1">
           <FormControl>
             <Input
-              className={clsx('h-11 w-full', errorMessage ? 'border-[#FF5E3A]' : 'border-stone-300')}
+              className={clsx('h-11 w-full rounded-lg border-secondary-grey-400')}
               placeholder={placeholder}
               type={inputType}
               {...field}
@@ -90,9 +94,9 @@ const AuthFormField = <T extends FieldValues>({
           <DuplicateCheckMessage errorMessage={errorMessage} successMessage={successMessage} />
         </div>
         {isCheckButton && (
-          <Button disabled={!isValid} type="button" className="h-11 w-[70px]" onClick={handleDuplicateCheck}>
+          <CustomButton type="button" size="check" variant="grey" onClick={handleDuplicateCheck}>
             중복확인
-          </Button>
+          </CustomButton>
         )}
       </div>
     </FormItem>

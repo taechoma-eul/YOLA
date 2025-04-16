@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { parseTags } from '@/lib/utils/parse-tags';
+import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
 
 interface UpdateLifePostPayload {
   id: number;
@@ -18,6 +19,10 @@ export const useUpdateLifePost = () => {
   return useMutation({
     mutationFn: async ({ id, title, content, rawTags, imageUrls, missionId, date }: UpdateLifePostPayload) => {
       // 1. life_posts 테이블 업데이트
+      const { userId } = await fetchUserSessionState();
+      if (userId === null) {
+        throw new Error('로그인 정보가 없습니다. 다시 로그인 해주세요.');
+      }
       const { error: updateError } = await supabase
         .from('life_posts')
         .update({
@@ -25,7 +30,8 @@ export const useUpdateLifePost = () => {
           content,
           tags: parseTags(rawTags),
           mission_id: missionId ? +missionId : null,
-          date
+          date,
+          user_id: userId
         })
         .eq('id', id);
 

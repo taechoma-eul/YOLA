@@ -1,16 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import {
-  format,
-  addMonths,
-  subMonths,
-  startOfMonth,
-  endOfMonth,
-  eachDayOfInterval,
-  getDay,
-  isSameMonth
-} from 'date-fns';
+import { useMemo, useState, useEffect } from 'react';
+import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameMonth } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSwipeable } from 'react-swipeable';
 import CalendarHeader from '@/components/features/life/calendar/calendar-header';
@@ -27,13 +18,15 @@ interface Props {
 
 const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props) => {
   const [calendarMonth, setCalendarMonth] = useState(() => selectedDate.slice(0, 7));
+  const [direction, setDirection] = useState<1 | -1 | 0>(1);
+  const [displayMonth, setDisplayMonth] = useState(calendarMonth);
 
   const moveMonth = (diff: number) => {
     const baseDate = new Date(calendarMonth + '-01');
-    const next = diff > 0 ? addMonths(baseDate, diff) : subMonths(baseDate, Math.abs(diff));
+    const next = addMonths(baseDate, diff);
     const newMonth = format(next, 'yyyy-MM');
+    setDirection(diff > 0 ? 1 : -1);
     setCalendarMonth(newMonth);
-    onMonthChange(newMonth);
   };
 
   const swipeHandlers = useSwipeable({
@@ -42,28 +35,33 @@ const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props)
     trackMouse: true
   });
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDisplayMonth(calendarMonth);
+      onMonthChange(calendarMonth);
+    }, 0);
+    return () => clearTimeout(timeout);
+  }, [calendarMonth, onMonthChange]);
+
   const weeks = useMemo(() => {
-    const baseDate = new Date(calendarMonth + '-01');
+    const baseDate = new Date(displayMonth + '-01');
     const start = startOfMonth(baseDate);
     const end = endOfMonth(baseDate);
-
     const startIdx = getDay(start);
     const endIdx = getDay(end);
-
     const allDays = eachDayOfInterval({
       start: new Date(start.getFullYear(), start.getMonth(), 1 - startIdx),
       end: new Date(end.getFullYear(), end.getMonth(), 6 - endIdx + end.getDate())
     });
-
     const weeks: Date[][] = [];
     for (let i = 0; i < allDays.length; i += 7) {
       weeks.push(allDays.slice(i, i + 7));
     }
     return weeks;
-  }, [calendarMonth]);
+  }, [displayMonth]);
 
   const isSelected = (date: Date) => format(date, 'yyyy-MM-dd') === selectedDate;
-  const isOutside = (date: Date) => !isSameMonth(date, new Date(calendarMonth + '-01'));
+  const isOutside = (date: Date) => !isSameMonth(date, new Date(displayMonth + '-01'));
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-2 sm:px-4 lg:px-10">
@@ -74,21 +72,22 @@ const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props)
           const today = format(new Date(), 'yyyy-MM-dd');
           setDate(today);
           const month = today.slice(0, 7);
+          setDirection(0);
           setCalendarMonth(month);
-          onMonthChange(month);
         }}
       />
 
       <div className="flex flex-col items-center justify-start self-stretch" {...swipeHandlers}>
         <CalendarWeekdays />
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" custom={direction}>
           <motion.div
-            key={calendarMonth}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            key={displayMonth}
+            custom={direction}
+            initial={{ x: direction === 0 ? 0 : direction * 1000, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: direction === 0 ? 0 : -direction * 1000, opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="flex flex-col items-start justify-start gap-1 self-stretch"
           >
             {weeks.map((week, rowIdx) => (
@@ -107,8 +106,8 @@ const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props)
                       onClick={() => {
                         if (outside) {
                           const newMonth = format(date, 'yyyy-MM');
+                          setDirection(0);
                           setCalendarMonth(newMonth);
-                          onMonthChange(newMonth);
                         }
                         setDate(dateStr);
                       }}

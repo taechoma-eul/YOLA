@@ -13,9 +13,9 @@ const MainBanner = ({ title, text, color }: Banner) => {
         color === 'red' && 'bg-banner-red'
       )}
     >
-      <div className="absolute left-[40px] top-[135px] inline-flex w-[455px] flex-col items-start justify-start gap-2.5">
+      <div className="absolute left-[40px] top-[135px] inline-flex flex-col items-start justify-start gap-2.5">
         <strong className="justify-start self-stretch text-3xl font-bold text-secondary-grey-900">{title}</strong>
-        <p className="justify-start self-stretch text-base leading-snug text-secondary-grey-900">{text}</p>
+        <p className="w-full justify-start self-stretch text-base leading-snug text-secondary-grey-900">{text}</p>
       </div>
       <div className="absolute left-[1001px] top-[48px] h-44 w-32 overflow-hidden">
         <Image

@@ -8,7 +8,7 @@ interface CalendarHeaderProps {
 
 const CalendarHeader = ({ calendarMonth, onMoveMonth, onResetToToday }: CalendarHeaderProps) => {
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="mb-5 flex w-full items-center justify-center">
       {/* 가운데 정렬된 월 + 화살표 */}
       <div className="ml-3 flex items-center justify-center gap-4 sm:ml-auto sm:gap-10">
         <button onClick={() => onMoveMonth(-1)} className="flex h-6 w-6 items-center justify-center">
