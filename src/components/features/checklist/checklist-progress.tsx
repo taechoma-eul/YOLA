@@ -82,7 +82,7 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
                       )}
                     </span>
                     {isCurrent && (
-                      <div className="absolute left-1/2 top-[-6px] -translate-x-1/2 border-x-8 border-b-8 border-x-transparent border-b-gray-800" />
+                      <div className="absolute left-1/2 top-[-6px] -translate-x-1/2 border-x-8 border-b-8 border-x-transparent border-b-secondary-grey-900" />
                     )}
                   </div>
                 </div>
