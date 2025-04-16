@@ -1,8 +1,12 @@
 'use client';
-import type { Tables } from '@/types/supabase';
-import { X } from 'lucide-react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FadeLoader } from 'react-spinners';
+import { X } from 'lucide-react';
+import { CustomButton } from '@/components/ui/custom-button';
+import { MAIN_CHARACTER_URL } from '@/constants/default-image-url';
+import type { Tables } from '@/types/supabase';
+import MISSION_BACKGROUND from '@images/images/random-modal-bg.svg';
 
 /*
 Step 1. 사용할 페이지 서버컴포넌트에서 이 코드를 추가해주세요
@@ -30,6 +34,7 @@ interface RandomMissionModalProps {
 const TIME_OUT = 1250;
 const RandomMissionModal = ({ missionsData, clickModal, showModal, isLogin }: RandomMissionModalProps) => {
   const [randomMission, setRandomMission] = useState<string>('');
+  const [showContent, setShowContent] = useState(true);
 
   useEffect(() => {
     const preventScroll = (e: TouchEvent) => {
@@ -53,11 +58,10 @@ const RandomMissionModal = ({ missionsData, clickModal, showModal, isLogin }: Ra
     const randomIndex = Math.floor(Math.random() * missionsData.length);
     const randomMissionData = missionsData[randomIndex];
     setRandomMission(randomMissionData.content);
+    setShowContent(false);
   };
 
   const RandomMissionWithLoadingSpinner = () => {
-    const [showContent, setShowContent] = useState(false);
-
     useEffect(() => {
       const timer = setTimeout(() => {
         setShowContent(true);
@@ -68,22 +72,26 @@ const RandomMissionModal = ({ missionsData, clickModal, showModal, isLogin }: Ra
 
     if (!showContent) {
       return (
-        <div className="relative h-44 w-[462px] rounded-2xl">
-          <div className="absolute left-0 top-[69px] inline-flex w-[462px] items-center justify-center gap-2.5 p-2.5">
-            <FadeLoader />
-          </div>
+        <div className="relative left-[37px] top-[25px] h-[94px] w-[94px]">
+          <FadeLoader className="custom-spinner" />
         </div>
       );
     }
 
     return (
-      <div className="relative h-44 w-[462px] rounded-2xl bg-gray-50">
-        <div className="absolute left-0 top-[69px] inline-flex w-[462px] items-center justify-center gap-2.5 p-2.5">
-          <div className="justify-start text-center font-['Pretendard'] text-2xl font-semibold leading-loose text-zinc-800">
-            {randomMission}
-          </div>
-        </div>
-      </div>
+      <>
+        <Image
+          src={MISSION_BACKGROUND}
+          alt="랜덤 미션 배경 효과"
+          width={461}
+          height={177}
+          className="absolute"
+          style={{ width: 'auto', height: 'auto' }}
+        />
+        <p className="justify-start text-center text-xl font-semibold leading-relaxed text-secondary-grey-900">
+          {randomMission}
+        </p>
+      </>
     );
   };
 
@@ -94,40 +102,33 @@ const RandomMissionModal = ({ missionsData, clickModal, showModal, isLogin }: Ra
     >
       <div
         onClick={(e) => e.stopPropagation()} // 모달 안을 클릭 했을 때 나가는 것 막음
-        className="relative h-96 w-[598px] overflow-hidden rounded-[20px] bg-white"
+        className="relative flex h-[416px] w-[598px] flex-col gap-5 overflow-hidden rounded-[20px] bg-white px-[68px] pb-[36px] pt-[60px]"
       >
-        <div className="absolute right-[30px] top-[30px] z-[52] h-7 w-7 cursor-pointer">
-          <X onClick={() => clickModal()} className="h-full w-full" />
+        <X onClick={() => clickModal()} className="absolute right-[30px] top-[30px] z-[52] h-7 w-7 cursor-pointer" />
+        <div className="flex flex-col justify-start gap-2.5 self-stretch text-center leading-relaxed text-secondary-grey-900">
+          <strong className="text-xl font-semibold">오늘의 랜덤 미션</strong>
+          <p className="text-base font-normal">
+            {isLogin ? '두근두근 뭐가 나올까?' : '더 많은 미션을 원하시면 회원가입하세요!'}
+          </p>
         </div>
-        <div className="absolute left-[68px] top-[60px] inline-flex h-80 w-[462px] flex-col items-center justify-center gap-5">
-          <div className="flex flex-col items-center justify-start gap-2.5 self-stretch">
-            <div className="justify-start self-stretch text-center font-['Pretendard'] text-2xl font-semibold leading-loose text-zinc-800">
-              오늘의 랜덤 미션
-            </div>
-            <div className="justify-start self-stretch text-center font-['Pretendard'] text-base font-normal leading-snug text-zinc-800">
-              {isLogin ? <p>두근두근 뭐가 나올까?</p> : <p>더 많은 미션을 원하시면 회원가입하세요!</p>}
-            </div>
-          </div>
+        <div className="flex h-[178px] w-[462px] items-center justify-center">
           {randomMission ? (
             <RandomMissionWithLoadingSpinner />
           ) : (
-            <div className="relative h-44 w-[462px] overflow-hidden"></div>
+            <Image
+              src={MAIN_CHARACTER_URL}
+              alt="랜덤 뽑기 캐릭터 이미지"
+              width={104}
+              height={142}
+              style={{ height: '142px', width: '104px' }}
+            />
           )}
-          <div
-            data-priority="Primary"
-            data-size="Medium"
-            data-status="Default"
-            className="inline-flex w-56 cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-amber-400 px-4 py-2.5"
-            onClick={() => handleRandomMission()}
-          >
-            <button
-              type="button"
-              className="justify-start font-['Pretendard'] text-base font-semibold leading-snug text-zinc-800"
-            >
-              {randomMission ? '다시 뽑기' : '뽑기'}
-            </button>
-          </div>
         </div>
+        {showContent && (
+          <CustomButton onClick={handleRandomMission} type="button" className="mx-auto">
+            {randomMission ? '다시 뽑기' : '뽑기'}
+          </CustomButton>
+        )}
       </div>
     </div>
   );
