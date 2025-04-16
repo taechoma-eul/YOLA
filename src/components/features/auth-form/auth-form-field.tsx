@@ -20,6 +20,7 @@ interface FieldProps<T extends FieldValues> {
   isValid?: boolean;
   setEmailDuplicateCheck?: Dispatch<SetStateAction<boolean>>;
   setNicknameDuplicateCheck?: Dispatch<SetStateAction<boolean>>;
+  isLoginForm?: boolean;
 }
 
 const AuthFormField = <T extends FieldValues>({
@@ -30,7 +31,8 @@ const AuthFormField = <T extends FieldValues>({
   field,
   isValid,
   setEmailDuplicateCheck,
-  setNicknameDuplicateCheck
+  setNicknameDuplicateCheck,
+  isLoginForm
 }: FieldProps<T>) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 중복 확인 실패 메시지
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // 중복 확인 성공 메시지
@@ -90,7 +92,7 @@ const AuthFormField = <T extends FieldValues>({
               {...field}
             />
           </FormControl>
-          <FormMessage />
+          {!isLoginForm && <FormMessage />}
           <DuplicateCheckMessage errorMessage={errorMessage} successMessage={successMessage} />
         </div>
         {isCheckButton && (
