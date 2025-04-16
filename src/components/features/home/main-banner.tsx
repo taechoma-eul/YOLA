@@ -14,11 +14,18 @@ const MainBanner = ({ title, text, color }: Banner) => {
       )}
     >
       <div className="absolute left-[40px] top-[135px] inline-flex w-[455px] flex-col items-start justify-start gap-2.5">
-        <strong className="text-secondary-grey-900 justify-start self-stretch text-3xl font-bold">{title}</strong>
-        <p className="text-secondary-grey-900 justify-start self-stretch text-base leading-snug">{text}</p>
+        <strong className="justify-start self-stretch text-3xl font-bold text-secondary-grey-900">{title}</strong>
+        <p className="justify-start self-stretch text-base leading-snug text-secondary-grey-900">{text}</p>
       </div>
       <div className="absolute left-[1001px] top-[48px] h-44 w-32 overflow-hidden">
-        <Image priority src={MAIN_CHARACTER_URL} alt="메인 배너 캐릭터" width={124} height={167.96} />
+        <Image
+          priority
+          src={MAIN_CHARACTER_URL}
+          alt="메인 배너 캐릭터"
+          width={124}
+          height={168}
+          style={{ width: 'auto', height: 'auto' }}
+        />
       </div>
     </div>
   );
