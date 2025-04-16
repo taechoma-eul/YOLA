@@ -30,13 +30,13 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
   const pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1).slice(0, MAX_PAGE_LINKS);
 
   return (
-    <Pagination>
+    <Pagination className="py-[38px]">
       <PaginationContent>
         <PaginationItem>
           <PaginationLink
             href="#"
             onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-secondary-grey-500 hover:text-secondary-grey-900"
           >
             &lt;
           </PaginationLink>
@@ -57,7 +57,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
           <PaginationLink
             href="#"
             onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-secondary-grey-500 hover:text-secondary-grey-900"
           >
             &gt;
           </PaginationLink>
