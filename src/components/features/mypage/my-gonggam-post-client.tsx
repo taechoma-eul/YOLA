@@ -37,7 +37,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   }, [inView]);
 
   if (isPending) return <div className="p-4">로딩 중...</div>;
-  if (error) return <div className="p-4 text-red-500">에러 발생</div>;
+  if (error) throw error;
 
   const allPosts = posts.pages.flatMap((page) => page.data);
 
