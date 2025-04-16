@@ -54,7 +54,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
 
       {/* 이미지 */}
       <figure className="relative h-[110px] w-[110px] overflow-hidden rounded-[16px]">
-        <Image src={imagePreview} alt={post.title} fill className="object-cover" />
+        <Image src={imagePreview} alt={post.title} fill sizes="110px" className="object-cover" priority />
       </figure>
     </article>
   );
