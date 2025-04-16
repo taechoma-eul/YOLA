@@ -3,9 +3,26 @@
 import type { SoloLifeCardType } from '@/types/life-post';
 import Image from 'next/image';
 
-const SoloLifeCard = ({ id, imageUrls, thumbnail, title, content, date, isMission, tags }: SoloLifeCardType) => {
+interface SoloLifeCardProps extends SoloLifeCardType {
+  onClick: () => void;
+}
+
+const SoloLifeCard = ({
+  id,
+  imageUrls,
+  thumbnail,
+  title,
+  content,
+  date,
+  isMission,
+  tags,
+  onClick
+}: SoloLifeCardProps) => {
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden rounded border border-gray-300 bg-white shadow-sm">
+    <div
+      className="flex h-full w-full cursor-pointer flex-col overflow-hidden rounded border border-gray-300 bg-white shadow-sm"
+      onClick={onClick}
+    >
       {/* 이미지 영역 */}
       <div className="relative aspect-square bg-gray-200">
         {/* 이미지가 없을 경우 기본 이미지 사용 */}

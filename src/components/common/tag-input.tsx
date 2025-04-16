@@ -1,8 +1,9 @@
 'use client';
 
 import { Info } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+
 interface TagInputProps {
   value?: string[];
   onChange?: (tags: string[]) => void;
@@ -22,9 +23,17 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
 
   const MAX_TAG_LENGTH = 8;
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setTags(value);
   }, [value]);
+
+  useEffect(() => {
+    if (inputVisible) {
+      inputRef.current?.focus();
+    }
+  }, [inputVisible]);
 
   const addTag = (tag: string): boolean => {
     const cleaned = tag.trim().replace(/^#/, '');
@@ -82,6 +91,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
 
       {inputVisible && (
         <input
+          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={handleInputChange}

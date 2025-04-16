@@ -16,6 +16,8 @@ import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { PATH } from '@/constants/page-path';
 import { getToday } from '@/lib/utils/get-date';
 import type { MissionType } from '@/types/checklist';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-keys';
 
 interface LifeInputFormProps {
   missionId: string | null;
@@ -53,6 +55,7 @@ const PostInputForm = ({
   const router = useRouter();
   const { mutate, isPending } = useLifePost();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateLifePost();
+  const queryClient = useQueryClient();
 
   const isLoading = isPending || isUpdatePending;
   const action = isEditMode ? '수정' : '등록';
@@ -126,12 +129,10 @@ const PostInputForm = ({
         date: selectedDate
       };
 
-      const mutationFn =
-        isEditMode && defaultValues
-          ? () => updateMutate({ id: defaultValues.id, ...payload }, { onSuccess: onSuccess, onError: onError })
-          : () => mutate(payload, { onSuccess: onSuccess, onError: onError });
-
       const onSuccess = () => {
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEY.LIFE_POSTS()
+        });
         alert(`${action}되었습니다!`);
         router.push(PATH.LIFE);
       };
@@ -139,6 +140,10 @@ const PostInputForm = ({
       const onError = (err: unknown) => {
         alert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`);
       };
+      const mutationFn =
+        isEditMode && defaultValues
+          ? () => updateMutate({ id: defaultValues.id, ...payload }, { onSuccess, onError })
+          : () => mutate(payload, { onSuccess, onError });
 
       mutationFn();
     } catch (err) {
