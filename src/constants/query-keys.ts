@@ -11,6 +11,7 @@ export const QUERY_KEY = {
     return key;
   },
   GONGGAM_COMMENTS: (postId: number) => ['gonggam-comments', postId],
-  MISSIONS: () => ['missions']
+  MISSIONS: () => ['missions'],
+  GONGGAM_POSTS: () => ['gonggam-posts']
 };
 // month 안쓸때 LIFE_POSTS()로 사용하고 month 쓸때는 LIFE_POSTS(month)로 사용
