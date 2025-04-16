@@ -1,15 +1,16 @@
 'use client';
 
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { Camera } from 'lucide-react';
 import { processedImagePreview } from '@/lib/utils/processed-image';
-import ProfileAvatar from '@/components/common/profile-avatar';
+import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
 import { AUTH } from '@/constants/auth-form';
+import CAMERA from '@images/images/camera.svg';
 
 const ProfileImageField = ({
   form,
@@ -53,7 +54,7 @@ const ProfileImageField = ({
             onClick={triggerFileInput}
             className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-neutral-600 p-0"
           >
-            <Camera />
+            <Image src={CAMERA} alt="프로필 이미지 업로드 버튼" width={20} height={20} />
           </Button>
         </div>
       )}

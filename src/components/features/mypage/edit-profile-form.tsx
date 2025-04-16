@@ -7,7 +7,7 @@ import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useProfileForm } from '@/lib/hooks/use-profile-form';
 import { processedImage } from '@/lib/utils/processed-image';
 import { toastAlert } from '@/lib/utils/toast';
-import { Button } from '@/components/ui/button';
+import { CustomButton } from '@/components/ui/custom-button';
 import { Form } from '@/components/ui/form';
 import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
 import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
@@ -55,16 +55,21 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
   return (
     <Form {...form}>
       <form className="justify-items-end space-y-[48px]" onSubmit={form.handleSubmit(handleUpdateProfile)}>
-        <div className="flex w-full items-start justify-start gap-10 rounded-xl bg-white p-8 outline outline-1 outline-offset-[-1px] outline-neutral-300">
+        <div className="flex w-full items-start justify-start gap-10 rounded-xl bg-white p-8 outline outline-1 outline-offset-[-1px] outline-secondary-grey-400">
           <ProfileImageField form={form} profileImage={profile.profile_image} />
           <div className="flex w-[500px] flex-col items-start justify-center gap-4 self-stretch">
             <EmailField email={profile.email} />
             <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={profile.nickname} />
           </div>
         </div>
-        <Button type="submit" disabled={!isValid || !duplicateCheck || isPending}>
-          {isPending ? '저장 중...' : '수정하기'}
-        </Button>
+        <CustomButton
+          type="submit"
+          disabled={!isValid || !duplicateCheck || isPending}
+          variant="default"
+          size="gonggam-write"
+        >
+          {isPending ? '저장 중...' : '저장하기'}
+        </CustomButton>
       </form>
     </Form>
   );

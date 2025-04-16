@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
+import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
 import type { EditFormData } from '@/types/components/edit-profile-form';
 import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
@@ -21,6 +21,7 @@ interface FieldProps {
 const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 중복 확인 실패 메시지
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // 중복 확인 성공 메시지
+  const { isValid } = form.formState;
   const { watch, getValues } = useFormContext(); // 필드 값 변경 감지
   const nicknameValue = watch(AUTH.NICKNAME);
 
@@ -36,6 +37,11 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
   // -------------------------------------------------
   const handleDuplicateCheck = async () => {
     const nowValue: string = getValues(AUTH.NICKNAME);
+
+    if (!isValid) {
+      setErrorMessage(AUTH_ERROR.EMPTY_NICKNAME);
+      return;
+    }
 
     try {
       const isDuplication = await fetchDuplicateCheck(AUTH.NICKNAME, nowValue);
@@ -59,18 +65,20 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
       control={form.control}
       name={AUTH.NICKNAME}
       render={({ field }) => (
-        <FormItem className="flex h-10 items-center justify-start gap-10 self-stretch">
+        <FormItem className="flex h-10 items-center justify-start self-stretch">
           <FormLabel
-            className={clsx('justify-start text-lg font-normal', errorMessage ? 'text-destructive' : 'text-zinc-800')}
+            className={clsx(
+              'justify-start text-lg font-normal',
+              errorMessage ? 'text-destructive' : 'text-secondary-grey-900'
+            )}
           >
             {LABEL.NICKNAME}
           </FormLabel>
-          <div className="relative flex-1">
+          <div className="relative">
             <FormControl>
               <Input
                 className={clsx(
-                  'flex h-full w-full items-center justify-start gap-2.5 rounded p-2.5',
-                  errorMessage ? 'border-[#FF5E3A]' : 'border-stone-300'
+                  'ml-[42px] mr-[8px] flex h-[37px] w-[269px] items-center justify-start gap-2.5 rounded border-secondary-grey-400 p-2.5'
                 )}
                 placeholder={PLACEHOLDER.NICKNAME}
                 type="text"
@@ -80,15 +88,9 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
             <FormMessage />
             <DuplicateCheckMessage errorMessage={errorMessage} successMessage={successMessage} />
           </div>
-          {/* 유효성 검사 통과 못하면 중복 검사 불가 */}
-          <Button
-            disabled={!form.formState.isValid}
-            type="button"
-            className="h-full w-[70px]"
-            onClick={handleDuplicateCheck}
-          >
+          <CustomButton type="button" variant="grey" size="check" className="h-[38px]" onClick={handleDuplicateCheck}>
             중복확인
-          </Button>
+          </CustomButton>
         </FormItem>
       )}
     />
