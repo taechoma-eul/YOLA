@@ -12,3 +12,5 @@ export interface UserLevelByMissionType {
 
 export type MissionMapType = Record<string, keyof UserLevel>;
 export type MissionTag = '혼밥' | '혼자여행' | '혼놀' | '청소' | '갓생';
+
+export type MissionWithStatus = MissionType & { completed: boolean };
