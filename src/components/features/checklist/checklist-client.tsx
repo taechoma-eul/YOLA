@@ -3,9 +3,9 @@
 import MissionListClient from '@/components/features/checklist/mission-list-client';
 import ChecklistProgress from '@/components/features/checklist/checklist-progress';
 import type { Level, MissionWithStatus } from '@/types/checklist';
-import { useState } from 'react';
-import { LifePostWithImageUrls } from '@/types/life-post';
+import { useEffect, useState } from 'react';
 import { PostDetailModal } from '../modals/calendar-post-detail';
+import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
 
 interface ChecklistClientProps {
   decodedMission: string;
@@ -17,7 +17,15 @@ interface ChecklistClientProps {
 
 const ChecklistClient = ({ decodedMission, userId, userLevel, progress, missionList }: ChecklistClientProps) => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
+  const [selectedMissionId, setSelectedMissionId] = useState<number | null>(null);
+
+  const { data: selectedPost } = useGetLifePostByMissionId(selectedMissionId);
+
+  useEffect(() => {
+    if (selectedPost) {
+      setShowModal(true);
+    }
+  }, [selectedPost]);
 
   return (
     <section className="w-full pl-[37px] pr-[39px] pt-[59px]">
@@ -26,12 +34,11 @@ const ChecklistClient = ({ decodedMission, userId, userLevel, progress, missionL
         <ChecklistProgress progress={progress} userLevel={userLevel as Level} />
       </div>
       <MissionListClient
-        setShowModal={setShowModal}
-        setSelectedPost={setSelectedPost}
+        setSelectedMissionId={setSelectedMissionId}
         missionList={missionList}
         {...(userId && { userId })}
       />
-      {showModal && (
+      {selectedPost && showModal && (
         <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
       )}
     </section>
