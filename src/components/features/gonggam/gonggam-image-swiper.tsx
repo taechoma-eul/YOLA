@@ -24,7 +24,7 @@ const GonggamImageSwiper = ({ images }: GonggamImageSwiperProps) => {
       {images.map((url, index) => (
         <SwiperSlide key={index}>
           <div className="relative aspect-square w-full overflow-hidden rounded-[12px]">
-            <Image src={url} alt={`게시글 이미지 ${index + 1}`} width={382} height={382} className="object-cover" />
+            <Image src={url} alt={`게시글 이미지 ${index + 1}`} fill className="object-cover" />
           </div>
         </SwiperSlide>
       ))}
