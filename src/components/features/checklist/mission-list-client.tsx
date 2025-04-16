@@ -39,7 +39,6 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
     <ul className="mt-[129px] flex w-full max-w-[1200px] items-center gap-[24px]">
       {missionList.map((mission) => {
         const isCompleted = mission.completed;
-        const baseClasses = `h-[248px] w-[221px] rounded-[20px] border border-secondary-grey-300 bg-white flex flex-col items-start`;
         const handleClick = isCompleted ? handleCompletedMissionClick : !userId ? handleMissionClick : undefined;
 
         return (
@@ -47,7 +46,7 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
             <Link
               href={!isCompleted && userId ? `${PATH.LIFE_POST}?mission_id=${mission.id}` : '#'}
               onClick={handleClick}
-              className={baseClasses}
+              className="flex h-[248px] w-[221px] flex-col items-start rounded-[20px] border border-secondary-grey-300 bg-white"
             >
               <strong className="flex w-[221px] items-start gap-[10px] px-[20px] py-[20px] pb-0 pt-[20px]">
                 <span className="flex-1 grow basis-0 text-[16px] font-semibold leading-[1.4] text-primary-orange-900">
