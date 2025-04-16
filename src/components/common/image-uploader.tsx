@@ -38,6 +38,8 @@ const ImageUploader = ({
     onChange(newImages);
   };
 
+  const isMax = images.length + defaultImageUrls.length >= maxCount;
+
   return (
     <div className="flex items-start gap-40 rounded-md bg-gray-50 px-6 py-4">
       <div className="w-50 flex flex-col items-start justify-center">
@@ -46,16 +48,20 @@ const ImageUploader = ({
       </div>
 
       <div className="flex flex-wrap gap-3">
-        {/* 추가 버튼 */}
-        {images.length + defaultImageUrls.length < maxCount && (
-          <label className="flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 bg-white text-sm text-gray-400 hover:bg-gray-100">
-            <span className="text-4xl">
-              <CirclePlusIcon />
-            </span>
-            <span className="text-xs">추가하기</span>
-            <input type="file" multiple className="hidden" onChange={handleUpload} />
-          </label>
-        )}
+        {/* 항상 보여지는 업로드 버튼 */}
+        <label
+          className={`flex h-24 w-24 flex-col items-center justify-center rounded-md border border-dashed text-sm ${
+            isMax
+              ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-300'
+              : 'cursor-pointer border-gray-300 bg-white text-gray-400 hover:bg-gray-100'
+          } `}
+        >
+          <span className="text-4xl">
+            <CirclePlusIcon />
+          </span>
+          <span className="text-xs">추가하기</span>
+          <input type="file" multiple className="hidden" disabled={isMax} onChange={handleUpload} />
+        </label>
 
         {/* 기본 이미지 목록 */}
         {defaultImageUrls.map((url, idx) => (
