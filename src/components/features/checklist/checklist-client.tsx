@@ -27,6 +27,11 @@ const ChecklistClient = ({ decodedMission, userId, userLevel, progress, missionL
     }
   }, [selectedPost]);
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedMissionId(null);
+  };
+
   return (
     <section className="w-full pl-[37px] pr-[39px] pt-[59px]">
       <div className="flex w-full flex-col gap-[34px]">
@@ -39,7 +44,7 @@ const ChecklistClient = ({ decodedMission, userId, userLevel, progress, missionL
         {...(userId && { userId })}
       />
       {selectedPost && showModal && (
-        <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
+        <PostDetailModal clickModal={handleCloseModal} showModal={showModal} post={selectedPost} />
       )}
     </section>
   );
