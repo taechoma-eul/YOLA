@@ -24,7 +24,7 @@ const ProfileBox = ({ initProfile }: InitProfile) => {
 
       {/* 프로필 수정 버튼 */}
       <Link href={PATH.MYPAGE}>
-        <CustomButton variant="grey" size="edit-profile" className="mb-[37px] h-[36px]">
+        <CustomButton variant="grey" size="edit-profile" className="mb-[37px] h-[36px] text-sm">
           프로필 수정
         </CustomButton>
       </Link>

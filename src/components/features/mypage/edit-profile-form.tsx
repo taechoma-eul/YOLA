@@ -67,6 +67,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
           disabled={!isValid || !duplicateCheck || isPending}
           variant="default"
           size="gonggam-write"
+          // className="font-semibold"
         >
           {isPending ? '저장 중...' : '저장하기'}
         </CustomButton>
