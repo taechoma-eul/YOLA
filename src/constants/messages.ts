@@ -38,5 +38,7 @@ export const AUTH_ERROR = {
   EMAIL_CHECK: '이메일 중복확인을 해주세요.',
   NICKNAME_CHECK: '닉네임 중복확인을 해주세요.',
   CHECK_NICKNAME_FAIL: '이미 사용 중인 닉네임입니다.',
-  CHECK_EMAIL_FAIL: '이미 사용 중인 이메일입니다.'
+  CHECK_EMAIL_FAIL: '이미 사용 중인 이메일입니다.',
+  EMPTY_NICKNAME: '닉네임을 입력해주세요.',
+  EMPTY_EMAIL: '이메일을 입력해주세요.'
 } as const;
