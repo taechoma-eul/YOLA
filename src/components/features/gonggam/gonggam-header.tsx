@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 const GonggamHeader = () => {
   return (
-    <section className="mb-5 flex justify-between">
-      <h1 className="text-2xl font-extrabold">혼자 라이프 공감 게시판</h1>
+    <section className="mt-[44px] flex justify-between px-[10px] py-[8px]">
+      <h1 className="py-[5px] text-center text-[20px] font-semibold leading-[140%]">혼자 라이프 공감 게시판</h1>
       <Link href={PATH.GONGGAM_POST}>
         <Button>글 작성하기</Button>
       </Link>
