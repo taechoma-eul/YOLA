@@ -82,9 +82,7 @@ export const PostDetailModal = ({
   // 미션id 유무로 미션인증 작성 페이지로 보낼지, 하루일기 작성 페이지로 보낼지 결정
   const handleEdit = () => {
     {
-      post.mission_id
-        ? router.push(`${PATH.LIFE_POST}?mission_id=${post.mission_id}`)
-        : router.push(`${PATH.LIFE_POST}?post_id=${post.id}`);
+      router.push(`${PATH.LIFE_POST}/edit/${post.id}`);
     }
   };
 
