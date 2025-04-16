@@ -1,5 +1,6 @@
 import GonggamCommentForm from '@/components/features/gonggam/gonggam-comment-form';
 import GonggamCommentList from '@/components/features/gonggam/gonggam-comment-list';
+import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
@@ -23,14 +24,16 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
   const displayDate = updated_at ?? created_at;
 
   return (
-    <article className="space-y-4">
+    <article>
       {/* 게시글 헤더 */}
-      <header className="mb-6">
-        <h1 className="mb-2 text-2xl font-bold">{title}</h1>
+      <header className="mt-[64px]">
+        <h1 className="mb-[12px] justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+          {title}
+        </h1>
         {/* 작성자 정보 및 시간 + 구분선 */}
-        <div className="mb-4 flex items-center justify-between gap-1 border-b pb-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <div className="relative h-6 w-6 overflow-hidden rounded-full">
+        <section className="flex items-center border-b pb-[20px] text-base text-secondary-grey-800">
+          <div className="flex items-center">
+            <div className="relative mr-[6px] h-[22px] w-[22px] overflow-hidden rounded-full">
               <Image
                 src={profile.profileImage ?? DEFAULT_AVATAR_URL}
                 alt={`${profile.nickname}의 프로필 이미지`}
@@ -44,21 +47,18 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
           </div>
           {/* {userId === profile.id && <GonggamMyPostDropdown />} */}
           {userData?.id === profile.id && <GonggamMyPostDropdown />}
-        </div>
+        </section>
       </header>
 
       {/* 이미지 영역 */}
       {images.length > 0 && (
-        <section className="mb-6 space-y-4">
-          {images.map((url, index) => (
-            <div key={index} className="relative aspect-square w-full max-w-[379px] overflow-hidden rounded-md">
-              <Image src={url} alt={`게시글 이미지 ${index + 1}`} fill className="object-cover" />
-            </div>
-          ))}
-        </section>
+        <figure className="mb-[40px] mt-[46px] w-full">
+          <GonggamImageSwiper images={images} />
+        </figure>
       )}
+
       {/* 본문 영역 */}
-      <section className="prose prose-sm sm:prose lg:prose-lg max-w-none">
+      <section className="prose prose-sm sm:prose lg:prose-lg mb-[46px] max-w-none justify-start text-base text-secondary-grey-800">
         <p>{content}</p>
       </section>
 
