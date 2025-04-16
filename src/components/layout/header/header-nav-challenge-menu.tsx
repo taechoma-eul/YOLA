@@ -2,6 +2,7 @@ import Image from 'next/image';
 import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
 import type { MenuItem } from '@/types/components/header';
 import { PATH } from '@/constants/page-path';
+import MENU_ICON from '@images/images/challenge_menu.svg';
 
 const NavChallengeMenu = () => {
   const challengeMenuItem: MenuItem[] = [
@@ -17,7 +18,7 @@ const NavChallengeMenu = () => {
         <div className="flex h-[25px] w-[72px] justify-between text-center">
           챌린지
           <Image
-            src="images/challenge_menu.svg"
+            src={MENU_ICON}
             alt="챌린지 메뉴 드롭 다운 표시"
             width={14}
             height={26}
