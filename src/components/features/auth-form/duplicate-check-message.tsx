@@ -10,7 +10,7 @@ const DuplicateCheckMessage = ({ successMessage, errorMessage }: Message) => {
     <p
       className={clsx(
         'absolute -bottom-[25.2px] text-[0.8rem] font-medium',
-        successMessage ? 'text-zinc-800' : 'text-destructive'
+        successMessage ? 'text-secondary-grey-900' : 'text-destructive'
       )}
     >
       {successMessage ? successMessage : errorMessage}

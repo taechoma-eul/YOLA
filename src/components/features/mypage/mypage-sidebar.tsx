@@ -6,7 +6,7 @@ const MypageSideBar = async () => {
   if (!initProfile) throw Error;
 
   return (
-    <aside className="mt-[40px] flex h-[calc(100vh-150px)] w-full flex-col items-center gap-5 md:w-60">
+    <aside className="ml-[40px] mr-[50px] mt-[40px] flex h-[843px] w-[209px] flex-col items-center gap-5 rounded-[20px] border border-secondary-grey-400 p-[20px]">
       {/* 내 프로필 보기 */}
       <ProfileBox initProfile={initProfile} />
     </aside>

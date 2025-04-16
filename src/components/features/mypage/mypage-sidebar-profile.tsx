@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { PATH } from '@/constants/page-path';
-import { Button } from '@/components/ui/button';
-import ProfileAvatar from '@/components/common/profile-avatar';
+import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import type { InitProfile } from '@/types/components/edit-profile-form';
+import { CustomButton } from '@/components/ui/custom-button';
 
 const ProfileBox = ({ initProfile }: InitProfile) => {
   //현재 경로 가져오기
@@ -16,7 +16,7 @@ const ProfileBox = ({ initProfile }: InitProfile) => {
   if (isProfileError) throw profileFetchingError;
 
   return (
-    <section className="flex h-[843px] w-[209px] flex-col items-center justify-start rounded-[20px] border border-secondary-grey-400 p-[20px]">
+    <section className="flex flex-col items-center justify-start">
       {/* 프로필 영역 */}
       <ProfileAvatar src={profile.profile_image} />
       <p className="text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
@@ -24,9 +24,9 @@ const ProfileBox = ({ initProfile }: InitProfile) => {
 
       {/* 프로필 수정 버튼 */}
       <Link href={PATH.MYPAGE}>
-        <Button variant="outline" className="mb-[37px]">
+        <CustomButton variant="grey" size="edit-profile" className="mb-[37px] h-[36px] text-sm">
           프로필 수정
-        </Button>
+        </CustomButton>
       </Link>
 
       {/* 구분선 */}
