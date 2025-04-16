@@ -4,11 +4,11 @@ import GonggamPostInputForm from '@/components/features/gonggam/gonggam-post-inp
 import { getGonggamPostById } from '@/lib/utils/api/gonggam-post.api';
 
 interface GonggamEditPageProps {
-  params: { post_id: string };
+  params: { postId: string };
 }
 
 const GonggamEditPage = async ({ params }: GonggamEditPageProps) => {
-  const postId = Number(params.post_id);
+  const postId = Number(params.postId);
   const post = await getGonggamPostById(postId);
 
   return (

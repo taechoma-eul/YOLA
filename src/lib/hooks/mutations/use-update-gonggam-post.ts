@@ -1,6 +1,6 @@
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { Database } from '@/types/supabase';
 import { useMutation } from '@tanstack/react-query';
+import type { Database } from '@/types/supabase';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { GONGGAM_POSTS_TABLE, IMAGE_TABLE } from '@/lib/hooks/mutations/use-gonggam-post';
 import { parseTags } from '@/lib/utils/parse-tags';
 
@@ -26,7 +26,6 @@ export const useUpdateGonggamPost = () => {
           title,
           content,
           category,
-          imageUrls,
           updated_at,
           tags: parseTags(rawTags)
         })
@@ -41,14 +40,14 @@ export const useUpdateGonggamPost = () => {
         throw new Error('기존 이미지 삭제 실패: ' + deleteError.message);
       }
 
-      // Step 2. 이미지 경로 등록
+      // Step 3. 새로운 이미지 경로 삽입
       if (imageUrls.length > 0) {
-        const imageRows = imageUrls.map((url) => ({
+        const insertData = imageUrls.map((url) => ({
           post_id: id,
           image_url: url
         }));
 
-        const { error: imageError } = await supabase.from(IMAGE_TABLE).insert(imageRows);
+        const { error: imageError } = await supabase.from(IMAGE_TABLE).insert(insertData);
         if (imageError) {
           throw new Error('새 이미지 등록 실패: ' + imageError.message);
         }
