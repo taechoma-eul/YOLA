@@ -29,10 +29,10 @@ export const getPaginatedGonggamPosts = async (
   // Step 1: 전체 개수 카운트
   const { count, error: countError } = await supabase
     .from(TABLE.GONGGAM_POSTS)
-    .select('*', { count: 'exact', head: true }) // count만 select
+    .select('*', { count: 'exact' }) // count만 select
     .eq('category', category);
 
-  if (countError) throw new Error(countError.message);
+  if (countError && !count) throw new Error(countError.message);
 
   const totalCount = count ?? 0;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
