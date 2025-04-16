@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { MSG } from '@/constants/messages';
 import type { MissionWithStatus } from '@/types/checklist';
 import { Dispatch, SetStateAction } from 'react';
+import { toastAlert } from '@/lib/utils/toast';
 
 interface ClientMissionListProps {
   setSelectedMissionId: Dispatch<SetStateAction<number | null>>;
@@ -18,18 +19,12 @@ interface ClientMissionListProps {
 }
 
 const MissionListClient = ({ setSelectedMissionId, missionList, userId }: ClientMissionListProps) => {
-  const { toast } = useToast();
   const router = useRouter();
 
   const handleMissionClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!userId) {
       e.preventDefault();
-
-      toast({
-        title: MSG.NEED_LOGIN,
-        description: MSG.LOGIN_BEFORE_POST_MISSION_CLEAR,
-        variant: 'destructive'
-      });
+      toastAlert(MSG.LOGIN_BEFORE_POST_MISSION_CLEAR, 'destructive');
       router.push(PATH.LOGIN);
     }
   };
