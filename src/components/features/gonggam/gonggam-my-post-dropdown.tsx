@@ -6,12 +6,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { PATH } from '@/constants/page-path';
 import { MoreVertical } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-const GonggamMyPostDropdown = () => {
+const GonggamMyPostDropdown = ({ postId }: { postId: number }) => {
+  const route = useRouter();
   const handleEdit = () => {
-    // TODO: 수정 로직
-    alert('수정');
+    route.push(`${PATH.GONGGAM_POST}/edit/${postId}`);
   };
 
   const handleDelete = () => {

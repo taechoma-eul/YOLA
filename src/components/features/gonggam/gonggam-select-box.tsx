@@ -10,7 +10,7 @@ interface GonggamSelectBoxProps {
 const GonggamSelectBox = ({ value, onChange }: GonggamSelectBoxProps) => {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger>
+      <SelectTrigger className="mb-[20px] h-auto w-auto gap-[12px] px-[10px] py-[8px]">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

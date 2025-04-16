@@ -19,6 +19,7 @@ interface LoginField {
     email: string;
   }>;
   inputType: string;
+  isLoginForm: boolean;
 }
 
 const LoginForm = () => {
@@ -28,8 +29,14 @@ const LoginForm = () => {
   const { isValid } = form.formState;
 
   const loginFieldData: LoginField[] = [
-    { fieldName: AUTH.EMAIL, placeholder: PLACEHOLDER.EMAIL, form: form, inputType: 'email' },
-    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: form, inputType: 'password' }
+    { fieldName: AUTH.EMAIL, placeholder: PLACEHOLDER.EMAIL, form: form, inputType: 'email', isLoginForm: true },
+    {
+      fieldName: AUTH.PASSWORD,
+      placeholder: PLACEHOLDER.PASSWORD,
+      form: form,
+      inputType: 'password',
+      isLoginForm: true
+    }
   ];
 
   const handleFormAction = async (formData: FormData) => {
@@ -58,6 +65,7 @@ const LoginForm = () => {
                   placeholder={data.placeholder}
                   inputType={data.inputType}
                   field={field}
+                  isLoginForm={data.isLoginForm}
                 />
               )}
             />

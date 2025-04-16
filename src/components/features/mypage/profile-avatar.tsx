@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
-import Image from 'next/image';
 
 const ProfileAvatar = ({ src }: { src: string | null }) => {
   return (

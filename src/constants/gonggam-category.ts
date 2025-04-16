@@ -11,6 +11,11 @@ export const categoryMap: CategoryMapType = {
   밋업: 'meetup'
 };
 
+/** categoryMap의 reaverse 버전
+ * 예: 'daily' -> '일상공유'
+ */
+export const reverseCategoryMap = Object.fromEntries(Object.entries(categoryMap).map(([key, value]) => [value, key]));
+
 /** slugToCategory: 클라이언트 URL param을 기반으로 Supabase에서 사용할 수 있는 Enum 값을 추출할 때 사용
  * URL slug → Supabase 'categorys' Enum (한글 카테고리명) 변환
  * 예: 'daily' → '일상공유'

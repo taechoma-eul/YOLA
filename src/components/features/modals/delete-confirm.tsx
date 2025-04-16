@@ -1,3 +1,4 @@
+import { CustomButton } from '@/components/ui/custom-button';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
 
@@ -28,12 +29,16 @@ const DeleteConfirmModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()} // 모달 안을 클릭 했을 때 나가는 것 막음
-        className="relative w-96 rounded-2xl bg-white p-6 shadow-2xl"
+        className="relative h-[267px] w-[508px] rounded-2xl bg-white px-[139px] pb-[44px] pt-[60px] shadow-2xl"
       >
-        <X onClick={clickModal} className="absolute right-4 top-4 cursor-pointer text-gray-600 hover:text-black" />
-        <h1>{isItPost ? `글` : `댓글`}을 삭제합니다.</h1>
-        <p>정말 삭제하시겠습니까?</p>
-        <button onClick={handleDelete}>삭제하기</button>
+        <X onClick={clickModal} className="absolute right-6 top-6 cursor-pointer text-secondary-grey-900" />
+        <div className="mb-[63px] flex flex-col justify-start gap-2.5 self-stretch text-center leading-relaxed text-secondary-grey-900">
+          <strong className="h-[26px] text-xl font-semibold">{isItPost ? `글` : `댓글`}을 삭제합니다.</strong>
+          <p className="h-[22px] text-base font-normal">정말 삭제하시겠습니까?</p>
+        </div>
+        <CustomButton onClick={handleDelete} type="button" className="mx-auto">
+          삭제하기
+        </CustomButton>
       </div>
     </div>
   );
