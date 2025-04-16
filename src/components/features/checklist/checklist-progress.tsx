@@ -6,7 +6,7 @@ interface ChecklistProgressProps {
   userLevel: Level;
 }
 
-const ChecklistProgress = async ({ progress, userLevel }: ChecklistProgressProps) => {
+const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
   const TOTAL_LEVELS = 5;
   const levels = ['1단계', '2단계', '3단계', '4단계', '5단계'];
 

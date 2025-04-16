@@ -9,15 +9,22 @@ import UNDO from '@images/images/checklist-undo.svg';
 import Image from 'next/image';
 import { MSG } from '@/constants/messages';
 import type { MissionWithStatus } from '@/types/checklist';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { LifePostWithImageUrls } from '@/types/life-post';
+import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
 
 interface ClientMissionListProps {
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+  setSelectedPost: Dispatch<SetStateAction<LifePostWithImageUrls | null>>;
   missionList: MissionWithStatus[];
   userId?: string;
 }
 
-const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
+const MissionListClient = ({ setShowModal, setSelectedPost, missionList, userId }: ClientMissionListProps) => {
   const { toast } = useToast();
   const router = useRouter();
+  const [selectedMissionId, setSelectedMissionId] = useState<number | null>(null);
+  const { data, isLoading, isError, error } = useGetLifePostByMissionId(selectedMissionId);
 
   const handleMissionClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!userId) {
@@ -32,13 +39,29 @@ const MissionListClient = ({ missionList, userId }: ClientMissionListProps) => {
     }
   };
 
-  const handleCompletedMissionClick = () => {};
+  const handleCompletedMissionClick = (missionId: number) => {
+    setSelectedMissionId(missionId);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setSelectedPost(data);
+      setShowModal(true);
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
 
   return (
     <ul className="mt-[129px] flex w-full max-w-[1200px] items-center gap-[24px]">
       {missionList.map((mission) => {
         const isCompleted = mission.completed;
-        const handleClick = isCompleted ? handleCompletedMissionClick : !userId ? handleMissionClick : undefined;
+        const handleClick = isCompleted
+          ? () => handleCompletedMissionClick(mission.id)
+          : !userId
+            ? handleMissionClick
+            : undefined;
 
         return (
           <li key={mission.id} className="">
