@@ -19,14 +19,14 @@ const NavLinkItem = ({ href, children }: Children & { href: string }) => {
       <div className="flex w-32 flex-col items-center">
         <div
           className={clsx(
-            'text-zinc-80 relative h-full justify-start text-center text-lg group-hover:font-semibold',
+            'text-secondary-grey-900 relative h-[25px] justify-start text-center text-lg group-hover:font-semibold',
             isSelect && !isMission ? 'font-semibold' : 'font-normal'
           )}
         >
           {children}
           <div
             className={clsx(
-              'absolute h-0.5 w-full self-stretch rounded-[1px] bg-amber-500 group-hover:visible',
+              'bg-primary-orange-500 absolute top-[25px] h-[2px] w-full self-stretch rounded-[1px] group-hover:visible',
               isSelect && !isMission ? 'visible' : 'invisible'
             )}
           />

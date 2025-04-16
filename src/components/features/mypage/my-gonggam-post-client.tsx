@@ -42,15 +42,17 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   const allPosts = posts.pages.flatMap((page) => page.data);
 
   return (
-    <div>
+    <div className="mt-[72px]">
       <section className="mb-[35px] flex flex-row items-center justify-between">
-        <strong className="text-xl">{nickname}님이 작성한 공감 게시글</strong>
+        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+          {nickname}님이 작성한 공감 게시글
+        </div>
         <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
       </section>
 
       <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
         {allPosts.length === 0 ? (
-          <div className="col-span-full flex h-screen flex-col items-center justify-center whitespace-normal bg-slate-100 text-center text-gray-500">
+          <div className="col-span-full mb-[272px] flex min-h-[542px] flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500">
             <p>앗 아직 기록이 없어요</p>
             <p>공감 게시판에서 글을 작성해보세요!</p>
           </div>
@@ -60,11 +62,11 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
               <MypageGonggamItem key={item.id} post={item} />
             ))}
 
-            <div className="col-span-full flex items-center justify-center py-4 text-sm text-slate-400">
+            <div className="col-span-full flex items-center justify-center text-sm text-secondary-grey-500">
               {hasNextPage ? (
                 <div ref={ref}>{isFetchingNextPage && '불러오는 중...'}</div>
               ) : (
-                '작성하신 라이프글을 전부 불러왔어요.'
+                '작성하신 공감 게시글을 전부 불러왔어요.'
               )}
             </div>
           </>

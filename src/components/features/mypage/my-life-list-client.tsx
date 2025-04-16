@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
-import type { GetLifePostsResponse, SoloLifeCardType } from '@/types/life-post';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
+import type { GetLifePostsResponse, SoloLifeCardType } from '@/types/life-post';
 
 const MyLifeListClient = () => {
   const {
@@ -50,7 +50,7 @@ const MyLifeListClient = () => {
   return (
     <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {parsedList.length === 0 ? (
-        <div className="col-span-full flex h-screen flex-col items-center justify-center whitespace-normal bg-slate-100 text-center text-gray-500">
+        <div className="col-span-full mb-[272px] flex min-h-[542px] flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500">
           <p>앗 아직 기록이 없어요</p>
           <p>오늘의 혼자 라이프를 기록해보세요!</p>
         </div>
