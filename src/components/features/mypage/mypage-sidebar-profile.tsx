@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { PATH } from '@/constants/page-path';
-import ProfileAvatar from '@/components/common/profile-avatar';
+import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import type { InitProfile } from '@/types/components/edit-profile-form';
 import { CustomButton } from '@/components/ui/custom-button';
 
