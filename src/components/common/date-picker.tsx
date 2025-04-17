@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils/utils';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toKoreanISOString } from '@/lib/utils/utc-to-kst';
+import { ko } from 'date-fns/locale';
 
 type DatePickerProps = {
   date: string;
@@ -39,16 +40,13 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn('w-[240px] justify-start text-left font-normal', !selectedDate && 'text-muted-foreground')}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {selectedDate ? <span>{date}</span> : <span>Pick a date</span>}
+        <Button variant="outline" className="flex h-[45px] w-[208px] items-center justify-center text-left font-normal">
+          <span className="text-lg text-secondary-grey-700">{date}</span>
+          <CalendarIcon className="!h-[22px] !w-[22px] shrink-0 text-secondary-grey-700" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        <Calendar mode="single" selected={selectedDate} onSelect={handleSelect} initialFocus />
+        <Calendar mode="single" selected={selectedDate} onSelect={handleSelect} initialFocus locale={ko} />
       </PopoverContent>
     </Popover>
   );

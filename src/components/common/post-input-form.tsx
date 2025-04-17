@@ -18,6 +18,8 @@ import { getToday } from '@/lib/utils/get-date';
 import type { MissionType } from '@/types/checklist';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { ChevronLeft } from 'lucide-react';
+import { CustomButton } from '../ui/custom-button';
 
 interface LifeInputFormProps {
   missionId: string | null;
@@ -140,6 +142,7 @@ const PostInputForm = ({
       const onError = (err: unknown) => {
         alert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`);
       };
+
       const mutationFn =
         isEditMode && defaultValues
           ? () => updateMutate({ id: defaultValues.id, ...payload }, { onSuccess, onError })
@@ -152,7 +155,7 @@ const PostInputForm = ({
   };
 
   const handleCancel = async () => {
-    const confirm = window.confirm('작성 중인 내용이 사라집니다. 취소할까요?');
+    const confirm = window.confirm('작성 중인 내용이 사라집니다. 뒤로갈까요?');
     if (!confirm) return;
 
     try {
@@ -165,65 +168,61 @@ const PostInputForm = ({
   };
 
   return (
-    <div className="min-h-screen w-full bg-white px-4 py-10 text-black">
-      <h1 className="mb-5 text-2xl font-bold">{isEditMode ? '기록 수정' : !isMission && '나의 일기 작성'}</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-        <div className="mb-4 rounded-xl border border-gray-200 bg-white p-8">
-          <div className="mb-4 flex items-center gap-4">
-            {isMission && dropdownMissions && (
-              <ChecklistPostDropdown
-                missions={dropdownMissions}
-                completedIds={completedIds}
-                selectedId={selectedMissionId}
-                onSelect={setSelectedMissionId}
-              />
-            )}
-            {!isMission && (
-              <input
-                type="text"
-                {...register('title')}
-                placeholder={DEFAULT_TITLE}
-                className="mb-[20px] w-[700px] border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
-              />
-            )}
-            <DatePicker date={selectedDate} setDate={setSelectedDate} />
+    <div className="min-h-screen w-full max-w-[1200px] bg-white px-4 py-10 text-secondary-grey-900">
+      <button
+        type="button"
+        onClick={handleCancel}
+        className="mb-[32px] flex items-center text-sm text-secondary-grey-600 hover:text-secondary-grey-800"
+      >
+        <ChevronLeft className="mr-1 h-5 w-5" />
+        뒤로가기
+      </button>
+      <div className="flex w-full items-center justify-between">
+        <h1 className="mb-[20px] text-xl font-bold">{isEditMode ? '기록 수정' : '혼자라이프 일기 작성'}</h1>
+        <div className="ml-4 shrink-0">
+          <DatePicker date={selectedDate} setDate={setSelectedDate} />
+        </div>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-[1200px]">
+        <div className="mb-6 h-[450px] w-full rounded-lg border border-secondary-grey-200 bg-white p-8">
+          <div className="mb-6 flex items-start justify-between border-b border-secondary-grey-200">
+            <input
+              type="text"
+              {...register('title')}
+              placeholder={DEFAULT_TITLE}
+              className="w-full border-none text-xl font-semibold outline-none placeholder:text-secondary-grey-500"
+            />
           </div>
 
           <textarea
             {...register('content')}
             placeholder="내용을 입력하세요..."
-            className="h-[300px] w-full resize-none bg-white p-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="h-56 w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
           />
-          {errors.content && <p className="mt-1 text-sm text-red-500">{errors.content.message}</p>}
+          {errors.content && <p className="mt-2 text-sm text-red-500">{errors.content.message}</p>}
         </div>
 
-        <TagInput value={tags} onChange={setTags} />
-        <ImageUploader
-          images={images}
-          onChange={setImages}
-          defaultImageUrls={uploadedImages.map((img) => img.publicUrl)}
-          onRemoveDefaultImage={(idx) => {
-            const updated = [...uploadedImages];
-            updated.splice(idx, 1);
-            setUploadedImages(updated);
-          }}
-        />
+        <div className="mb-6">
+          <TagInput value={tags} onChange={setTags} />
+        </div>
 
-        <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl border bg-white px-4 py-2.5"
-          >
-            작성 취소
-          </button>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5"
-          >
+        <div className="mb-6">
+          <ImageUploader
+            images={images}
+            onChange={setImages}
+            defaultImageUrls={uploadedImages.map((img) => img.publicUrl)}
+            onRemoveDefaultImage={(idx) => {
+              const updated = [...uploadedImages];
+              updated.splice(idx, 1);
+              setUploadedImages(updated);
+            }}
+          />
+        </div>
+
+        <div className="mx-auto mt-6 flex w-full items-center justify-center gap-5">
+          <CustomButton type="submit" disabled={isLoading}>
             {buttonLabel}
-          </button>
+          </CustomButton>
         </div>
       </form>
     </div>
