@@ -27,7 +27,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
   const displayDate = updated_at ?? created_at;
 
   return (
-    <article>
+    <article className="px-[40px]">
       {/* 게시글 헤더 */}
       <header className="mt-[64px]">
         <h1 className="mb-[12px] justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
@@ -64,7 +64,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
       )}
 
       {/* 본문 영역 */}
-      <section className="prose prose-sm sm:prose lg:prose-lg mb-[46px] max-w-none justify-start text-base text-secondary-grey-800">
+      <section className="prose prose-sm sm:prose lg:prose-lg mb-[46px] mt-[40px] max-w-none justify-start text-[16px] text-secondary-grey-800">
         <p>{content}</p>
       </section>
 
@@ -72,9 +72,12 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
       <GonggamLikes postId={postId} userId={userData?.id} />
 
       {/* 태그 영역 */}
-      <ul className="mb-6 mt-4 flex flex-wrap gap-2 text-sm text-muted-foreground">
+      <ul className="mt-[46px] flex flex-wrap gap-[8px] border-b pb-[38px] text-[12px]">
         {tags?.map((tag) => (
-          <li key={tag} className="rounded-md border border-gray-300 bg-muted px-2 py-1 text-xs text-gray-600">
+          <li
+            key={tag}
+            className="border-black/12 rounded-[4px] border bg-secondary-grey-150 px-2 py-1 text-[12px] text-secondary-grey-900"
+          >
             # {tag}
           </li>
         ))}
