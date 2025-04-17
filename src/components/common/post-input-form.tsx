@@ -19,6 +19,7 @@ import type { MissionType } from '@/types/checklist';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
 import { ChevronLeft } from 'lucide-react';
+import { CustomButton } from '../ui/custom-button';
 
 interface LifeInputFormProps {
   missionId: string | null;
@@ -203,7 +204,6 @@ const PostInputForm = ({
 
         <div className="mb-6">
           <TagInput value={tags} onChange={setTags} />
-          <p className="mt-2 text-xs text-secondary-grey-500">최대 8글자, 6개 이내</p>
         </div>
 
         <div className="mb-6">
@@ -220,13 +220,9 @@ const PostInputForm = ({
         </div>
 
         <div className="mx-auto mt-6 flex w-full items-center justify-center gap-5">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex w-56 items-center justify-center gap-2.5 rounded-lg bg-primary-orange-400 px-4 py-2.5 text-white hover:bg-primary-orange-600 disabled:opacity-50"
-          >
+          <CustomButton type="submit" disabled={isLoading}>
             {buttonLabel}
-          </button>
+          </CustomButton>
         </div>
       </form>
     </div>
