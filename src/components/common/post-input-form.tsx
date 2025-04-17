@@ -176,7 +176,7 @@ const PostInputForm = ({
         <ChevronLeft className="mr-1 h-5 w-5" />
         뒤로가기
       </button>
-      <div className="flex w-full justify-between">
+      <div className="flex w-full items-center justify-between">
         <h1 className="mb-[20px] text-xl font-bold">{isEditMode ? '기록 수정' : '혼자라이프 일기 작성'}</h1>
         <div className="ml-4 shrink-0">
           <DatePicker date={selectedDate} setDate={setSelectedDate} />
