@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
-import { getPostImagesByPostId, getPostMetaByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import {
+  getPostImagesByPostId,
+  getPostMetaByPostId,
+  getViewCount,
+  getWriterProfile
+} from '@/lib/utils/api/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { Dot } from 'lucide-react';
 import type { GonggamPost } from '@/types/gonggam';
@@ -20,6 +25,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
 
   /** like, comments 불러오기 */
   const { likeCnt, commentCnt } = await getPostMetaByPostId(post.id);
+  const viewCount = await getViewCount(String(post.id));
 
   return (
     <article className="flex max-w-[1200px] items-start justify-between gap-[10px] border-b border-secondary-grey-200 px-[10px] py-[12px]">
@@ -38,7 +44,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
           </p>
         </div>
         {/* 좋아요/댓글/조회수 */}
-        <GonggamBoardMeta likeCnt={likeCnt} commentCnt={commentCnt} postId={String(post.id)} />
+        <GonggamBoardMeta likeCnt={likeCnt} commentCnt={commentCnt} viewCount={viewCount} />
       </section>
 
       {/* 이미지 */}
