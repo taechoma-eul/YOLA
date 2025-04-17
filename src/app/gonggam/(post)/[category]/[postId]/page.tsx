@@ -34,7 +34,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
           {title}
         </h1>
         {/* 작성자 정보 및 시간 + 구분선 */}
-        <section className="flex items-center border-b pb-[20px] text-base text-secondary-grey-800">
+        <section className="flex items-center justify-between border-b pb-[20px] text-base text-secondary-grey-800">
           <div className="flex items-center">
             <div className="relative mr-[6px] h-[22px] w-[22px] overflow-hidden rounded-full">
               <Image
