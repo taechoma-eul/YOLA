@@ -71,7 +71,7 @@ const AchievementPage = async () => {
 
               {/* 카테고리명 */}
               <div className="flex cursor-pointer flex-row whitespace-nowrap text-base font-semibold">
-                <figure className="h-[24px]flex mr-[4px] w-[24px]">
+                <figure className="mr-[4px] flex h-[24px] w-[24px]">
                   <Image src={icon} alt={type} height={24} width={24} />
                 </figure>
                 {type}

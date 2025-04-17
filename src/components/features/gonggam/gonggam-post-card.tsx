@@ -1,9 +1,15 @@
 import Image from 'next/image';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
-import { getPostImagesByPostId, getPostMetaByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import {
+  getPostImagesByPostId,
+  getPostMetaByPostId,
+  getViewCount,
+  getWriterProfile
+} from '@/lib/utils/api/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import { Dot, Eye, Heart, MessageSquare } from 'lucide-react';
+import { Dot } from 'lucide-react';
 import type { GonggamPost } from '@/types/gonggam';
+import GonggamBoardMeta from '@/components/features/gonggam/gonggam-board-meta';
 
 interface GonggamPostCardProps {
   post: GonggamPost;
@@ -19,6 +25,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
 
   /** like, comments 불러오기 */
   const { likeCnt, commentCnt } = await getPostMetaByPostId(post.id);
+  const viewCount = await getViewCount(String(post.id));
 
   return (
     <article className="flex max-w-[1200px] items-start justify-between gap-[10px] border-b border-secondary-grey-200 px-[10px] py-[12px]">
@@ -29,27 +36,15 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
           <Dot size={12} className="translate-y-[-2px]" />
           <time dateTime={post.created_at}>{formatRelativeDate(post.created_at)}</time>
         </div>
-
         {/* 텍스트 영역 */}
         <div className="mb-[13px] mt-[4px] flex flex-col items-start gap-1 self-stretch">
           <h3 className="flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">{post.title}</h3>
           <p className="overflow-hidden truncate text-[12px] font-normal leading-[140%] text-secondary-grey-900">
-            {post.content}
+            {post.content.length > 100 ? `${post.content.slice(0, 100)}...` : post.content}
           </p>
         </div>
-
-        {/* 좋아요/댓글 */}
-        <footer className="mb-[11px] flex gap-[12px] self-stretch">
-          <div className="flex items-center gap-[3px] overflow-hidden truncate text-[12px] font-normal leading-normal text-secondary-grey-900">
-            <Heart size={12} /> {likeCnt}
-          </div>
-          <div className="flex items-center gap-[3px] overflow-hidden truncate text-[12px] font-normal leading-normal text-secondary-grey-900">
-            <MessageSquare size={12} /> {commentCnt}
-          </div>
-          <div className="flex items-center gap-[3px] overflow-hidden truncate text-[12px] font-normal leading-normal text-secondary-grey-900">
-            <Eye size={12} /> 0
-          </div>
-        </footer>
+        {/* 좋아요/댓글/조회수 */}
+        <GonggamBoardMeta likeCnt={likeCnt} commentCnt={commentCnt} viewCount={viewCount} />
       </section>
 
       {/* 이미지 */}

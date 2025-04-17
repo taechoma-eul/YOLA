@@ -30,7 +30,8 @@ export async function updateSession(request: NextRequest) {
     API.GOOGLE_LOGIN,
     API.KAKAO_LOGIN,
     API.SOCIAL_LOGIN_CALL_BACK,
-    API.DUPLICATE
+    API.DUPLICATE,
+    API.VIEW_COUNT
   ];
 
   // 루트 경로는 정확한 매칭, /gonggam/[category]/[postId]는 정규식으로 체크, 나머지는 startsWith

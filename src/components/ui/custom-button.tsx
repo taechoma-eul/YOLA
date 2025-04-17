@@ -17,7 +17,7 @@ const buttonVariants = cva(
       size: {
         default: 'w-[230px] py-[10px] rounded-xl font-semibold',
         'error-page': 'w-[240px] py-[10px] rounded-xl font-semibold',
-        'comment-submit': 'w-[80px] py-[12px] rounded-lg',
+        'comment-submit': 'min-w-[80px] h-[46px] p-[12px] rounded-[8px]',
         'gonggam-write': 'w-[100px] h-[38px]  rounded-lg',
         'auth-submit': 'w-[360px] py-[10px] rounded-lg',
         login: 'px-[12px] py-[8px] min-w-[66px] rounded-lg',
