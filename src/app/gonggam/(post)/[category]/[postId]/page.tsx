@@ -1,10 +1,12 @@
 import GonggamCommentForm from '@/components/features/gonggam/gonggam-comment-form';
 import GonggamCommentList from '@/components/features/gonggam/gonggam-comment-list';
+import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail-view-count';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { getUserProfile } from '@/lib/utils/api/auth.api';
+import { getViewCount } from '@/lib/utils/api/gonggam-board.api';
 import { getGonggamPostDetail } from '@/lib/utils/api/gonggam-detail.api';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 import { Dot } from 'lucide-react';
@@ -20,6 +22,7 @@ interface GonggamPostDetailProps {
 const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDetailProps) => {
   const userData = await getUserProfile();
   const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
+  const viewCount = await getViewCount(String(postId));
 
   const displayDate = updated_at ?? created_at;
 
@@ -44,6 +47,9 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
             <span>{profile.nickname}</span>
             <Dot size={12} />
             <time dateTime={displayDate}>{getKoreanDateTime(displayDate)}</time>
+            <Dot size={12} />
+            {/* 디테일 뷰카운트 */}
+            <GonggamDetailViewCount postId={String(postId)} initCount={viewCount} />
           </div>
           {/* {userId === profile.id && <GonggamMyPostDropdown />} */}
           {userData?.id === profile.id && <GonggamMyPostDropdown postId={postId} />}
