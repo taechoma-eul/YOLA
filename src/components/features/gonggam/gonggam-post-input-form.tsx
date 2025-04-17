@@ -5,16 +5,18 @@ import Image from 'next/image';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
 import GonggamSelectBox from '@/components/features/gonggam/gonggam-select-box';
+import { CustomButton } from '@/components/ui/custom-button';
 import { categoryMap, reverseCategoryMap } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
 import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
+import { toastAlert } from '@/lib/utils/toast';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
 import type { Tables } from '@/types/supabase';
@@ -35,7 +37,7 @@ export type Category = Tables<'gonggam_posts'>['category'];
 const categoryKeys = Object.keys(categoryMap) as [keyof typeof categoryMap];
 
 const postSchema = z.object({
-  title: z.string().min(1, '내용은 필수입니다'),
+  title: z.string().min(1, '내용은 필수입니다').max(50, '제목은 50자 이하여야 합니다'),
   content: z.string().min(1, '내용은 필수입니다'),
   category: z.enum(categoryKeys)
 });
@@ -69,9 +71,10 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isValid }
   } = useForm<FormData>({
     resolver: zodResolver(postSchema),
+    mode: 'onChange',
     defaultValues: {
       title: defaultValues?.title ?? '',
       content: defaultValues?.content ?? '',
@@ -124,12 +127,12 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
         queryClient.invalidateQueries({
           queryKey: QUERY_KEY.GONGGAM_POSTS()
         });
-        alert(`${action}되었습니다!`);
+        toastAlert(`${action}되었습니다!`, 'success');
         router.push(`${PATH.GONGGAM}/${categoryMap[category]}`); //작성한 글의 카테고리 게시판으로 이동
       };
 
       const onError = (err: unknown) => {
-        alert(err instanceof Error ? err.message : `${action} 중 오류가 발생했습니다.`);
+        toastAlert(err instanceof Error ? err.message : `${action} 중 오류가 발생했습니다.`, 'destructive');
       };
 
       const mutationFn =
@@ -139,7 +142,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
       mutationFn();
     } catch (err) {
-      alert(err instanceof Error ? err.message : '알 수 없는 오류 발생');
+      toastAlert(err instanceof Error ? err.message : '알 수 없는 오류 발생', 'destructive');
     }
   };
 
@@ -152,7 +155,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
-      alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
+      toastAlert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''), 'destructive');
     }
   };
 
@@ -176,6 +179,8 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
             className="mb-4 w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
             required
           />
+          {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title.message}</p>}
+
           <textarea
             {...register('content')}
             placeholder="내용을 입력하세요..."
@@ -198,13 +203,9 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
         />
 
         <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5 text-white"
-          >
+          <CustomButton type="submit" disabled={!isValid || isLoading}>
             등록하기
-          </button>
+          </CustomButton>
         </div>
       </form>
     </div>

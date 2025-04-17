@@ -17,11 +17,12 @@ const SET_TIME_OUT = 150;
  * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
 const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
-  const [isOpen, setIsopen] = useState<boolean>(true);
+  const [isOpen, setIsopen] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [showModal, setShowModal] = useState(false);
 
   const handlePointerEnter = () => {
+    if (showModal) return;
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -29,11 +30,18 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
   };
 
   const handlePointerLeave = () => {
+    if (showModal) return;
     /** 아이콘과 버튼 사이의 갭 때문에 생기는 리렌더링(깜빡임) 방지하기 위한 디바운싱 */
     timeoutRef.current = setTimeout(() => {
       setIsopen(false);
     }, SET_TIME_OUT);
   };
+
+  useEffect(() => {
+    if (showModal) {
+      setIsopen(false); // 모달 열릴 때 드롭다운 닫기
+    }
+  }, [showModal]);
 
   /** 메모리 누수 방지를 위한 클린업 함수 */
   useEffect(() => {
@@ -46,7 +54,7 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
 
   return (
     <div onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave} className="inline-block">
-      <DropdownMenu open={isOpen} modal={false}>
+      <DropdownMenu open={isOpen} onOpenChange={setIsopen} modal={false}>
         {/** 직접 넘긴 컴포넌트를 중첩 없이 그대로 사용하기 위해 asChild 필요 */}
         <DropdownMenuTrigger asChild>
           <div className="cursor-pointer">

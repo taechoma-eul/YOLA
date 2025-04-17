@@ -10,6 +10,7 @@ import Image from 'next/image';
 import divider from '@images/images/post-detail-divider.svg';
 import missionIcon from '@images/images/post-mission.svg';
 import diaryIcon from '@images/images/post-diary.svg';
+import { toastAlert } from '@/lib/utils/toast';
 
 /**
   step 1. 모달을 호출할 파일에 이 코드를 추가해주세요
@@ -64,15 +65,13 @@ export const PostDetailModal = ({
     if (showModal) {
       timeoutId = setTimeout(() => setIsVisible(true), SET_TIME_OUT_SHOW_MODAL);
       document.body.style.overflow = 'hidden'; //모달이 클릭되면 배경에 스크롤 막음
+      document.documentElement.style.overflow = 'hidden';
       document.addEventListener('touchmove', preventScroll, { passive: false }); //모바일에서도 막음
-    } else {
-      setIsVisible(false);
-      document.body.style.overflow = '';
-      document.removeEventListener('touchmove', preventScroll);
     }
     return () => {
       clearTimeout(timeoutId); // 클린업 시 타이머 제거
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       document.removeEventListener('touchmove', preventScroll);
     };
   }, [showModal]);
@@ -95,9 +94,9 @@ export const PostDetailModal = ({
     try {
       await deleteLifePost.mutateAsync(post);
       handleClose();
-      alert('삭제되었습니다!');
+      toastAlert('삭제되었습니다!', 'success');
     } catch (error) {
-      alert('삭제에 실패했습니다.');
+      toastAlert('삭제에 실패했습니다.', 'destructive');
     }
   };
 
