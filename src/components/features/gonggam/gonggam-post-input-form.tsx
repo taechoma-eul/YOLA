@@ -36,7 +36,7 @@ export type Category = Tables<'gonggam_posts'>['category'];
 const categoryKeys = Object.keys(categoryMap) as [keyof typeof categoryMap];
 
 const postSchema = z.object({
-  title: z.string().min(1, '내용은 필수입니다'),
+  title: z.string().min(1, '내용은 필수입니다').max(50, '제목은 50자 이하여야 합니다'),
   content: z.string().min(1, '내용은 필수입니다'),
   category: z.enum(categoryKeys)
 });
@@ -70,9 +70,10 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isValid }
   } = useForm<FormData>({
     resolver: zodResolver(postSchema),
+    mode: 'onChange',
     defaultValues: {
       title: defaultValues?.title ?? '',
       content: defaultValues?.content ?? '',
@@ -177,6 +178,8 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
             className="mb-4 w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
             required
           />
+          {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title.message}</p>}
+
           <textarea
             {...register('content')}
             placeholder="내용을 입력하세요..."
@@ -199,11 +202,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
         />
 
         <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
-          <CustomButton
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5 text-white"
-          >
+          <CustomButton type="submit" disabled={!isValid || isLoading}>
             등록하기
           </CustomButton>
         </div>
