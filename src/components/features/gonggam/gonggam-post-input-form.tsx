@@ -9,13 +9,14 @@ import { CustomButton } from '@/components/ui/custom-button';
 import { categoryMap, reverseCategoryMap } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
 import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
+import { toastAlert } from '@/lib/utils/toast';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
 import type { Tables } from '@/types/supabase';
@@ -126,12 +127,12 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
         queryClient.invalidateQueries({
           queryKey: QUERY_KEY.GONGGAM_POSTS()
         });
-        alert(`${action}되었습니다!`);
+        toastAlert(`${action}되었습니다!`, 'success');
         router.push(`${PATH.GONGGAM}/${categoryMap[category]}`); //작성한 글의 카테고리 게시판으로 이동
       };
 
       const onError = (err: unknown) => {
-        alert(err instanceof Error ? err.message : `${action} 중 오류가 발생했습니다.`);
+        toastAlert(err instanceof Error ? err.message : `${action} 중 오류가 발생했습니다.`, 'destructive');
       };
 
       const mutationFn =
@@ -141,7 +142,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
       mutationFn();
     } catch (err) {
-      alert(err instanceof Error ? err.message : '알 수 없는 오류 발생');
+      toastAlert(err instanceof Error ? err.message : '알 수 없는 오류 발생', 'destructive');
     }
   };
 
@@ -154,7 +155,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
-      alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
+      toastAlert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''), 'destructive');
     }
   };
 
