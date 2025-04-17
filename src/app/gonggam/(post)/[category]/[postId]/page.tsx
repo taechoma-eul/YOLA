@@ -65,7 +65,7 @@ const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDe
 
       {/* 본문 영역 */}
       <section className="prose prose-sm sm:prose lg:prose-lg mb-[46px] mt-[40px] max-w-none justify-start text-[16px] text-secondary-grey-800">
-        <p>{content}</p>
+        <p className="whitespace-pre-wrap">{content}</p>
       </section>
 
       {/* 좋아요 영역 */}
