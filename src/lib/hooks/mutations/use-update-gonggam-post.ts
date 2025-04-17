@@ -10,7 +10,6 @@ interface UpdateGonggamPostParams {
   created_at?: string;
   id: number;
   title: string;
-  updated_at?: string | null;
   user_id?: string;
   imageUrls: string[];
   rawTags: string; // 사용자 입력 문자열 (예: "#혼밥, #기록")
@@ -18,7 +17,9 @@ interface UpdateGonggamPostParams {
 
 export const useUpdateGonggamPost = () => {
   return useMutation({
-    mutationFn: async ({ id, title, content, category, imageUrls, updated_at, rawTags }: UpdateGonggamPostParams) => {
+    mutationFn: async ({ id, title, content, category, imageUrls, rawTags }: UpdateGonggamPostParams) => {
+      const updatedAt = new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString();
+
       // Step 1. 게시글 업데이트
       const { data: postData, error: postError } = await supabase
         .from(GONGGAM_POSTS_TABLE)
@@ -26,7 +27,7 @@ export const useUpdateGonggamPost = () => {
           title,
           content,
           category,
-          updated_at,
+          updated_at: updatedAt,
           tags: parseTags(rawTags)
         })
         .eq('id', id);

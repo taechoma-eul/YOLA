@@ -5,6 +5,7 @@ import Image from 'next/image';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
 import GonggamSelectBox from '@/components/features/gonggam/gonggam-select-box';
+import { CustomButton } from '@/components/ui/custom-button';
 import { categoryMap, reverseCategoryMap } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { QUERY_KEY } from '@/constants/query-keys';
@@ -198,13 +199,13 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
         />
 
         <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
-          <button
+          <CustomButton
             type="submit"
             disabled={isLoading}
             className="inline-flex w-56 items-center justify-center gap-2.5 rounded-xl bg-orange-400 px-4 py-2.5 text-white"
           >
             등록하기
-          </button>
+          </CustomButton>
         </div>
       </form>
     </div>

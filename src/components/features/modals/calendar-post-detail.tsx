@@ -64,15 +64,13 @@ export const PostDetailModal = ({
     if (showModal) {
       timeoutId = setTimeout(() => setIsVisible(true), SET_TIME_OUT_SHOW_MODAL);
       document.body.style.overflow = 'hidden'; //모달이 클릭되면 배경에 스크롤 막음
+      document.documentElement.style.overflow = 'hidden';
       document.addEventListener('touchmove', preventScroll, { passive: false }); //모바일에서도 막음
-    } else {
-      setIsVisible(false);
-      document.body.style.overflow = '';
-      document.removeEventListener('touchmove', preventScroll);
     }
     return () => {
       clearTimeout(timeoutId); // 클린업 시 타이머 제거
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       document.removeEventListener('touchmove', preventScroll);
     };
   }, [showModal]);
