@@ -40,7 +40,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
         <div className="mb-[13px] mt-[4px] flex flex-col items-start gap-1 self-stretch">
           <h3 className="flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">{post.title}</h3>
           <p className="overflow-hidden truncate text-[12px] font-normal leading-[140%] text-secondary-grey-900">
-            {post.content}
+            {post.content.length > 100 ? `${post.content.slice(0, 100)}...` : post.content}
           </p>
         </div>
         {/* 좋아요/댓글/조회수 */}
