@@ -73,10 +73,6 @@
   }
 }
 
-html {
-  overflow-y: scroll; /* 항상 스크롤바 표시 */
-}
-
 body {
   width: 100%;
   margin: 0;
