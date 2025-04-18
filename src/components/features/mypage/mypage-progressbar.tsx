@@ -17,7 +17,7 @@ const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
   useEffect(() => {
     const index = stepLabels.indexOf(level);
     setCurrentStep(index === -1 ? 0 : index);
-  }, [level]);
+  }, [level, stepLabels]);
 
   return (
     <div className="gap-3 rounded-[8px] border border-secondary-grey-400 p-10">
