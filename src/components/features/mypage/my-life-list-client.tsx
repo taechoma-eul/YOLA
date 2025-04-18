@@ -29,7 +29,7 @@ const MyLifeListClient = () => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   const parsedList: SoloLifeCardType[] =
     posts?.pages?.flatMap((page: GetLifePostsResponse) =>
