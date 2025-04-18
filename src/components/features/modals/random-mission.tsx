@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { FadeLoader } from 'react-spinners';
 import { CustomButton } from '@/components/ui/custom-button';
 import { MAIN_CHARACTER_URL } from '@/constants/default-image-url';
-import MISSION_BACKGROUND from '@images/images/random-modal-bg.svg';
 import type { TableMissionList } from '@/types/supabase-const';
+import MISSION_BACKGROUND from '@images/images/random-modal-bg.svg';
 
 /*
 Step 1. 사용할 페이지 서버컴포넌트에서 이 코드를 추가해주세요

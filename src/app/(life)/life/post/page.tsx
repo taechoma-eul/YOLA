@@ -1,6 +1,6 @@
 import PostInputForm from '@/components/common/post-input-form';
 import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
-import { getMissionDropdownData } from '@/lib/utils/api/checklist-post.api';
+import { getMissionDropdownData } from '@/lib/utils/api/checklist/checklist-post.api';
 import type { MissionType } from '@/types/checklist';
 
 const LifePostPage = async ({ searchParams }: { searchParams: { mission_id?: string } }) => {

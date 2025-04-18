@@ -6,7 +6,7 @@ import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import { CustomButton } from '@/components/ui/custom-button';
 import { PATH } from '@/constants/page-path';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
-import type { InitProfile } from '@/types/edit-profile-form';
+import type { InitProfile } from '@/types/auth-form';
 
 const ProfileBox = ({ initProfile }: InitProfile) => {
   //현재 경로 가져오기
