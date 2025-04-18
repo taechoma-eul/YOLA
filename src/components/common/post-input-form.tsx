@@ -20,6 +20,7 @@ import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { MissionType } from '@/types/checklist';
 import { CustomButton } from '../ui/custom-button';
 import clsx from 'clsx';
+import ChecklistPostDropdown from '../features/checklist/checklist-post-dropdown';
 
 interface LifeInputFormProps {
   missionId: string | null;
