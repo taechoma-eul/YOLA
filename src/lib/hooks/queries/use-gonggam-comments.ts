@@ -9,7 +9,7 @@ export const useGonggamComments = (postId: number) => {
     isPending: isCommentsPending,
     error: commentsErr
   } = useQuery<CommentWithUser[]>({
-    queryKey: QUERY_KEY.GONGGAM_COMMENTS(postId),
+    queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId],
     queryFn: () => getCommentsByPostId(postId)
   });
   return { comments, isCommentsPending, commentsErr };

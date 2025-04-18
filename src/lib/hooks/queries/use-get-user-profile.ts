@@ -11,7 +11,7 @@ export const useUserProfile = (initProfile: TableUsers) => {
     error: profileFetchingError
   } = useQuery({
     queryFn: fetchUserProfile,
-    queryKey: QUERY_KEY.PROFILE,
+    queryKey: [QUERY_KEY.PROFILE],
     initialData: initProfile
   });
 

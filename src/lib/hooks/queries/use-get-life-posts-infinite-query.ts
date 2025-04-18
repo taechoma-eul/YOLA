@@ -9,7 +9,7 @@ import type { GetLifePostsResponse } from '@/types/life-post';
  */
 const useGetLifePostsInfiniteQuery = () => {
   return useInfiniteQuery<GetLifePostsResponse>({
-    queryKey: QUERY_KEY.LIFE_POSTS_INFINITE,
+    queryKey: [QUERY_KEY.LIFE_POSTS_INFINITE],
     queryFn: ({ pageParam }) => getLifePostsAll({ page: pageParam as number }),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.totalPages) {

@@ -5,7 +5,7 @@ import type { LifePostWithImageUrls } from '@/types/life-post';
 
 export const useGetLifePostByMissionId = (missionId: number | null) => {
   return useQuery<LifePostWithImageUrls>({
-    queryKey: QUERY_KEY.LIFE_POSTS(String(missionId)),
+    queryKey: [QUERY_KEY.LIFE_POSTS, missionId],
     queryFn: () => getLifePostByMissionId(missionId!),
     enabled: missionId !== null
   });

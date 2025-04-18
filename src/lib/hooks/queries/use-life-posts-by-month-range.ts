@@ -8,7 +8,7 @@ import type { LifePostWithImageUrls } from '@/types/life-post';
 export const useLifePostsByMonthRange = (months: string[]) => {
   const results = useQueries({
     queries: months.map((month) => ({
-      queryKey: QUERY_KEY.LIFE_POSTS(month),
+      queryKey: [QUERY_KEY.LIFE_POSTS, month],
       queryFn: () => getLifePostsByMonth(month)
     }))
   });

@@ -8,7 +8,7 @@ export const useUploadComment = (postId: number) => {
   return useMutation({
     mutationFn: (comment: string) => uploadGonggamComment({ postId, comment }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.GONGGAM_COMMENTS(postId) });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId] });
     }
   });
 };

@@ -15,7 +15,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
 
   useEffect(() => {
     queryClient.invalidateQueries({
-      queryKey: QUERY_KEY.GONGGAM_POSTS_INFINITE(sortBy)
+      queryKey: [QUERY_KEY.GONGGAM_POSTS_INFINITE, sortBy]
     });
   }, [sortBy]);
 

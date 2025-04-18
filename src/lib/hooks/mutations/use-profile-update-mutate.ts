@@ -9,7 +9,7 @@ export const useUpdateProfileMutate = () => {
     mutationFn: updateUserProfile, // 서버 액션
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.PROFILE
+        queryKey: [QUERY_KEY.PROFILE]
       });
     },
     onError: (error) => {
