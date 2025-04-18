@@ -20,6 +20,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
 import { ChevronLeft } from 'lucide-react';
 import { CustomButton } from '../ui/custom-button';
+import clsx from 'clsx';
 
 interface LifeInputFormProps {
   missionId: string | null;
@@ -177,27 +178,43 @@ const PostInputForm = ({
         <ChevronLeft className="mr-1 h-5 w-5" />
         뒤로가기
       </button>
-      <div className="flex w-full items-center justify-between">
-        <h1 className="mb-[20px] text-xl font-bold">{isEditMode ? '기록 수정' : '혼자라이프 일기 작성'}</h1>
-        <div className="ml-4 shrink-0">
-          <DatePicker date={selectedDate} setDate={setSelectedDate} />
-        </div>
-      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[1200px]">
+        <div
+          className={clsx('mb-[20px] flex w-full items-center', isMission ? 'justify-start gap-4' : 'justify-between')}
+        >
+          <h1 className="text-xl font-bold">
+            {isEditMode
+              ? '기록 수정'
+              : isMission
+                ? dropdownMissions && (
+                    <ChecklistPostDropdown
+                      missions={dropdownMissions}
+                      completedIds={completedIds}
+                      selectedId={selectedMissionId}
+                      onSelect={setSelectedMissionId}
+                    />
+                  )
+                : '혼자 라이프 기록'}
+          </h1>
+          <div className="ml-4 shrink-0">
+            <DatePicker date={selectedDate} setDate={setSelectedDate} />
+          </div>
+        </div>
+
         <div className="mb-6 h-[450px] w-full rounded-lg border border-secondary-grey-200 bg-white p-8">
-          <div className="mb-6 flex items-start justify-between border-b border-secondary-grey-200">
+          {!isMission && (
             <input
               type="text"
               {...register('title')}
               placeholder={DEFAULT_TITLE}
-              className="w-full border-none text-xl font-semibold outline-none placeholder:text-secondary-grey-500"
+              className="mb-[20px] w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
             />
-          </div>
+          )}
 
           <textarea
             {...register('content')}
             placeholder="내용을 입력하세요..."
-            className="h-56 w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
+            className="h-[90%] w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
           />
           {errors.content && <p className="mt-2 text-sm text-red-500">{errors.content.message}</p>}
         </div>
