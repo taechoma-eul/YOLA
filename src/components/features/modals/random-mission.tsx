@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { FadeLoader } from 'react-spinners';
 import { CustomButton } from '@/components/ui/custom-button';
 import { MAIN_CHARACTER_URL } from '@/constants/default-image-url';
-import type { Tables } from '@/types/supabase';
 import MISSION_BACKGROUND from '@images/images/random-modal-bg.svg';
+import type { TableMissionList } from '@/types/supabase-const';
 
 /*
 Step 1. 사용할 페이지 서버컴포넌트에서 이 코드를 추가해주세요
@@ -25,7 +25,7 @@ Step 5. 4번의 버튼 바깥에 이 코드를 추가해주세요
 {showModal && <RandomMissionModal missions={missions} clickModal={clickModal} showModal={showModal} isLogin={isLogin} />}
  */
 interface RandomMissionModalProps {
-  missionsData: Tables<'mission_list'>[];
+  missionsData: TableMissionList[];
   clickModal: Function;
   showModal: boolean;
   isLogin: boolean;

@@ -1,4 +1,4 @@
-import type { SortBy } from '@/types/gonggam-posts';
+import type { SortBy } from '@/types/gonggam';
 
 export const QUERY_KEY = {
   PROFILE: ['profile'],
