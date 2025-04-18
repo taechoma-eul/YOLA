@@ -1,6 +1,6 @@
 import { MSG } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 /**

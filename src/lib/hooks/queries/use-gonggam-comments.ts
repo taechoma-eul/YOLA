@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { getCommentsByPostId } from '@/lib/utils/api/gonggam-detail-client.api';
+import { getCommentsByPostId } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 import type { CommentWithUser } from '@/types/gonggam';
 
 export const useGonggamComments = (postId: number) => {
@@ -9,7 +9,7 @@ export const useGonggamComments = (postId: number) => {
     isPending: isCommentsPending,
     error: commentsErr
   } = useQuery<CommentWithUser[]>({
-    queryKey: QUERY_KEY.GONGGAM_COMMENTS(postId),
+    queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId],
     queryFn: () => getCommentsByPostId(postId)
   });
   return { comments, isCommentsPending, commentsErr };

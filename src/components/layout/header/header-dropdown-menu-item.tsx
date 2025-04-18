@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import { FAIL } from '@/constants/messages';
-import { logout } from '@/lib/utils/api/auth-action';
+import { logout } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import type { MenuItem } from '@/types/header';
 

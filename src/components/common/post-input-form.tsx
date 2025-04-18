@@ -132,7 +132,7 @@ const PostInputForm = ({
 
       const onSuccess = () => {
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEY.LIFE_POSTS()
+          queryKey: [QUERY_KEY.LIFE_POSTS]
         });
         alert(`${action}되었습니다!`);
         router.push(PATH.LIFE);

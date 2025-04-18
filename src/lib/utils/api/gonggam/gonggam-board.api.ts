@@ -5,9 +5,9 @@ import type {
   GonggamPost,
   GonggamPostMeta,
   PaginatedPostsResponse,
-  WriterProfileResponse
+  WriterProfileResponse,
+  GonggamPostWithReaction
 } from '@/types/gonggam';
-import type { GonggamPostWithReaction } from '@/types/gonggam';
 import type { TableUsers } from '@/types/supabase-const';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수

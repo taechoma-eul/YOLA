@@ -1,5 +1,5 @@
 import { TABLE } from '@/constants/supabase-tables-name';
-import { getPostImagesByPostId, getWriterProfile } from '@/lib/utils/api/gonggam-board.api';
+import { getPostImagesByPostId, getWriterProfile } from '@/lib/utils/api/gonggam/gonggam-board.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { GonggamPost, GonggamPostDetail } from '@/types/gonggam';
 

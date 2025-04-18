@@ -7,7 +7,7 @@ import {
   getPostMetaByPostId,
   getViewCount,
   getWriterProfile
-} from '@/lib/utils/api/gonggam-board.api';
+} from '@/lib/utils/api/gonggam/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import type { GonggamPost } from '@/types/gonggam';
 

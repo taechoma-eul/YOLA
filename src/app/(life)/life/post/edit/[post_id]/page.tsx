@@ -1,7 +1,7 @@
 // app/life/post/edit/[post_id]/page.tsx
 
 import PostInputForm from '@/components/common/post-input-form';
-import { getLifePostById } from '@/lib/utils/api/my-life.api';
+import { getLifePostById } from '@/lib/utils/api/mypage/my-life.api';
 
 interface EditPageProps {
   params: { post_id: string };

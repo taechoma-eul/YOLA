@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { updateUserProfile } from '@/lib/utils/api/auth-action';
+import { updateUserProfile } from '@/lib/utils/api/auth/auth-action';
 
 export const useUpdateProfileMutate = () => {
   const queryClient = useQueryClient();
@@ -9,7 +9,7 @@ export const useUpdateProfileMutate = () => {
     mutationFn: updateUserProfile, // 서버 액션
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.PROFILE
+        queryKey: [QUERY_KEY.PROFILE]
       });
     },
     onError: (error) => {

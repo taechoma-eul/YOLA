@@ -7,9 +7,9 @@ import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swip
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
-import { getUserProfile } from '@/lib/utils/api/auth.api';
-import { getViewCount } from '@/lib/utils/api/gonggam-board.api';
-import { getGonggamPostDetail } from '@/lib/utils/api/gonggam-detail.api';
+import { getUserProfile } from '@/lib/utils/api/auth/auth.api';
+import { getViewCount } from '@/lib/utils/api/gonggam/gonggam-board.api';
+import { getGonggamPostDetail } from '@/lib/utils/api/gonggam/gonggam-detail.api';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 
 interface GonggamPostDetailProps {

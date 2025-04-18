@@ -9,7 +9,7 @@ import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { AUTH } from '@/constants/auth-form';
 import { processedImagePreview } from '@/lib/utils/processed-image';
-import type { EditFormData } from '@/types/edit-profile-form';
+import type { EditFormData } from '@/types/auth-form';
 import CAMERA from '@images/images/camera.svg';
 
 const ProfileImageField = ({

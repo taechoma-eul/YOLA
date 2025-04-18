@@ -2,7 +2,7 @@ import GuestOptionMenu from '@/components/layout/header/header-guest-option';
 import MainLogo from '@/components/layout/header/header-main-logo';
 import HeaderNav from '@/components/layout/header/header-nav';
 import UserOptionMenu from '@/components/layout/header/header-user-option';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 
 const Header = async () => {
   const { isLogin } = await getUserSessionState();
