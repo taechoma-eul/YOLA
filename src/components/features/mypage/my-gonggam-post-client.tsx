@@ -17,7 +17,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
     queryClient.invalidateQueries({
       queryKey: QUERY_KEY.GONGGAM_POSTS_INFINITE(sortBy)
     });
-  }, [sortBy]);
+  }, [sortBy, queryClient]);
 
   const {
     data: posts,
@@ -34,7 +34,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) throw error;
