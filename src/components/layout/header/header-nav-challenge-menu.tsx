@@ -4,7 +4,7 @@ import { PATH } from '@/constants/page-path';
 import type { MenuItem } from '@/types/components/header';
 import MENU_ICON from '@images/images/challenge_menu.svg';
 
-const NavChallengeMenu = () => {
+const NavChallengeMenu = ({ label }: { label: string }) => {
   const challengeMenuItem: MenuItem[] = [
     { href: PATH.MEAL_CHECKLIST, label: '혼밥' },
     { href: PATH.TRAVEL_CHECKLIST, label: '혼자여행' },
@@ -16,7 +16,7 @@ const NavChallengeMenu = () => {
     <div data-state="Dropdown" className="inline-flex h-11 items-center justify-center gap-2.5 py-2.5">
       <HeaderDropdownMenu menuItems={challengeMenuItem}>
         <div className="flex h-[25px] w-[72px] justify-between text-center">
-          챌린지
+          {label}
           <Image
             src={MENU_ICON}
             alt="챌린지 메뉴 드롭 다운 표시"

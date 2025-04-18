@@ -15,12 +15,9 @@ const HeaderNav = () => {
 
   return (
     <nav className="flex items-center justify-center gap-1">
-      {navList.map((item) => (
-        <NavLinkItem key={item.label} href={item.href}>
-          {item.label}
-        </NavLinkItem>
-      ))}
-      <NavChallengeMenu />
+      <NavLinkItem label="혼자라이프 달력" href={PATH.LIFE} />
+      <NavLinkItem label="공감 게시판" href={PATH.GONGGAM} />
+      <NavChallengeMenu label="챌린지" />
     </nav>
   );
 };

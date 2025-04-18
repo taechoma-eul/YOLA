@@ -3,9 +3,8 @@
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import type { Children } from '@/types/children';
 
-const NavLinkItem = ({ href, children }: Children & { href: string }) => {
+const NavLinkItem = ({ href, label }: { href: string; label: string }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -23,7 +22,7 @@ const NavLinkItem = ({ href, children }: Children & { href: string }) => {
             isSelect && !isMission ? 'font-semibold' : 'font-normal'
           )}
         >
-          {children}
+          {label}
           <div
             className={clsx(
               'absolute top-[25px] h-[2px] w-full self-stretch rounded-[1px] bg-primary-orange-500 group-hover:visible',
