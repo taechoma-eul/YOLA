@@ -43,7 +43,7 @@ export const PostDetailModal = ({
   showModal,
   post
 }: {
-  clickModal: Function;
+  clickModal: (value: boolean) => void;
   showModal: boolean;
   post: LifePostWithImageUrls | null;
 }) => {
@@ -51,10 +51,8 @@ export const PostDetailModal = ({
   const deleteLifePost = useDeleteLifePost();
   const router = useRouter();
 
-  if (!post) return;
-
-  const createdDate = post.created_at.slice(0, 10);
-  const date = createdDate.split('-').join('.');
+  const createdDate = post?.created_at.slice(0, 10);
+  const date = createdDate?.split('-').join('.');
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout; // ID 저장 변수
@@ -75,6 +73,8 @@ export const PostDetailModal = ({
       document.removeEventListener('touchmove', preventScroll);
     };
   }, [showModal]);
+
+  if (!post) return null;
 
   const handleClose = () => {
     setIsVisible(false);
@@ -139,7 +139,7 @@ export const PostDetailModal = ({
             ))}
           </div>
           <hr className="w-[542px] border-t border-gray-300 px-[10px] py-[10px]" />
-          <p className="text-md font-normal text-secondary-grey-900">{post.content}</p>
+          <p className="text-md whitespace-pre-wrap font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
     </div>
