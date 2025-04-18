@@ -1,5 +1,5 @@
 import PostInputForm from '@/components/common/post-input-form';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { getMissionDropdownData } from '@/lib/utils/api/checklist-post.api';
 import type { MissionType } from '@/types/checklist';
 

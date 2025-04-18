@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import ChecklistClient from '@/components/features/checklist/checklist-client';
 import { validMissionTags } from '@/constants/mission';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
 import type { Level, MissionTag } from '@/types/checklist';
 

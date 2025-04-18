@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { uploadGonggamComment } from '@/lib/utils/api/gonggam-detail-client.api';
+import { uploadGonggamComment } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 
 export const useUploadComment = (postId: number) => {
   const queryClient = useQueryClient();

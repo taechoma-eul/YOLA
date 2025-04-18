@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { getMyGonggamPostsAll } from '@/lib/utils/api/my-gonggam-client.api';
+import { getMyGonggamPostsAll } from '@/lib/utils/api/mypage/my-gonggam-client.api';
 import type { GetMyGonggamPostsResponse, SortBy } from '@/types/gonggam';
 
 /**

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { fetchViewCount, incrementViewCount } from '@/lib/utils/api/gonggam-view-count.api';
+import { fetchViewCount, incrementViewCount } from '@/lib/utils/api/gonggam/gonggam-view-count.api';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 
 /**

@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { getLifePostsAll } from '@/lib/utils/api/my-life-client.api';
+import { getLifePostsAll } from '@/lib/utils/api/mypage/my-life-client.api';
 import type { GetLifePostsResponse } from '@/types/life-post';
 
 /**

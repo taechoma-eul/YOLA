@@ -9,7 +9,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input';
 import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
-import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
+import { fetchDuplicateCheck } from '@/lib/utils/api/auth/auth-client.api';
 import type { EditFormData } from '@/types/edit-profile-form';
 
 interface FieldProps {
