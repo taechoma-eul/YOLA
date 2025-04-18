@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { CustomButton } from '@/components/ui/custom-button';
 
 /**
@@ -44,7 +44,7 @@ const DeleteConfirmModal = ({
   );
 
   // 부모 모달에 영향 받지 않고 최상위에 띄워줌
-  return ReactDOM.createPortal(modal, document.body);
+  return createPortal(modal, document.body);
 };
 
 export default DeleteConfirmModal;
