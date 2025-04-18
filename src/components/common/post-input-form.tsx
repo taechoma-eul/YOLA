@@ -1,24 +1,23 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
+import DatePicker from '@/components/common/date-picker';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
-import DatePicker from '@/components/common/date-picker';
-import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
+import { PATH } from '@/constants/page-path';
+import { QUERY_KEY } from '@/constants/query-keys';
 import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
 import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { PATH } from '@/constants/page-path';
 import { getToday } from '@/lib/utils/get-date';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { MissionType } from '@/types/checklist';
-import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/query-keys';
-import { ChevronLeft } from 'lucide-react';
 import { CustomButton } from '../ui/custom-button';
 import clsx from 'clsx';
 

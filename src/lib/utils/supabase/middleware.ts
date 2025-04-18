@@ -1,10 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { PATH } from '@/constants/page-path';
 import { API } from '@/constants/api-path';
+import { PATH } from '@/constants/page-path';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
+  const supabaseResponse = NextResponse.next({
     request
   });
 
@@ -30,7 +30,8 @@ export async function updateSession(request: NextRequest) {
     API.GOOGLE_LOGIN,
     API.KAKAO_LOGIN,
     API.SOCIAL_LOGIN_CALL_BACK,
-    API.DUPLICATE
+    API.DUPLICATE,
+    API.VIEW_COUNT
   ];
 
   // 루트 경로는 정확한 매칭, /gonggam/[category]/[postId]는 정규식으로 체크, 나머지는 startsWith

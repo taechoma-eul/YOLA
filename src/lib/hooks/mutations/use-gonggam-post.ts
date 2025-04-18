@@ -1,7 +1,7 @@
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { TABLE } from '@/constants/supabase-tables-name';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { TABLE } from '@/constants/supabase-tables-name';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { Database } from '@/types/supabase';
 
 export const GONGGAM_POSTS_TABLE = TABLE.GONGGAM_POSTS;

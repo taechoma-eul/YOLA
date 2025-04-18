@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
 import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameMonth } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMemo, useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import CalendarHeader from '@/components/features/life/calendar/calendar-header';
-import CalendarWeekdays from '@/components/features/life/calendar/calendar-weekdays';
 import CalendarCell from '@/components/features/life/calendar/calendar-cell';
-import { renderDot } from '@/components/features/life/calendar/calendar-render-dot';
+import CalendarHeader from '@/components/features/life/calendar/calendar-header';
+import RenderDot from '@/components/features/life/calendar/calendar-render-dot';
+import CalendarWeekdays from '@/components/features/life/calendar/calendar-weekdays';
 
 interface Props {
   selectedDate: string;
@@ -111,7 +111,7 @@ const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props)
                         }
                         setDate(dateStr);
                       }}
-                      renderDot={renderDot(dotMap)}
+                      renderDot={RenderDot(dotMap)}
                     />
                   );
                 })}

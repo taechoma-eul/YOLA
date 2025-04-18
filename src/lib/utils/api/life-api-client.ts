@@ -1,9 +1,9 @@
 'use client';
 
-import { supabase } from '../supabase/supabase-client';
+import { v4 as uuidv4 } from 'uuid';
 import { TABLE } from '@/constants/supabase-tables-name';
 import type { LifePostWithImageUrls } from '@/types/life-post';
-import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../supabase/supabase-client';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 

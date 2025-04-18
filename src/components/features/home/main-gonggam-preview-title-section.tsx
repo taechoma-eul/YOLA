@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { PATH } from '@/constants/page-path';
-import Image from 'next/image';
 
 const TitleSection = () => {
   return (

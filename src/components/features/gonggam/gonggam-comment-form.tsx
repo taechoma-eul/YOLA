@@ -1,12 +1,12 @@
 'use client';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useState } from 'react';
+import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { MSG } from '@/constants/messages';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { toastAlert } from '@/lib/utils/toast';
-import Image from 'next/image';
-import { useState } from 'react';
 
 interface GonggamCommentFormProps {
   postId: number;
@@ -34,9 +34,9 @@ const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL
   };
 
   return (
-    <div>
-      <form className="flex items-center gap-2" onSubmit={handleSubmit}>
-        <div className="relative h-[40px] w-[40px] overflow-hidden rounded-full">
+    <div className="border-t py-[24px]">
+      <form className="flex items-center gap-[16px]" onSubmit={handleSubmit}>
+        <div className="border-black/12 relative h-[40px] w-[40px] overflow-hidden rounded-full border">
           <Image src={profileImage} alt="profile" fill sizes="40px" className="object-cover" />
         </div>
         <Input
@@ -45,10 +45,11 @@ const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           disabled={!isLogin}
+          className="font-base flex h-[46px] flex-1 items-center gap-[10px] rounded-[8px] bg-secondary-grey-150 px-[10px] py-[16px] leading-[140%]"
         />
-        <Button type="submit" disabled={isUploading || !isLogin}>
+        <CustomButton type="submit" size="comment-submit" disabled={isUploading || !isLogin}>
           등록하기
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

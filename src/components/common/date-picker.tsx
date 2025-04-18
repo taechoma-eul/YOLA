@@ -1,15 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { parseISO } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import { CalendarIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-import { cn } from '@/lib/utils/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toKoreanISOString } from '@/lib/utils/utc-to-kst';
-import { ko } from 'date-fns/locale';
 
 type DatePickerProps = {
   date: string;

@@ -1,13 +1,13 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { redirect } from 'next/navigation';
 import { AUTH } from '@/constants/auth-form';
+import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { FAIL } from '@/constants/messages';
+import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 const LAYOUT = 'layout';
 

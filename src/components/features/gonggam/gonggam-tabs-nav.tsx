@@ -1,7 +1,7 @@
 'use client';
 
+import { clsx } from 'clsx';
 import Link from 'next/link';
-import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import { tabs } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';

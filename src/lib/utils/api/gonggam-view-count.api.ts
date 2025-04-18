@@ -14,7 +14,7 @@ export const incrementViewCount = async (postId: string): Promise<void> => {
     if (!res.ok) {
       throw new Error(FAIL.INCREMENT_VIEW_COUNT);
     }
-  } catch (error) {
+  } catch {
     throw new Error(FAIL.INCREMENT_VIEW_COUNT);
   }
 };
@@ -31,7 +31,7 @@ export const fetchViewCount = async (postId: string): Promise<number> => {
     const { count }: { count: number } = await res.json();
 
     return count;
-  } catch (error) {
+  } catch {
     throw new Error(FAIL.GET_VIEW_COUNT);
   }
 };
