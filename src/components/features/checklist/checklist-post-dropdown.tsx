@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PATH } from '@/constants/page-path';
 import type { MissionType } from '@/types/checklist';
+import { ChevronDown } from 'lucide-react';
 
 type ChecklistPostDropdownProps = {
   missions: MissionType[];
@@ -51,8 +52,9 @@ const ChecklistPostDropdown = ({ missions, completedIds = [], selectedId, onSele
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="w-full justify-between">
+        <Button variant="outline" className="h-[45px] w-full min-w-[360px] justify-between">
           {selected ? selected.content : '미션 선택'}
+          <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-full">
