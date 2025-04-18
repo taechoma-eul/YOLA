@@ -1,7 +1,7 @@
-import { MAIN_LOGO_URL } from '@/constants/default-image-url';
-import { PATH } from '@/constants/page-path';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MAIN_LOGO_URL } from '@/constants/default-image-url';
+import { PATH } from '@/constants/page-path';
 
 const MainLogo = () => {
   return (

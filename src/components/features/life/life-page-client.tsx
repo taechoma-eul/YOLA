@@ -1,12 +1,12 @@
 'use client';
 
-import { useLifePostsByMonthRange } from '@/lib/hooks/queries/use-life-posts-by-month-range';
-import Calendar from '@/components/features/life/calendar/calendar';
-import SoloLifeList from '@/components/features/life/solo-life-list';
-import { getNextMonth, getPrevMonth, getToday } from '@/lib/utils/get-date';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import Calendar from '@/components/features/life/calendar/calendar';
+import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
+import { useLifePostsByMonthRange } from '@/lib/hooks/queries/use-life-posts-by-month-range';
+import { getNextMonth, getPrevMonth, getToday } from '@/lib/utils/get-date';
 
 type Props = {
   nickname: string;

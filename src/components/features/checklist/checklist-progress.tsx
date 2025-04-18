@@ -1,5 +1,5 @@
-import type { Level } from '@/types/checklist';
 import { Lock, Unlock } from 'lucide-react';
+import type { Level } from '@/types/checklist';
 
 interface ChecklistProgressProps {
   progress: number;

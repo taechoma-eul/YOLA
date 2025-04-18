@@ -1,9 +1,9 @@
+import Link from 'next/link';
 import { GonggamPagination } from '@/components/features/gonggam/gonggam-pagination';
 import GonggamPostCard from '@/components/features/gonggam/gonggam-post-card';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam-board.api';
-import Link from 'next/link';
 
 interface GonggamCategoryBoardProps {
   params: { category: string };

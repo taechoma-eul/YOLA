@@ -1,18 +1,18 @@
 import Image from 'next/image';
-import { getUserMission } from '@/lib/utils/api/my-mission.api';
-import { getMissionsData } from '@/lib/utils/api/missions.api';
-import { getLevelsByTypes } from '@/lib/utils/get-level-by-types';
-import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth.api';
-import { parseUserMissions } from '@/lib/utils/parse-user-mission';
-import { calculateUserLevel } from '@/lib/utils/calculate-user-level';
-import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
 import ButtonClientComponent from '@/components/features/mypage/button-client-component';
-import MEAL_ICON from '@images/images/meal-icon.svg';
-import TRAVEL_ICON from '@images/images/travel-icon.svg';
-import GOAT_ICON from '@images/images/goat-icon.svg';
+import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
+import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getMissionsData } from '@/lib/utils/api/missions.api';
+import { getUserMission } from '@/lib/utils/api/my-mission.api';
+import { calculateUserLevel } from '@/lib/utils/calculate-user-level';
+import { getLevelsByTypes } from '@/lib/utils/get-level-by-types';
+import { parseUserMissions } from '@/lib/utils/parse-user-mission';
 import CLEAN_ICON from '@images/images/clean-icon.svg';
+import GOAT_ICON from '@images/images/goat-icon.svg';
+import MEAL_ICON from '@images/images/meal-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
 import TOOLTIP_BOX from '@images/images/tooltip-box.svg';
+import TRAVEL_ICON from '@images/images/travel-icon.svg';
 
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회

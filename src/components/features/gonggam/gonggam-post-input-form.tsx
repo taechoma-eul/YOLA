@@ -1,7 +1,13 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
 import GonggamSelectBox from '@/components/features/gonggam/gonggam-select-box';
@@ -9,16 +15,10 @@ import { CustomButton } from '@/components/ui/custom-button';
 import { categoryMap, reverseCategoryMap } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
 import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
+import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import { z } from 'zod';
-import { v4 as uuidv4 } from 'uuid';
 import type { Tables } from '@/types/supabase';
 import backIcon from '@images/images/go-back-icon.svg';
 

@@ -1,8 +1,7 @@
 // components/calendar/calendar-render-dot.tsx
 import { format } from 'date-fns';
-import React from 'react';
 
-export const renderDot = (
+const RenderDot = (
   dotMap: Record<string, Set<'mission' | 'normal'>>
 ): ((date: Date, isOutside: boolean) => React.ReactNode) => {
   return (date, isOutside) => {
@@ -36,3 +35,5 @@ export const renderDot = (
     );
   };
 };
+
+export default RenderDot;

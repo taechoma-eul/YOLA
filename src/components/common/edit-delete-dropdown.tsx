@@ -1,12 +1,12 @@
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
-import Image from 'next/image';
 import dropdown from '@images/images/post-dropdown.svg';
 
 const SET_TIME_OUT = 150;

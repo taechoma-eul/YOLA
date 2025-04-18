@@ -1,5 +1,5 @@
-import { FOOTER_LOGO_URL } from '@/constants/default-image-url';
 import Image from 'next/image';
+import { FOOTER_LOGO_URL } from '@/constants/default-image-url';
 
 const Footer = () => {
   return (

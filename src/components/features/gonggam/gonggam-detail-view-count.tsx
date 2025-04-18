@@ -1,7 +1,7 @@
 'use client';
 
-import { useViewCount } from '@/lib/hooks/use-view-count';
 import { Eye } from 'lucide-react';
+import { useViewCount } from '@/lib/hooks/use-view-count';
 
 interface GonggamDetailViewCountProps {
   postId: string;

@@ -1,6 +1,6 @@
-import { CustomButton } from '@/components/ui/custom-button';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
+import { CustomButton } from '@/components/ui/custom-button';
 
 /**
  * Step 1. 모달을 호출할 파일에 이 코드를 추가해주세요
