@@ -4,12 +4,12 @@ import { redirect } from 'next/navigation';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { Tables } from '@/types/supabase';
+import type { TableMissionList } from '@/types/supabase-const';
 
 const GET_MISSIONS_DATA_KEY = 'mission-list-cache-key';
 
 // 미션리스트 전체 가져옴
-const _getMissionsData = async (supabase: SupabaseClient): Promise<Tables<'mission_list'>[]> => {
+const _getMissionsData = async (supabase: SupabaseClient): Promise<TableMissionList[]> => {
   const { data, error } = await supabase.from(TABLE.MISSION_LIST).select('*');
   if (error || !data) {
     redirect(PATH.ERROR);

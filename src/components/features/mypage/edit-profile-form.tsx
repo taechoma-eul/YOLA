@@ -13,7 +13,7 @@ import { useProfileForm } from '@/lib/hooks/use-profile-form';
 import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
 import { processedImage } from '@/lib/utils/processed-image';
 import { toastAlert } from '@/lib/utils/toast';
-import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
+import type { EditFormData, InitProfile } from '@/types/edit-profile-form';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);

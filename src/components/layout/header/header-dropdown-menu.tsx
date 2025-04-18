@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-menu-item';
 import { PATH } from '@/constants/page-path';
 import type { Children } from '@/types/children';
-import type { MenuItem } from '@/types/components/header';
+import type { MenuItem } from '@/types/header';
 
 interface MenuProps extends Children {
   menuItems: MenuItem[];

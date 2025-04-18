@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import RandomMissionModal from '@/components/features/modals/random-mission';
 import { CustomButton } from '@/components/ui/custom-button';
-import type { Tables } from '@/types/supabase';
+import type { TableMissionList } from '@/types/supabase-const';
 
 interface ButtonProps {
   isLogin: boolean;
-  missionData: Tables<'mission_list'>[];
+  missionData: TableMissionList[];
 }
 
 const MissionButton = ({ isLogin, missionData }: ButtonProps) => {

@@ -1,11 +1,8 @@
 import { deleteExistingImage } from '@/lib/utils/extract-file-form-url';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { Tables } from '@/types/supabase';
+import type { TableUsers } from '@/types/supabase-const';
 
-export const profileImageUpload = async (
-  file: File,
-  profile: Tables<'users'> | undefined
-): Promise<string | undefined> => {
+export const profileImageUpload = async (file: File, profile: TableUsers | undefined): Promise<string | undefined> => {
   const existingImageUrl = profile?.profile_image;
   if (existingImageUrl) {
     await deleteExistingImage(existingImageUrl);

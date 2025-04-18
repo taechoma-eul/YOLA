@@ -19,8 +19,8 @@ import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
 import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import type { Tables } from '@/types/supabase';
 import backIcon from '@images/images/go-back-icon.svg';
+import type { EnumCategories } from '@/types/supabase-const';
 
 interface GonggamPostInputFormProps {
   isEditMode?: boolean;
@@ -30,10 +30,10 @@ interface GonggamPostInputFormProps {
     content: string;
     tags: string[];
     imageUrls: string[];
-    category: Category;
+    category: EnumCategories;
   };
 }
-export type Category = Tables<'gonggam_posts'>['category'];
+
 const categoryKeys = Object.keys(categoryMap) as [keyof typeof categoryMap];
 
 const postSchema = z.object({
@@ -59,8 +59,8 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
   const isLoading = isPending || isUpdatePending;
   const action = isEditMode ? '수정' : '등록';
 
-  const [category, setCategory] = useState<Category>(
-    categoryName && !isEditMode ? (reverseCategoryMap[categoryName] as Category) : defaultValues!.category
+  const [category, setCategory] = useState<EnumCategories>(
+    categoryName && !isEditMode ? (reverseCategoryMap[categoryName] as EnumCategories) : defaultValues!.category
   );
   const [tags, setTags] = useState(defaultValues?.tags || []);
   const [images, setImages] = useState<File[]>([]);

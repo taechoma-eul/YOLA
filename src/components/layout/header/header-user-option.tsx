@@ -5,7 +5,7 @@ import { User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
 import { PATH } from '@/constants/page-path';
-import type { MenuItem } from '@/types/components/header';
+import type { MenuItem } from '@/types/header';
 
 const UserOptionMenu = () => {
   const pathname = usePathname();

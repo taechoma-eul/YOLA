@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import { MAIN_CHARACTER_URL } from '@/constants/default-image-url';
-import type { Banner } from '@/types/components/main-banner';
+import type { Banner } from '@/types/main-banner';
 
 const MainBanner = ({ title, text, color }: Banner) => {
   return (

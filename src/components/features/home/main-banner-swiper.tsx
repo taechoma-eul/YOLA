@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import MainBanner from '@/components/features/home/main-banner';
-import type { Banner } from '@/types/components/main-banner';
+import type { Banner } from '@/types/main-banner';
 
 const MainBannerSwiper = () => {
   const bannerProperty: Banner[] = [

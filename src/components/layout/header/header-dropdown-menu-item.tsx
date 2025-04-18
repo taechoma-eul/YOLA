@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FAIL } from '@/constants/messages';
 import { logout } from '@/lib/utils/api/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
-import type { MenuItem } from '@/types/components/header';
+import type { MenuItem } from '@/types/header';
 
 const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathname }: MenuItem) => {
   const queryClient = useQueryClient();
