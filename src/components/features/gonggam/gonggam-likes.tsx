@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { toastAlert } from '@/lib/utils/toast';
-import { MSG } from '@/constants/messages';
+import { clsx } from 'clsx';
 import { Heart } from 'lucide-react';
-import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { MSG } from '@/constants/messages';
 import {
   dislikePost,
   getLikeCountClient,
   getUserLikedStatus,
   likePost
 } from '@/lib/utils/api/gonggam-detail-client.api';
+import { toastAlert } from '@/lib/utils/toast';
 
 interface GonggamLikesProps {
   postId: number;

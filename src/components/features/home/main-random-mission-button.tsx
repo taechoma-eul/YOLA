@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { CustomButton } from '@/components/ui/custom-button';
 import RandomMissionModal from '@/components/features/modals/random-mission';
+import { CustomButton } from '@/components/ui/custom-button';
 import type { Tables } from '@/types/supabase';
 
 interface ButtonProps {

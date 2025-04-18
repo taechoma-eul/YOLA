@@ -1,7 +1,7 @@
 'use client';
 
+import { clsx } from 'clsx';
 import Link from 'next/link';
-import clsx from 'clsx';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { Children } from '@/types/children';
 
@@ -19,14 +19,14 @@ const NavLinkItem = ({ href, children }: Children & { href: string }) => {
       <div className="flex w-32 flex-col items-center">
         <div
           className={clsx(
-            'text-secondary-grey-900 relative h-[25px] justify-start text-center text-lg group-hover:font-semibold',
+            'relative h-[25px] justify-start text-center text-lg text-secondary-grey-900 group-hover:font-semibold',
             isSelect && !isMission ? 'font-semibold' : 'font-normal'
           )}
         >
           {children}
           <div
             className={clsx(
-              'bg-primary-orange-500 absolute top-[25px] h-[2px] w-full self-stretch rounded-[1px] group-hover:visible',
+              'absolute top-[25px] h-[2px] w-full self-stretch rounded-[1px] bg-primary-orange-500 group-hover:visible',
               isSelect && !isMission ? 'visible' : 'invisible'
             )}
           />

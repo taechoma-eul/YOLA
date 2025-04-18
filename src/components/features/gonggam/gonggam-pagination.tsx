@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Pagination,
   PaginationContent,
@@ -7,7 +8,6 @@ import {
   PaginationLink,
   PaginationEllipsis
 } from '@/components/ui/pagination';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 interface GonggamPaginationProps {
   currentPage: number;

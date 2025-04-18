@@ -1,8 +1,8 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { Info } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 
 interface TagInputProps {
   value?: string[];

@@ -1,8 +1,8 @@
-import { TABLE } from '@/constants/supabase-tables-name';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
-import type { GetLifePostsResponse } from '@/types/life-post';
 import { MSG } from '@/constants/messages';
+import { TABLE } from '@/constants/supabase-tables-name';
+import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import type { GetLifePostsResponse } from '@/types/life-post';
 
 /**
  * Supabase에서 `life_posts` 테이블의 전체 조회 및 `life_post_image_path`(image_url) 조회하는 함수

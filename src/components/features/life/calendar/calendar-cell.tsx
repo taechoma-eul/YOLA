@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 // components/calendar/CalendarCell.tsx
 const CalendarCell = ({

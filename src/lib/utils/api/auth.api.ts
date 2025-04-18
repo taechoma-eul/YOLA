@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { TABLE } from '@/constants/supabase-tables-name';
-import type { Tables } from '@/types/supabase';
 import { FAIL } from '@/constants/messages';
+import { TABLE } from '@/constants/supabase-tables-name';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
+import type { Tables } from '@/types/supabase';
 
 /**
  * 서버 환경에서만 동작합니다. 클라이언트에서 호출시 에러 발생합니다.

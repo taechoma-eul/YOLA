@@ -18,7 +18,7 @@ export const getGonggamPostById = async (id: number) => {
   if (!data) throw new Error('No data found');
 
   const processed = {
-    ...(data),
+    ...data,
     image_urls: data.gonggam_post_image_path?.map((img) => img.image_url) ?? []
   };
 

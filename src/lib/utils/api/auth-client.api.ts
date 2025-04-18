@@ -1,6 +1,6 @@
-import type { Tables } from '@/types/supabase';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
+import type { Tables } from '@/types/supabase';
 
 /**
  * user-session-state 라우트 핸들러에서 값을 fetching 해오는 api 함수입니다.

@@ -1,8 +1,8 @@
 'use client';
+import { X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FadeLoader } from 'react-spinners';
-import { X } from 'lucide-react';
 import { CustomButton } from '@/components/ui/custom-button';
 import { MAIN_CHARACTER_URL } from '@/constants/default-image-url';
 import type { Tables } from '@/types/supabase';

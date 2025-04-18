@@ -1,4 +1,6 @@
+import { Dot } from 'lucide-react';
 import Image from 'next/image';
+import GonggamBoardMeta from '@/components/features/gonggam/gonggam-board-meta';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import {
   getPostImagesByPostId,
@@ -7,9 +9,7 @@ import {
   getWriterProfile
 } from '@/lib/utils/api/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import { Dot } from 'lucide-react';
 import type { GonggamPost } from '@/types/gonggam';
-import GonggamBoardMeta from '@/components/features/gonggam/gonggam-board-meta';
 
 interface GonggamPostCardProps {
   post: GonggamPost;

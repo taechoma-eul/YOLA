@@ -1,15 +1,15 @@
 'use client';
 
+import { clsx } from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ControllerRenderProps, FieldValues, useFormContext } from 'react-hook-form';
-import clsx from 'clsx';
-import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
-import { CustomButton } from '@/components/ui/custom-button';
-import { Input } from '@/components/ui/input';
-import { FormControl, FormItem, FormMessage } from '@/components/ui/form';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
+import { CustomButton } from '@/components/ui/custom-button';
+import { FormControl, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { AUTH } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
+import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
 
 interface FieldProps<T extends FieldValues> {
   inputType: string;
@@ -74,7 +74,7 @@ const AuthFormField = <T extends FieldValues>({
         setSuccessMessage(fieldName === AUTH.EMAIL ? SUCCESS.EMAIL_CHECK : SUCCESS.NICKNAME_CHECK);
         setDuplicateCheck(true);
         return;
-      } catch (error) {
+      } catch {
         setErrorMessage(FAIL.DUPLICATE);
       }
     }

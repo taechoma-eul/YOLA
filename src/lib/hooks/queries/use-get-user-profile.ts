@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-keys';
 import { fetchUserProfile } from '@/lib/utils/api/auth-client.api';
 import type { Tables } from '@/types/supabase';
-import { QUERY_KEY } from '@/constants/query-keys';
 
 export const useUserProfile = (initProfile: Tables<'users'>) => {
   const {
