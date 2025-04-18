@@ -26,7 +26,7 @@ Step 5. 4번의 버튼 바깥에 이 코드를 추가해주세요
  */
 interface RandomMissionModalProps {
   missionsData: Tables<'mission_list'>[];
-  clickModal: Function;
+  clickModal: () => void;
   showModal: boolean;
   isLogin: boolean;
 }
