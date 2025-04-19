@@ -1,6 +1,6 @@
-import type { Tables } from '@/types/supabase';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
+import type { TableUsers } from '@/types/supabase-const';
 
 /**
  * user-session-state 라우트 핸들러에서 값을 fetching 해오는 api 함수입니다.
@@ -60,15 +60,15 @@ export const fetchDuplicateCheck = async (field: string, value: string): Promise
 /**
  * profile 라우트 핸들러에서 값을 fetching 해오는 api 함수입니다.
  * 현재 로그인 되어 있는 사용자의 프로필 정보를 반홥합니다.
- * @returns { Tables<'users'> } - 현재 로그인 되어있는 사용자의 프로필 정보
+ * @returns { TableUsers } - 현재 로그인 되어있는 사용자의 프로필 정보
  */
-export const fetchUserProfile = async (): Promise<Tables<'users'>> => {
+export const fetchUserProfile = async (): Promise<TableUsers> => {
   try {
     const res = await fetch(`${NEXT_SERVER_BASE_URL}${API.PROFILE}`, {
       method: 'GET'
     });
 
-    const { data }: { data: Tables<'users'> } = await res.json();
+    const { data }: { data: TableUsers } = await res.json();
     return data;
   } catch (error) {
     throw error;

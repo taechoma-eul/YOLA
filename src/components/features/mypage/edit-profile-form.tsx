@@ -1,19 +1,19 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
+import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
+import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
+import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
+import { CustomButton } from '@/components/ui/custom-button';
+import { Form } from '@/components/ui/form';
+import { FAIL, SUCCESS } from '@/constants/messages';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useProfileForm } from '@/lib/hooks/use-profile-form';
+import { profileImageUpload } from '@/lib/utils/api/profile-image-upload.api';
 import { processedImage } from '@/lib/utils/processed-image';
 import { toastAlert } from '@/lib/utils/toast';
-import { CustomButton } from '@/components/ui/custom-button';
-import { Form } from '@/components/ui/form';
-import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
-import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
-import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
-import type { EditFormData, InitProfile } from '@/types/components/edit-profile-form';
-import { FAIL, SUCCESS } from '@/constants/messages';
+import type { EditFormData, InitProfile } from '@/types/edit-profile-form';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         };
         updateProfile(updatedData);
         toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
-      } catch (error) {
+      } catch {
         toastAlert(FAIL.UPDATE_PROFILE, 'destructive');
       }
     });

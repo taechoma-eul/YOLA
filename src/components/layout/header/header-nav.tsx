@@ -1,5 +1,5 @@
-import NavLinkItem from '@/components/layout/header/header-nav-link-item';
 import NavChallengeMenu from '@/components/layout/header/header-nav-challenge-menu';
+import NavLinkItem from '@/components/layout/header/header-nav-link-item';
 import { PATH } from '@/constants/page-path';
 
 interface NavList {
@@ -16,7 +16,9 @@ const HeaderNav = () => {
   return (
     <nav className="flex items-center justify-center gap-1">
       {navList.map((item) => (
-        <NavLinkItem key={item.label} href={item.href} children={item.label} />
+        <NavLinkItem key={item.label} href={item.href}>
+          {item.label}
+        </NavLinkItem>
       ))}
       <NavChallengeMenu />
     </nav>

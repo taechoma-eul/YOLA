@@ -1,9 +1,9 @@
 // src/lib/hooks/queries/use-life-posts-by-month-range.ts
 
 import { useQueries } from '@tanstack/react-query';
-import type { LifePostWithImageUrls } from '@/types/life-post';
-import { getLifePostsByMonth } from '@/lib/utils/api/life-api-client';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { getLifePostsByMonth } from '@/lib/utils/api/life-api-client';
+import type { LifePostWithImageUrls } from '@/types/life-post';
 
 export const useLifePostsByMonthRange = (months: string[]) => {
   const results = useQueries({

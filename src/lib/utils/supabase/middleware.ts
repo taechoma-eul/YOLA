@@ -1,10 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { PATH } from '@/constants/page-path';
 import { API } from '@/constants/api-path';
+import { PATH } from '@/constants/page-path';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
+  const supabaseResponse = NextResponse.next({
     request
   });
 

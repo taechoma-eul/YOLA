@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { TABLE } from '@/constants/supabase-tables-name';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { TABLE } from '@/constants/supabase-tables-name';
 import { parseTags } from '@/lib/utils/parse-tags';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 
 const LIFE_POSTS_TABLE = TABLE.LIFE_POSTS;
 const USER_MISSION = TABLE.USER_MISSION;

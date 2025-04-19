@@ -1,10 +1,10 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';
-import { useState } from 'react';
 import { PostDetailModal } from '../modals/calendar-post-detail';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {

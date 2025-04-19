@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
-import { PATH } from '@/constants/page-path';
 import ProfileAvatar from '@/components/features/mypage/profile-avatar';
-import type { InitProfile } from '@/types/components/edit-profile-form';
 import { CustomButton } from '@/components/ui/custom-button';
+import { PATH } from '@/constants/page-path';
+import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
+import type { InitProfile } from '@/types/edit-profile-form';
 
 const ProfileBox = ({ initProfile }: InitProfile) => {
   //현재 경로 가져오기

@@ -1,5 +1,5 @@
-import { getUserProfile } from '@/lib/utils/api/auth.api';
 import EditProfileForm from '@/components/features/mypage/edit-profile-form';
+import { getUserProfile } from '@/lib/utils/api/auth.api';
 
 const MyPage = async () => {
   const profile = await getUserProfile();

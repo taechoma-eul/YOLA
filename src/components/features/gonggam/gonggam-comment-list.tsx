@@ -1,9 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import Image from 'next/image';
 
 const GonggamCommentList = ({ postId }: { postId: number }) => {
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);

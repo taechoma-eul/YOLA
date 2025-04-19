@@ -1,5 +1,5 @@
-import { Children } from '@/types/children';
 import MypageSideBar from '@/components/features/mypage/mypage-sidebar';
+import type { Children } from '@/types/children';
 
 const Layout = ({ children }: Children) => {
   return (

@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import type { Database } from '@/types/supabase';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { GONGGAM_POSTS_TABLE, IMAGE_TABLE } from '@/lib/hooks/mutations/use-gonggam-post';
 import { parseTags } from '@/lib/utils/parse-tags';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import type { Database } from '@/types/supabase';
 
 interface UpdateGonggamPostParams {
   category: Database['public']['Enums']['categorys'];
@@ -21,7 +21,7 @@ export const useUpdateGonggamPost = () => {
       const updatedAt = new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString();
 
       // Step 1. 게시글 업데이트
-      const { data: postData, error: postError } = await supabase
+      const { error: postError } = await supabase
         .from(GONGGAM_POSTS_TABLE)
         .update({
           title,

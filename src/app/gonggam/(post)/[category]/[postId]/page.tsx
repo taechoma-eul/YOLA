@@ -1,3 +1,5 @@
+import { Dot } from 'lucide-react';
+import Image from 'next/image';
 import GonggamCommentForm from '@/components/features/gonggam/gonggam-comment-form';
 import GonggamCommentList from '@/components/features/gonggam/gonggam-comment-list';
 import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail-view-count';
@@ -9,17 +11,14 @@ import { getUserProfile } from '@/lib/utils/api/auth.api';
 import { getViewCount } from '@/lib/utils/api/gonggam-board.api';
 import { getGonggamPostDetail } from '@/lib/utils/api/gonggam-detail.api';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
-import { Dot } from 'lucide-react';
-import Image from 'next/image';
 
 interface GonggamPostDetailProps {
   params: {
-    category: string;
     postId: number;
   };
 }
 
-const GonggamPostDetail = async ({ params: { category, postId } }: GonggamPostDetailProps) => {
+const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps) => {
   const userData = await getUserProfile();
   const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
   const viewCount = await getViewCount(String(postId));

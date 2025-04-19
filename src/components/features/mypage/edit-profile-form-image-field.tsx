@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { processedImagePreview } from '@/lib/utils/processed-image';
 import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import type { EditFormData } from '@/types/components/edit-profile-form';
 import { AUTH } from '@/constants/auth-form';
+import { processedImagePreview } from '@/lib/utils/processed-image';
+import type { EditFormData } from '@/types/edit-profile-form';
 import CAMERA from '@images/images/camera.svg';
 
 const ProfileImageField = ({

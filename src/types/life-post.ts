@@ -1,6 +1,4 @@
-import type { Tables } from './supabase';
-
-export type LifePost = Tables<'life_posts'>;
+import type { TableLifePosts } from '@/types/supabase-const';
 
 export interface SoloLifeCardType {
   id: string;
@@ -13,7 +11,7 @@ export interface SoloLifeCardType {
   tags: string[];
 }
 
-export interface LifePostWithImageUrls extends LifePost {
+export interface LifePostWithImageUrls extends TableLifePosts {
   image_urls: string[];
 }
 

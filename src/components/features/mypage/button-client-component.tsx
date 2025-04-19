@@ -4,10 +4,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 import RandomMissionModal from '@/components/features/modals/random-mission';
 import CHEVRON_RIGHT from '@images/images/chevron-right.svg';
-import type { Tables } from '@/types/supabase';
+import type { TableMissionList } from '@/types/supabase-const';
 
 interface ButtonClientComponentProps {
-  missionsData: Tables<'mission_list'>[];
+  missionsData: TableMissionList[];
   isLogin: boolean;
 }
 

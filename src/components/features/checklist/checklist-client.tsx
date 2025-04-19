@@ -1,11 +1,11 @@
 'use client';
 
-import MissionListClient from '@/components/features/checklist/mission-list-client';
-import ChecklistProgress from '@/components/features/checklist/checklist-progress';
-import type { Level, MissionWithStatus } from '@/types/checklist';
 import { useEffect, useState } from 'react';
+import ChecklistProgress from '@/components/features/checklist/checklist-progress';
+import MissionListClient from '@/components/features/checklist/mission-list-client';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
+import type { Level, MissionWithStatus } from '@/types/checklist';
 
 interface ChecklistClientProps {
   decodedMission: string;

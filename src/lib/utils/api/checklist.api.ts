@@ -42,9 +42,9 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
   }
   const { data, error } = (await supabase.from(TABLE.USER_LEVEL).select(col).eq('user_id', userId).single()) as {
     data: Pick<UserLevel, typeof col>;
-    error: any;
+    error: unknown;
   };
-  if (error) throw new Error(error.message);
+  if (error) throw new Error('getUserLevelByMission 오류');
 
   return String(data[col]);
 };

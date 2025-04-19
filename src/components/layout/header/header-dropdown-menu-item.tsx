@@ -1,12 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
+import { clsx } from 'clsx';
+import Link from 'next/link';
+import { FAIL } from '@/constants/messages';
 import { logout } from '@/lib/utils/api/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
-import type { MenuItem } from '@/types/components/header';
-import { FAIL } from '@/constants/messages';
+import type { MenuItem } from '@/types/header';
 
 const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, pathname }: MenuItem) => {
   const queryClient = useQueryClient();
@@ -17,7 +17,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, 
     try {
       await logout();
       queryClient.clear();
-    } catch (error) {
+    } catch {
       toastAlert(FAIL.LOGOUT, 'default');
       return;
     }
@@ -27,7 +27,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, 
     <>
       <div
         className={clsx(
-          'hover:text-primary-orange-600 flex h-[47px] items-center justify-center bg-white',
+          'flex h-[47px] items-center justify-center bg-white hover:text-primary-orange-600',
           isSelect && href !== '' ? 'text-primary-orange-600' : 'text-secondary-grey-900'
         )}
       >
@@ -39,7 +39,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isButton = false, 
           <Link href={href}>{label}</Link>
         )}
       </div>
-      {isLine && <div className="bg-secondary-grey-300 m-0 h-[1px] w-[60px]" />}
+      {isLine && <div className="m-0 h-[1px] w-[60px] bg-secondary-grey-300" />}
     </>
   );
 };

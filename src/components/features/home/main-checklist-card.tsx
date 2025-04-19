@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { PATH } from '@/constants/page-path';
 
 const CheckListCard = ({ checkListType }: { checkListType: string }) => {

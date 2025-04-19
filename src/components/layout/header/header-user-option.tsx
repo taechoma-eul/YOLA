@@ -1,11 +1,11 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { User } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import HeaderDropdownMenu from '@/components/layout/header/header-dropdown-menu';
-import type { MenuItem } from '@/types/components/header';
 import { PATH } from '@/constants/page-path';
+import type { MenuItem } from '@/types/header';
 
 const UserOptionMenu = () => {
   const pathname = usePathname();
@@ -20,8 +20,8 @@ const UserOptionMenu = () => {
     <HeaderDropdownMenu menuItems={userMenuItem} isUserMenu>
       <div
         className={clsx(
-          'hover:bg-primary-orange-400 flex size-[36px] items-center justify-center rounded-full hover:text-white',
-          isSelect ? 'bg-primary-orange-400 text-white' : 'text-secondary-grey-900 bg-none'
+          'flex size-[36px] items-center justify-center rounded-full hover:bg-primary-orange-400 hover:text-white',
+          isSelect ? 'bg-primary-orange-400 text-white' : 'bg-none text-secondary-grey-900'
         )}
       >
         <User size={24} />

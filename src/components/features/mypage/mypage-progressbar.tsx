@@ -1,7 +1,7 @@
 'use client';
 
-import { USER_LEVELS } from '@/lib/utils/calculate-user-level';
 import { useEffect, useState } from 'react';
+import { USER_LEVELS } from '@/lib/utils/calculate-user-level';
 
 interface MypageProgressBarProps {
   level: string;

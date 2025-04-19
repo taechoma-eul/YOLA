@@ -1,16 +1,16 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
-import { toastAlert } from '@/lib/utils/toast';
 import { CustomButton } from '@/components/ui/custom-button';
-import type { AuthFormButtonProps } from '@/types/components/auth-form';
-import { PATH } from '@/constants/page-path';
 import { API } from '@/constants/api-path';
-import { FAIL } from '@/constants/messages';
 import { GOOGLE_LOGIN, KAKAO_LOGIN } from '@/constants/default-image-url';
+import { FAIL } from '@/constants/messages';
+import { PATH } from '@/constants/page-path';
+import { toastAlert } from '@/lib/utils/toast';
+import type { AuthFormButtonProps } from '@/types/auth-form';
 
 const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
     startTransition(() => {
       try {
         router.push(apiPath);
-      } catch (error) {
+      } catch {
         toastAlert(FAIL.SOCIAL_LOGIN, 'destructive');
       }
     });
@@ -41,8 +41,8 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
           <Link href={PATH.SIGNUP}>회원가입</Link>
         </CustomButton>
       </div>
-      <div className="border-secondary-grey-600 relative mb-[23px] h-[78px] border-b border-t-0">
-        <p className="text-secondary-grey-600 absolute left-[120px] top-[69px] justify-start bg-white px-[26px] text-sm font-normal leading-tight">
+      <div className="relative mb-[23px] h-[78px] border-b border-t-0 border-secondary-grey-600">
+        <p className="absolute left-[120px] top-[69px] justify-start bg-white px-[26px] text-sm font-normal leading-tight text-secondary-grey-600">
           간편 로그인
         </p>
       </div>

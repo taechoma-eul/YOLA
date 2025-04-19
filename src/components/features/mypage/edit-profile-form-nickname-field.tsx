@@ -1,16 +1,16 @@
 'use client';
 
+import { clsx } from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFormContext, UseFormReturn } from 'react-hook-form';
-import clsx from 'clsx';
-import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { CustomButton } from '@/components/ui/custom-button';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import type { EditFormData } from '@/types/components/edit-profile-form';
 import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
+import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
+import type { EditFormData } from '@/types/edit-profile-form';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;
@@ -54,7 +54,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
       setSuccessMessage(SUCCESS.NICKNAME_CHECK);
       setDuplicateCheck(true);
       return;
-    } catch (error) {
+    } catch {
       setErrorMessage(FAIL.DUPLICATE);
     }
   };

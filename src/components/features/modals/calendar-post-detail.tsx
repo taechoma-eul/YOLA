@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
 import { ChevronsRight } from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import EditDeleteDropdown from '@/components/common/edit-delete-dropdown';
 import { ImageSwiper } from '@/components/ui/card-detail-image-swiper';
 import { PATH } from '@/constants/page-path';
 import { useDeleteLifePost } from '@/lib/hooks/mutations/use-delete-life-post';
-import type { LifePostWithImageUrls } from '@/types/life-post';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import divider from '@images/images/post-detail-divider.svg';
-import missionIcon from '@images/images/post-mission.svg';
-import diaryIcon from '@images/images/post-diary.svg';
 import { toastAlert } from '@/lib/utils/toast';
+import type { LifePostWithImageUrls } from '@/types/life-post';
+import divider from '@images/images/post-detail-divider.svg';
+import diaryIcon from '@images/images/post-diary.svg';
+import missionIcon from '@images/images/post-mission.svg';
 
 /**
   step 1. 모달을 호출할 파일에 이 코드를 추가해주세요
@@ -95,7 +95,7 @@ export const PostDetailModal = ({
       await deleteLifePost.mutateAsync(post);
       handleClose();
       toastAlert('삭제되었습니다!', 'success');
-    } catch (error) {
+    } catch {
       toastAlert('삭제에 실패했습니다.', 'destructive');
     }
   };

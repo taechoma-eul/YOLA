@@ -1,13 +1,12 @@
 'use client';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useState } from 'react';
 import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { MSG } from '@/constants/messages';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { toastAlert } from '@/lib/utils/toast';
-import Image from 'next/image';
-import { useState } from 'react';
 
 interface GonggamCommentFormProps {
   postId: number;
