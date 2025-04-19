@@ -1,5 +1,5 @@
 import { TABLE } from '@/constants/supabase-tables-name';
-import { supabase } from '../supabase/supabase-client';
+import { supabase } from '../../supabase/supabase-client';
 
 /**
  * 선택한 게시글의 조회수를 클라이언트 컴포넌트에서 조회하기 위한 api 함수입니다.

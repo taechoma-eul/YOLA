@@ -19,8 +19,8 @@ import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
 import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import backIcon from '@images/images/go-back-icon.svg';
 import type { EnumCategories } from '@/types/supabase-const';
+import backIcon from '@images/images/go-back-icon.svg';
 
 interface GonggamPostInputFormProps {
   isEditMode?: boolean;
@@ -125,7 +125,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
       const onSuccess = () => {
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEY.GONGGAM_POSTS()
+          queryKey: [QUERY_KEY.GONGGAM_POSTS]
         });
         toastAlert(`${action}되었습니다!`, 'success');
         router.push(`${PATH.GONGGAM}/${categoryMap[category]}`); //작성한 글의 카테고리 게시판으로 이동

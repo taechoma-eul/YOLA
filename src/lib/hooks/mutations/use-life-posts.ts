@@ -81,7 +81,7 @@ export const useLifePost = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.LIFE_POSTS() });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LIFE_POSTS] });
     },
 
     onError: (error) => {

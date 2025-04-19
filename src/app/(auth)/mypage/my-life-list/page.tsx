@@ -1,5 +1,5 @@
 import MyLifeListClient from '@/components/features/mypage/my-life-list-client';
-import { getUserProfile } from '@/lib/utils/api/auth.api';
+import { getUserProfile } from '@/lib/utils/api/auth/auth.api';
 
 const MyLifeListPage = async () => {
   const profile = await getUserProfile();

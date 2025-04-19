@@ -8,7 +8,7 @@ import { Form, FormField } from '@/components/ui/form';
 import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 import { SUCCESS } from '@/constants/messages';
 import { useLoginForm } from '@/lib/hooks/use-login-form';
-import { login } from '@/lib/utils/api/auth-action';
+import { login } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 
 interface LoginField {
