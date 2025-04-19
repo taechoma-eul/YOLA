@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
 import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
-import type { EditFormData } from '@/types/components/edit-profile-form';
+import type { EditFormData } from '@/types/edit-profile-form';
 
 interface FieldProps {
   form: UseFormReturn<EditFormData, any, undefined>;

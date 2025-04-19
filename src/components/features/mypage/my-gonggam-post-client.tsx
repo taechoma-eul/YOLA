@@ -7,7 +7,7 @@ import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
 import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
-import type { SortBy } from '@/types/gonggam-posts';
+import type { SortBy } from '@/types/gonggam';
 
 const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   const [sortBy, setSortBy] = useState<SortBy>('latest');

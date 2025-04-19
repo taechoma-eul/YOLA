@@ -1,7 +1,7 @@
 import { FAIL } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { Tables } from '@/types/supabase';
+import type { TableUsers } from '@/types/supabase-const';
 
 /**
  * 서버 환경에서만 동작합니다. 클라이언트에서 호출시 에러 발생합니다.
@@ -45,9 +45,9 @@ export const getDuplicateCheckData = async (field: string, value: string) => {
  * 서버 환경에서만 동작합니다. 클라이언트에서 호출시 에러 발생합니다.
  * public.users 테이블에서 현재 로그인 된 사용자의 프로필 정보를 불러옵니다.
  * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
- * @returns { Tables<'users'> } - 현재 세션에 해당하는 users 테이블 row
+ * @returns { TableUsers } - 현재 세션에 해당하는 users 테이블 row
  */
-export const getUserProfile = async (): Promise<Tables<'users'> | null> => {
+export const getUserProfile = async (): Promise<TableUsers | null> => {
   const supabase = await createClient();
   try {
     const { userId } = await getUserSessionState();
