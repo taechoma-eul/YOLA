@@ -42,7 +42,7 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
       }
     };
     fetchLikeStatus();
-  }, []);
+  }, [postId, userId]);
 
   const handleLikeToggle = async () => {
     if (!userId) {
