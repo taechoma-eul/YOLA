@@ -1,14 +1,14 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { clsx } from 'clsx';
 import { User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { PATH } from '@/constants/page-path';
 import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-menu-item';
-import { logout } from '@/lib/utils/api/auth/auth-action';
-import { useQueryClient } from '@tanstack/react-query';
-import { toastAlert } from '@/lib/utils/toast';
 import { FAIL } from '@/constants/messages';
+import { PATH } from '@/constants/page-path';
+import { logout } from '@/lib/utils/api/auth/auth-action';
+import { toastAlert } from '@/lib/utils/toast';
 
 const UserOptionMenu = () => {
   const queryClient = useQueryClient();
