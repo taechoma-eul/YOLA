@@ -19,8 +19,8 @@ import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
 import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import backIcon from '@images/images/go-back-icon.svg';
 import type { EnumCategories } from '@/types/supabase-const';
+import backIcon from '@images/images/go-back-icon.svg';
 
 interface GonggamPostInputFormProps {
   isEditMode?: boolean;
