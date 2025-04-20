@@ -10,7 +10,7 @@ import { GOOGLE_LOGIN, KAKAO_LOGIN } from '@/constants/default-image-url';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { toastAlert } from '@/lib/utils/toast';
-import type { AuthFormButtonProps } from '@/types/components/auth-form';
+import type { AuthFormButtonProps } from '@/types/auth-form';
 
 const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
   const router = useRouter();

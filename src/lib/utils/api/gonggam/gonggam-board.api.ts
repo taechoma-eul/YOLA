@@ -5,10 +5,10 @@ import type {
   GonggamPost,
   GonggamPostMeta,
   PaginatedPostsResponse,
-  WriterProfileResponse
+  WriterProfileResponse,
+  GonggamPostWithReaction
 } from '@/types/gonggam';
-import type { GonggamPostWithReaction } from '@/types/gonggam-posts';
-import type { Tables } from '@/types/supabase';
+import type { TableUsers } from '@/types/supabase-const';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -66,7 +66,7 @@ export const getPaginatedGonggamPosts = async (
  * @param writerId - 조회할 작성자의 고유 ID
  * @returns id, nickname, profile_image_url
  */
-export const getWriterProfile = async (writerId: Tables<'users'>['id']): Promise<WriterProfileResponse> => {
+export const getWriterProfile = async (writerId: TableUsers['id']): Promise<WriterProfileResponse> => {
   const supabase = await createClient();
   const { data: profile, error: userErr } = await supabase
     .from(TABLE.USERS)

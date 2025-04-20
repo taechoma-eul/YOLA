@@ -7,7 +7,7 @@ import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
 import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
-import type { SortBy } from '@/types/gonggam-posts';
+import type { SortBy } from '@/types/gonggam';
 
 const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   const [sortBy, setSortBy] = useState<SortBy>('latest');
@@ -15,9 +15,9 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
 
   useEffect(() => {
     queryClient.invalidateQueries({
-      queryKey: QUERY_KEY.GONGGAM_POSTS_INFINITE(sortBy)
+      queryKey: [QUERY_KEY.GONGGAM_POSTS_INFINITE, sortBy]
     });
-  }, [sortBy]);
+  }, [sortBy, queryClient]);
 
   const {
     data: posts,
@@ -34,7 +34,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) throw error;

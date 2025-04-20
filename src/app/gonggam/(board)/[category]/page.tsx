@@ -3,7 +3,7 @@ import { GonggamPagination } from '@/components/features/gonggam/gonggam-paginat
 import GonggamPostCard from '@/components/features/gonggam/gonggam-post-card';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
-import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam-board.api';
+import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam/gonggam-board.api';
 
 interface GonggamCategoryBoardProps {
   params: { category: string };

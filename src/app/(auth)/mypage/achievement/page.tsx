@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import ButtonClientComponent from '@/components/features/mypage/button-client-component';
 import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
-import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { getMissionsData } from '@/lib/utils/api/missions.api';
-import { getUserMission } from '@/lib/utils/api/my-mission.api';
+import { getUserMission } from '@/lib/utils/api/mypage/my-mission.api';
 import { calculateUserLevel } from '@/lib/utils/calculate-user-level';
 import { getLevelsByTypes } from '@/lib/utils/get-level-by-types';
 import { parseUserMissions } from '@/lib/utils/parse-user-mission';

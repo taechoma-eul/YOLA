@@ -9,7 +9,7 @@ import { FormControl, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { AUTH } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
-import { fetchDuplicateCheck } from '@/lib/utils/api/auth-client.api';
+import { fetchDuplicateCheck } from '@/lib/utils/api/auth/auth-client.api';
 
 interface FieldProps<T extends FieldValues> {
   inputType: string;

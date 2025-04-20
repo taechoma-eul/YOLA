@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { fetchUserProfile } from '@/lib/utils/api/auth-client.api';
-import type { Tables } from '@/types/supabase';
+import { fetchUserProfile } from '@/lib/utils/api/auth/auth-client.api';
+import type { TableUsers } from '@/types/supabase-const';
 
-export const useUserProfile = (initProfile: Tables<'users'>) => {
+export const useUserProfile = (initProfile: TableUsers) => {
   const {
     data: profile,
     isPending: isProfilePending,
@@ -11,7 +11,7 @@ export const useUserProfile = (initProfile: Tables<'users'>) => {
     error: profileFetchingError
   } = useQuery({
     queryFn: fetchUserProfile,
-    queryKey: QUERY_KEY.PROFILE,
+    queryKey: [QUERY_KEY.PROFILE],
     initialData: initProfile
   });
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { FAIL } from '@/constants/messages';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 
 /**
  * 클라이언트에서 getUserSessionState() 함수를 이용해서 사용자 아이디와 로그인 상태를 받아오기 위한 라우트 핸들러입니다.

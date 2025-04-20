@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { editProfileSchema } from '@/lib/utils/validation/auth-schema';
-import type { EditFormData } from '@/types/components/edit-profile-form';
+import type { EditFormData } from '@/types/auth-form';
 
 export const useProfileForm = (initNickname: string) => {
   const form = useForm<EditFormData>({
