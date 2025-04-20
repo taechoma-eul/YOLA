@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
+import { fetchUserSessionState } from '@/lib/utils/api/auth/auth-client.api';
 import { parseTags } from '@/lib/utils/parse-tags';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 

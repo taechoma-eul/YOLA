@@ -6,7 +6,7 @@ import { AUTH } from '@/constants/auth-form';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 const LAYOUT = 'layout';

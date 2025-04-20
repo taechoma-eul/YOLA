@@ -1,6 +1,6 @@
 import { MSG } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
+import { fetchUserSessionState } from '@/lib/utils/api/auth/auth-client.api';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { GetMyGonggamPostsResponse, GonggamPostWithCounts, SortBy } from '@/types/gonggam';
 

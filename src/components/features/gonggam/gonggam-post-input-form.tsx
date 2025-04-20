@@ -125,7 +125,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
       const onSuccess = () => {
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEY.GONGGAM_POSTS()
+          queryKey: [QUERY_KEY.GONGGAM_POSTS]
         });
         toastAlert(`${action}되었습니다!`, 'success');
         router.push(`${PATH.GONGGAM}/${categoryMap[category]}`); //작성한 글의 카테고리 게시판으로 이동
