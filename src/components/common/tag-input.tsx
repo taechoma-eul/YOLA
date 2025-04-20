@@ -15,6 +15,15 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
   const [inputValue, setInputValue] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
   const [shouldShake, setShouldShake] = useState(false);
+  const isComposing = useRef(false);
+
+  const handleCompositionStart = () => {
+    isComposing.current = true;
+  };
+
+  const handleCompositionEnd = () => {
+    isComposing.current = false;
+  };
 
   const triggerShake = () => {
     setShouldShake(true);
@@ -49,6 +58,8 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isComposing.current) return; //한글 조합 중이라면 리턴
+
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       const success = addTag(inputValue);
@@ -96,6 +107,8 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
           placeholder="입력 후 Enter 또는 ,"
           className="min-w-[80px] rounded border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-yellow-200"
         />
