@@ -2,7 +2,7 @@
 
 import { useQueries } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { getLifePostsByMonth } from '@/lib/utils/api/life-api-client';
+import { getLifePostsByMonth } from '@/lib/utils/api/life-client.api';
 import type { LifePostWithImageUrls } from '@/types/life-post';
 
 export const useLifePostsByMonthRange = (months: string[]) => {
