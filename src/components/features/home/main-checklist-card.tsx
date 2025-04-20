@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { PATH } from '@/constants/page-path';
 import LevelLabel from '@/components/features/home/main-checklist-card-level';
+import { PATH } from '@/constants/page-path';
 
 const CheckListCard = async ({ checkListType }: { checkListType: string }) => {
   return (
