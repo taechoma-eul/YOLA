@@ -35,11 +35,6 @@ const config: Config = {
           800: '#555A60',
           900: '#2E3135'
         },
-        banner: {
-          blue: '#D8EFF7',
-          red: '#FFBFA9',
-          orange: '#FEC84B'
-        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

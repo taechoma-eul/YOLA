@@ -5,23 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import MainBanner from '@/components/features/home/main-banner';
-import type { Banner } from '@/types/main-banner';
+import MainBannerImage from '@/components/features/home/main-banner-image';
+import BANNER_1 from '@images/images/main-banner-1.svg';
+import BANNER_2 from '@images/images/main-banner-2.svg';
+import BANNER_3 from '@images/images/main-banner-3.svg';
 
 const MainBannerSwiper = () => {
-  const bannerProperty: Banner[] = [
-    {
-      title: '너 혼자 살아도 괜차낭.',
-      text: `혼자만의 일상을 가볍게 기록하면서, 같은 '혼자족'끼리 공감하고 공유해요`,
-      color: 'orange'
-    },
-    { title: '갓생 살기 챌린지', text: 'YOLA가 처음이신가요? YOLA 챌린지부터 둘러보세요!', color: 'red' },
-    {
-      title: '작지만 특별한 미션',
-      text: '오늘 하루, 나를 위한 작은 도전. 어떤 미션이 나올지 기대해보세요!',
-      color: 'blue'
-    }
-  ];
+  const bannerData: string[] = [BANNER_1, BANNER_2, BANNER_3];
 
   return (
     <section className="mx-auto w-full max-w-[1280px]">
@@ -39,9 +29,9 @@ const MainBannerSwiper = () => {
         loop
         className="my-swiper h-60"
       >
-        {bannerProperty.map((data, index) => (
+        {bannerData.map((imageUrl, index) => (
           <SwiperSlide key={index}>
-            <MainBanner title={data.title} text={data.text} color={data.color} />
+            <MainBannerImage imageUrl={imageUrl} index={index} />
           </SwiperSlide>
         ))}
       </Swiper>
