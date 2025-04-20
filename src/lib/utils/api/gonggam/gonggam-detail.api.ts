@@ -1,7 +1,8 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { getPostImagesByPostId, getWriterProfile } from '@/lib/utils/api/gonggam/gonggam-board.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { GonggamPost, GonggamPostDetail } from '@/types/gonggam';
+import type { GonggamPostDetail } from '@/types/gonggam';
+import type { TableGonggamPosts } from '@/types/supabase-const';
 
 /** getGonggamPostDetail
  * postId를 기반으로 공감 게시글 내용을 조회합니다.
@@ -9,7 +10,7 @@ import type { GonggamPost, GonggamPostDetail } from '@/types/gonggam';
  * @param postId - 게시글 고유 ID
  * @returns 게시글 본문, 이미지 배열, 작성자 닉네임 등 포함된 상세 정보
  */
-export const getGonggamPostDetail = async (postId: GonggamPost['id']): Promise<GonggamPostDetail> => {
+export const getGonggamPostDetail = async (postId: TableGonggamPosts['id']): Promise<GonggamPostDetail> => {
   const supabase = await createClient();
 
   // 1. 게시글 기본 정보 조회

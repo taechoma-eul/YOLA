@@ -3,9 +3,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import type { GonggamPost } from '@/types/gonggam';
+import type { TableGonggamPosts } from '@/types/supabase-const';
 
-export interface GonggamPostWithImageUrls extends GonggamPost {
+export interface GonggamPostWithImageUrls extends TableGonggamPosts {
   image_urls: string[];
 }
 

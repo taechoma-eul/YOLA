@@ -1,13 +1,4 @@
-import type { Enums, Tables } from '@/types/supabase';
 import type { EnumCategories, TableComments, TableGonggamPosts, TableLikes } from '@/types/supabase-const';
-
-export type GonggamCategory = Enums<'categories'>;
-
-export type CategoryMapType = Record<GonggamCategory, string>;
-export type SlugToCategoryType = Record<string, GonggamCategory>;
-
-export type GonggamPost = Tables<'gonggam_posts'>;
-type GonggamComments = Tables<'comments'>;
 
 export interface PaginationInfo {
   currentPage: number;
@@ -16,7 +7,7 @@ export interface PaginationInfo {
 }
 
 export interface PaginatedPostsResponse {
-  posts: GonggamPost[];
+  posts: TableGonggamPosts[];
   pagination: PaginationInfo;
 }
 
@@ -31,11 +22,11 @@ export interface WriterProfileResponse {
   profileImage: string | null;
 }
 
-export interface GonggamPostDetail extends GonggamPost {
+export interface GonggamPostDetail extends TableGonggamPosts {
   profile: WriterProfileResponse;
   images: string[];
 }
-export interface CommentWithUser extends Omit<GonggamComments, 'post_id' | 'user_id'> {
+export interface CommentWithUser extends Omit<TableComments, 'post_id' | 'user_id'> {
   writer: WriterProfileResponse;
 }
 

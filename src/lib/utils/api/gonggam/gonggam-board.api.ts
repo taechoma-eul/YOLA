@@ -1,14 +1,12 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type {
-  GonggamCategory,
-  GonggamPost,
   GonggamPostMeta,
   PaginatedPostsResponse,
   WriterProfileResponse,
   GonggamPostWithReaction
 } from '@/types/gonggam';
-import type { TableUsers } from '@/types/supabase-const';
+import type { EnumCategories, TableGonggamPosts, TableUsers } from '@/types/supabase-const';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 
@@ -21,7 +19,7 @@ const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
  *          pagination: 현재 페이지, 전체 페이지 수, 전체 게시글 수
  */
 export const getPaginatedGonggamPosts = async (
-  category: GonggamCategory,
+  category: EnumCategories,
   page: number = 1
 ): Promise<PaginatedPostsResponse> => {
   const supabase = await createClient();
@@ -87,7 +85,7 @@ export const getWriterProfile = async (writerId: TableUsers['id']): Promise<Writ
  * @param postId 게시글 ID
  * @returns 이미지 URL 문자열 배열 (없으면 빈 배열)
  */
-export const getPostImagesByPostId = async (postId: GonggamPost['id']): Promise<string[]> => {
+export const getPostImagesByPostId = async (postId: TableGonggamPosts['id']): Promise<string[]> => {
   const supabase = await createClient();
   const { data, error } = await supabase.from(TABLE.GONGGAM_POST_IMAGE_PATH).select('image_url').eq('post_id', postId);
 
@@ -102,7 +100,7 @@ export const getPostImagesByPostId = async (postId: GonggamPost['id']): Promise<
  * @param postId - 게시글 ID
  * @returns { likeCnt, commentCnt }
  */
-export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<GonggamPostMeta> => {
+export const getPostMetaByPostId = async (postId: TableGonggamPosts['id']): Promise<GonggamPostMeta> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc('get_post_meta', { post_id: postId });
@@ -119,7 +117,7 @@ export const getPostMetaByPostId = async (postId: GonggamPost['id']): Promise<Go
 
 /**
  * public.gonggam_posts 테이블에서 조회수 높은순 3개의 공감 게시글을 불러옵니다.
- * @returns { Promise<GonggamPost[]> } 공감 게시글 배열
+ * @returns { Promise<GonggamPostWithReaction[]> } 공감 게시글 배열
  */
 export const getGonggamPreviewList = async (): Promise<GonggamPostWithReaction[]> => {
   const supabase = await createClient();

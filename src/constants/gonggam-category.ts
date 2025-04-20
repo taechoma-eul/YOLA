@@ -1,4 +1,7 @@
-import type { CategoryMapType, GonggamCategory, SlugToCategoryType } from '@/types/gonggam';
+import { EnumCategories } from '@/types/supabase-const';
+
+type CategoryMapType = Record<EnumCategories, string>;
+type SlugToCategoryType = Record<string, EnumCategories>;
 
 /** categoryMap: 단일 source of truth
  * Supabase 'categorys' Enum (한글 카테고리명) → URL에서 사용하는 slug 값 매핑
@@ -29,6 +32,6 @@ export const slugToCategory = Object.fromEntries(
  * 예: { label: '밋업', slug: 'meetup' }
  */
 export const tabs = Object.entries(categoryMap).map(([label, slug]) => ({
-  label: label as GonggamCategory,
+  label: label as EnumCategories,
   slug
 }));
