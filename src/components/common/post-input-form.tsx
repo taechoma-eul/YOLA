@@ -17,12 +17,12 @@ import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
 import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 import { getToday } from '@/lib/utils/get-date';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { MissionType } from '@/types/checklist';
-import { CustomButton } from '../ui/custom-button';
+import { CustomButton } from '@/components/ui/custom-button';
+import type { TableMissionList } from '@/types/supabase-const';
 
 interface LifeInputFormProps {
   missionId: string | null;
-  dropdownMissions?: MissionType[];
+  dropdownMissions?: TableMissionList[];
   completedIds?: number[];
   isEditMode?: boolean;
   defaultValues?: {

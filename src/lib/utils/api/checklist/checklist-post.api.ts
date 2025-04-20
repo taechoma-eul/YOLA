@@ -1,8 +1,8 @@
 import { MSG } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { MissionTag, MissionType } from '@/types/checklist';
 import { getCompletedMissionIds, getMissionListByLevel } from '@/lib/utils/api/checklist/checklist.api';
+import type { EnumChecklist, TableMissionList } from '@/types/supabase-const';
 
 interface DropdownParams {
   userId: string;
@@ -10,7 +10,7 @@ interface DropdownParams {
 }
 
 export async function getMissionDropdownData({ userId, missionId }: DropdownParams): Promise<{
-  missions: MissionType[];
+  missions: TableMissionList[];
   completedIds: number[];
 }> {
   const supabase = await createClient();
@@ -28,7 +28,7 @@ export async function getMissionDropdownData({ userId, missionId }: DropdownPara
   const { type, level } = meta;
 
   // 2. 해당 type + level의 미션 리스트
-  const missions = await getMissionListByLevel(type as MissionTag, level);
+  const missions = await getMissionListByLevel(type as EnumChecklist, level);
 
   // 3. 유저가 완료한 미션 ID
   const completedIds = await getCompletedMissionIds({
