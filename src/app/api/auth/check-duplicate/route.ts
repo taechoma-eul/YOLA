@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDuplicateCheckData } from '@/lib/utils/api/auth.api';
+import { getDuplicateCheckData } from '@/lib/utils/api/auth/auth.api';
 
 /**
  * 클라이언트에서 supabase ssr 데이터를 조회하기 위한 라우트 핸들러입니다.

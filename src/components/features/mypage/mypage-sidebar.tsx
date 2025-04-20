@@ -1,5 +1,5 @@
 import ProfileBox from '@/components/features/mypage/mypage-sidebar-profile';
-import { getUserProfile } from '@/lib/utils/api/auth.api';
+import { getUserProfile } from '@/lib/utils/api/auth/auth.api';
 
 const MypageSideBar = async () => {
   const initProfile = await getUserProfile();

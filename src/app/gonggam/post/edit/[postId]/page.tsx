@@ -1,7 +1,7 @@
 // app/gonggam/post/edit/[post_id]/page.tsx
 
 import GonggamPostInputForm from '@/components/features/gonggam/gonggam-post-input-form';
-import { getGonggamPostById } from '@/lib/utils/api/gonggam-post.api';
+import { getGonggamPostById } from '@/lib/utils/api/gonggam/gonggam-post.api';
 
 interface GonggamEditPageProps {
   params: { postId: string };

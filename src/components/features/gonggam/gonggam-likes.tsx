@@ -9,7 +9,7 @@ import {
   getLikeCountClient,
   getUserLikedStatus,
   likePost
-} from '@/lib/utils/api/gonggam-detail-client.api';
+} from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 import { toastAlert } from '@/lib/utils/toast';
 
 interface GonggamLikesProps {
