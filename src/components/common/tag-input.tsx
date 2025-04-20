@@ -49,10 +49,12 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      const success = addTag(inputValue);
-      if (success) setInputValue('');
+    if (e.nativeEvent.isComposing === false) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const success = addTag(inputValue);
+        if (success) setInputValue('');
+      }
     }
   };
 
