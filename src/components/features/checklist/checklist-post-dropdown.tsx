@@ -1,5 +1,6 @@
 'use client';
 
+import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { PATH } from '@/constants/page-path';
 import type { MissionType } from '@/types/checklist';
-import { ChevronDown } from 'lucide-react';
 
 type ChecklistPostDropdownProps = {
   missions: MissionType[];

@@ -1,36 +1,36 @@
 'use client';
 
-// 라이브러리
-import { z } from 'zod';
-import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ChevronLeft } from 'lucide-react';
-import clsx from 'clsx';
-
-// React Hook Form & React Query
-import { useForm } from 'react-hook-form';
+// 외부 라이브러리
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import { clsx } from 'clsx';
+import { ChevronLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+import { useState } from 'react';
+
+import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
 
 // 컴포넌트
-import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
 import DatePicker from '@/components/common/date-picker';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
+import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
 import { CustomButton } from '@/components/ui/custom-button';
-
-// 훅
-import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
-import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
-
-// 유틸
-import { getToday } from '@/lib/utils/get-date';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 
 // 상수 및 타입
 import { PATH } from '@/constants/page-path';
 import { QUERY_KEY } from '@/constants/query-keys';
+
+// 유틸
+import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
+import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
+import { getToday } from '@/lib/utils/get-date';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+
+// 훅
 import type { MissionType } from '@/types/checklist';
 
 interface LifeInputFormProps {
