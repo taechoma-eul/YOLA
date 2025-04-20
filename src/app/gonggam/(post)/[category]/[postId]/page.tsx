@@ -20,7 +20,8 @@ interface GonggamPostDetailProps {
 
 const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps) => {
   const userData = await getUserProfile();
-  const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
+  const post = await getGonggamPostDetail(postId);
+  const { title, content, created_at, updated_at, profile, images, tags } = post;
   const viewCount = await getViewCount(String(postId));
 
   const displayDate = updated_at ?? created_at;
@@ -50,8 +51,7 @@ const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps)
             {/* 디테일 뷰카운트 */}
             <GonggamDetailViewCount postId={String(postId)} initCount={viewCount} />
           </div>
-          {/* {userId === profile.id && <GonggamMyPostDropdown />} */}
-          {userData?.id === profile.id && <GonggamMyPostDropdown postId={postId} />}
+          {userData?.id === profile.id && <GonggamMyPostDropdown post={post} />}
         </section>
       </header>
 
