@@ -22,6 +22,7 @@ const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: 
 
   return (
     <li
+      aria-label="챌린지 리스트 드롭 다운 메뉴"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="group relative flex h-[44px] w-[72px] items-center justify-between gap-2.5 py-2.5"
@@ -32,7 +33,7 @@ const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: 
       </div>
       <Image
         src={MENU_ICON}
-        alt="챌린지 메뉴 드롭 다운 표시"
+        alt="챌린지 메뉴 드롭 다운 표시 아이콘"
         width={14}
         height={26}
         style={{ width: 'auto', height: 'auto' }}

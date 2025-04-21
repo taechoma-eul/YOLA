@@ -12,6 +12,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true, isSelect }: MenuIt
   return (
     <>
       <Link
+        aria-label={`${label} 페이지 이동 메뉴`}
         href={href}
         className={clsx(
           'flex h-[47px] items-center justify-center bg-white hover:text-primary-orange-600',

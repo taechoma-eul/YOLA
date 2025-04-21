@@ -17,7 +17,10 @@ const NavLinkItem = ({ href, label, fullUrl, isMission }: ItemProps) => {
   const isSelect: boolean = fullUrl.includes(href);
 
   return (
-    <li className="flex h-[44px] w-[127px] flex-col items-center justify-center">
+    <li
+      aria-label={`${label} 페이지 이동 메뉴`}
+      className="flex h-[44px] w-[127px] flex-col items-center justify-center"
+    >
       <Link
         href={href}
         onMouseEnter={() => setIsHovered(true)}
