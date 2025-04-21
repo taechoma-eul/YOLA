@@ -10,7 +10,11 @@ import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
 import type { SortBy } from '@/types/gonggam';
 
-const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
+interface MyGonggamPostClientProps {
+  nickname: string;
+}
+
+const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
   const [sortBy, setSortBy] = useState<SortBy>('latest');
   const queryClient = useQueryClient();
 
@@ -43,12 +47,16 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   const allPosts = posts.pages.flatMap((page) => page.data);
 
   return (
-    <div className="mt-[72px]">
-      <section className="mb-[35px] flex flex-row items-center justify-between">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+    <div className="mt-[20px] md:mt-[72px]">
+      <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
+        {/* 데스크탑에서만 보이는 텍스트 */}
+        <div className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
           {nickname}님이 작성한 공감 게시글
         </div>
-        <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
+        {/* SelectBox는 항상 오른쪽 정렬 */}
+        <div className="ml-auto">
+          <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
+        </div>
       </section>
 
       <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
