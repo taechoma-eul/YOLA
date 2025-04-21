@@ -227,7 +227,7 @@ const PostInputForm = ({
             placeholder="내용을 입력하세요..."
             className="h-[90%] w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
           />
-          {errors.content && <p className="mt-2 text-sm text-primary-orange-900">{errors.content.message}</p>}
+          {errors.content && <p className="mt-2 text-sm text-red-500">{errors.content.message}</p>}
         </div>
 
         <div className="mb-6">

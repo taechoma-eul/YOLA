@@ -14,10 +14,10 @@ export const useLifePostsByMonthRange = (months: string[]) => {
     }))
   });
 
-  const isLoading = results.some((r) => r.isLoading);
+  const isPending = results.some((r) => r.isPending);
   const isError = results.some((r) => r.isError);
 
   const data: LifePostWithImageUrls[] = results.filter((r) => r.status === 'success').flatMap((r) => r.data ?? []);
 
-  return { data, isLoading, isError };
+  return { data, isPending, isError };
 };

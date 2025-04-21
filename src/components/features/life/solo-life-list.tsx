@@ -12,7 +12,7 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
   const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
 
   const selectedMonth = selectedDate.slice(0, 7);
-  const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
+  const { data: posts = [], isPending, error } = useLifePostsByMonth(selectedMonth);
 
   const parsedList: SoloLifeCardType[] = posts
     .filter((p) => p.date.startsWith(selectedDate))
@@ -39,7 +39,7 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
     setShowModal(true);
   };
 
-  if (isLoading) return <div className="p-4">로딩 중...</div>;
+  if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) return <div className="p-4 text-red-500">에러 발생</div>;
 
   return (
