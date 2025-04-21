@@ -1,38 +1,36 @@
 'use client';
 
-import { clsx } from 'clsx';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import type { Children } from '@/types/children';
+import { useState } from 'react';
+import NavLabel from '@/components/layout/header/header-nav-label';
+import NavUnderBar from '@/components/layout/header/header-nav-under-bar';
 
-const NavLinkItem = ({ href, children }: Children & { href: string }) => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+interface ItemProps {
+  href: string;
+  label: string;
+  fullUrl: string;
+  isMission: boolean;
+}
 
-  const fullUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-
+const NavLinkItem = ({ href, label, fullUrl, isMission }: ItemProps) => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const isSelect: boolean = fullUrl.includes(href);
-  const isMission: boolean = fullUrl.includes('mission_id');
 
   return (
-    <Link href={href} data-state="Default" className="group inline-flex h-11 flex-col items-center justify-center">
-      <div className="flex w-32 flex-col items-center">
-        <div
-          className={clsx(
-            'relative h-[25px] justify-start text-center text-lg text-secondary-grey-900 group-hover:font-semibold',
-            isSelect && !isMission ? 'font-semibold' : 'font-normal'
-          )}
-        >
-          {children}
-          <div
-            className={clsx(
-              'absolute top-[25px] h-[2px] w-full self-stretch rounded-[1px] bg-primary-orange-500 group-hover:visible',
-              isSelect && !isMission ? 'visible' : 'invisible'
-            )}
-          />
-        </div>
-      </div>
-    </Link>
+    <li
+      aria-label={`${label} 페이지 이동 메뉴`}
+      className="flex h-[44px] w-[127px] flex-col items-center justify-center"
+    >
+      <Link
+        href={href}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative"
+      >
+        <NavLabel label={label} isBold={isHovered || (isSelect && !isMission)} />
+        <NavUnderBar isVisible={isHovered || (isSelect && !isMission)} />
+      </Link>
+    </li>
   );
 };
 
