@@ -30,7 +30,6 @@ import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 import { getToday } from '@/lib/utils/get-date';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 
-// 훅
 import type { MissionType } from '@/types/checklist';
 
 interface LifeInputFormProps {
