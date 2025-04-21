@@ -1,6 +1,7 @@
 'use client';
 
-import { CirclePlusIcon } from 'lucide-react';
+import { clsx } from 'clsx';
+import { CirclePlusIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import { ChangeEvent } from 'react';
 
@@ -41,20 +42,21 @@ const ImageUploader = ({
   const isMax = images.length + defaultImageUrls.length >= maxCount;
 
   return (
-    <div className="flex items-start gap-40 rounded-md bg-gray-50 px-6 py-4">
+    <div className="flex items-start gap-40 rounded-md bg-secondary-grey-100 px-6 py-4">
       <div className="w-50 flex flex-col items-start justify-center">
-        <p className="mb-1 mt-5 text-xl font-semibold text-gray-700">이미지등록</p>
-        <p className="text-xs text-gray-500">이미지는 최대 {maxCount}개까지 등록됩니다.</p>
+        <p className="mb-1 mt-5 text-xl font-semibold text-secondary-grey-800">이미지등록</p>
+        <p className="text-xs text-secondary-grey-700">이미지는 최대 {maxCount}개까지 등록됩니다.</p>
       </div>
 
       <div className="flex flex-wrap gap-3">
-        {/* 항상 보여지는 업로드 버튼 */}
+        {/* 업로드 버튼 */}
         <label
-          className={`flex h-24 w-24 flex-col items-center justify-center rounded-md border border-dashed text-sm ${
+          className={clsx(
+            'flex h-24 w-24 flex-col items-center justify-center rounded-md border border-dashed text-sm',
             isMax
-              ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-300'
-              : 'cursor-pointer border-gray-300 bg-white text-gray-400 hover:bg-gray-100'
-          } `}
+              ? 'cursor-not-allowed border-secondary-grey-500 bg-secondary-grey-150 text-secondary-grey-500'
+              : 'cursor-pointer border-secondary-grey-500 bg-white text-secondary-grey-800 hover:bg-secondary-grey-150'
+          )}
         >
           <span className="text-4xl">
             <CirclePlusIcon />
@@ -65,12 +67,12 @@ const ImageUploader = ({
 
         {/* 기본 이미지 목록 */}
         {defaultImageUrls.map((url, idx) => (
-          <div key={`default-${idx}`} className="relative h-24 w-24 overflow-hidden rounded-md border border-gray-300">
+          <div key={`default-${idx}`} className="relative h-24 w-24 overflow-hidden rounded-md border">
             <Image src={url} alt={`uploaded-${idx}`} width={96} height={96} className="h-full w-full object-cover" />
             <button
               type="button"
               onClick={() => onRemoveDefaultImage?.(idx)}
-              className="absolute right-1 top-1 rounded bg-black bg-opacity-70 px-1 text-xs text-white"
+              className="absolute right-1 top-1 rounded bg-black bg-opacity-70 px-1 text-xs text-secondary-grey-700"
             >
               ✕
             </button>
@@ -79,7 +81,7 @@ const ImageUploader = ({
 
         {/* 새로 선택된 이미지 목록 */}
         {images.map((img, idx) => (
-          <div key={`new-${idx}`} className="relative h-24 w-24 overflow-hidden rounded-md border border-gray-300">
+          <div key={`new-${idx}`} className="relative h-24 w-24 overflow-hidden rounded-md border">
             <Image
               src={URL.createObjectURL(img)}
               alt={`preview-${idx}`}
@@ -90,9 +92,9 @@ const ImageUploader = ({
             <button
               type="button"
               onClick={() => handleRemove(idx)}
-              className="absolute right-1 top-1 rounded bg-black bg-opacity-70 px-1 text-xs text-white"
+              className="absolute right-1 top-1 flex h-[20px] w-[20px] items-center justify-center rounded-full border-[2px] border-secondary-grey-400 bg-white text-secondary-grey-700"
             >
-              ✕
+              <X className="h-[15px] w-[15px]" />
             </button>
           </div>
         ))}
