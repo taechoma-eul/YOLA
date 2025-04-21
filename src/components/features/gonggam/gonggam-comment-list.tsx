@@ -41,7 +41,7 @@ const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
         setCommentIdToDelete(null);
       },
       onError: () => {
-        toastAlert(FAIL.FAIL_TO_DELETE_COMMENT, 'destructive');
+        toastAlert(FAIL.DELETE_COMMENT, 'destructive');
       }
     });
   };

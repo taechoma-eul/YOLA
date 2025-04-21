@@ -36,7 +36,7 @@ const GonggamCommentItem = ({ comment, postId, userId, onClickDelete }: GonggamC
           setIsEditing(false);
         },
         onError: () => {
-          toastAlert(FAIL.FAIL_TO_UPDATE_COMMENT, 'destructive');
+          toastAlert(FAIL.UPDATE_COMMENT, 'destructive');
         }
       }
     );

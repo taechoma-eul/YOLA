@@ -28,13 +28,13 @@ export const FAIL = {
   INVALID_MISSION_TYPE: '유효하지 않은 미션 이름입니다',
   NOTFOUND_MISSION_INFO: '해당 미션 정보를 찾을 수 없습니다.',
   /** 공감게시판 */
-  FAIL_TO_GET_POST_META: '포스트 메타데이터를 가져오는 데 실패했습니다.',
-  FAIL_TO_GET_LIKES: '좋아요 상태 조회에 실패했습니다.',
-  FAIL_TO_UPDATE_LIKE: '좋아요 업데이트에 실패했습니다.',
+  GET_POST_META: '포스트 메타데이터를 가져오는 데 실패했습니다.',
+  GET_LIKES: '좋아요 상태 조회에 실패했습니다.',
+  UPDATE_LIKE: '좋아요 업데이트에 실패했습니다.',
   GONGGAM_POST_DELETE_ERROR: '공감게시글 삭제에 실패했습니다.',
-  FAIL_TO_UPLOAD_COMMENT: '댓글 등록에 실패했습니다.',
-  FAIL_TO_DELETE_COMMENT: '댓글 삭제에 실패했습니다.',
-  FAIL_TO_UPDATE_COMMENT: '댓글 수정에 실패했습니다.'
+  UPLOAD_COMMENT: '댓글 등록에 실패했습니다.',
+  DELETE_COMMENT: '댓글 삭제에 실패했습니다.',
+  UPDATE_COMMENT: '댓글 수정에 실패했습니다.'
 } as const;
 
 export const AUTH_ERROR = {
