@@ -1,4 +1,4 @@
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { fetchUserSessionState } from '@/lib/utils/api/auth/auth-client.api';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
@@ -19,7 +19,7 @@ export const getMyGonggamPostsAll = async ({
   sortBy: SortBy;
 }): Promise<GetMyGonggamPostsResponse> => {
   const { userId } = await fetchUserSessionState();
-  if (!userId) throw new Error(MSG.NEED_LOGIN);
+  if (!userId) throw new Error(FAIL.NEED_LOGIN);
 
   const postsPerPage = 4;
   const from = (page - 1) * postsPerPage;
