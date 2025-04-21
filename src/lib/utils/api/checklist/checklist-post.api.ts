@@ -1,4 +1,4 @@
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { getCompletedMissionIds, getMissionListByLevel } from '@/lib/utils/api/checklist/checklist.api';
@@ -23,7 +23,7 @@ export async function getMissionDropdownData({ userId, missionId }: DropdownPara
     .single();
 
   if (metaError) throw new Error(metaError.message);
-  if (!meta) throw new Error(MSG.NOTFOUND_MISSION_INFO);
+  if (!meta) throw new Error(FAIL.NOTFOUND_MISSION_INFO);
 
   const { type, level } = meta;
 

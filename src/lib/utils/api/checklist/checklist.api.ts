@@ -1,4 +1,4 @@
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
@@ -39,7 +39,7 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
   const supabase = await createClient();
   const col = missionTypeMap[decodedMission];
   if (!col) {
-    throw new Error(`${MSG.INVALID_MISSION_TYPE}: ${decodedMission}`);
+    throw new Error(`${FAIL.INVALID_MISSION_TYPE}: ${decodedMission}`);
   }
   const { data, error } = (await supabase.from(TABLE.USER_LEVEL).select(col).eq('user_id', userId).single()) as {
     data: Pick<TableUserLevel, typeof col>;
