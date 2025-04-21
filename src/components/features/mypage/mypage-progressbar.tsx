@@ -67,7 +67,7 @@ const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps)
       </section>
 
       {/* 아래 레벨 현황 및 남은 개수 */}
-      <section className="-mx-10 mt-[40px] w-[calc(100%+80px)] rounded-b-[12px] border-t border-dashed border-secondary-grey-600 bg-secondary-grey-100 p-[16px] text-center">
+      <section className="-mx-10 mt-[40px] w-[calc(100%+80px)] rounded-b-[12px] border-t border-dashed border-secondary-grey-600 bg-secondary-grey-100 p-[16px] text-center text-xs md:text-base">
         {remainingMissions !== null ? (
           <span>
             당신의 레벨은 <span className="font-semibold">{level}</span>입니다. 다음 레벨까지{' '}
