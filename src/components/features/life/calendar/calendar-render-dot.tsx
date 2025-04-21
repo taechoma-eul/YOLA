@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 const RenderDot = (
   dotMap: Record<string, Set<'mission' | 'normal'>>
 ): ((date: Date, isOutside: boolean) => React.ReactNode) => {
-  return (date, isOutside) => {
+  const DotComponent = (date: Date, isOutside: boolean) => {
     const dateStr = format(date, 'yyyy-MM-dd');
     const dots = dotMap[dateStr];
     const dotTextColor = isOutside ? 'text-gray-300' : 'text-zinc-500';
@@ -34,6 +34,9 @@ const RenderDot = (
       </div>
     );
   };
+
+  DotComponent.displayName = 'RenderDotCell';
+  return DotComponent;
 };
 
 export default RenderDot;
