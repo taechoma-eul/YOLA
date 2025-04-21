@@ -49,12 +49,10 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing === false) {
-      if (e.key === 'Enter' || e.key === ',') {
-        e.preventDefault();
-        const success = addTag(inputValue);
-        if (success) setInputValue('');
-      }
+    if (e.nativeEvent.isComposing === false && e.key === 'Enter') {
+      e.preventDefault();
+      const success = addTag(inputValue);
+      if (success) setInputValue('');
     }
   };
 
@@ -98,7 +96,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="입력 후 Enter 또는 ,"
+          placeholder="입력 후 Enter"
           className="min-w-[80px] rounded border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-yellow-200"
         />
       )}
