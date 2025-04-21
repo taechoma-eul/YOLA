@@ -1,5 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import type { EnumCategories, TableGonggamPosts } from '@/types/supabase-const';
 import type { GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 
@@ -112,5 +113,24 @@ export const getPostMetaByPostIdByClient = async (postId: TableGonggamPosts['id'
   return {
     likeCnt: data[0].likes_count ?? 0,
     commentCnt: data[0].comments_count ?? 0
+  };
+};
+
+export const getGonggamPostCardMeta = async (postId: number) => {
+  // 1. 이미지 URL
+  const imageUrls = await getPostImagesByPostIdByClient(postId);
+  const imagePreview = imageUrls?.[0] ?? DEFAULT_LIFE_IMAGE_URL;
+
+  // 2. 좋아요/댓글 수
+  const { likeCnt, commentCnt } = await getPostMetaByPostIdByClient(postId);
+
+  // 3. 조회수
+  const viewCount = await getViewCountByClient(String(postId));
+
+  return {
+    imagePreview,
+    likeCnt,
+    commentCnt,
+    viewCount
   };
 };

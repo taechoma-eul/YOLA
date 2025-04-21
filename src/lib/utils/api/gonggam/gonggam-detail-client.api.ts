@@ -101,7 +101,6 @@ export const dislikePost = async ({ postId, userId }: { postId: number; userId: 
  */
 export const getGonggamPostDetailByClient = async (postId: TableGonggamPosts['id']): Promise<GonggamPostDetail> => {
   // 1. 게시글 + 작성자 조인 조회
-
   const { data: post, error: postError } = await supabase
     .from(TABLE.GONGGAM_POSTS)
     .select(

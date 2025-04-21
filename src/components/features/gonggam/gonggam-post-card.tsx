@@ -1,17 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { Dot } from 'lucide-react';
 import GonggamBoardMeta from '@/components/features/gonggam/gonggam-board-meta';
-import {
-  getPostImagesByPostIdByClient,
-  getPostMetaByPostIdByClient,
-  getViewCountByClient
-} from '@/lib/utils/api/gonggam/gonggam-board-client.api';
+import { useGetGonggamPostCardMeta } from '@/lib/hooks/queries/use-get-gonggam-post-card-meta';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
-import { FAIL } from '@/constants/messages';
 import type { GonggamPostDetailResponse } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
@@ -19,35 +12,10 @@ interface GonggamPostCardProps {
 }
 
 const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
-  const [imagePreview, setImagePreview] = useState(DEFAULT_LIFE_IMAGE_URL);
-  const [postMeta, setPostMeta] = useState({ likeCnt: 0, commentCnt: 0, viewCount: 0 });
+  const { data: meta, isPending, error } = useGetGonggamPostCardMeta(post.id);
 
-  useEffect(() => {
-    const fetchPostMeta = async () => {
-      try {
-        // 1. 이미지 불러오기
-        const images = await getPostImagesByPostIdByClient(post.id);
-        const fetchedImagePreview = images[0] ?? DEFAULT_LIFE_IMAGE_URL;
-        setImagePreview(fetchedImagePreview);
-
-        // 2. 좋아요, 댓글 수 불러오기
-        const { likeCnt, commentCnt } = await getPostMetaByPostIdByClient(post.id);
-
-        // 3. 조회수 불러오기
-        const viewCount = await getViewCountByClient(String(post.id));
-
-        setPostMeta({
-          likeCnt,
-          commentCnt,
-          viewCount
-        });
-      } catch {
-        throw new Error(FAIL.GET_POST_META);
-      }
-    };
-
-    fetchPostMeta();
-  }, [post.id]);
+  if (isPending) return <div>loading...</div>;
+  if (error) throw new Error(error.message);
 
   return (
     <article className="flex max-w-[1200px] items-start justify-between gap-[10px] border-b border-secondary-grey-200 px-[10px] py-[12px]">
@@ -68,12 +36,12 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
         </div>
 
         {/* 좋아요/댓글/조회수 */}
-        <GonggamBoardMeta likeCnt={postMeta.likeCnt} commentCnt={postMeta.commentCnt} viewCount={postMeta.viewCount} />
+        <GonggamBoardMeta likeCnt={meta.likeCnt} commentCnt={meta.commentCnt} viewCount={meta.viewCount} />
       </section>
 
       {/* 이미지 */}
       <figure className="relative h-[110px] w-[110px] overflow-hidden rounded-[16px]">
-        <Image src={imagePreview} alt={post.title} fill sizes="110px" className="object-cover" priority />
+        <Image src={meta.imagePreview} alt={post.title} fill sizes="110px" className="object-cover" priority />
       </figure>
     </article>
   );
