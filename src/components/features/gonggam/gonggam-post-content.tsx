@@ -6,6 +6,7 @@ import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
+import { SkeletonCard } from '@/components/ui/skeleton';
 import { useGetGonggamPostDetail } from '@/lib/hooks/queries/use-get-gonggam-post-detail';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
@@ -20,7 +21,12 @@ interface GonggamPostContentProps {
 const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentProps) => {
   const { data: post, isPending, error } = useGetGonggamPostDetail(postId);
 
-  if (isPending) return <div>loading...</div>;
+  if (isPending)
+    return (
+      <div className="my-[50px] w-full">
+        <SkeletonCard />
+      </div>
+    );
   if (error) throw new Error(error.message);
 
   const { title, content, created_at, updated_at, writer: users, images, tags, user_id } = post;

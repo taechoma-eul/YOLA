@@ -14,7 +14,6 @@ interface GonggamPostCardProps {
 const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
   const { data: meta, isPending, error } = useGetGonggamPostCardMeta(post.id);
 
-  if (isPending) return <div>loading...</div>;
   if (error) throw new Error(error.message);
 
   return (
@@ -36,12 +35,20 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
         </div>
 
         {/* 좋아요/댓글/조회수 */}
-        <GonggamBoardMeta likeCnt={meta.likeCnt} commentCnt={meta.commentCnt} viewCount={meta.viewCount} />
+        {isPending ? (
+          <div className="h-[10px] w-[120px] animate-pulse rounded-md bg-primary/10" />
+        ) : (
+          <GonggamBoardMeta likeCnt={meta.likeCnt} commentCnt={meta.commentCnt} viewCount={meta.viewCount} />
+        )}
       </section>
 
       {/* 이미지 */}
       <figure className="relative h-[110px] w-[110px] overflow-hidden rounded-[16px]">
-        <Image src={meta.imagePreview} alt={post.title} fill sizes="110px" className="object-cover" priority />
+        {isPending ? (
+          <div className="h-full w-full animate-pulse bg-primary/10" />
+        ) : (
+          <Image src={meta.imagePreview} alt={post.title} fill sizes="110px" className="object-cover" priority />
+        )}
       </figure>
     </article>
   );

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import GonggamPagination from '@/components/features/gonggam/gonggam-pagination';
 import GonggamPostCard from '@/components/features/gonggam/gonggam-post-card';
+import { SkeletonFlatten } from '@/components/ui/skeleton';
 import { usePaginatedGonggamPosts } from '@/lib/hooks/queries/use-paginated-gonggam-posts';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
@@ -18,7 +19,14 @@ const GonggamCategoryBoard = ({ params: { category } }: GonggamCategoryBoardProp
   const categoryEnum = slugToCategory[category];
   const { data, isPending, error } = usePaginatedGonggamPosts(categoryEnum, currentPage);
 
-  if (isPending) return <div className="p-4">loading...</div>;
+  if (isPending)
+    return (
+      <div className="mt-[20px] flex flex-col gap-8">
+        <SkeletonFlatten />
+        <SkeletonFlatten />
+        <SkeletonFlatten />
+      </div>
+    );
   if (error) throw new Error(error.message);
 
   const { posts, pagination } = data;
