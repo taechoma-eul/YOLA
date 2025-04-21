@@ -107,7 +107,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
           className="flex items-center gap-1 rounded border border-secondary-grey-600 px-3 py-1 text-sm text-secondary-grey-700"
         >
           <span>#{tag}</span>
-          <button type="button" onClick={() => handleRemove(tag)} className="hover:text-primary-orange-500">
+          <button type="button" onClick={() => handleRemove(tag)}>
             ×
           </button>
         </div>
