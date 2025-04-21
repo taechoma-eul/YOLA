@@ -16,7 +16,7 @@ interface SelectBoxProps {
 export function SelectBox({ value, onChange }: SelectBoxProps) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="h-[44px] w-[109px]">
+      <SelectTrigger className="h-[44px] w-[120px]">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
