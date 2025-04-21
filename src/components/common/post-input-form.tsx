@@ -29,6 +29,7 @@ import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
 import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 import { getToday } from '@/lib/utils/get-date';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { toastAlert } from '@/lib/utils/toast';
 
 // 타입
 import type { TableMissionList } from '@/types/supabase-const';
@@ -147,12 +148,12 @@ const PostInputForm = ({
         queryClient.invalidateQueries({
           queryKey: [QUERY_KEY.LIFE_POSTS]
         });
-        alert(`${action}되었습니다!`);
+        toastAlert(`${action}되었습니다!`, 'success');
         router.push(PATH.LIFE);
       };
 
       const onError = (err: unknown) => {
-        alert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`);
+        toastAlert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`, 'destructive');
       };
 
       const mutationFn =
@@ -162,11 +163,12 @@ const PostInputForm = ({
 
       mutationFn();
     } catch (err) {
-      alert(err instanceof Error ? err.message : '알 수 없는 오류');
+      toastAlert(err instanceof Error ? err.message : '알 수 없는 오류', 'destructive');
     }
   };
 
   const handleCancel = async () => {
+    // 모달띄우기!!!!!!!!!!!!
     const confirm = window.confirm('작성 중인 내용이 사라집니다. 뒤로갈까요?');
     if (!confirm) return;
 
@@ -175,7 +177,7 @@ const PostInputForm = ({
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
-      alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
+      toastAlert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
     }
   };
 
