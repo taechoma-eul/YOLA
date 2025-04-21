@@ -11,7 +11,11 @@ import type { EnumChecklist, EnumLevel } from '@/types/supabase-const';
 
 let userLevel = '1'; // default level (for 비로그인 사용자)
 
-const Checklist = async ({ params }: { params: { mission: string } }) => {
+interface ChecklistProps {
+  params: { mission: string };
+}
+
+const Checklist = async ({ params }: ChecklistProps) => {
   const decoded = decodeURIComponent(params.mission);
 
   if (!validMissionTags.includes(decoded as EnumChecklist)) {
