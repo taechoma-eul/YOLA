@@ -218,7 +218,7 @@ const PostInputForm = ({
               type="text"
               {...register('title')}
               placeholder={DEFAULT_TITLE}
-              className="mb-[20px] w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
+              className="mb-[20px] w-full border-b border-secondary-grey-300 pb-2 text-xl font-semibold outline-none placeholder:text-secondary-grey-400 focus:border-blue-500"
             />
           )}
 
