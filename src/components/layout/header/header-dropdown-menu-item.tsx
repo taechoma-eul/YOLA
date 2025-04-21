@@ -5,12 +5,10 @@ interface MenuItem {
   label: string;
   href: string;
   isLine?: boolean;
-  pathname?: string;
+  isSelect: boolean;
 }
 
-const HeaderDropdownMenuItem = ({ label, href, isLine = true, pathname }: MenuItem) => {
-  const isSelect: boolean = decodeURIComponent(pathname!).includes(href);
-
+const HeaderDropdownMenuItem = ({ label, href, isLine = true, isSelect }: MenuItem) => {
   return (
     <>
       <Link
