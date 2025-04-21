@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-menu-item';
 import NavLabel from '@/components/layout/header/header-nav-label';
@@ -9,15 +8,9 @@ import NavUnderBar from '@/components/layout/header/header-nav-under-bar';
 import { PATH } from '@/constants/page-path';
 import MENU_ICON from '@images/images/challenge_menu.svg';
 
-const NavChallengeMenu = () => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: boolean }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
-
-  const fullUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-
   const isSelect: boolean = fullUrl.includes(PATH.CHECKLIST);
-  const isMission: boolean = fullUrl.includes('mission_id');
 
   const challengeMenuItem = [
     { href: PATH.MEAL_CHECKLIST, label: '혼밥' },
@@ -49,7 +42,7 @@ const NavChallengeMenu = () => {
           <HeaderDropdownMenuItem
             key={index}
             label={item.label}
-            pathname={pathname}
+            isSelect={isSelect}
             isLine={item.isLine}
             href={item.href}
           />
