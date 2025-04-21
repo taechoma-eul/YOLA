@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import ButtonClientComponent from '@/components/features/mypage/button-client-component';
 import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
+import RandomMissionBox from '@/components/features/mypage/mypage-radom-mission-box';
 import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { getMissionsData } from '@/lib/utils/api/missions.api';
 import { getUserMission } from '@/lib/utils/api/mypage/my-mission.api';
@@ -11,7 +11,6 @@ import CLEAN_ICON from '@images/images/clean-icon.svg';
 import GOAT_ICON from '@images/images/goat-icon.svg';
 import MEAL_ICON from '@images/images/meal-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
-import TOOLTIP_BOX from '@images/images/tooltip-box.svg';
 import TRAVEL_ICON from '@images/images/travel-icon.svg';
 
 const AchievementPage = async () => {
@@ -26,7 +25,7 @@ const AchievementPage = async () => {
   //유저 전체 레벨 계산 로직 -> progressBar 에 Props 전달
   const rawMissionsFromSupabase = await getUserMission();
   const totalCount = [...rawMissionsFromSupabase].length;
-  const userLevel = calculateUserLevel(totalCount);
+  const { level, remainingMissions } = calculateUserLevel(totalCount);
 
   //미션별 레벨 계산할 미션리스트 데이터로 가공 후, 계산 로직 인자값으로 전달
   const missionList = parseUserMissions(rawMissionsFromSupabase);
@@ -39,7 +38,7 @@ const AchievementPage = async () => {
   const categories = missionLevels.map(({ type, currentLevel, nextLevelLeft }) => ({
     type: type,
     level: currentLevel as number | 'master',
-    description: `다음 레벨까지 ${nextLevelLeft}개 남았어요`,
+    description: `다음 레벨까지 ${nextLevelLeft}개`,
     icon: CATEGORY_ICONS[type as keyof typeof CATEGORY_ICONS]
   }));
 
@@ -50,7 +49,7 @@ const AchievementPage = async () => {
         <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {profile.nickname}님의 혼자 라이프 레벨
         </div>
-        <MypageProgressBar level={userLevel} />
+        <MypageProgressBar level={level} remainingMissions={remainingMissions} />
       </section>
 
       {/* 각각의 미션 카테고리 level 현황 */}
@@ -78,15 +77,8 @@ const AchievementPage = async () => {
               </div>
               {/* 레벨 표시 */}
               <strong className="mt-[15px] text-xl font-semibold">{formatLevel(level)}</strong>
-              {/* Hover 시 나타나는 툴팁 */}
-              <div className="item-center absolute -bottom-20 hidden w-48 justify-center group-hover:block">
-                <figure className="relative">
-                  <Image src={TOOLTIP_BOX} alt="tooltip-box 이미지" className="h-auto w-full" />
-                  <figcaption className="item-center absolute left-1/2 top-[65%] w-[85%] -translate-x-1/2 -translate-y-1/2 justify-center text-center text-sm text-white">
-                    {description}
-                  </figcaption>
-                </figure>
-              </div>
+              {/* 다음 레벨까지 남은 개수 안내 */}
+              <div className="mt-[12px] text-xs font-normal leading-none text-secondary-grey-900">{description}</div>
             </div>
           ))}
         </div>
@@ -94,17 +86,10 @@ const AchievementPage = async () => {
 
       {/* 렌덤 미션 뽑기 */}
       <section className="flex flex-col gap-[20px]">
-        <div className="flex justify-between">
-          <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
-            오늘의 랜덤 미션
-          </div>
-          <ButtonClientComponent missionsData={missionsData} isLogin={isLogin} />
+        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+          오늘의 랜덤 미션
         </div>
-        <div className="mb-[227px] flex min-h-[55px] items-center justify-start rounded-[8px] border-none bg-secondary-grey-100 p-2.5 text-sm leading-tight text-secondary-grey-900">
-          <p>
-            혼자서 보내는 시간이 지루하게 느껴질 때, 다양한 주제의 랜덤 미션을 통해 매일 색다른 하루를 만들어보세요.
-          </p>
-        </div>
+        <RandomMissionBox isLogin={isLogin} missionsData={missionsData} />
       </section>
     </div>
   );

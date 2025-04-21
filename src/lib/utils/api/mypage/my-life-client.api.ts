@@ -1,4 +1,4 @@
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { fetchUserSessionState } from '@/lib/utils/api/auth/auth-client.api';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
@@ -16,7 +16,7 @@ import type { GetLifePostsResponse } from '@/types/life-post';
  */
 export const getLifePostsAll = async ({ page }: { page: number }): Promise<GetLifePostsResponse> => {
   const { userId } = await fetchUserSessionState();
-  if (!userId) throw new Error(MSG.NEED_LOGIN);
+  if (!userId) throw new Error(FAIL.NEED_LOGIN);
 
   // 페이지당 게시물 수
   const postsPerPage = 8;
