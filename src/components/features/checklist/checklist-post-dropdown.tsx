@@ -11,10 +11,10 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { PATH } from '@/constants/page-path';
-import type { MissionType } from '@/types/checklist';
+import type { TableMissionList } from '@/types/supabase-const';
 
 type ChecklistPostDropdownProps = {
-  missions: MissionType[];
+  missions: TableMissionList[];
   completedIds?: number[];
   selectedId: number | null;
   onSelect: (id: number) => void;
@@ -28,7 +28,7 @@ type ChecklistPostDropdownProps = {
  * @param {Object} params - 함수 매개변수 객체
  * @param {string} params.userId - 현재 로그인한 유저의 ID
  * @param {number} params.missionId - 현재 선택된 미션 ID
- * @returns {Promise<{ missions: MissionType[]; completedIds: number[] }>}
+ * @returns {Promise<{ missions: TableMissionList[]; completedIds: number[] }>}
  * - `missions`: 현재 미션과 동일한 타입 및 레벨의 미션 목록
  * - `completedIds`: 해당 유저가 이미 완료한 미션 ID 리스트
  * @throws {Error} - 미션 메타 정보가 없거나 Supabase 쿼리 중 에러가 발생할 경우 에러 throw

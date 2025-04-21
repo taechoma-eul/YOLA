@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { toastAlert } from '@/lib/utils/toast';
 import type { MissionWithStatus } from '@/types/checklist';
@@ -23,7 +23,7 @@ const MissionListClient = ({ setSelectedMissionId, missionList, userId }: Client
   const handleMissionClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!userId) {
       e.preventDefault();
-      toastAlert(MSG.LOGIN_BEFORE_POST_MISSION_CLEAR, 'destructive');
+      toastAlert(FAIL.NEED_LOGIN, 'destructive');
       router.push(PATH.LOGIN);
     }
   };
