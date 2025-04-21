@@ -78,12 +78,12 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
     }
   };
   return (
-    <div className="mb-5 flex flex-wrap items-center gap-2 rounded-md border border-gray-300 px-3 py-2">
+    <div className="mb-5 flex flex-wrap items-center gap-2 rounded-md border border-secondary-grey-300 px-3 py-2">
       {!inputVisible && (
         <button
           type="button"
           onClick={() => setInputVisible(true)}
-          className="rounded border border-gray-300 px-3 py-1 text-sm text-gray-500 hover:bg-gray-100"
+          className="rounded border border-secondary-grey-800 px-3 py-1 text-sm text-secondary-grey-800 hover:bg-secondary-grey-100"
         >
           +태그추가
         </button>
@@ -97,17 +97,17 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="입력 후 Enter"
-          className="min-w-[80px] rounded border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-yellow-200"
+          className="min-w-[80px] rounded border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-1 focus:ring-primary-orange-500"
         />
       )}
 
       {tags.map((tag) => (
         <div
           key={tag}
-          className="flex items-center gap-1 rounded border border-gray-400 px-3 py-1 text-sm text-gray-700"
+          className="flex items-center gap-1 rounded border border-secondary-grey-600 px-3 py-1 text-sm text-secondary-grey-700"
         >
           <span>#{tag}</span>
-          <button type="button" onClick={() => handleRemove(tag)} className="text-gray-500 hover:text-red-500">
+          <button type="button" onClick={() => handleRemove(tag)} className="hover:text-red-500">
             ×
           </button>
         </div>
@@ -116,7 +116,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
       <motion.div
         key={shouldShake ? 'shake' : 'stable'} // key 변경으로 애니메이션 재실행 유도
         {...(shouldShake ? shakeAnimation : {})}
-        className="mt-2 flex w-full items-center gap-1 text-xs text-gray-500"
+        className="mt-2 flex w-full items-center gap-1 text-xs text-secondary-grey-700"
       >
         <Info className="h-[13px] w-[13px]" />
         최대 8글자, 6개 이내
