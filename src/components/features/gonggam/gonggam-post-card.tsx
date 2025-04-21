@@ -12,10 +12,10 @@ import {
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import { FAIL } from '@/constants/messages';
-import type { EachPaginatedGonggamPost } from '@/types/gonggam';
+import type { GonggamPostDetailResponse } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
-  post: EachPaginatedGonggamPost;
+  post: GonggamPostDetailResponse;
 }
 
 const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
@@ -58,13 +58,15 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
           <Dot size={12} className="translate-y-[-2px]" />
           <time dateTime={post.created_at}>{formatRelativeDate(post.created_at)}</time>
         </div>
+
         {/* 텍스트 영역 */}
         <div className="mb-[13px] mt-[4px] flex flex-col items-start gap-1 self-stretch">
-          <h3 className="flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">{post.title}</h3>
+          <h1 className="flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">{post.title}</h1>
           <p className="overflow-hidden truncate text-[12px] font-normal leading-[140%] text-secondary-grey-900">
             {post.content.length > 100 ? `${post.content.slice(0, 100)}...` : post.content}
           </p>
         </div>
+
         {/* 좋아요/댓글/조회수 */}
         <GonggamBoardMeta likeCnt={postMeta.likeCnt} commentCnt={postMeta.commentCnt} viewCount={postMeta.viewCount} />
       </section>

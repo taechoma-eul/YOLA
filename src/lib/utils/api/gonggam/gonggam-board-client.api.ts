@@ -1,12 +1,7 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { EnumCategories, TableGonggamPosts } from '@/types/supabase-const';
-import {
-  GonggamPostMeta,
-  // PaginatedPostsResponse,
-  PaginatedPostsResponseNew
-  // WriterProfileResponse
-} from '@/types/gonggam';
+import type { EnumCategories, TableGonggamPosts } from '@/types/supabase-const';
+import type { GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 
 /**
  * 선택한 게시글의 조회수를 클라이언트 컴포넌트에서 조회하기 위한 api 함수입니다.
@@ -38,7 +33,7 @@ const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
 export const getPaginatedGonggamPostsByClient = async (
   category: EnumCategories,
   page: number = 1
-): Promise<PaginatedPostsResponseNew> => {
+): Promise<PaginatedPostsResponse> => {
   // Step 1: 전체 개수 카운트
   const { count, error: countError } = await supabase
     .from(TABLE.GONGGAM_POSTS)

@@ -17,7 +17,7 @@ interface GonggamPaginationProps {
 
 const MAX_PAGE_LINKS = 5; // 화면에 표시할 페이지 버튼 수
 
-export const GonggamPagination = ({ currentPage, totalPages, baseHref }: GonggamPaginationProps) => {
+const GonggamPagination = ({ currentPage, totalPages, baseHref }: GonggamPaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -68,3 +68,5 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
     </Pagination>
   );
 };
+
+export default GonggamPagination;

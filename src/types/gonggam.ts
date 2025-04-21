@@ -1,28 +1,12 @@
 import type { EnumCategories, TableComments, TableGonggamPosts, TableLikes, TableUsers } from '@/types/supabase-const';
 
-export interface PaginationInfo {
-  currentPage: number;
-  totalPages: number;
-  totalCount: number;
-}
-
 export interface PaginatedPostsResponse {
-  posts: TableGonggamPosts[];
-  pagination: PaginationInfo;
-}
-
-export type EachPaginatedGonggamPost = TableGonggamPosts & {
-  writer: WriterProfile;
-};
-
-export interface PaginatedPostsResponseNew {
-  posts: EachPaginatedGonggamPost[];
-  pagination: PaginationInfo;
-}
-
-export interface GonggamPostMeta {
-  likeCnt: number;
-  commentCnt: number;
+  posts: GonggamPostDetailResponse[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalCount: number;
+  };
 }
 
 export interface WriterProfile {
@@ -31,15 +15,20 @@ export interface WriterProfile {
 }
 
 export interface GonggamPostDetailResponse extends TableGonggamPosts {
-  users: WriterProfile;
+  writer: WriterProfile;
 }
 
-export type GonggamPostDetail = GonggamPostDetailResponse & {
+export interface GonggamPostDetail extends GonggamPostDetailResponse {
   images: string[];
-};
+}
 
 export interface CommentWithUser extends Omit<TableComments, 'post_id' | 'user_id'> {
   writer: WriterProfile;
+}
+
+export interface GonggamPostMeta {
+  likeCnt: number;
+  commentCnt: number;
 }
 
 export interface UploadGonggamCommentParams {

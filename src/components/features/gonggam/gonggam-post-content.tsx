@@ -7,7 +7,7 @@ import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
-import { getGonggamPostDetailByClient } from '@/lib/utils/api/gonggam/gonggam-detail.api';
+import { getGonggamPostDetailByClient } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import type { TableUsers } from '@/types/supabase-const';
@@ -32,7 +32,7 @@ const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentP
 
   if (!post) return <div>loading...</div>;
 
-  const { title, content, created_at, updated_at, users, images, tags, user_id } = post;
+  const { title, content, created_at, updated_at, writer: users, images, tags, user_id } = post;
   const displayDate = updated_at ?? created_at;
 
   return (
