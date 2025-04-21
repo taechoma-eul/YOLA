@@ -74,7 +74,9 @@ const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps)
             <span className="font-semibold">{remainingMissions}</span>개 남았습니다.
           </span>
         ) : (
-          <span>최고 레벨입니다 🎉</span>
+          <span>
+            당신의 레벨은 <span className="font-semibold">{level}</span>입니다. 최고 레벨입니다 🎉
+          </span>
         )}
       </section>
     </div>
