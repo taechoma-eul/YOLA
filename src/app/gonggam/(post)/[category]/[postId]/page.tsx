@@ -83,7 +83,7 @@ const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps)
       </ul>
 
       {/* 댓글 영역 */}
-      <GonggamCommentList postId={postId} />
+      <GonggamCommentList postId={postId} userId={userData?.id} />
       <GonggamCommentForm
         postId={postId}
         isLogin={!!userData?.id}
