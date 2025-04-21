@@ -23,7 +23,7 @@ const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL
 
     uploadComment(newComment, {
       onSuccess: () => {
-        toastAlert(SUCCESS.SUCCESS_UPLOAD_COMMENT);
+        toastAlert(SUCCESS.UPLOAD_COMMENT);
         setNewComment('');
       },
       onError: (err) => {
