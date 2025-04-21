@@ -36,13 +36,13 @@ const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentP
   const displayDate = updated_at ?? created_at;
 
   return (
-    <>
+    <section>
       {/* 게시글 헤더 */}
       <header className="mt-[64px]">
         <h1 className="mb-[12px] justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {title}
         </h1>
-        <section className="flex items-center justify-between border-b pb-[20px] text-base text-secondary-grey-800">
+        <figure className="flex items-center justify-between border-b pb-[20px] text-base text-secondary-grey-800">
           <div className="flex items-center">
             <div className="relative mr-[6px] h-[22px] w-[22px] overflow-hidden rounded-full">
               <Image
@@ -60,7 +60,7 @@ const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentP
             <GonggamDetailViewCount postId={String(postId)} initCount={viewCount} />
           </div>
           {userData?.id === user_id && <GonggamMyPostDropdown post={post} />}
-        </section>
+        </figure>
       </header>
 
       {/* 이미지 영역 */}
@@ -89,7 +89,7 @@ const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentP
           </li>
         ))}
       </ul>
-    </>
+    </section>
   );
 };
 
