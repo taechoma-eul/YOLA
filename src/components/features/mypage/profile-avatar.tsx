@@ -5,7 +5,7 @@ import { clsx } from 'clsx';
 
 interface ProfileAvatarProps {
   src: string | null;
-  mode: 'mobile' | 'pc';
+  mode: 'mobile' | 'desktop';
 }
 
 const ProfileAvatar = ({ src, mode }: ProfileAvatarProps) => {
@@ -13,7 +13,7 @@ const ProfileAvatar = ({ src, mode }: ProfileAvatarProps) => {
     <Avatar
       className={clsx('mb-[20px] rounded-2xl border-2 border-[#EFF1F3]', {
         'min-h-[48px] min-w-[48px]': mode === 'mobile',
-        'h-[172px] w-[172px]': mode === 'pc'
+        'h-[172px] w-[172px]': mode === 'desktop'
       })}
     >
       <AvatarImage src={src ? src : ''} />

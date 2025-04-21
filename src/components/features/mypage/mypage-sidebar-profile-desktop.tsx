@@ -18,7 +18,7 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
   return (
     <section className="flex flex-col items-center justify-start">
       {/* 프로필 영역 */}
-      <ProfileAvatar src={profile.profile_image} mode="pc" />
+      <ProfileAvatar src={profile.profile_image} mode="desktop" />
       <p className="text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
       <p className="mb-[20px] mt-[8px] text-base text-secondary-grey-700">{profile.email}</p>
 
