@@ -9,10 +9,10 @@ import {
   getWriterProfile
 } from '@/lib/utils/api/gonggam/gonggam-board.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import type { GonggamPost } from '@/types/gonggam';
+import type { TableGonggamPosts } from '@/types/supabase-const';
 
 interface GonggamPostCardProps {
-  post: GonggamPost;
+  post: TableGonggamPosts;
 }
 
 const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
