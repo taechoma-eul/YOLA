@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 import { CirclePlusIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import { ChangeEvent } from 'react';
+import { toastAlert } from '@/lib/utils/toast';
 
 interface ImageUploaderProps {
   images: File[];
@@ -27,7 +28,7 @@ const ImageUploader = ({
     const total = images.length + defaultImageUrls.length + newFiles.length;
 
     if (total > maxCount) {
-      alert(`이미지는 최대 ${maxCount}장까지 등록할 수 있습니다.`);
+      toastAlert(`이미지는 최대 ${maxCount}장까지 등록할 수 있습니다.`, 'warning');
       return;
     }
 
