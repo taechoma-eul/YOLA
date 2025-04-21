@@ -33,7 +33,7 @@ const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
         queryClient.invalidateQueries({
           queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId]
         });
-        toastAlert(SUCCESS.DELETE_COMMENT);
+        toastAlert(SUCCESS.DELETE_COMMENT, 'success');
       },
       onError: () => {
         toastAlert(FAIL.FAIL_TO_DELETE_COMMENT, 'destructive');

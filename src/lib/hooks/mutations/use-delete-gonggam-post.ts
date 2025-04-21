@@ -26,12 +26,12 @@ export const useDeleteGonggamPost = ({ onSuccessCallback }: useDeleteGonggamPost
     },
 
     onSuccess: () => {
-      toastAlert(SUCCESS.DELETE_GONGGAM_POST);
+      toastAlert(SUCCESS.DELETE_GONGGAM_POST, 'success');
       onSuccessCallback?.();
     },
 
     onError: (error) => {
-      toastAlert(error.message);
+      toastAlert(FAIL.GONGGAM_POST_DELETE_ERROR, 'destructive');
     }
   });
 };
