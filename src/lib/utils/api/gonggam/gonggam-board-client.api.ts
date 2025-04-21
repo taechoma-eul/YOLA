@@ -103,7 +103,6 @@ export const getPostImagesByPostIdByClient = async (postId: TableGonggamPosts['i
  * @returns { likeCnt, commentCnt }
  */
 export const getPostMetaByPostIdByClient = async (postId: TableGonggamPosts['id']): Promise<GonggamPostMeta> => {
-  // RPC 함수 사용
   const { data, error } = await supabase.rpc('get_post_meta', { post_id: postId });
 
   if (error || !data || data.length === 0) {

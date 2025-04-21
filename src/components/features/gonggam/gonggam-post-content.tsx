@@ -1,17 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { Dot } from 'lucide-react';
 import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail-view-count';
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
-import { getGonggamPostDetailByClient } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
+import { useGetGonggamPostDetail } from '@/lib/hooks/queries/use-get-gonggam-post-detail';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import type { TableUsers } from '@/types/supabase-const';
-import type { GonggamPostDetail } from '@/types/gonggam';
 
 interface GonggamPostContentProps {
   postId: number;
@@ -20,17 +18,10 @@ interface GonggamPostContentProps {
 }
 
 const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentProps) => {
-  const [post, setPost] = useState<GonggamPostDetail | null>(null);
+  const { data: post, isPending, error } = useGetGonggamPostDetail(postId);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await getGonggamPostDetailByClient(postId);
-      setPost(res);
-    };
-    fetch();
-  }, [postId]);
-
-  if (!post) return <div>loading...</div>;
+  if (isPending) return <div>loading...</div>;
+  if (error) throw new Error(error.message);
 
   const { title, content, created_at, updated_at, writer: users, images, tags, user_id } = post;
   const displayDate = updated_at ?? created_at;

@@ -25,7 +25,7 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
   useEffect(() => {
     const fetchPostMeta = async () => {
       try {
-        // 1. 이미지 불러오기 (이전 답변 내용)
+        // 1. 이미지 불러오기
         const images = await getPostImagesByPostIdByClient(post.id);
         const fetchedImagePreview = images[0] ?? DEFAULT_LIFE_IMAGE_URL;
         setImagePreview(fetchedImagePreview);
