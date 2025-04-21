@@ -1,19 +1,19 @@
 'use client';
 
 import { MoreVertical } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { PATH } from '@/constants/page-path';
+import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
 import { useDeleteGonggamPost } from '@/lib/hooks/mutations/use-delete-gonggam-post';
-import { GonggamPostDetail } from '@/types/gonggam';
+import { PATH } from '@/constants/page-path';
 import { categoryMap } from '@/constants/gonggam-category';
-import { useState } from 'react';
-import DeleteConfirmModal from '../modals/delete-confirm';
+import type { GonggamPostDetail } from '@/types/gonggam';
 
 interface GonggamMyPostDropdownProps {
   post: GonggamPostDetail;

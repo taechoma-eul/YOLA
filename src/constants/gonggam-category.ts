@@ -1,4 +1,4 @@
-import { EnumCategories } from '@/types/supabase-const';
+import type { EnumCategories } from '@/types/supabase-const';
 
 type CategoryMapType = Record<EnumCategories, string>;
 type SlugToCategoryType = Record<string, EnumCategories>;

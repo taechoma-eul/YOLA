@@ -1,4 +1,4 @@
-import { TableMissionList, TableUserLevel } from '@/types/supabase-const';
+import type { TableMissionList, TableUserLevel } from '@/types/supabase-const';
 
 export interface UserLevelByMissionType {
   userId: TableUserLevel['user_id'];
