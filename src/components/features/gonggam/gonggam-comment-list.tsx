@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
 import { useDeleteGonggamComment } from '@/lib/hooks/mutations/use-delete-gonggam-comment';
+import { useUpdateGonggamComment } from '@/lib/hooks/mutations/use-update-gonggam-comment';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { toastAlert } from '@/lib/utils/toast';
 import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
@@ -21,8 +22,12 @@ const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
   const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const [targetCommentId, setTargetCommentId] = useState<number | null>(null);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [editedContent, setEditedContent] = useState('');
+
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
   const { mutate: deleteComment } = useDeleteGonggamComment();
+  const { mutate: updateComment } = useUpdateGonggamComment();
 
   const handleDeleteComment = (commentId: number) => {
     if (targetCommentId === null) return;
@@ -41,6 +46,25 @@ const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
     });
   };
 
+  const handleUpdateComment = (commentId: number, newContent: string) => {
+    updateComment(
+      { commentId, content: newContent },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId]
+          });
+          toastAlert(SUCCESS.UPDATE_COMMENT, 'success');
+          setEditingCommentId(null);
+          setEditedContent('');
+        },
+        onError: () => {
+          toastAlert(FAIL.FAIL_TO_UPDATE_COMMENT, 'destructive');
+        }
+      }
+    );
+  };
+
   if (commentsErr) throw new Error(commentsErr.message);
   if (isCommentsPending) return null;
 
@@ -48,51 +72,97 @@ const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
     <div className="mb-[44px] mt-[24px]">
       <h2 className="mb-[14px] text-base font-medium">댓글 {comments.length}개</h2>
 
-      {comments.map((comment) => (
-        <div key={comment.id} className="relative flex items-start gap-[16px] py-[12px] text-sm">
-          {/* 프로필 이미지 */}
-          <div className="border-black/12 relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full border">
-            <Image
-              src={comment.writer.profileImage || DEFAULT_AVATAR_URL}
-              alt={comment.writer.nickname ?? '알 수 없음'}
-              fill
-              sizes="40px"
-              className="object-cover"
-            />
-          </div>
+      {comments.map((comment) => {
+        const isEditing = editingCommentId === comment.id;
 
-          {/* 닉네임, 시간, 텍스트 */}
-          <div className="flex flex-col gap-[4px]">
-            <div className="flex items-center gap-[8px]">
-              <p className="text-[16px] font-semibold leading-[1.4]">{comment.writer.nickname ?? '알 수 없음'}</p>
-              <span className="text-[16px] font-normal text-secondary-grey-700">
-                {formatRelativeDate(comment.created_at)}
-              </span>
+        return (
+          <div key={comment.id} className="relative flex items-start gap-[16px] py-[12px] text-sm">
+            {/* 프로필 이미지 */}
+            <div className="border-black/12 relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full border">
+              <Image
+                src={comment.writer.profileImage || DEFAULT_AVATAR_URL}
+                alt={comment.writer.nickname ?? '알 수 없음'}
+                fill
+                sizes="40px"
+                className="object-cover"
+              />
             </div>
-            <p className="text-[16px] font-normal leading-[1.4]">{comment.comment}</p>
-          </div>
 
-          {/* 수정/삭제 버튼 */}
-          {comment.writer.id === userId && (
-            <div className="absolute right-0 top-0 flex gap-1 text-sm text-secondary-grey-700">
-              <button type="button" onClick={() => console.log('수정 클릭', comment.id)} className="hover:underline">
-                수정
-              </button>
-              <span>|</span>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowModal(true);
-                  setTargetCommentId(comment.id);
-                }}
-                className="hover:underline"
-              >
-                삭제
-              </button>
+            {/* 닉네임, 시간, 텍스트 or 수정 폼 */}
+            <div className="flex w-full flex-col gap-[4px]">
+              <div className="flex items-center gap-[8px]">
+                <p className="text-[16px] font-semibold leading-[1.4]">{comment.writer.nickname ?? '알 수 없음'}</p>
+                <span className="text-[16px] font-normal text-secondary-grey-700">
+                  {formatRelativeDate(comment.created_at)}
+                </span>
+              </div>
+
+              {isEditing ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleUpdateComment(comment.id, editedContent);
+                  }}
+                  className="flex flex-col gap-[8px]"
+                >
+                  <input
+                    type="text"
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    className="h-[48px] w-full rounded-md border border-secondary-grey-400 px-3 text-[16px]"
+                  />
+                  <div className="absolute right-0 top-0 flex gap-1 text-sm text-secondary-grey-700">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingCommentId(null);
+                        setEditedContent('');
+                      }}
+                      className="hover:underline"
+                    >
+                      취소
+                    </button>
+                    <span>|</span>
+                    <button type="submit" className="hover:underline">
+                      저장
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <p className="text-[16px] font-normal leading-[1.4]">{comment.comment}</p>
+              )}
             </div>
-          )}
-        </div>
-      ))}
+
+            {/* 수정/삭제 버튼 */}
+            {comment.writer.id === userId && !isEditing && (
+              <div className="absolute right-0 top-0 flex gap-1 text-sm text-secondary-grey-700">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingCommentId(comment.id);
+                    setEditedContent(comment.comment);
+                  }}
+                  className="hover:underline"
+                >
+                  수정
+                </button>
+                <span>|</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowModal(true);
+                    setTargetCommentId(comment.id);
+                  }}
+                  className="hover:underline"
+                >
+                  삭제
+                </button>
+              </div>
+            )}
+          </div>
+        );
+      })}
+
       {showModal && (
         <DeleteConfirmModal
           clickModal={() => {

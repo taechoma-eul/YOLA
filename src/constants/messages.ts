@@ -8,7 +8,8 @@ export const SUCCESS = {
   /** 공감게시판 */
   UPLOAD_COMMENT: '댓글이 등록되었습니다.',
   DELETE_GONGGAM_POST: '게시글이 삭제되었습니다.',
-  DELETE_COMMENT: '댓글이 삭제되었습니다.'
+  DELETE_COMMENT: '댓글이 삭제되었습니다.',
+  UPDATE_COMMENT: '댓글이 수정되었습니다.'
 } as const;
 
 export const FAIL = {
@@ -32,7 +33,8 @@ export const FAIL = {
   FAIL_TO_UPDATE_LIKE: '좋아요 업데이트에 실패했습니다.',
   GONGGAM_POST_DELETE_ERROR: '공감게시글 삭제에 실패했습니다.',
   FAIL_TO_UPLOAD_COMMENT: '댓글 등록에 실패했습니다.',
-  FAIL_TO_DELETE_COMMENT: '댓글 삭제에 실패했습니다.'
+  FAIL_TO_DELETE_COMMENT: '댓글 삭제에 실패했습니다.',
+  FAIL_TO_UPDATE_COMMENT: '댓글 수정에 실패했습니다.'
 } as const;
 
 export const AUTH_ERROR = {
