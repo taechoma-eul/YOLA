@@ -5,7 +5,8 @@ import ChecklistProgress from '@/components/features/checklist/checklist-progres
 import MissionListClient from '@/components/features/checklist/mission-list-client';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
-import type { Level, MissionWithStatus } from '@/types/checklist';
+import type { MissionWithStatus } from '@/types/checklist';
+import type { EnumLevel } from '@/types/supabase-const';
 
 interface ChecklistClientProps {
   decodedMission: string;
@@ -36,7 +37,7 @@ const ChecklistClient = ({ decodedMission, userId, userLevel, progress, missionL
     <section className="w-full pl-[37px] pr-[39px] pt-[59px]">
       <div className="flex w-full flex-col gap-[34px]">
         <h1 className="whitespace-nowrap text-2xl font-bold">{decodedMission} 체크리스트</h1>
-        <ChecklistProgress progress={progress} userLevel={userLevel as Level} />
+        <ChecklistProgress progress={progress} userLevel={userLevel as EnumLevel} />
       </div>
       <MissionListClient
         setSelectedMissionId={setSelectedMissionId}

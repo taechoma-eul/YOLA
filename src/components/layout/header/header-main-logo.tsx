@@ -5,8 +5,8 @@ import { PATH } from '@/constants/page-path';
 
 const MainLogo = () => {
   return (
-    <Link href={PATH.HOME}>
-      <Image src={MAIN_LOGO_URL} alt="YOLA 로고" width={84} height={23} />
+    <Link href={PATH.HOME} className="flex h-[44px] w-[104px] items-center justify-center">
+      <Image src={MAIN_LOGO_URL} alt="YOLA 메인 로고" width={84} height={23} />
     </Link>
   );
 };

@@ -3,7 +3,7 @@
 import { clsx } from 'clsx';
 import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import {
   dislikePost,
   getLikeCountClient,
@@ -28,7 +28,7 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
         const likeCnt = await getLikeCountClient(postId);
         setLikeCnt(likeCnt);
       } catch (err) {
-        console.error(MSG.FAIL_TO_GET_POST_META, err);
+        console.error(FAIL.FAIL_TO_GET_POST_META, err);
       }
     };
     fetchMeta();
@@ -38,15 +38,15 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
         const liked = await getUserLikedStatus({ postId, userId });
         setIsLiked(liked);
       } catch (err) {
-        console.error('좋아요 상태 조회 실패:', err);
+        console.error(FAIL.FAIL_TO_GET_LIKES, err);
       }
     };
     fetchLikeStatus();
-  }, []);
+  }, [postId, userId]);
 
   const handleLikeToggle = async () => {
     if (!userId) {
-      toastAlert('공감을 남기려면 로그인이 필요합니다.', 'destructive');
+      toastAlert(FAIL.NEED_LOGIN, 'destructive');
       return;
     }
     setIsLikePending(true);
@@ -61,7 +61,7 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
         setIsLiked(true);
       }
     } catch (err) {
-      toastAlert(MSG.FAIL_TO_UPDATE_LIKE, 'destructive');
+      toastAlert(FAIL.FAIL_TO_UPDATE_LIKE, 'destructive');
       console.error(err);
     } finally {
       setIsLikePending(false);

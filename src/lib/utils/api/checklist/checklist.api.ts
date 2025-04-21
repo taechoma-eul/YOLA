@@ -1,8 +1,9 @@
-import { MSG } from '@/constants/messages';
+import { FAIL } from '@/constants/messages';
 import { missionTypeMap } from '@/constants/mission';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import type { Level, MissionTag, MissionType, UserLevel, UserLevelByMissionType } from '@/types/checklist';
+import type { UserLevelByMissionType } from '@/types/checklist';
+import type { EnumChecklist, EnumLevel, TableMissionList, TableUserLevel } from '@/types/supabase-const';
 
 /**
  * Supabase에서 `mission_list` 테이블의 고유한 `type` 값을 조회하는 함수
@@ -38,10 +39,10 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
   const supabase = await createClient();
   const col = missionTypeMap[decodedMission];
   if (!col) {
-    throw new Error(`${MSG.INVALID_MISSION_TYPE}: ${decodedMission}`);
+    throw new Error(`${FAIL.INVALID_MISSION_TYPE}: ${decodedMission}`);
   }
   const { data, error } = (await supabase.from(TABLE.USER_LEVEL).select(col).eq('user_id', userId).single()) as {
-    data: Pick<UserLevel, typeof col>;
+    data: Pick<TableUserLevel, typeof col>;
     error: unknown;
   };
   if (error) throw new Error('getUserLevelByMission 오류');
@@ -55,10 +56,13 @@ export const getUserLevelByMission = async ({ userId, decodedMission }: UserLeve
  * @function getMissionListByLevel
  * @param {string} mission - 조회할 미션의 `type` 값 (예: '혼자놀기')
  * @param {number} userLevel - 유저의 현재 레벨 값 (예: 1, 2, 3 등)
- * @returns {Promise<MissionType[]>} `mission_list` 테이블에서 해당 타입과 레벨에 맞는 미션 배열
+ * @returns {Promise<TableMissionList[]>} `mission_list` 테이블에서 해당 타입과 레벨에 맞는 미션 배열
  * @throws {Error} Supabase 쿼리 실행 중 오류 발생 시 throw Error
  */
-export const getMissionListByLevel = async (mission: MissionTag, userLevel: Level): Promise<MissionType[]> => {
+export const getMissionListByLevel = async (
+  mission: EnumChecklist,
+  userLevel: EnumLevel
+): Promise<TableMissionList[]> => {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from(TABLE.MISSION_LIST)

@@ -37,6 +37,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
             href="#"
             onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
             className="cursor-pointer text-secondary-grey-500 hover:text-secondary-grey-900"
+            size="pagination"
           >
             &lt;
           </PaginationLink>
@@ -44,7 +45,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
 
         {pagesToShow.map((page) => (
           <PaginationItem key={page}>
-            <PaginationLink href="#" isActive={page === currentPage} onClick={() => goToPage(page)}>
+            <PaginationLink href="#" isActive={page === currentPage} onClick={() => goToPage(page)} size="pagination">
               {page}
             </PaginationLink>
           </PaginationItem>
@@ -58,6 +59,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
             href="#"
             onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
             className="cursor-pointer text-secondary-grey-500 hover:text-secondary-grey-900"
+            size="pagination"
           >
             &gt;
           </PaginationLink>

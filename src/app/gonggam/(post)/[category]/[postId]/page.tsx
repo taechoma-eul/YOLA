@@ -20,7 +20,8 @@ interface GonggamPostDetailProps {
 
 const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps) => {
   const userData = await getUserProfile();
-  const { title, content, created_at, updated_at, profile, images, tags } = await getGonggamPostDetail(postId);
+  const post = await getGonggamPostDetail(postId);
+  const { title, content, created_at, updated_at, profile, images, tags } = post;
   const viewCount = await getViewCount(String(postId));
 
   const displayDate = updated_at ?? created_at;
@@ -33,7 +34,7 @@ const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps)
           {title}
         </h1>
         {/* 작성자 정보 및 시간 + 구분선 */}
-        <section className="flex items-center border-b pb-[20px] text-base text-secondary-grey-800">
+        <section className="flex items-center justify-between border-b pb-[20px] text-base text-secondary-grey-800">
           <div className="flex items-center">
             <div className="relative mr-[6px] h-[22px] w-[22px] overflow-hidden rounded-full">
               <Image
@@ -50,8 +51,7 @@ const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps)
             {/* 디테일 뷰카운트 */}
             <GonggamDetailViewCount postId={String(postId)} initCount={viewCount} />
           </div>
-          {/* {userId === profile.id && <GonggamMyPostDropdown />} */}
-          {userData?.id === profile.id && <GonggamMyPostDropdown postId={postId} />}
+          {userData?.id === profile.id && <GonggamMyPostDropdown post={post} />}
         </section>
       </header>
 
@@ -83,7 +83,7 @@ const GonggamPostDetail = async ({ params: { postId } }: GonggamPostDetailProps)
       </ul>
 
       {/* 댓글 영역 */}
-      <GonggamCommentList postId={postId} />
+      <GonggamCommentList postId={postId} userId={userData?.id} />
       <GonggamCommentForm
         postId={postId}
         isLogin={!!userData?.id}
