@@ -1,18 +1,27 @@
+'use client';
+
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { GonggamPagination } from '@/components/features/gonggam/gonggam-pagination';
 import GonggamPostCard from '@/components/features/gonggam/gonggam-post-card';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
-import { getPaginatedGonggamPosts } from '@/lib/utils/api/gonggam/gonggam-board.api';
+import { usePaginatedGonggamPosts } from '@/lib/hooks/queries/use-paginated-gonggam-posts';
 
 interface GonggamCategoryBoardProps {
   params: { category: string };
-  searchParams: { page?: string };
 }
 
-const GonggamCategoryBoard = async ({ params: { category }, searchParams }: GonggamCategoryBoardProps) => {
-  const currentPage = Number(searchParams.page) || 1;
-  const { posts, pagination } = await getPaginatedGonggamPosts(slugToCategory[category], currentPage);
+const GonggamCategoryBoard = ({ params: { category } }: GonggamCategoryBoardProps) => {
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const categoryEnum = slugToCategory[category];
+  const { data, isPending, error } = usePaginatedGonggamPosts(categoryEnum, currentPage);
+
+  if (isPending) return <div className="p-4">loading...</div>;
+  if (error) throw new Error(error.message);
+
+  const { posts, pagination } = data;
 
   return (
     <div>

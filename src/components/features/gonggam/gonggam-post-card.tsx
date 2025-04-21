@@ -1,38 +1,60 @@
-import { Dot } from 'lucide-react';
+'use client';
+
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { Dot } from 'lucide-react';
 import GonggamBoardMeta from '@/components/features/gonggam/gonggam-board-meta';
-import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import {
-  getPostImagesByPostId,
-  getPostMetaByPostId,
-  getViewCount,
-  getWriterProfile
-} from '@/lib/utils/api/gonggam/gonggam-board.api';
+  getPostImagesByPostIdByClient,
+  getPostMetaByPostIdByClient,
+  getViewCountByClient
+} from '@/lib/utils/api/gonggam/gonggam-board-client.api';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import type { TableGonggamPosts } from '@/types/supabase-const';
+import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
+import { FAIL } from '@/constants/messages';
+import type { EachPaginatedGonggamPost } from '@/types/gonggam';
 
 interface GonggamPostCardProps {
-  post: TableGonggamPosts;
+  post: EachPaginatedGonggamPost;
 }
 
-const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
-  /** 작성자 닉네임 불러오기 */
-  const { nickname } = await getWriterProfile(post.user_id);
+const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
+  const [imagePreview, setImagePreview] = useState(DEFAULT_LIFE_IMAGE_URL);
+  const [postMeta, setPostMeta] = useState({ likeCnt: 0, commentCnt: 0, viewCount: 0 });
 
-  /** 이미지 불러오기 */
-  const images = await getPostImagesByPostId(post.id);
-  const imagePreview = images[0] ?? DEFAULT_LIFE_IMAGE_URL;
+  useEffect(() => {
+    const fetchPostMeta = async () => {
+      try {
+        // 1. 이미지 불러오기 (이전 답변 내용)
+        const images = await getPostImagesByPostIdByClient(post.id);
+        const fetchedImagePreview = images[0] ?? DEFAULT_LIFE_IMAGE_URL;
+        setImagePreview(fetchedImagePreview);
 
-  /** like, comments 불러오기 */
-  const { likeCnt, commentCnt } = await getPostMetaByPostId(post.id);
-  const viewCount = await getViewCount(String(post.id));
+        // 2. 좋아요, 댓글 수 불러오기
+        const { likeCnt, commentCnt } = await getPostMetaByPostIdByClient(post.id);
+
+        // 3. 조회수 불러오기
+        const viewCount = await getViewCountByClient(String(post.id));
+
+        setPostMeta({
+          likeCnt,
+          commentCnt,
+          viewCount
+        });
+      } catch {
+        throw new Error(FAIL.GET_POST_META);
+      }
+    };
+
+    fetchPostMeta();
+  }, [post.id]);
 
   return (
     <article className="flex max-w-[1200px] items-start justify-between gap-[10px] border-b border-secondary-grey-200 px-[10px] py-[12px]">
       <section className="flex flex-col items-start gap-1 self-stretch">
         {/* 작성자 영역 */}
         <div className="mt-[11px] flex h-[17px] items-center gap-[4px] text-[12px] font-normal leading-[140%] text-secondary-grey-800">
-          <p>{nickname}</p>
+          <p>{post.writer.nickname}</p>
           <Dot size={12} className="translate-y-[-2px]" />
           <time dateTime={post.created_at}>{formatRelativeDate(post.created_at)}</time>
         </div>
@@ -44,7 +66,7 @@ const GonggamPostCard = async ({ post }: GonggamPostCardProps) => {
           </p>
         </div>
         {/* 좋아요/댓글/조회수 */}
-        <GonggamBoardMeta likeCnt={likeCnt} commentCnt={commentCnt} viewCount={viewCount} />
+        <GonggamBoardMeta likeCnt={postMeta.likeCnt} commentCnt={postMeta.commentCnt} viewCount={postMeta.viewCount} />
       </section>
 
       {/* 이미지 */}
