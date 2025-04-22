@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import CHARACTER from '@images/images/random-mission-character.svg';
+import CHARACTER from '@images/images/cat-in-question-box-original.svg';
 
 const ImageSection = () => {
   return (
