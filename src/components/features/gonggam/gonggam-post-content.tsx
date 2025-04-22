@@ -1,16 +1,16 @@
 'use client';
 
 import { Dot } from 'lucide-react';
-import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail-view-count';
-import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
+import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import { SkeletonCard } from '@/components/ui/skeleton';
 import { useGetGonggamPostDetail } from '@/lib/hooks/queries/use-get-gonggam-post-detail';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
 import type { TableUsers } from '@/types/supabase-const';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 
 interface GonggamPostContentProps {
   postId: number;
