@@ -1,23 +1,28 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { QUERY_KEY } from '@/constants/query-keys';
-import { useQueryClient } from '@tanstack/react-query';
+import NoRecordsBox from '@/components/common/no-records-box';
 import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
+import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
-import type { SortBy } from '@/types/gonggam-posts';
+import type { SortBy } from '@/types/gonggam';
 
-const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
+interface MyGonggamPostClientProps {
+  nickname: string;
+}
+
+const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
   const [sortBy, setSortBy] = useState<SortBy>('latest');
   const queryClient = useQueryClient();
 
   useEffect(() => {
     queryClient.invalidateQueries({
-      queryKey: QUERY_KEY.GONGGAM_POSTS_INFINITE(sortBy)
+      queryKey: [QUERY_KEY.GONGGAM_POSTS_INFINITE, sortBy]
     });
-  }, [sortBy]);
+  }, [sortBy, queryClient]);
 
   const {
     data: posts,
@@ -34,7 +39,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) throw error;
@@ -42,20 +47,21 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
   const allPosts = posts.pages.flatMap((page) => page.data);
 
   return (
-    <div className="mt-[72px]">
-      <section className="mb-[35px] flex flex-row items-center justify-between">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+    <div className="mt-[20px] md:mt-[72px]">
+      <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
+        {/* 데스크탑에서만 보이는 텍스트 */}
+        <div className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
           {nickname}님이 작성한 공감 게시글
         </div>
-        <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
+        {/* SelectBox는 항상 오른쪽 정렬 */}
+        <div className="ml-auto">
+          <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
+        </div>
       </section>
 
       <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
         {allPosts.length === 0 ? (
-          <div className="col-span-full mb-[272px] flex min-h-[542px] flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500">
-            <p>앗 아직 기록이 없어요</p>
-            <p>공감 게시판에서 글을 작성해보세요!</p>
-          </div>
+          <NoRecordsBox mode="공감" />
         ) : (
           <>
             {allPosts.map((item) => (

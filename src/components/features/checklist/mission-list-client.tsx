@@ -1,16 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/lib/hooks/use-toast';
+import { Dispatch, SetStateAction } from 'react';
+import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
+import { toastAlert } from '@/lib/utils/toast';
+import type { MissionWithStatus } from '@/types/checklist';
 import DONE from '@images/images/checklist-done.svg';
 import UNDO from '@images/images/checklist-undo.svg';
-import Image from 'next/image';
-import { MSG } from '@/constants/messages';
-import type { MissionWithStatus } from '@/types/checklist';
-import { Dispatch, SetStateAction } from 'react';
-import { toastAlert } from '@/lib/utils/toast';
 
 interface ClientMissionListProps {
   setSelectedMissionId: Dispatch<SetStateAction<number | null>>;
@@ -24,7 +23,7 @@ const MissionListClient = ({ setSelectedMissionId, missionList, userId }: Client
   const handleMissionClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!userId) {
       e.preventDefault();
-      toastAlert(MSG.LOGIN_BEFORE_POST_MISSION_CLEAR, 'destructive');
+      toastAlert(FAIL.NEED_LOGIN, 'destructive');
       router.push(PATH.LOGIN);
     }
   };

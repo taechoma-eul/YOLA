@@ -1,12 +1,50 @@
 'use client';
 
-import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import GonggamCommentItem from '@/components/features/gonggam/gonggam-comment-item';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
+import { SUCCESS, FAIL } from '@/constants/messages';
+import { QUERY_KEY } from '@/constants/query-keys';
+import { useDeleteGonggamComment } from '@/lib/hooks/mutations/use-delete-gonggam-comment';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
-import { formatRelativeDate } from '@/lib/utils/date-format';
-import Image from 'next/image';
+import { toastAlert } from '@/lib/utils/toast';
 
-const GonggamCommentList = ({ postId }: { postId: number }) => {
+interface GonggamCommentListProps {
+  postId: number;
+  userId?: string;
+}
+
+const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
   const { comments, isCommentsPending, commentsErr } = useGonggamComments(postId);
+  const { mutate: deleteComment } = useDeleteGonggamComment();
+  const queryClient = useQueryClient();
+
+  const [showModal, setShowModal] = useState(false);
+  const [commentIdToDelete, setCommentIdToDelete] = useState<number | null>(null);
+
+  const handleDelete = (commentId: number) => {
+    setCommentIdToDelete(commentId);
+    setShowModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (commentIdToDelete === null) return;
+
+    deleteComment(commentIdToDelete, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId]
+        });
+        toastAlert(SUCCESS.DELETE_COMMENT, 'success');
+        setShowModal(false);
+        setCommentIdToDelete(null);
+      },
+      onError: () => {
+        toastAlert(FAIL.DELETE_COMMENT, 'destructive');
+      }
+    });
+  };
 
   if (commentsErr) throw new Error(commentsErr.message);
   if (isCommentsPending) return null;
@@ -14,31 +52,27 @@ const GonggamCommentList = ({ postId }: { postId: number }) => {
   return (
     <div className="mb-[44px] mt-[24px]">
       <h2 className="mb-[14px] text-base font-medium">댓글 {comments.length}개</h2>
-      {comments.map((comment) => (
-        <div key={comment.id} className="flex items-start gap-[16px] py-[12px] text-sm">
-          {/* 프로필 이미지 */}
-          <div className="border-black/12 relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full border">
-            <Image
-              src={comment.writer.profileImage || DEFAULT_AVATAR_URL}
-              alt={`${comment.writer.nickname}`}
-              fill
-              sizes="40px"
-              className="object-cover"
-            />
-          </div>
 
-          {/* 닉네임, 시간, 텍스트 */}
-          <div className="flex flex-col gap-[4px]">
-            <div className="flex items-center gap-[8px]">
-              <p className="text-[16px] font-semibold leading-[1.4]">{comment.writer.nickname ?? '알 수 없음'}</p>
-              <span className="text-[16px] font-normal text-secondary-grey-700">
-                {formatRelativeDate(comment.created_at)}
-              </span>
-            </div>
-            <p className="text-[16px] font-normal leading-[1.4]">{comment.comment}</p>
-          </div>
-        </div>
+      {comments.map((comment) => (
+        <GonggamCommentItem
+          key={comment.id}
+          comment={comment}
+          postId={postId}
+          userId={userId}
+          onClickDelete={handleDelete}
+        />
       ))}
+
+      {showModal && (
+        <ConfirmModal
+          clickModal={() => {
+            setShowModal(false);
+            setCommentIdToDelete(null);
+          }}
+          handleDelete={confirmDelete}
+          isItPost={false}
+        />
+      )}
     </div>
   );
 };

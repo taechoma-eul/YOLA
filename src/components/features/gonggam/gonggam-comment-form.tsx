@@ -1,13 +1,12 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { CustomButton } from '@/components/ui/custom-button';
-import { Input } from '@/components/ui/input';
-import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
-import { MSG } from '@/constants/messages';
-import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
-import { toastAlert } from '@/lib/utils/toast';
 import Image from 'next/image';
 import { useState } from 'react';
+import { CustomButton } from '@/components/ui/custom-button';
+import { Input } from '@/components/ui/input';
+import { FAIL, SUCCESS } from '@/constants/messages';
+import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
+import { toastAlert } from '@/lib/utils/toast';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 
 interface GonggamCommentFormProps {
   postId: number;
@@ -24,11 +23,11 @@ const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL
 
     uploadComment(newComment, {
       onSuccess: () => {
-        toastAlert(MSG.SUCCESS_UPLOAD_COMMENT);
+        toastAlert(SUCCESS.UPLOAD_COMMENT, 'success');
         setNewComment('');
       },
       onError: (err) => {
-        toastAlert(MSG.FAIL_TO_UPLOAD_COMMENT);
+        toastAlert(FAIL.UPLOAD_COMMENT);
         throw Error(err.message);
       }
     });

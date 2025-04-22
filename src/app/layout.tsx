@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import TQProvider from '@/lib/providers/TQProvider';
-import Header from '@/components/layout/header/header';
 import Footer from '@/components/layout/footer/footer';
+import Header from '@/components/layout/header/header';
 import '@/app/globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import TQProvider from '@/lib/providers/TQProvider';
 
 export const metadata: Metadata = {
   title: '너 혼자 산다',

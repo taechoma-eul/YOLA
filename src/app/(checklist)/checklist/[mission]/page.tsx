@@ -1,19 +1,27 @@
 import { notFound } from 'next/navigation';
-import { getCompletedMissionIds, getMissionListByLevel, getUserLevelByMission } from '@/lib/utils/api/checklist.api';
-import { validMissionTags } from '@/constants/mission';
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
 import ChecklistClient from '@/components/features/checklist/checklist-client';
-import type { Level, MissionTag } from '@/types/checklist';
+import { validMissionTags } from '@/constants/mission';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
+import {
+  getCompletedMissionIds,
+  getMissionListByLevel,
+  getUserLevelByMission
+} from '@/lib/utils/api/checklist/checklist.api';
+import type { EnumChecklist, EnumLevel } from '@/types/supabase-const';
 
 let userLevel = '1'; // default level (for 비로그인 사용자)
 
-const Checklist = async ({ params }: { params: { mission: string } }) => {
+interface ChecklistProps {
+  params: { mission: string };
+}
+
+const Checklist = async ({ params }: ChecklistProps) => {
   const decoded = decodeURIComponent(params.mission);
 
-  if (!validMissionTags.includes(decoded as MissionTag)) {
+  if (!validMissionTags.includes(decoded as EnumChecklist)) {
     notFound(); // 유효한 미션타입이 아닌 경우 우회
   }
-  const decodedMission = decoded as MissionTag;
+  const decodedMission = decoded as EnumChecklist;
 
   // /** 레벨 세팅 */
   const { userId } = await getUserSessionState();
@@ -22,7 +30,7 @@ const Checklist = async ({ params }: { params: { mission: string } }) => {
   }
 
   /** 단계별 미션 불러오기 */
-  const missionList = await getMissionListByLevel(decodedMission as MissionTag, userLevel as Level);
+  const missionList = await getMissionListByLevel(decodedMission as EnumChecklist, userLevel as EnumLevel);
 
   /** 유저 진척도 불러오기 */
   const missionIds = missionList.map((m) => m.id);

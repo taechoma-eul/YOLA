@@ -1,23 +1,13 @@
 'use client';
 
-import type { SoloLifeCardType } from '@/types/life-post';
 import Image from 'next/image';
+import type { SoloLifeCardType } from '@/types/life-post';
 
 interface SoloLifeCardProps extends SoloLifeCardType {
   onClick: () => void;
 }
 
-const SoloLifeCard = ({
-  id,
-  imageUrls,
-  thumbnail,
-  title,
-  content,
-  date,
-  isMission,
-  tags,
-  onClick
-}: SoloLifeCardProps) => {
+const SoloLifeCard = ({ thumbnail, title, content, date, isMission, tags, onClick }: SoloLifeCardProps) => {
   return (
     <div
       className="flex h-full w-full cursor-pointer flex-col overflow-hidden rounded border border-gray-300 bg-white shadow-sm"

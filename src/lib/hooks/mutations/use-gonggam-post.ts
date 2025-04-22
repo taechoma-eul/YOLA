@@ -1,8 +1,8 @@
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { TABLE } from '@/constants/supabase-tables-name';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
-import type { Database } from '@/types/supabase';
+import { TABLE } from '@/constants/supabase-tables-name';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import type { EnumCategories } from '@/types/supabase-const';
 
 export const GONGGAM_POSTS_TABLE = TABLE.GONGGAM_POSTS;
 export const IMAGE_TABLE = 'gonggam_post_image_path';
@@ -16,7 +16,7 @@ const parseTags = (raw: string): string[] => {
 };
 
 interface NewGonggamPostParams {
-  category: Database['public']['Enums']['categorys'];
+  category: EnumCategories;
   content: string;
   created_at?: string;
   id?: number;
@@ -88,7 +88,7 @@ export const useGonggamPost = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.GONGGAM_POSTS() });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.GONGGAM_POSTS] });
     },
 
     onError: (error) => {

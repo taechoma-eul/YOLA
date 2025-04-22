@@ -1,9 +1,9 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { fetchUserSessionState } from '@/lib/utils/api/auth/auth-client.api';
 import { parseTags } from '@/lib/utils/parse-tags';
-import { fetchUserSessionState } from '@/lib/utils/api/auth-client.api';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 
 interface UpdateLifePostPayload {
   id: number;

@@ -2,7 +2,7 @@ import ContentsContainer from '@/components/features/home/main-gonggam-item-cont
 import ReactionBox from '@/components/features/home/main-gonggam-item-reaction-box';
 import MypageItemContainer from '@/components/features/mypage/mypage-gonggam-item-container';
 import { formatRelativeDate } from '@/lib/utils/date-format';
-import type { GonggamPostWithCounts } from '@/types/gonggam-posts';
+import type { GonggamPostWithCounts } from '@/types/gonggam';
 
 interface ItemProps {
   post: GonggamPostWithCounts;

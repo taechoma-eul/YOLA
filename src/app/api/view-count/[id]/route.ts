@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getViewCount } from '@/lib/utils/api/gonggam-board.api';
+import { getViewCount } from '@/lib/utils/api/gonggam/gonggam-board.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 /**

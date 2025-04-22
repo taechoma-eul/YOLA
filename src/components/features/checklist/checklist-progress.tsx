@@ -1,9 +1,9 @@
-import type { Level } from '@/types/checklist';
 import { Lock, Unlock } from 'lucide-react';
+import type { EnumLevel } from '@/types/supabase-const';
 
 interface ChecklistProgressProps {
   progress: number;
-  userLevel: Level;
+  userLevel: EnumLevel;
 }
 
 const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {

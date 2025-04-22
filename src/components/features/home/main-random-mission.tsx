@@ -1,9 +1,9 @@
-import { getUserSessionState } from '@/lib/utils/api/auth.api';
-import { getMissionsData } from '@/lib/utils/api/missions.api';
-import ImageSection from '@/components/features/home/main-random-mission-image';
 import MissionButton from '@/components/features/home/main-random-mission-button';
 import RandomMissionContainer from '@/components/features/home/main-random-mission-container';
+import ImageSection from '@/components/features/home/main-random-mission-image';
 import TitleSection from '@/components/features/home/main-random-title';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
+import { getMissionsData } from '@/lib/utils/api/missions.api';
 
 const RandomMissionSection = async () => {
   const { isLogin } = await getUserSessionState();

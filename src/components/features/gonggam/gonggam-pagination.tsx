@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Pagination,
   PaginationContent,
@@ -7,7 +8,6 @@ import {
   PaginationLink,
   PaginationEllipsis
 } from '@/components/ui/pagination';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 interface GonggamPaginationProps {
   currentPage: number;
@@ -17,7 +17,7 @@ interface GonggamPaginationProps {
 
 const MAX_PAGE_LINKS = 5; // 화면에 표시할 페이지 버튼 수
 
-export const GonggamPagination = ({ currentPage, totalPages, baseHref }: GonggamPaginationProps) => {
+const GonggamPagination = ({ currentPage, totalPages, baseHref }: GonggamPaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -37,6 +37,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
             href="#"
             onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
             className="cursor-pointer text-secondary-grey-500 hover:text-secondary-grey-900"
+            size="pagination"
           >
             &lt;
           </PaginationLink>
@@ -44,7 +45,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
 
         {pagesToShow.map((page) => (
           <PaginationItem key={page}>
-            <PaginationLink href="#" isActive={page === currentPage} onClick={() => goToPage(page)}>
+            <PaginationLink href="#" isActive={page === currentPage} onClick={() => goToPage(page)} size="pagination">
               {page}
             </PaginationLink>
           </PaginationItem>
@@ -58,6 +59,7 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
             href="#"
             onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
             className="cursor-pointer text-secondary-grey-500 hover:text-secondary-grey-900"
+            size="pagination"
           >
             &gt;
           </PaginationLink>
@@ -66,3 +68,5 @@ export const GonggamPagination = ({ currentPage, totalPages, baseHref }: Gonggam
     </Pagination>
   );
 };
+
+export default GonggamPagination;

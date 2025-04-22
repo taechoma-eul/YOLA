@@ -1,6 +1,6 @@
-import { QUERY_KEY } from '@/constants/query-keys';
-import { uploadGonggamComment } from '@/lib/utils/api/gonggam-detail-client.api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-keys';
+import { uploadGonggamComment } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 
 export const useUploadComment = (postId: number) => {
   const queryClient = useQueryClient();
@@ -8,7 +8,7 @@ export const useUploadComment = (postId: number) => {
   return useMutation({
     mutationFn: (comment: string) => uploadGonggamComment({ postId, comment }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.GONGGAM_COMMENTS(postId) });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.GONGGAM_COMMENTS, postId] });
     }
   });
 };

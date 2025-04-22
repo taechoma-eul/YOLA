@@ -1,4 +1,5 @@
-import type { Mission, UsedTags } from '@/types/my-missions';
+import type { Mission } from '@/types/my-missions';
+import type { EnumChecklist } from '@/types/supabase-const';
 
 /**
  * @function getLevelsByTypes - 사용자가 완료한 미션 목록을 기반으로 각 타입(카테고리)별 현재 레벨 및 상태를 계산하는 함수
@@ -10,8 +11,11 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
   const MAX_LEVEL_COUNT = 5;
 
   //각 타입별로 레벨 1~5까지 완료한 미션 수를 저장할 배열
-  const usedTags: UsedTags[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
-  const levelMap = Object.fromEntries(usedTags.map((tag) => [tag, Array(5).fill(0)])) as Record<UsedTags, number[]>;
+  const usedTags: EnumChecklist[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
+  const levelMap = Object.fromEntries(usedTags.map((tag) => [tag, Array(5).fill(0)])) as Record<
+    EnumChecklist,
+    number[]
+  >;
 
   //미션 데이터를 순회하면서 각 타입의 레벨별 개수 카운트
   missionList.forEach(({ type, level }) => {
@@ -41,7 +45,7 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
     const activeLevelIndex = isMaster ? 4 : currentLevel - 1; // 현재 레벨 인덱스 계산
 
     return {
-      type: type as UsedTags,
+      type: type as EnumChecklist,
       currentLevel: isMaster ? 'master' : currentLevel,
       currentLevelDone: levels[activeLevelIndex],
       nextLevelLeft: isMaster ? 0 : MAX_LEVEL_COUNT - levels[activeLevelIndex]

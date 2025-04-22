@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { CustomButton } from '@/components/ui/custom-button';
-import type { AuthFormButtonProps } from '@/types/components/auth-form';
 import { PATH } from '@/constants/page-path';
+import type { AuthFormButtonProps } from '@/types/auth-form';
 
 const SignupFormButton = ({ isValid, isSignupPending }: AuthFormButtonProps) => {
   return (

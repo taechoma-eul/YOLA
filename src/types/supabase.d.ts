@@ -84,7 +84,7 @@ export type Database = {
       };
       gonggam_posts: {
         Row: {
-          category: Database['public']['Enums']['categorys'];
+          category: Database['public']['Enums']['categories'];
           content: string;
           created_at: string;
           id: number;
@@ -95,7 +95,7 @@ export type Database = {
           view_count: number;
         };
         Insert: {
-          category: Database['public']['Enums']['categorys'];
+          category: Database['public']['Enums']['categories'];
           content: string;
           created_at?: string;
           id?: number;
@@ -106,7 +106,7 @@ export type Database = {
           view_count?: number;
         };
         Update: {
-          category?: Database['public']['Enums']['categorys'];
+          category?: Database['public']['Enums']['categories'];
           content?: string;
           created_at?: string;
           id?: number;
@@ -248,19 +248,19 @@ export type Database = {
           content: string;
           id: number;
           level: Database['public']['Enums']['level'];
-          type: Database['public']['Enums']['tags'];
+          type: Database['public']['Enums']['checklist'];
         };
         Insert: {
           content: string;
           id?: number;
           level: Database['public']['Enums']['level'];
-          type: Database['public']['Enums']['tags'];
+          type: Database['public']['Enums']['checklist'];
         };
         Update: {
           content?: string;
           id?: number;
           level?: Database['public']['Enums']['level'];
-          type?: Database['public']['Enums']['tags'];
+          type?: Database['public']['Enums']['checklist'];
         };
         Relationships: [];
       };
@@ -366,7 +366,7 @@ export type Database = {
     Views: {
       gonggam_posts_with_counts: {
         Row: {
-          category: Database['public']['Enums']['categorys'] | null;
+          category: Database['public']['Enums']['categories'] | null;
           comment_count: number | null;
           content: string | null;
           created_at: string | null;
@@ -377,7 +377,7 @@ export type Database = {
           user_id: string | null;
         };
         Insert: {
-          category?: Database['public']['Enums']['categorys'] | null;
+          category?: Database['public']['Enums']['categories'] | null;
           comment_count?: never;
           content?: string | null;
           created_at?: string | null;
@@ -388,7 +388,7 @@ export type Database = {
           user_id?: string | null;
         };
         Update: {
-          category?: Database['public']['Enums']['categorys'] | null;
+          category?: Database['public']['Enums']['categories'] | null;
           comment_count?: never;
           content?: string | null;
           created_at?: string | null;
@@ -423,9 +423,9 @@ export type Database = {
       };
     };
     Enums: {
-      categorys: '일상공유' | '꿀팁공유' | '여기추천' | '밋업';
+      categories: '일상공유' | '꿀팁공유' | '여기추천' | '밋업';
+      checklist: '혼밥' | '혼자여행' | '갓생' | '청소' | '혼놀';
       level: '1' | '2' | '3' | '4' | '5' | 'master';
-      tags: '혼밥' | '혼자여행' | '갓생' | '혼놀' | '청소' | '공감해죠' | '칭찬해죠' | '힘들어';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -531,9 +531,9 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      categorys: ['일상공유', '꿀팁공유', '여기추천', '밋업'],
-      level: ['1', '2', '3', '4', '5', 'master'],
-      tags: ['혼밥', '혼자여행', '갓생', '혼놀', '청소', '공감해죠', '칭찬해죠', '힘들어']
+      categories: ['일상공유', '꿀팁공유', '여기추천', '밋업'],
+      checklist: ['혼밥', '혼자여행', '갓생', '청소', '혼놀'],
+      level: ['1', '2', '3', '4', '5', 'master']
     }
   }
 } as const;

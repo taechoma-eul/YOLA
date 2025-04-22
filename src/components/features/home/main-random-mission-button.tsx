@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { CustomButton } from '@/components/ui/custom-button';
 import RandomMissionModal from '@/components/features/modals/random-mission';
-import type { Tables } from '@/types/supabase';
+import { CustomButton } from '@/components/ui/custom-button';
+import type { TableMissionList } from '@/types/supabase-const';
 
 interface ButtonProps {
   isLogin: boolean;
-  missionData: Tables<'mission_list'>[];
+  missionData: TableMissionList[];
 }
 
 const MissionButton = ({ isLogin, missionData }: ButtonProps) => {

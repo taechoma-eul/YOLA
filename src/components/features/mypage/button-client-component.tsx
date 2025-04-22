@@ -3,11 +3,11 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import RandomMissionModal from '@/components/features/modals/random-mission';
+import type { TableMissionList } from '@/types/supabase-const';
 import CHEVRON_RIGHT from '@images/images/chevron-right.svg';
-import type { Tables } from '@/types/supabase';
 
 interface ButtonClientComponentProps {
-  missionsData: Tables<'mission_list'>[];
+  missionsData: TableMissionList[];
   isLogin: boolean;
 }
 
@@ -19,7 +19,7 @@ const ButtonClientComponent = ({ missionsData, isLogin }: ButtonClientComponentP
     <div>
       <button
         onClick={clickModal}
-        className="flex items-center justify-start text-base font-normal leading-snug text-secondary-grey-900"
+        className="flex items-center justify-start text-base font-semibold leading-snug text-primary-orange-700"
       >
         미션 받으러 가기
         <Image src={CHEVRON_RIGHT} alt="미션 받으러 가기 화살표 아이콘" height={24} width={24} />

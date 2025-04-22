@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 export const GET = async () => {
   const supabase = await createClient();

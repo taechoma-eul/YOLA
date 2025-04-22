@@ -1,8 +1,8 @@
 // src/app/(life)/life/page.tsx
-import LifePageClient from '@/components/features/life/life-page-client';
-import { getUserProfile } from '@/lib/utils/api/auth.api';
-import { PATH } from '@/constants/page-path';
 import { redirect } from 'next/navigation';
+import LifePageClient from '@/components/features/life/life-page-client';
+import { PATH } from '@/constants/page-path';
+import { getUserProfile } from '@/lib/utils/api/auth/auth.api';
 
 const LifePage = async () => {
   const profile = await getUserProfile();

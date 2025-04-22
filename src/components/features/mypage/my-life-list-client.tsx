@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
+import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
+import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';
 
 const MyLifeListClient = () => {
@@ -29,7 +30,7 @@ const MyLifeListClient = () => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   const parsedList: SoloLifeCardType[] =
     posts?.pages?.flatMap((page: GetLifePostsResponse) =>
@@ -65,10 +66,7 @@ const MyLifeListClient = () => {
   return (
     <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {parsedList.length === 0 ? (
-        <div className="col-span-full mb-[272px] flex min-h-[542px] flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500">
-          <p>앗 아직 기록이 없어요</p>
-          <p>오늘의 혼자 라이프를 기록해보세요!</p>
-        </div>
+        <NoRecordsBox mode="라이프" />
       ) : (
         <>
           {parsedList.map((post) => (

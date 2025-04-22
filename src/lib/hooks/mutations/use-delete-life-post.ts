@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { TABLE } from '@/constants/supabase-tables-name';
-import type { LifePostWithImageUrls } from '@/types/life-post';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { TABLE } from '@/constants/supabase-tables-name';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import type { LifePostWithImageUrls } from '@/types/life-post';
 
 export const useDeleteLifePost = () => {
   const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export const useDeleteLifePost = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.LIFE_POSTS() });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LIFE_POSTS] });
     }
   });
 };

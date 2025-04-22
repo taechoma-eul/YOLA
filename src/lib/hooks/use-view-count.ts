@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { fetchViewCount, incrementViewCount } from '@/lib/utils/api/gonggam-view-count.api';
 import { TABLE } from '@/constants/supabase-tables-name';
+import { fetchViewCount, incrementViewCount } from '@/lib/utils/api/gonggam/gonggam-view-count.api';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 
 /**
  * 공감 게시글의 조회수를 실시간으로 반영하여 반환하는 훅입니다. 게시글 내부의 클라이언트 컴포넌트에서 선언하여 사용할 수 있습니다.

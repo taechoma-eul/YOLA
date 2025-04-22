@@ -1,29 +1,43 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+// 외부 라이브러리
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { clsx } from 'clsx';
+import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+
+import { useState } from 'react';
+
+import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
+
+// 컴포넌트
+import DatePicker from '@/components/common/date-picker';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
-import DatePicker from '@/components/common/date-picker';
 import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
+import { CustomButton } from '@/components/ui/custom-button';
+
+// 상수 및 타입
+import { PATH } from '@/constants/page-path';
+import { QUERY_KEY } from '@/constants/query-keys';
+
+// 유틸
 import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
 import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { PATH } from '@/constants/page-path';
 import { getToday } from '@/lib/utils/get-date';
-import type { MissionType } from '@/types/checklist';
-import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/query-keys';
-import { ChevronLeft } from 'lucide-react';
-import { CustomButton } from '../ui/custom-button';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { toastAlert } from '@/lib/utils/toast';
+
+// 타입
+import type { TableMissionList } from '@/types/supabase-const';
 
 interface LifeInputFormProps {
   missionId: string | null;
-  dropdownMissions?: MissionType[];
+  dropdownMissions?: TableMissionList[];
   completedIds?: number[];
   isEditMode?: boolean;
   defaultValues?: {
@@ -72,6 +86,7 @@ const PostInputForm = ({
   const [selectedMissionId, setSelectedMissionId] = useState<number | null>(
     defaultValues?.missionId ?? (missionId ? +missionId : null)
   );
+  const [showModal, setShowModal] = useState(false);
 
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
@@ -133,14 +148,14 @@ const PostInputForm = ({
 
       const onSuccess = () => {
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEY.LIFE_POSTS()
+          queryKey: [QUERY_KEY.LIFE_POSTS]
         });
-        alert(`${action}되었습니다!`);
+        toastAlert(`${action}되었습니다!`, 'success');
         router.push(PATH.LIFE);
       };
 
       const onError = (err: unknown) => {
-        alert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`);
+        toastAlert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`, 'destructive');
       };
 
       const mutationFn =
@@ -150,20 +165,21 @@ const PostInputForm = ({
 
       mutationFn();
     } catch (err) {
-      alert(err instanceof Error ? err.message : '알 수 없는 오류');
+      toastAlert(err instanceof Error ? err.message : '알 수 없는 오류', 'destructive');
     }
   };
 
-  const handleCancel = async () => {
-    const confirm = window.confirm('작성 중인 내용이 사라집니다. 뒤로갈까요?');
-    if (!confirm) return;
+  const handleCancel = () => {
+    setShowModal(!showModal);
+  };
 
+  const handleDelete = async () => {
     try {
       const pathsToDelete = uploadedImages.map((img) => img.storagePath).filter(Boolean);
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
-      alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
+      toastAlert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
     }
   };
 
@@ -177,27 +193,43 @@ const PostInputForm = ({
         <ChevronLeft className="mr-1 h-5 w-5" />
         뒤로가기
       </button>
-      <div className="flex w-full items-center justify-between">
-        <h1 className="mb-[20px] text-xl font-bold">{isEditMode ? '기록 수정' : '혼자라이프 일기 작성'}</h1>
-        <div className="ml-4 shrink-0">
-          <DatePicker date={selectedDate} setDate={setSelectedDate} />
-        </div>
-      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[1200px]">
+        <div
+          className={clsx('mb-[20px] flex w-full items-center', isMission ? 'justify-start gap-4' : 'justify-between')}
+        >
+          <h1 className="text-xl font-bold">
+            {isEditMode
+              ? '기록 수정'
+              : isMission
+                ? dropdownMissions && (
+                    <ChecklistPostDropdown
+                      missions={dropdownMissions}
+                      completedIds={completedIds}
+                      selectedId={selectedMissionId}
+                      onSelect={setSelectedMissionId}
+                    />
+                  )
+                : '혼자 라이프 기록'}
+          </h1>
+          <div className="ml-4 shrink-0">
+            <DatePicker date={selectedDate} setDate={setSelectedDate} />
+          </div>
+        </div>
+
         <div className="mb-6 h-[450px] w-full rounded-lg border border-secondary-grey-200 bg-white p-8">
-          <div className="mb-6 flex items-start justify-between border-b border-secondary-grey-200">
+          {!isMission && (
             <input
               type="text"
               {...register('title')}
               placeholder={DEFAULT_TITLE}
-              className="w-full border-none text-xl font-semibold outline-none placeholder:text-secondary-grey-500"
+              className="mb-[20px] w-full border-b border-secondary-grey-300 pb-2 text-xl font-semibold outline-none placeholder:text-secondary-grey-400 focus:border-blue-500"
             />
-          </div>
+          )}
 
           <textarea
             {...register('content')}
             placeholder="내용을 입력하세요..."
-            className="h-56 w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
+            className="h-[90%] w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
           />
           {errors.content && <p className="mt-2 text-sm text-red-500">{errors.content.message}</p>}
         </div>
@@ -225,6 +257,14 @@ const PostInputForm = ({
           </CustomButton>
         </div>
       </form>
+      {showModal && (
+        <ConfirmModal
+          clickModal={() => setShowModal(false)}
+          handleDelete={handleDelete}
+          isItPost={true}
+          isItBack={true}
+        />
+      )}
     </div>
   );
 };
