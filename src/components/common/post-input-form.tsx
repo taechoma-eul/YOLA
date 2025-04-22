@@ -30,6 +30,7 @@ import { useLifePost } from '@/lib/hooks/mutations/use-life-posts';
 import { useUpdateLifePost } from '@/lib/hooks/mutations/use-update-life-post';
 import { getToday } from '@/lib/utils/get-date';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { toastAlert } from '@/lib/utils/toast';
 
 // 타입
 import type { TableMissionList } from '@/types/supabase-const';
@@ -149,12 +150,12 @@ const PostInputForm = ({
         queryClient.invalidateQueries({
           queryKey: [QUERY_KEY.LIFE_POSTS]
         });
-        alert(`${action}되었습니다!`);
+        toastAlert(`${action}되었습니다!`, 'success');
         router.push(PATH.LIFE);
       };
 
       const onError = (err: unknown) => {
-        alert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`);
+        toastAlert(err instanceof Error ? err.message : `${action} 중 알 수 없는 오류가 발생했습니다.`, 'destructive');
       };
 
       const mutationFn =
@@ -164,7 +165,7 @@ const PostInputForm = ({
 
       mutationFn();
     } catch (err) {
-      alert(err instanceof Error ? err.message : '알 수 없는 오류');
+      toastAlert(err instanceof Error ? err.message : '알 수 없는 오류', 'destructive');
     }
   };
 
@@ -178,7 +179,7 @@ const PostInputForm = ({
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
-      alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
+      toastAlert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
     }
   };
 
@@ -221,7 +222,7 @@ const PostInputForm = ({
               type="text"
               {...register('title')}
               placeholder={DEFAULT_TITLE}
-              className="mb-[20px] w-full border-b border-gray-300 pb-2 text-xl font-semibold outline-none placeholder:text-gray-400 focus:border-blue-500"
+              className="mb-[20px] w-full border-b border-secondary-grey-300 pb-2 text-xl font-semibold outline-none placeholder:text-secondary-grey-400 focus:border-blue-500"
             />
           )}
 

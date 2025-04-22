@@ -2,17 +2,18 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+
 import SoloLifeCard from '@/components/common/solo-life-card';
+import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';
-import { PostDetailModal } from '../modals/calendar-post-detail';
 
 const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
 
   const selectedMonth = selectedDate.slice(0, 7);
-  const { data: posts = [], isLoading, error } = useLifePostsByMonth(selectedMonth);
+  const { data: posts = [], isPending, error } = useLifePostsByMonth(selectedMonth);
 
   const parsedList: SoloLifeCardType[] = posts
     .filter((p) => p.date.startsWith(selectedDate))
@@ -39,7 +40,7 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
     setShowModal(true);
   };
 
-  if (isLoading) return <div className="p-4">로딩 중...</div>;
+  if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) return <div className="p-4 text-red-500">에러 발생</div>;
 
   return (
