@@ -6,11 +6,7 @@ const MyGonggamPostListPage = async () => {
   const profile = await getUserProfile();
   if (!profile) throw new Error();
   const nickname = profile.nickname;
-  return (
-    <div>
-      <MyGonggamPostClient nickname={nickname} />
-    </div>
-  );
+  return <MyGonggamPostClient nickname={nickname} />;
 };
 
 export default MyGonggamPostListPage;

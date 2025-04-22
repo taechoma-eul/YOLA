@@ -10,7 +10,7 @@ interface RandomMissionBoxProps {
 
 const RandomMissionBox = ({ missionsData, isLogin }: RandomMissionBoxProps) => {
   return (
-    <div className="bg-mypage-peach relative mb-[96px] flex min-h-[178px] w-full flex-row justify-between rounded-[8px] border-none pl-[28px] pr-[96px] pt-[27px] text-sm leading-tight text-secondary-grey-900">
+    <div className="relative mb-[96px] flex min-h-[178px] w-full flex-row justify-between rounded-[8px] border-none bg-mypage-peach pl-[28px] pr-[96px] pt-[27px] text-sm leading-tight text-secondary-grey-900">
       {/* 왼쪽 텍스트 & 버튼 */}
       <div className="flex max-w-[70%] flex-col justify-start">
         <p className="mt-[27px] text-base font-normal leading-snug text-secondary-grey-900">
