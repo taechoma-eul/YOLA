@@ -38,11 +38,6 @@ const config: Config = {
         mypage: {
           peach: '#FFF5E5'
         },
-        banner: {
-          blue: '#D8EFF7',
-          red: '#FFBFA9',
-          orange: '#FEC84B'
-        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
