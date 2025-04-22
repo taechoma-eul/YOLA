@@ -25,7 +25,7 @@ const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: 
       aria-label="챌린지 리스트 드롭 다운 메뉴"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex h-[44px] w-[72px] items-center justify-between gap-2.5 py-2.5"
+      className="group relative flex h-[44px] w-[72px] items-center justify-between py-2.5"
     >
       <div className="relative">
         <NavLabel label="챌린지" isBold={isHovered || isSelect || isMission} />
@@ -40,13 +40,7 @@ const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: 
       />
       <div className="invisible absolute right-0 top-11 flex w-[100px] transform flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-0 opacity-0 shadow-[0px_0px_3px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-secondary-grey-300 transition-all duration-150 ease-in-out group-hover:visible group-hover:opacity-100">
         {challengeMenuItem.map((item, index) => (
-          <HeaderDropdownMenuItem
-            key={index}
-            label={item.label}
-            isSelect={isSelect}
-            isLine={item.isLine}
-            href={item.href}
-          />
+          <HeaderDropdownMenuItem key={index} label={item.label} isLine={item.isLine} href={item.href} />
         ))}
       </div>
     </li>

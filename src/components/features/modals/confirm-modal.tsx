@@ -45,12 +45,12 @@ const ConfirmModal = ({
           {isItBack ? (
             <>
               <strong className="text-xl font-semibold">글 작성을 취소합니다.</strong>
-              <p className="text-md mt-2 h-[22px] w-[280px] font-normal">작성 중인 내용은 저장되지 않습니다.</p>
+              <p className="mt-2 h-[22px] w-[280px] text-md font-normal">작성 중인 내용은 저장되지 않습니다.</p>
             </>
           ) : (
             <>
               <strong className="text-xl font-semibold">{isItPost ? `글` : `댓글`}을 삭제합니다.</strong>
-              <p className="text-md mt-2 h-[22px] font-normal">정말 삭제하시겠습니까?</p>
+              <p className="mt-2 h-[22px] text-md font-normal">정말 삭제하시겠습니까?</p>
             </>
           )}
         </div>

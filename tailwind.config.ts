@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        sm: '14px',
+        md: '16px',
+        lg: '18px'
+      },
       colors: {
         'primary-orange': {
           50: '#FFF8E3',

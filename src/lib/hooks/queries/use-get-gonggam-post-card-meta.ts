@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getGonggamPostCardMeta } from '@/lib/utils/api/gonggam/gonggam-board-client.api';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { getGonggamPostCardMeta } from '@/lib/utils/api/gonggam/gonggam-board-client.api';
 
 export const useGetGonggamPostCardMeta = (postId: number) => {
   return useQuery({

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getGonggamPostDetailByClient } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 import { QUERY_KEY } from '@/constants/query-keys';
+import { getGonggamPostDetailByClient } from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
 
 export const useGetGonggamPostDetail = (postId: number) => {
   return useQuery({
