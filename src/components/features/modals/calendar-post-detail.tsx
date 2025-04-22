@@ -120,7 +120,7 @@ export const PostDetailModal = ({
           {/** 사진 슬라이드 */}
           <ImageSwiper image_urls={post.image_urls} />
           <div className="mb-[2px] flex gap-[12px] text-center md:mb-[10px]">
-            <p className="md:text-md font-(family-name:Comfortaa) text-sm font-normal text-secondary-grey-900">
+            <p className="font-(family-name:Comfortaa) text-sm font-normal text-secondary-grey-900 md:text-md">
               {date}
             </p>
             <Image src={divider} alt="날짜와 미션인증/하루일기 사이의 영역을 나누는 막대" />
@@ -141,7 +141,7 @@ export const PostDetailModal = ({
             ))}
           </div>
           <hr className="w-[344px] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
-          <p className="text-md whitespace-pre-wrap font-normal text-secondary-grey-900">{post.content}</p>
+          <p className="whitespace-pre-wrap text-md font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
     </div>

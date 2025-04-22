@@ -1,8 +1,8 @@
 'use client';
 
+import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
 import { USER_LEVELS } from '@/lib/utils/calculate-user-level';
-import { clsx } from 'clsx';
 
 interface MypageProgressBarProps {
   level: string;

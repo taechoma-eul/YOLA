@@ -1,7 +1,7 @@
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { TABLE } from '@/constants/supabase-tables-name';
-import type { TableGonggamPosts } from '@/types/supabase-const';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { CommentWithUser, UploadGonggamCommentParams, GonggamPostDetail } from '@/types/gonggam';
+import type { TableGonggamPosts } from '@/types/supabase-const';
 
 /** getLikeCountClient
  * 클라이언트에서 특정 게시글의 좋아요 수를 조회하는 함수입니다.

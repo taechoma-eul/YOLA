@@ -35,12 +35,12 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
 
   const handlePointerEnter = () => {
     if (showModal) return; // 화면 밖을 나갔다가 들어와도 드롭다운 생기지 않게 함
-    !isMobile ? setShowDropdown(true) : undefined;
+    if (!isMobile) setShowDropdown(true);
   };
 
   const handlePointerLeave = () => {
     if (showModal) return;
-    !isMobile ? setShowDropdown(false) : undefined;
+    if (!isMobile) setShowDropdown(false);
   };
 
   useEffect(() => {
@@ -62,14 +62,14 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
         <div className="absolute left-0 top-full z-20 flex w-[80px] translate-x-[-70%] flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-0 shadow-[0_0_3px_0_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-secondary-grey-300 md:w-[88px] md:translate-x-0">
           <button
             onClick={handleEdit}
-            className="text-md flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center"
+            className="flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center text-base"
           >
             수정
           </button>
           <hr className="border-spacing-4 border-gray-300 px-[35px]" />
           <button
             onClick={() => setShowModal(true)}
-            className="text-md flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center"
+            className="flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center text-base"
           >
             삭제
           </button>

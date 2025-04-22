@@ -5,9 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import GonggamPagination from '@/components/features/gonggam/gonggam-pagination';
 import GonggamPostCard from '@/components/features/gonggam/gonggam-post-card';
 import { SkeletonFlatten } from '@/components/ui/skeleton';
-import { usePaginatedGonggamPosts } from '@/lib/hooks/queries/use-paginated-gonggam-posts';
 import { slugToCategory } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
+import { usePaginatedGonggamPosts } from '@/lib/hooks/queries/use-paginated-gonggam-posts';
 
 interface GonggamCategoryBoardProps {
   params: { category: string };

@@ -3,9 +3,9 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import NoRecordsBox from '@/components/common/no-records-box';
 import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
-import NoRecordsBox from '@/components/common/no-records-box';
 import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
 import type { SortBy } from '@/types/gonggam';

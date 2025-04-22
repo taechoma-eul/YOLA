@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { TABLE } from '@/constants/supabase-tables-name';
+import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { TableComments } from '@/types/supabase-const';
 
 interface UpdateCommentParams {

@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { Dot } from 'lucide-react';
+import Image from 'next/image';
 import GonggamBoardMeta from '@/components/features/gonggam/gonggam-board-meta';
 import { useGetGonggamPostCardMeta } from '@/lib/hooks/queries/use-get-gonggam-post-card-meta';
 import { formatRelativeDate } from '@/lib/utils/date-format';

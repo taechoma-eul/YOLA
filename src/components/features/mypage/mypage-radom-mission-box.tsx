@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import ButtonClientComponent from '@/components/features/mypage/button-client-component';
-import CAT_IN_QUESTION_BOX from '@images/images/cat-in-question-box.svg';
 import type { TableMissionList } from '@/types/supabase-const';
+import CAT_IN_QUESTION_BOX from '@images/images/cat-in-question-box.svg';
 
 interface RandomMissionBoxProps {
   missionsData: TableMissionList[];

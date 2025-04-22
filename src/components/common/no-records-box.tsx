@@ -1,8 +1,8 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { CustomButton } from '@/components/ui/custom-button';
 import { PATH } from '@/constants/page-path';
 import CAT_NO_RECORDS from '@images/images/cat-no-records.svg';
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface NoRecordsBoxProps {
   mode: '공감' | '라이프' | '캘린더';

@@ -1,4 +1,5 @@
-import type { Mission, UsedTags, UserMissionRow } from '@/types/my-missions';
+import type { Mission, UserMissionRow } from '@/types/my-missions';
+import { EnumChecklist } from '@/types/supabase-const';
 
 /**
  * Supabase에서 가져온 미션 데이터 배열을 가공하여 레벨 계산 로직에 적합한 형태로 변환
@@ -16,7 +17,7 @@ import type { Mission, UsedTags, UserMissionRow } from '@/types/my-missions';
  */
 export function parseUserMissions(rawMissions: UserMissionRow[]): Mission[] {
   // 우리가 사용하는 태그 타입들만 필터링
-  const usedTags: UsedTags[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
+  const usedTags: EnumChecklist[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
 
   return rawMissions
     .map((mission) => {
@@ -24,10 +25,10 @@ export function parseUserMissions(rawMissions: UserMissionRow[]): Mission[] {
       const level = mission.mission_list.level;
 
       // 사용하지 않는 태그는 제외
-      if (!usedTags.includes(type as UsedTags)) return null;
+      if (!usedTags.includes(type as EnumChecklist)) return null;
 
       return {
-        type: type as UsedTags,
+        type: type as EnumChecklist,
         level: level
       };
     })

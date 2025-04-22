@@ -1,6 +1,6 @@
+import { clsx } from 'clsx';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { clsx } from 'clsx';
 import DEFAULT_AVATAR_IMAGE from '@images/images/default-avatar.svg';
 
 interface ProfileAvatarProps {

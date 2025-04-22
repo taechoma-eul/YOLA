@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { GONGGAM_POSTS_TABLE, IMAGE_TABLE } from '@/lib/hooks/mutations/use-gonggam-post';
 import { parseTags } from '@/lib/utils/parse-tags';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { Database } from '@/types/supabase';
+import { EnumCategories } from '@/types/supabase-const';
 
 interface UpdateGonggamPostParams {
-  category: Database['public']['Enums']['categorys'];
+  category: EnumCategories;
   content: string;
   created_at?: string;
   id: number;
