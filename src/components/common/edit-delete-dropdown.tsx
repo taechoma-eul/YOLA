@@ -9,17 +9,38 @@ import dropdown from '@images/images/post-dropdown.svg';
  * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
 const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // tailwind 기준 md 미만이면 모바일
+    };
+
+    handleResize(); // 초기 체크
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (showModal) {
+      setShowDropdown(false);
+    }
+  }, [showModal]);
+
+  const handleClickToggle = () => {
+    if (isMobile) setShowDropdown((prev) => !prev);
+  };
 
   const handlePointerEnter = () => {
     if (showModal) return; // 화면 밖을 나갔다가 들어와도 드롭다운 생기지 않게 함
-    setShowDropdown(true);
+    !isMobile ? setShowDropdown(true) : undefined;
   };
 
   const handlePointerLeave = () => {
     if (showModal) return;
-    setShowDropdown(false);
+    !isMobile ? setShowDropdown(false) : undefined;
   };
 
   useEffect(() => {
@@ -29,17 +50,16 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
   }, [showModal]);
 
   return (
-    <div onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave} className="relative w-fit">
-      <button className="flex w-[88px] cursor-pointer items-center justify-end">
+    <div className="relative w-fit" onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave}>
+      <button onClick={handleClickToggle} className="flex w-[24px] cursor-pointer items-center justify-end md:w-[88px]">
         <Image src={dropdown} alt="수정/삭제 드롭다운 아이콘" />
       </button>
 
-      {/* hover 유지용 투명 영역 (아이콘과 드롭다운 사이 끊김 방지) */}
-      <div className="h-[14px] w-[88px] cursor-pointer" />
+      {/* hover 유지용 투명 영역 (PC용) */}
+      {!isMobile && <div className="h-[14px] w-[24px] cursor-pointer md:w-[88px]" />}
 
-      {/* 드롭다운 메뉴 */}
       {showDropdown && (
-        <div className="absolute left-0 top-full z-20 flex w-[88px] flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-0 shadow-[0_0_3px_0_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-secondary-grey-300">
+        <div className="absolute left-0 top-full z-20 flex w-[80px] translate-x-[-70%] flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-0 shadow-[0_0_3px_0_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-secondary-grey-300 md:w-[88px] md:translate-x-0">
           <button
             onClick={handleEdit}
             className="text-md flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center"
