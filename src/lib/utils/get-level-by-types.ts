@@ -11,8 +11,8 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
   const MAX_LEVEL_COUNT = 5;
 
   //각 타입별로 레벨 1~5까지 완료한 미션 수를 저장할 배열
-  const usedTags: EnumChecklist[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
-  const levelMap = Object.fromEntries(usedTags.map((tag) => [tag, Array(5).fill(0)])) as Record<
+  const checklistTypes: EnumChecklist[] = ['혼밥', '혼자여행', '갓생', '혼놀', '청소'];
+  const levelMap = Object.fromEntries(checklistTypes.map((tag) => [tag, Array(5).fill(0)])) as Record<
     EnumChecklist,
     number[]
   >;
