@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Dot } from 'lucide-react';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail-view-count';
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
@@ -9,7 +10,6 @@ import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
 import { SkeletonCard } from '@/components/ui/skeleton';
 import { useGetGonggamPostDetail } from '@/lib/hooks/queries/use-get-gonggam-post-detail';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
-import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import type { TableUsers } from '@/types/supabase-const';
 
 interface GonggamPostContentProps {
