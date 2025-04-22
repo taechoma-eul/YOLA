@@ -2,12 +2,12 @@
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import GuestOptionMenu from '@/components/layout/header/header-guest-option';
+import MainLogo from '@/components/layout/header/header-main-logo';
 import NavChallengeMenu from '@/components/layout/header/header-nav-challenge-menu';
 import NavLinkItem from '@/components/layout/header/header-nav-link-item';
+import HeaderMobileMenu from '@/components/layout/header/header-nav-menu-mobile';
 import UserOptionMenu from '@/components/layout/header/header-user-option';
 import { PATH } from '@/constants/page-path';
-import MainLogo from './header-main-logo';
-import HeaderMobileMenu from './header-nav-menu-mobile';
 
 const HeaderNav = ({ isLogin }: { isLogin: boolean }) => {
   const pathname = usePathname();
