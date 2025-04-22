@@ -45,7 +45,7 @@ const ProfileImageField = ({
       name={AUTH.PROFILE_IMAGE}
       render={() => (
         <div className="relative flex w-44 flex-col items-end justify-start">
-          <ProfileAvatar src={previewUrl ? previewUrl : profileImage} size={172} className="rounded-2xl" />
+          <ProfileAvatar src={previewUrl ? previewUrl : profileImage} mode="desktop" />
           <FormControl>
             <Input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
           </FormControl>
