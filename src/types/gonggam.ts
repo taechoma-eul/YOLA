@@ -10,6 +10,7 @@ export interface PaginatedPostsResponse {
 }
 
 export interface WriterProfile {
+  id?: string;
   nickname: TableUsers['nickname'];
   profile_image?: TableUsers['profile_image'];
 }
