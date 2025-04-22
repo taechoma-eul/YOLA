@@ -20,20 +20,15 @@ const CalendarCell = ({
       className="inline-flex h-[88px] min-w-0 flex-1 flex-col items-center justify-start gap-1 overflow-hidden px-[2px] sm:h-[100px] sm:px-2 md:h-[110px]"
     >
       <button onClick={onClick} className="flex h-full w-full flex-col items-center justify-start gap-2.5">
-        <div
-          className={clsx(
-            'flex h-7 w-7 flex-col items-center justify-center gap-2.5',
-            isSelected && 'rounded-2xl bg-amber-500 p-0.5'
-          )}
-        >
-          <div
+        <div className={clsx('flex h-7 w-7 items-center justify-center rounded-full', isSelected && 'bg-amber-500')}>
+          <span
             className={clsx(
-              'text-center text-base',
+              'text-base leading-none',
               isSelected ? 'font-bold text-white' : isOutside ? 'text-gray-300' : 'text-black'
             )}
           >
             {date.getDate()}
-          </div>
+          </span>
         </div>
         {renderDot(date, isOutside)}
       </button>
