@@ -27,7 +27,7 @@ const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL
         setNewComment('');
       },
       onError: (err) => {
-        toastAlert(FAIL.FAIL_TO_UPLOAD_COMMENT);
+        toastAlert(FAIL.UPLOAD_COMMENT);
         throw Error(err.message);
       }
     });

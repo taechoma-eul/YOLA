@@ -28,7 +28,7 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
         const likeCnt = await getLikeCountClient(postId);
         setLikeCnt(likeCnt);
       } catch (err) {
-        console.error(FAIL.FAIL_TO_GET_POST_META, err);
+        console.error(FAIL.GET_POST_META, err);
       }
     };
     fetchMeta();
@@ -38,7 +38,7 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
         const liked = await getUserLikedStatus({ postId, userId });
         setIsLiked(liked);
       } catch (err) {
-        console.error(FAIL.FAIL_TO_GET_LIKES, err);
+        console.error(FAIL.GET_LIKES, err);
       }
     };
     fetchLikeStatus();
@@ -61,7 +61,7 @@ const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
         setIsLiked(true);
       }
     } catch (err) {
-      toastAlert(FAIL.FAIL_TO_UPDATE_LIKE, 'destructive');
+      toastAlert(FAIL.UPDATE_LIKE, 'destructive');
       console.error(err);
     } finally {
       setIsLikePending(false);

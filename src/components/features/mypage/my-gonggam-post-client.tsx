@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
+import NoRecordsBox from '@/components/features/mypage/mypage-no-records-box';
 import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
 import type { SortBy } from '@/types/gonggam';
@@ -52,10 +53,7 @@ const MyGonggamPostClient = ({ nickname }: { nickname: string }) => {
 
       <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
         {allPosts.length === 0 ? (
-          <div className="col-span-full mb-[272px] flex min-h-[542px] flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500">
-            <p>앗 아직 기록이 없어요</p>
-            <p>공감 게시판에서 글을 작성해보세요!</p>
-          </div>
+          <NoRecordsBox mode="공감" />
         ) : (
           <>
             {allPosts.map((item) => (

@@ -35,6 +35,9 @@ const config: Config = {
           800: '#555A60',
           900: '#2E3135'
         },
+        mypage: {
+          peach: '#FFF5E5'
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
