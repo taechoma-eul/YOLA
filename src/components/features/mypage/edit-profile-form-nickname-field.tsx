@@ -1,6 +1,5 @@
 'use client';
 
-import { clsx } from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFormContext, UseFormReturn } from 'react-hook-form';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
@@ -13,7 +12,7 @@ import { fetchDuplicateCheck } from '@/lib/utils/api/auth/auth-client.api';
 import type { EditFormData } from '@/types/auth-form';
 
 interface FieldProps {
-  form: UseFormReturn<EditFormData, any, undefined>;
+  form: UseFormReturn<EditFormData>;
   setDuplicateCheck: Dispatch<SetStateAction<boolean>>;
   initNickname: string;
 }
@@ -32,7 +31,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
     setErrorMessage(null);
 
     if (initNickname === getValues(AUTH.NICKNAME)) setDuplicateCheck(true); // 기존 닉네임과 같으면 중복검사 pass
-  }, [nicknameValue, setDuplicateCheck]);
+  }, [getValues, initNickname, nicknameValue, setDuplicateCheck]);
 
   // -------------------------------------------------
   const handleDuplicateCheck = async () => {
@@ -66,20 +65,11 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
       name={AUTH.NICKNAME}
       render={({ field }) => (
         <FormItem className="flex h-10 items-center justify-start self-stretch">
-          <FormLabel
-            className={clsx(
-              'justify-start text-lg font-normal',
-              errorMessage ? 'text-destructive' : 'text-secondary-grey-900'
-            )}
-          >
-            {LABEL.NICKNAME}
-          </FormLabel>
-          <div className="relative">
+          <FormLabel className="justify-start text-lg font-normal text-secondary-grey-900">{LABEL.NICKNAME}</FormLabel>
+          <div className="relative ml-[42px] mr-[8px]">
             <FormControl>
               <Input
-                className={clsx(
-                  'ml-[42px] mr-[8px] flex h-[37px] w-[269px] items-center justify-start gap-2.5 rounded border-secondary-grey-400 p-2.5'
-                )}
+                className="h-[37px] w-[269px] rounded border-secondary-grey-400 p-2.5"
                 placeholder={PLACEHOLDER.NICKNAME}
                 type="text"
                 {...field}
