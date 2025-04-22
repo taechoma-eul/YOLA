@@ -25,7 +25,7 @@ const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: 
       aria-label="챌린지 리스트 드롭 다운 메뉴"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex h-[44px] w-[72px] items-center justify-between gap-2.5 py-2.5"
+      className="group relative flex h-[44px] w-[72px] items-center justify-between py-2.5"
     >
       <div className="relative">
         <NavLabel label="챌린지" isBold={isHovered || isSelect || isMission} />

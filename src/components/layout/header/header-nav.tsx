@@ -14,7 +14,7 @@ const HeaderNav = ({ isLogin }: { isLogin: boolean }) => {
   const isMission: boolean = fullUrl.includes('mission_id');
 
   return (
-    <nav className="flex w-full justify-between">
+    <nav className="flex w-full items-center justify-between">
       <ul className="flex items-center justify-center gap-[4px]">
         <NavLinkItem label="혼자라이프 달력" href={PATH.LIFE} fullUrl={fullUrl} isMission={isMission} />
         <NavLinkItem label="공감 게시판" href={PATH.GONGGAM} fullUrl={fullUrl} isMission={isMission} />
