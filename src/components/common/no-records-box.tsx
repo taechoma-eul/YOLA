@@ -23,7 +23,7 @@ const NoRecordsBox = ({ mode }: NoRecordsBoxProps) => {
             : '혼자만의 하루에 대한 기록을 남겨보세요!'}
       </p>
       {mode === '캘린더' ? (
-        <Link href={PATH.LIFE_POST}>
+        <Link href={PATH.LIFE_POST} className="mt-[30px]">
           <CustomButton variant="default">일기 작성하기</CustomButton>
         </Link>
       ) : (
