@@ -6,6 +6,8 @@ import NavChallengeMenu from '@/components/layout/header/header-nav-challenge-me
 import NavLinkItem from '@/components/layout/header/header-nav-link-item';
 import UserOptionMenu from '@/components/layout/header/header-user-option';
 import { PATH } from '@/constants/page-path';
+import MainLogo from './header-main-logo';
+import HeaderMobileMenu from './header-nav-menu-mobile';
 
 const HeaderNav = ({ isLogin }: { isLogin: boolean }) => {
   const pathname = usePathname();
@@ -14,8 +16,10 @@ const HeaderNav = ({ isLogin }: { isLogin: boolean }) => {
   const isMission: boolean = fullUrl.includes('mission_id');
 
   return (
-    <nav className="flex w-full justify-between">
-      <ul className="flex items-center justify-center gap-[4px]">
+    <nav className="relative flex w-full justify-between">
+      <HeaderMobileMenu />
+      <MainLogo />
+      <ul className="left-[164px] hidden items-center justify-center gap-[4px] md:absolute md:flex">
         <NavLinkItem label="혼자라이프 달력" href={PATH.LIFE} fullUrl={fullUrl} isMission={isMission} />
         <NavLinkItem label="공감 게시판" href={PATH.GONGGAM} fullUrl={fullUrl} isMission={isMission} />
         <NavChallengeMenu fullUrl={fullUrl} isMission={isMission} />
