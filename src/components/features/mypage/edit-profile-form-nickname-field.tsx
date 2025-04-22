@@ -1,6 +1,5 @@
 'use client';
 
-import { clsx } from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFormContext, UseFormReturn } from 'react-hook-form';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
@@ -70,7 +69,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
           <div className="relative ml-[42px] mr-[8px]">
             <FormControl>
               <Input
-                className={clsx('h-[37px] w-[269px] rounded border-secondary-grey-400 p-2.5')}
+                className="h-[37px] w-[269px] rounded border-secondary-grey-400 p-2.5"
                 placeholder={PLACEHOLDER.NICKNAME}
                 type="text"
                 {...field}
