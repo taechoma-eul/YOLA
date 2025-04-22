@@ -1,11 +1,11 @@
 'use client';
 
 import { Dot } from 'lucide-react';
+import Image from 'next/image';
 import GonggamDetailViewCount from '@/components/features/gonggam/gonggam-detail-view-count';
 import GonggamImageSwiper from '@/components/features/gonggam/gonggam-image-swiper';
 import GonggamLikes from '@/components/features/gonggam/gonggam-likes';
 import GonggamMyPostDropdown from '@/components/features/gonggam/gonggam-my-post-dropdown';
-import ProfileAvatar from '@/components/features/mypage/profile-avatar';
 import { SkeletonCard } from '@/components/ui/skeleton';
 import { useGetGonggamPostDetail } from '@/lib/hooks/queries/use-get-gonggam-post-detail';
 import { getKoreanDateTime } from '@/lib/utils/utc-to-kst';
@@ -41,7 +41,15 @@ const GonggamPostContent = ({ postId, viewCount, userData }: GonggamPostContentP
         </h1>
         <figure className="flex items-center justify-between border-b pb-[20px] text-base text-secondary-grey-800">
           <div className="flex items-center">
-            <ProfileAvatar src={users.profile_image ?? DEFAULT_AVATAR_URL} size={24} className="rounded-full" />
+            <div className="relative mr-[6px] h-[22px] w-[22px] overflow-hidden rounded-full">
+              <Image
+                src={users.profile_image ?? DEFAULT_AVATAR_URL}
+                alt={`${users.nickname}의 프로필 이미지`}
+                fill
+                sizes="22px"
+                className="object-cover"
+              />
+            </div>
             <span className="ml-[6px]">{users.nickname}</span>
             <Dot size={12} />
             <time dateTime={displayDate}>{getKoreanDateTime(displayDate)}</time>
