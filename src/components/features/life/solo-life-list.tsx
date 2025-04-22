@@ -1,35 +1,47 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+
+import { useEffect, useMemo, useState } from 'react';
 
 import SoloLifeCard from '@/components/common/solo-life-card';
+import NoPost from '@/components/features/life/no-post';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
-import type { LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';
+import type { LifePostWithImageUrls } from '@/types/life-post';
+interface SoloLifeListProps {
+  selectedDate: string;
+  setIsEmpty: React.Dispatch<React.SetStateAction<boolean | null>>;
+}
 
-const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
+const SoloLifeList = ({ selectedDate, setIsEmpty }: SoloLifeListProps) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
 
   const selectedMonth = selectedDate.slice(0, 7);
-  const { data: posts = [], isPending, error } = useLifePostsByMonth(selectedMonth);
+  const { data: posts = [], isPending } = useLifePostsByMonth(selectedMonth);
 
-  const parsedList: SoloLifeCardType[] = posts
-    .filter((p) => p.date.startsWith(selectedDate))
-    .map((post) => {
-      const imageUrls = post.image_urls ?? [];
-      return {
-        id: post.id.toString(),
-        date: post.date,
-        title: post.content.split('\n')[0] || '제목 없음',
-        content: post.content,
-        thumbnail: imageUrls[0] || '/images/default-image.svg',
-        imageUrls,
-        isMission: post.mission_id !== null,
-        tags: post.tags ?? []
-      };
-    });
+  const parsedList = useMemo(() => {
+    return posts
+      .filter((p) => p.date.startsWith(selectedDate))
+      .map((post) => {
+        const imageUrls = post.image_urls ?? [];
+        return {
+          id: post.id.toString(),
+          date: post.date,
+          title: post.content.split('\n')[0] || '제목 없음',
+          content: post.content,
+          thumbnail: imageUrls[0] || '/images/default-image.svg',
+          imageUrls,
+          isMission: post.mission_id !== null,
+          tags: post.tags ?? []
+        };
+      });
+  }, [posts, selectedDate]);
+
+  useEffect(() => {
+    setIsEmpty(parsedList.length === 0);
+  }, [parsedList, setIsEmpty]);
 
   const handleClickCard = (id: string) => {
     const post = posts.find((post) => post.id === +id);
@@ -40,8 +52,25 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
     setShowModal(true);
   };
 
-  if (isPending) return <div className="p-4">로딩 중...</div>;
-  if (error) return <div className="p-4 text-red-500">에러 발생</div>;
+  if (isPending) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (parsedList.length === 0) {
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={selectedDate} // 날짜 바뀔 때마다 새로 렌더링
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <NoPost />
+        </motion.div>
+      </AnimatePresence>
+    );
+  }
 
   return (
     <AnimatePresence mode="wait">
@@ -51,13 +80,11 @@ const SoloLifeList = ({ selectedDate }: { selectedDate: string }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="m-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        className="grid grid-cols-4 items-stretch gap-[16px]"
       >
-        {parsedList.length === 0 ? (
-          <div className="col-span-full text-center text-gray-500">이 날 작성된 혼자 라이프가 없어요.</div>
-        ) : (
-          parsedList.map((data) => <SoloLifeCard onClick={() => handleClickCard(data.id)} key={data.id} {...data} />)
-        )}
+        {parsedList.map((data) => (
+          <SoloLifeCard onClick={() => handleClickCard(data.id)} key={data.id} {...data} />
+        ))}
         {showModal && (
           <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
         )}

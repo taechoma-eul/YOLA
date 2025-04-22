@@ -7,40 +7,52 @@ interface SoloLifeCardProps extends SoloLifeCardType {
   onClick: () => void;
 }
 
-const SoloLifeCard = ({ thumbnail, title, content, date, isMission, tags, onClick }: SoloLifeCardProps) => {
+const SoloLifeCard = ({ thumbnail, content, date, isMission, tags, onClick }: SoloLifeCardProps) => {
+  const maxLength = 30;
+  const previewContent = content.length > maxLength ? content.slice(0, maxLength) + '...' : content;
+  const formattedDate = date.replaceAll('-', '.');
   return (
-    <div
-      className="flex h-full w-full cursor-pointer flex-col overflow-hidden rounded border border-gray-300 bg-white shadow-sm"
+    <article
       onClick={onClick}
+      className="flex h-[340px] cursor-pointer flex-col rounded-2xl bg-white p-4 outline outline-1 outline-offset-[-1px] outline-secondary-grey-300"
     >
       {/* 이미지 영역 */}
-      <div className="relative aspect-square bg-gray-200">
-        {/* 이미지가 없을 경우 기본 이미지 사용 */}
-        <Image src={thumbnail} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
-      </div>
-
-      {/* 본문 내용 */}
-      <div className="flex flex-1 flex-col p-3 text-sm text-black">
-        {/* 내용 */}
-        <p className="mb-2 whitespace-pre-line text-[13px] leading-snug">{content}</p>
-
-        {/* 해시태그 */}
-        <div className="mb-2 mt-auto flex flex-wrap gap-1 text-[12px] text-blue-600">
-          {tags.map((tag, idx) => (
-            <span key={idx}>#{tag}</span>
-          ))}
+      <figure className="h-52 w-full flex-shrink-0">
+        <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-orange-50">
+          <Image src={thumbnail} alt="썸네일" width={208} height={208} className="object-cover" />
         </div>
+      </figure>
 
-        {/* 날짜 및 구분 */}
-        <div className="flex items-center gap-2 text-[11px] text-gray-500">
-          <span>{date}</span>
+      {/* 내용 + 태그 + footer */}
+      <section className="mt-2 flex flex-1 flex-col justify-start">
+        {/* 본문 */}
+        <p className="mb-2 whitespace-pre-line break-words text-sm leading-tight text-secondary-grey-900">
+          {previewContent}
+        </p>
+
+        {/* 태그 */}
+        <ul className="mb-2 mt-auto flex flex-wrap gap-1">
+          {tags.map((tag, idx) => (
+            <li
+              key={idx}
+              className="rounded bg-secondary-grey-100 px-2 py-1 text-xs text-secondary-grey-900 outline outline-1 outline-offset-[-1px] outline-black/10"
+            >
+              #{tag}
+            </li>
+          ))}
+        </ul>
+
+        {/* footer (날짜 + 타입) */}
+        <footer className="flex items-center gap-2 text-xs text-secondary-grey-800">
+          <time>{formattedDate}</time>
+          <div className="h-0 w-2.5 rotate-90 outline outline-1 outline-offset-[-0.52px] outline-secondary-grey-400" />
           <div className="flex items-center gap-1">
-            <span className={`inline-block h-1.5 w-1.5 rounded-full ${isMission ? 'bg-red-400' : 'bg-black'}`} />
+            <div className={`h-2 w-2 rounded-full ${isMission ? 'bg-rose-400' : 'bg-secondary-grey-900'}`} />
             <span>{isMission ? '미션인증' : '하루일기'}</span>
           </div>
-        </div>
-      </div>
-    </div>
+        </footer>
+      </section>
+    </article>
   );
 };
 
