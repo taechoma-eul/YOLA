@@ -47,7 +47,7 @@ const AchievementPage = async () => {
       {/* 전체 레벨 5단계 */}
       <section className="mt-[72px] flex flex-col gap-[20px]">
         <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
-          {profile.nickname}님의 혼자 라이프 레벨
+          {profile.nickname}님의 혼자라이프 레벨
         </div>
         <MypageProgressBar level={level} remainingMissions={remainingMissions} />
       </section>
@@ -57,28 +57,40 @@ const AchievementPage = async () => {
         <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {profile.nickname}님의 체크리스트 달성도
         </div>
-        <div className="relative flex rounded-[12px] border border-secondary-grey-400 py-[12px]">
+        <div className="relative flex flex-col rounded-[12px] border border-secondary-grey-400 py-[12px] md:flex-row">
           {categories.map(({ type, level, description, icon }, index) => (
             <div
               key={type}
-              className="group relative flex flex-1 flex-col items-center justify-center px-[20px] py-[20px] transition-colors duration-200 hover:bg-gray-100"
+              className="group relative flex flex-1 flex-col justify-between px-[20px] py-[20px] transition-colors duration-200 hover:bg-gray-100 md:justify-center"
             >
-              {/* 왼쪽 세로 구분선 */}
+              {/* 세로 구분선 (데스크탑 환경) */}
               {index !== 0 && (
                 <div className="absolute left-0 top-1/2 h-[62px] w-[1px] -translate-y-1/2 bg-secondary-grey-300" />
               )}
 
-              {/* 카테고리명 */}
-              <div className="flex cursor-pointer flex-row whitespace-nowrap text-base font-semibold">
-                <figure className="mr-[4px] flex h-[24px] w-[24px]">
-                  <Image src={icon} alt={type} height={24} width={24} />
-                </figure>
-                {type}
+              {/* 가로 구분선 (모바일 환경) */}
+              {index !== 0 && (
+                <div className="absolute left-1/2 top-0 h-[1px] w-full -translate-x-1/2 bg-secondary-grey-300 md:hidden" />
+              )}
+
+              <div className="flex flex-row items-center justify-between md:flex-col md:justify-center">
+                {/* 카테고리명 */}
+                <div className="flex cursor-pointer flex-row items-center justify-center whitespace-nowrap text-base font-semibold">
+                  <figure className="mr-[4px] flex h-[24px] w-[24px]">
+                    <Image src={icon} alt={type} height={24} width={24} />
+                  </figure>
+                  {type}
+                </div>
+                {/* 레벨 표시 */}
+                <strong className="mt-[15px] flex items-center justify-center text-xl font-semibold">
+                  {formatLevel(level)}
+                </strong>
               </div>
-              {/* 레벨 표시 */}
-              <strong className="mt-[15px] text-xl font-semibold">{formatLevel(level)}</strong>
+
               {/* 다음 레벨까지 남은 개수 안내 */}
-              <div className="mt-[12px] text-xs font-normal leading-none text-secondary-grey-900">{description}</div>
+              <div className="mt-[12px] flex justify-end text-xs font-normal leading-none text-secondary-grey-900 md:justify-center">
+                {description}
+              </div>
             </div>
           ))}
         </div>
@@ -86,7 +98,7 @@ const AchievementPage = async () => {
 
       {/* 렌덤 미션 뽑기 */}
       <section className="flex flex-col gap-[20px]">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+        <div className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
           오늘의 랜덤 미션
         </div>
         <RandomMissionBox isLogin={isLogin} missionsData={missionsData} />
