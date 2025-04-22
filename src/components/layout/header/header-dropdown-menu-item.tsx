@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathnameContext } from '@/contexts/pathname-context';
 
 interface MenuItem {
   label: string;
@@ -9,7 +9,8 @@ interface MenuItem {
 }
 
 const HeaderDropdownMenuItem = ({ label, href, isLine = true }: MenuItem) => {
-  const pathname = usePathname();
+  const { pathname } = usePathnameContext();
+
   const isSelect: boolean = decodeURIComponent(pathname).includes(href);
 
   return (

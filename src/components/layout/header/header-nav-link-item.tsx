@@ -4,15 +4,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 import NavLabel from '@/components/layout/header/header-nav-label';
 import NavUnderBar from '@/components/layout/header/header-nav-under-bar';
+import { usePathnameContext } from '@/contexts/pathname-context';
 
 interface ItemProps {
   href: string;
   label: string;
-  fullUrl: string;
-  isMission: boolean;
 }
 
-const NavLinkItem = ({ href, label, fullUrl, isMission }: ItemProps) => {
+const NavLinkItem = ({ href, label }: ItemProps) => {
+  const { fullUrl, isMission } = usePathnameContext();
+
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const isSelect: boolean = fullUrl.includes(href);
 
