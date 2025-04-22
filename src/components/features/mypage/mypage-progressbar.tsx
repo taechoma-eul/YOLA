@@ -5,9 +5,10 @@ import { USER_LEVELS } from '@/lib/utils/calculate-user-level';
 
 interface MypageProgressBarProps {
   level: string;
+  remainingMissions: number | null;
 }
 
-const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
+const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const totalSteps = 5;
@@ -20,47 +21,64 @@ const MypageProgressBar = ({ level }: MypageProgressBarProps) => {
   }, [level, stepLabels]);
 
   return (
-    <div className="gap-3 rounded-[8px] border border-secondary-grey-400 p-10">
-      <div className="relative flex items-center justify-between">
-        {/* Progress Bar */}
-        <div className="relative h-[10px] w-full rounded-full bg-secondary-grey-200">
-          {/* 채워지는 부분 */}
-          <div
-            className="absolute left-0 top-0 h-full rounded-full bg-primary-orange-400 transition-all duration-300"
-            style={{ width: progressWidth }}
-          />
+    <div className="item-center flex flex-col gap-3 rounded-[12px] border border-secondary-grey-400 px-10 pt-10">
+      {/* 전체 레벨 바 표시 */}
+      <section>
+        <div className="relative flex items-center justify-between">
+          {/* Progress Bar */}
+          <div className="relative h-[10px] w-full rounded-full bg-secondary-grey-200">
+            {/* 채워지는 부분 */}
+            <div
+              className="absolute left-0 top-0 h-full rounded-full bg-primary-orange-400 transition-all duration-300"
+              style={{ width: progressWidth }}
+            />
 
-          {/* 카테고리 사이 세로 구분선 */}
+            {/* 카테고리 사이 세로 구분선 */}
+            {[...Array(totalSteps + 1)].map((_, idx) => (
+              <div
+                key={idx}
+                className="absolute top-[-6px] h-6 w-px bg-white"
+                style={{ left: `${(idx / totalSteps) * 100}%` }}
+              />
+            ))}
+
+            {/* 현재 단계 circle 표시 */}
+            <div
+              className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `calc(${(currentStep / totalSteps) * 100}% )` }}
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-full border-[5px] border-primary-orange-400 bg-white" />
+            </div>
+          </div>
+        </div>
+
+        {/* 라벨 - 동그라미와 수직 정렬 */}
+        <div className="relative mt-3 h-5">
           {[...Array(totalSteps + 1)].map((_, idx) => (
             <div
               key={idx}
-              className="absolute top-[-6px] h-6 w-px bg-white"
+              className="absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap text-sm text-secondary-grey-900"
               style={{ left: `${(idx / totalSteps) * 100}%` }}
-            />
+            >
+              {stepLabels[idx]}
+            </div>
           ))}
-
-          {/* 현재 단계 circle 표시 */}
-          <div
-            className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `calc(${(currentStep / totalSteps) * 100}% )` }}
-          >
-            <div className="flex h-6 w-6 items-center justify-center rounded-full border-[5px] border-primary-orange-400 bg-white" />
-          </div>
         </div>
-      </div>
+      </section>
 
-      {/* 라벨 - 동그라미와 수직 정렬 */}
-      <div className="relative mt-3 h-5">
-        {[...Array(totalSteps + 1)].map((_, idx) => (
-          <div
-            key={idx}
-            className="absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap text-sm text-secondary-grey-900"
-            style={{ left: `${(idx / totalSteps) * 100}%` }}
-          >
-            {stepLabels[idx]}
-          </div>
-        ))}
-      </div>
+      {/* 아래 레벨 현황 및 남은 개수 */}
+      <section className="-mx-10 mt-[40px] w-[calc(100%+80px)] rounded-b-[12px] border-t border-dashed border-secondary-grey-600 bg-secondary-grey-100 p-[16px] text-center text-xs md:text-base">
+        {remainingMissions !== null ? (
+          <span>
+            당신의 레벨은 <span className="font-semibold">{level}</span>입니다. 다음 레벨까지{' '}
+            <span className="font-semibold">{remainingMissions}</span>개 남았습니다.
+          </span>
+        ) : (
+          <span>
+            당신의 레벨은 <span className="font-semibold">{level}</span>입니다. 최고 레벨입니다 🎉
+          </span>
+        )}
+      </section>
     </div>
   );
 };

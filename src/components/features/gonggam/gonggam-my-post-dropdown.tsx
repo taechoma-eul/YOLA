@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
 import { useDeleteGonggamPost } from '@/lib/hooks/mutations/use-delete-gonggam-post';
 import { PATH } from '@/constants/page-path';
 import { categoryMap } from '@/constants/gonggam-category';
@@ -55,9 +55,7 @@ const GonggamMyPostDropdown = ({ post }: GonggamMyPostDropdownProps) => {
           <DropdownMenuItem onClick={() => setShowModal(!showModal)}>삭제</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {showModal && (
-        <DeleteConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />
-      )}
+      {showModal && <ConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />}
     </>
   );
 };

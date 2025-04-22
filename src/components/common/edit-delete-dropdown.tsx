@@ -1,15 +1,7 @@
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+import { useEffect, useState } from 'react';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
 import dropdown from '@images/images/post-dropdown.svg';
-
-const SET_TIME_OUT = 150;
 
 /**
  * 수정/삭제를 할 수 있는 드롭다운입니다
@@ -17,73 +9,54 @@ const SET_TIME_OUT = 150;
  * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
 const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
-  const [isOpen, setIsopen] = useState<boolean>(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const handlePointerEnter = () => {
-    if (showModal) return;
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setIsopen(true);
+    if (showModal) return; // 화면 밖을 나갔다가 들어와도 드롭다운 생기지 않게 함
+    setShowDropdown(true);
   };
 
   const handlePointerLeave = () => {
     if (showModal) return;
-    /** 아이콘과 버튼 사이의 갭 때문에 생기는 리렌더링(깜빡임) 방지하기 위한 디바운싱 */
-    timeoutRef.current = setTimeout(() => {
-      setIsopen(false);
-    }, SET_TIME_OUT);
+    setShowDropdown(false);
   };
 
   useEffect(() => {
     if (showModal) {
-      setIsopen(false); // 모달 열릴 때 드롭다운 닫기
+      setShowDropdown(false); // 모달 열릴 때 드롭다운 닫기
     }
   }, [showModal]);
 
-  /** 메모리 누수 방지를 위한 클린업 함수 */
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
   return (
-    <div onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave} className="inline-block">
-      <DropdownMenu open={isOpen} onOpenChange={setIsopen} modal={false}>
-        {/** 직접 넘긴 컴포넌트를 중첩 없이 그대로 사용하기 위해 asChild 필요 */}
-        <DropdownMenuTrigger asChild>
-          <div className="cursor-pointer">
-            <Image src={dropdown} alt="수정/삭제를 담고 있는 드롭다운 메뉴" />
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="pointer-events-auto z-[52] flex !h-[95px] min-w-[88px] flex-col justify-center rounded-[12px] text-center">
-          <DropdownMenuItem className="flex p-0">
-            <button
-              onClick={() => handleEdit()}
-              className="text-md flex w-full justify-center px-[16px] py-[12px] text-center"
-            >
-              수정
-            </button>
-          </DropdownMenuItem>
-          <hr className="w-full border-t border-gray-300 px-[10px]" />
-          <DropdownMenuItem className="p-0">
-            <button
-              onClick={() => setShowModal(!showModal)}
-              className="text-md flex w-full justify-center px-[16px] py-[12px] text-center"
-            >
-              삭제
-            </button>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      {showModal && (
-        <DeleteConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />
+    <div onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave} className="relative w-fit">
+      <button className="flex w-[88px] cursor-pointer items-center justify-end">
+        <Image src={dropdown} alt="수정/삭제 드롭다운 아이콘" />
+      </button>
+
+      {/* hover 유지용 투명 영역 (아이콘과 드롭다운 사이 끊김 방지) */}
+      <div className="h-[14px] w-[88px] cursor-pointer" />
+
+      {/* 드롭다운 메뉴 */}
+      {showDropdown && (
+        <div className="absolute left-0 top-full z-20 flex w-[88px] flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-0 shadow-[0_0_3px_0_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-secondary-grey-300">
+          <button
+            onClick={handleEdit}
+            className="text-md flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center"
+          >
+            수정
+          </button>
+          <hr className="border-spacing-4 border-gray-300 px-[35px]" />
+          <button
+            onClick={() => setShowModal(true)}
+            className="text-md flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center"
+          >
+            삭제
+          </button>
+        </div>
       )}
+
+      {showModal && <ConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />}
     </div>
   );
 };

@@ -18,6 +18,7 @@ import DatePicker from '@/components/common/date-picker';
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
 import ChecklistPostDropdown from '@/components/features/checklist/checklist-post-dropdown';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
 import { CustomButton } from '@/components/ui/custom-button';
 
 // 상수 및 타입
@@ -85,6 +86,7 @@ const PostInputForm = ({
   const [selectedMissionId, setSelectedMissionId] = useState<number | null>(
     defaultValues?.missionId ?? (missionId ? +missionId : null)
   );
+  const [showModal, setShowModal] = useState(false);
 
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
@@ -167,11 +169,11 @@ const PostInputForm = ({
     }
   };
 
-  const handleCancel = async () => {
-    // 모달띄우기!!!!!!!!!!!!
-    const confirm = window.confirm('작성 중인 내용이 사라집니다. 뒤로갈까요?');
-    if (!confirm) return;
+  const handleCancel = () => {
+    setShowModal(!showModal);
+  };
 
+  const handleDelete = async () => {
     try {
       const pathsToDelete = uploadedImages.map((img) => img.storagePath).filter(Boolean);
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
@@ -255,6 +257,14 @@ const PostInputForm = ({
           </CustomButton>
         </div>
       </form>
+      {showModal && (
+        <ConfirmModal
+          clickModal={() => setShowModal(false)}
+          handleDelete={handleDelete}
+          isItPost={true}
+          isItBack={true}
+        />
+      )}
     </div>
   );
 };
