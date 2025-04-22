@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import RandomMissionLoadingSpinner from '@/components/features/modals/random-mission-loading-spinner';
 import { CustomButton } from '@/components/ui/custom-button';
 import type { TableMissionList } from '@/types/supabase-const';
-import MISSION_CHARACTER from '@images/images/main-character.svg';
+import MISSION_CHARACTER from '@images/images/cat-in-question-box.svg';
 
 /*
 Step 1. 사용할 페이지 서버컴포넌트에서 이 코드를 추가해주세요
