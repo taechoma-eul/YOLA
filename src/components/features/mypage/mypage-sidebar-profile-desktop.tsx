@@ -19,7 +19,7 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
     <section className="flex flex-col items-center justify-start">
       {/* 프로필 영역 */}
       <ProfileAvatar src={profile.profile_image} size={172} className="rounded-2xl" />
-      <p className="text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
+      <p className="mt-[20px] text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
       <p className="mb-[20px] mt-[8px] text-base text-secondary-grey-700">{profile.email}</p>
 
       {/* 프로필 수정 버튼 */}
