@@ -8,18 +8,25 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+
 import ImageUploader from '@/components/common/image-uploader';
 import TagInput from '@/components/common/tag-input';
 import GonggamSelectBox from '@/components/features/gonggam/gonggam-select-box';
 import { CustomButton } from '@/components/ui/custom-button';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
+
 import { categoryMap, reverseCategoryMap } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { QUERY_KEY } from '@/constants/query-keys';
+
 import { useGonggamPost } from '@/lib/hooks/mutations/use-gonggam-post';
 import { useUpdateGonggamPost } from '@/lib/hooks/mutations/use-update-gonggam-post';
+
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
+
 import type { EnumCategories } from '@/types/supabase-const';
+
 import backIcon from '@images/images/go-back-icon.svg';
 
 interface GonggamPostInputFormProps {
@@ -67,6 +74,8 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>(
     defaultValues?.imageUrls?.map((url) => ({ publicUrl: url, storagePath: '' })) || []
   );
+
+  const [showModal, setShowModal] = useState(false);
 
   const {
     register,
@@ -146,16 +155,17 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
     }
   };
 
-  const handleCancel = async () => {
-    const confirmCancel = window.confirm('작성 중인 내용을 취소하시겠습니까?');
-    if (!confirmCancel) return;
+  const handleCancel = () => {
+    setShowModal(!showModal);
+  };
 
+  const handleDelete = async () => {
     try {
       const pathsToDelete = uploadedImages.map((img) => img.storagePath).filter(Boolean);
       if (pathsToDelete.length > 0) await deleteImages(pathsToDelete);
       router.back();
     } catch (err) {
-      toastAlert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''), 'destructive');
+      alert('이미지 삭제 실패: ' + (err instanceof Error ? err.message : ''));
     }
   };
 
@@ -208,6 +218,14 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
           </CustomButton>
         </div>
       </form>
+      {showModal && (
+        <ConfirmModal
+          clickModal={() => setShowModal(false)}
+          handleDelete={handleDelete}
+          isItPost={true}
+          isItBack={true}
+        />
+      )}
     </div>
   );
 };
