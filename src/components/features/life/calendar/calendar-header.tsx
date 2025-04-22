@@ -10,7 +10,7 @@ const CalendarHeader = ({ calendarMonth, onMoveMonth, onResetToToday }: Calendar
   return (
     <div className="mb-5 flex w-full items-center justify-center">
       {/* 가운데 정렬된 월 + 화살표 */}
-      <div className="ml-3 flex items-center justify-center gap-4 sm:ml-auto sm:gap-10">
+      <div className="ml-3 flex items-center justify-center gap-4 sm:ml-[385px] sm:gap-[56px]">
         <button onClick={() => onMoveMonth(-1)} className="flex h-6 w-6 items-center justify-center">
           <ChevronLeft className="h-5 w-5 text-zinc-800 sm:h-6 sm:w-6" />
         </button>

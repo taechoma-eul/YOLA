@@ -24,7 +24,7 @@ const CalendarCell = ({
           <span
             className={clsx(
               'text-base leading-none',
-              isSelected ? 'font-bold text-white' : isOutside ? 'text-gray-300' : 'text-black'
+              isSelected ? 'font-bold text-white' : isOutside ? 'text-secondary-grey-300' : 'text-black'
             )}
           >
             {date.getDate()}

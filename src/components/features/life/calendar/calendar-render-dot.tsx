@@ -7,7 +7,7 @@ const RenderDot = (
   const DotComponent = (date: Date, isOutside: boolean) => {
     const dateStr = format(date, 'yyyy-MM-dd');
     const dots = dotMap[dateStr];
-    const dotTextColor = isOutside ? 'text-gray-300' : 'text-zinc-500';
+    const dotTextColor = isOutside ? 'text-secondary-grey-300' : 'text-zinc-500';
     const missionColor = isOutside ? 'bg-rose-200' : 'bg-rose-400';
     const normalColor = isOutside ? 'bg-zinc-300' : 'bg-zinc-800';
 
