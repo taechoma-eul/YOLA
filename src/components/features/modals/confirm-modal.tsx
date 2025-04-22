@@ -11,12 +11,12 @@ import { CustomButton } from '@/components/ui/custom-button';
  *
  * Step 3(삭제) 버튼이 있는 코드 바깥에(맵을 돌리고 있다면 맵 바깥에) 이 코드를 추가해주세요
  * 삭제 대상이 댓글이라면 isItPost={false}를 넣어주세요
- * {showModal && <DeleteConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />}
+ * {showModal && ConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />}
  *
  * Step 3(뒤로가기) return 문 가장 하위에 이 코드를 추가해주세요
- * {showModal && <DeleteConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} isItBack={true} />}
+ * {showModal && <ConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} isItBack={true} />}
  */
-const DeleteConfirmModal = ({
+const ConfirmModal = ({
   clickModal,
   handleDelete,
   isItPost,
@@ -45,7 +45,7 @@ const DeleteConfirmModal = ({
           {isItBack ? (
             <>
               <strong className="text-xl font-semibold">글 작성을 취소합니다.</strong>
-              <p className="text-md mt-2 h-[22px] font-normal">작성 중인 내용은 저장되지 않습니다.</p>
+              <p className="text-md mt-2 h-[22px] w-[280px] font-normal">작성 중인 내용은 저장되지 않습니다.</p>
             </>
           ) : (
             <>
@@ -79,4 +79,4 @@ const DeleteConfirmModal = ({
   return createPortal(modal, document.body);
 };
 
-export default DeleteConfirmModal;
+export default ConfirmModal;

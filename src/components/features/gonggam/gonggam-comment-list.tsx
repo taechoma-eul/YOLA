@@ -1,7 +1,7 @@
 'use client';
 
-import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
 import GonggamCommentItem from '@/components/features/gonggam/gonggam-comment-item';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGonggamComments } from '@/lib/hooks/queries/use-gonggam-comments';
@@ -64,7 +64,7 @@ const GonggamCommentList = ({ postId, userId }: GonggamCommentListProps) => {
       ))}
 
       {showModal && (
-        <DeleteConfirmModal
+        <ConfirmModal
           clickModal={() => {
             setShowModal(false);
             setCommentIdToDelete(null);
