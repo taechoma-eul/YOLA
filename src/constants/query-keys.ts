@@ -5,5 +5,6 @@ export const QUERY_KEY = {
   LIFE_POSTS: 'life-posts',
   GONGGAM_COMMENTS: 'gonggam-comments',
   MISSIONS: 'missions',
-  GONGGAM_POSTS: 'gonggam-posts'
+  GONGGAM_POSTS: 'gonggam-posts',
+  GONGGAM_POST_CARD: 'gonggam-post-card'
 };
