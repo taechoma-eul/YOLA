@@ -16,7 +16,7 @@ const HeaderNav = ({ isLogin }: { isLogin: boolean }) => {
   const isMission: boolean = fullUrl.includes('mission_id');
 
   return (
-    <nav className="relative flex w-full justify-between">
+    <nav className="relative flex w-full items-center justify-between">
       <HeaderMobileMenu />
       <MainLogo />
       <ul className="left-[164px] hidden items-center justify-center gap-[4px] md:absolute md:flex">
