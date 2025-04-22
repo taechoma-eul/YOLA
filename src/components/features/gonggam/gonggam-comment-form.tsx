@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
 import { FAIL, SUCCESS } from '@/constants/messages';
-import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { toastAlert } from '@/lib/utils/toast';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 
 interface GonggamCommentFormProps {
   postId: number;

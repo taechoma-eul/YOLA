@@ -1,8 +1,8 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
-import type { EnumCategories, TableGonggamPosts } from '@/types/supabase-const';
 import type { GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
+import type { EnumCategories, TableGonggamPosts } from '@/types/supabase-const';
+import DEFAULT_LIFE_IMAGE_URL from '@images/images/default-image.svg';
 
 /**
  * 선택한 게시글의 조회수를 클라이언트 컴포넌트에서 조회하기 위한 api 함수입니다.
