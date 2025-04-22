@@ -19,7 +19,7 @@ const MobileProfileBox = ({ initProfile }: InitProfile) => {
     <section className="mt-[20px] flex flex-col items-center">
       {/* 프로필 영역 */}
       <div className="ml-[16px] mt-[12px] flex w-full flex-row">
-        <ProfileAvatar src={profile.profile_image} mode="mobile" />
+        <ProfileAvatar src={profile.profile_image} size={48} className="rounded-2xl" />
         <div className="ml-[16px] flex-1 justify-start">
           <p className="text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
           <p className="mb-[8px] text-base text-secondary-grey-700">{profile.email}</p>
