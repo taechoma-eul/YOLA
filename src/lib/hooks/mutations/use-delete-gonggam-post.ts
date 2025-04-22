@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
+import { FAIL, SUCCESS } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import { FAIL, SUCCESS } from '@/constants/messages';
 import type { GonggamPostDetail } from '@/types/gonggam';
 
 interface useDeleteGonggamPostProps {
@@ -31,6 +31,7 @@ export const useDeleteGonggamPost = ({ onSuccessCallback }: useDeleteGonggamPost
     },
 
     onError: (error) => {
+      console.error('게시글 삭제 오류', error.message);
       toastAlert(FAIL.GONGGAM_POST_DELETE_ERROR, 'destructive');
     }
   });
