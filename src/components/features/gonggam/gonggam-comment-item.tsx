@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { formatRelativeDate } from '@/lib/utils/date-format';
 import { toastAlert } from '@/lib/utils/toast';
-import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 import { FAIL, SUCCESS } from '@/constants/messages';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
