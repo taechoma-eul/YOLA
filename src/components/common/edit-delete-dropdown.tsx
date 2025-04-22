@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import DeleteConfirmModal from '@/components/features/modals/delete-confirm';
+import ConfirmModal from '@/components/features/modals/confirm-modal';
 import dropdown from '@images/images/post-dropdown.svg';
 
 /**
@@ -56,9 +56,7 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
         </div>
       )}
 
-      {showModal && (
-        <DeleteConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />
-      )}
+      {showModal && <ConfirmModal clickModal={() => setShowModal(false)} handleDelete={handleDelete} isItPost={true} />}
     </div>
   );
 };
