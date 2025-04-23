@@ -28,7 +28,7 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
           {/* 진행도 바 */}
           <div className="flex h-3 w-full overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
-              if (bar.type === 'full') return <div key={idx} className="flex-1 bg-black" />;
+              if (bar.type === 'full') return <div key={idx} className="flex-1 bg-secondary-grey-900" />;
 
               if (bar.type === 'partial') {
                 return (
@@ -69,13 +69,15 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
                 >
                   <div className="relative flex items-center">
                     <span
-                      className={`inline-flex items-center gap-1 ${
+                      className={clsx(
+                        'inline-flex items-center gap-1 rounded-[12px]',
                         isCurrent
-                          ? 'rounded-lg bg-secondary-grey-900 px-3 py-2.5 text-[16px] text-white'
-                          : 'rounded-[12px] border border-secondary-grey-400 p-[12px] text-[12px] font-normal text-secondary-grey-800 md:px-3 md:py-2.5'
-                      }`}
+                          ? 'h-[37px] w-[63px] bg-secondary-grey-900 px-2 py-[10px] text-[12px] text-white md:h-[42px] md:w-[79px] md:px-3 md:py-2.5 md:text-[16px]'
+                          : 'h-[38px] w-[38px] border border-secondary-grey-400 p-[12px] text-[12px] font-normal text-secondary-grey-800 md:h-[41px] md:w-[71px] md:px-3 md:py-2.5',
+                        !isCurrent && 'justify-center md:justify-start'
+                      )}
                     >
-                      <span className={clsx('md:inline', !isCurrent && 'hidden md:inline')}>{label}</span>
+                      <span className={clsx('md:inline', !isCurrent && 'hidden')}>{label}</span>
                       {isUnlocked ? (
                         <Unlock className="h-[16px] w-[16px] shrink-0" />
                       ) : (
