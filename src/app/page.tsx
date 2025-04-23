@@ -1,4 +1,5 @@
 import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
+import MainBannerSwiperMobile from '@/components/features/home/main-banner-swiper-mobile';
 import CheckListCard from '@/components/features/home/main-checklist-card';
 import GonggamPreviewSection from '@/components/features/home/main-gonggam-preview';
 import RandomMissionSection from '@/components/features/home/main-random-mission';
@@ -9,6 +10,7 @@ const HomePage = async () => {
   return (
     <>
       <MainBannerSwiper />
+      <MainBannerSwiperMobile />
       <section className="mt-[46px] flex w-[1200px] flex-col gap-[26px]">
         <strong className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           YOLA 챌린지
