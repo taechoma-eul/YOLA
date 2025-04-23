@@ -43,6 +43,9 @@ const config: Config = {
         mypage: {
           peach: '#FFF5E5'
         },
+        calendar: {
+          mission: '#FB7185'
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
