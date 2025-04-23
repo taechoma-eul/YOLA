@@ -34,7 +34,7 @@ const ChecklistClient = ({ decodedMission, userId, userLevel, progress, missionL
   };
 
   return (
-    <section className="w-full pt-[59px]">
+    <section className="w-full pt-[32px] md:pt-[59px]">
       <div className="flex w-full flex-col gap-[34px] pl-[37px] pr-[39px]">
         <h1 className="whitespace-nowrap text-[20px] font-semibold">{decodedMission} 체크리스트</h1>
         <ChecklistProgress progress={progress} userLevel={userLevel as EnumLevel} />
