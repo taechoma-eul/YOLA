@@ -47,12 +47,18 @@ const ProfileImageField = ({
         <div className="relative flex w-44 flex-col items-end justify-start">
           <ProfileAvatar src={previewUrl ? previewUrl : profileImage} mode="desktop" />
           <FormControl>
-            <Input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
+            <Input
+              type="file"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/jpeg,image/png,image/webp,image/gif,image/jpg"
+            />
           </FormControl>
           <Button
             type="button"
             onClick={triggerFileInput}
-            className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-neutral-600 p-0"
+            className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-secondary-grey-800 p-0"
           >
             <Image src={CAMERA} alt="프로필 이미지 업로드 버튼" width={20} height={20} />
           </Button>
