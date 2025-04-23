@@ -6,9 +6,10 @@ interface MenuItem {
   label: string;
   href: string;
   isLine?: boolean;
+  className?: string;
 }
 
-const HeaderDropdownMenuItem = ({ label, href, isLine = true }: MenuItem) => {
+const HeaderDropdownMenuItem = ({ label, href, isLine = true, className }: MenuItem) => {
   const { pathname } = usePathnameContext();
 
   const isSelect: boolean = decodeURIComponent(pathname).includes(href);
@@ -19,7 +20,7 @@ const HeaderDropdownMenuItem = ({ label, href, isLine = true }: MenuItem) => {
         aria-label={`${label} 페이지 이동 메뉴`}
         href={href}
         className={clsx(
-          'flex h-[47px] items-center justify-center bg-white hover:text-primary-orange-600',
+          `flex h-[47px] items-center justify-center bg-white hover:text-primary-orange-600 ${className}`,
           isSelect ? 'text-primary-orange-600' : 'text-secondary-grey-900'
         )}
       >
