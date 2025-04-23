@@ -24,10 +24,10 @@ const HomePage = () => {
           ))}
         </div>
       </section>
-      <hr className="mx-auto mt-[57px] hidden outline-secondary-grey-200 md:block" />
-      <section className="mx-auto mb-[48px] mt-[46px] flex w-full max-w-[1200px] flex-col items-center justify-between self-stretch px-4 md:mb-[73px] md:mt-[61px] md:flex-row md:px-0">
+      <hr className="max-w-[mu-x-auto mx-10 mt-[57px] hidden w-[calc(100%-5rem)] max-w-[1200px] outline-secondary-grey-200 lg:block" />
+      <section className="mx-auto mb-[48px] mt-[45px] flex w-full max-w-[1280px] flex-col items-center justify-between self-stretch px-4 lg:mb-[73px] lg:mt-[61px] lg:flex-row lg:px-[40px]">
         <RandomMissionSection />
-        <div className="hidden h-60 w-0 origin-top-left outline outline-1 outline-offset-[-0.50px] outline-gray-200 md:block" />
+        <div className="mx-[50px] hidden h-[237px] w-0 origin-top-left outline outline-1 outline-offset-[-0.50px] outline-gray-200 lg:block" />
         <GonggamPreviewSection />
       </section>
     </>
