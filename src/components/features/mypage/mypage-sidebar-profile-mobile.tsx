@@ -16,9 +16,9 @@ const MobileProfileBox = ({ initProfile }: InitProfile) => {
   if (isProfileError) throw profileFetchingError;
 
   return (
-    <section className="mt-[20px] flex flex-col items-center">
+    <aside className="mt-[20px] flex flex-col items-center">
       {/* 프로필 영역 */}
-      <div className="ml-[16px] mt-[12px] flex w-full flex-row">
+      <section className="mt-[12px] flex w-full flex-row px-[16px]">
         <ProfileAvatar src={profile.profile_image} mode="mobile" />
         <div className="ml-[16px] flex-1 justify-start">
           <p className="text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
@@ -26,20 +26,20 @@ const MobileProfileBox = ({ initProfile }: InitProfile) => {
         </div>
         {/* 프로필 수정 버튼 */}
         <Link href={PATH.MYPAGE}>
-          <CustomButton variant="grey" size="edit-profile" className="mr-[16px] h-[36px] w-[41px] text-sm">
+          <CustomButton variant="grey" size="edit-profile" className="h-[36px] w-[41px] text-sm">
             수정
           </CustomButton>
         </Link>
-      </div>
+      </section>
 
       {/* 마이페이지 탭 3개 */}
-      <div className="flex w-full justify-around px-[16px]">
+      <nav className="mt-[12px] flex w-full justify-around px-[16px]">
         {/* 혼자라이프 기록 */}
         <div className="flex flex-col items-center">
           <Link
             href={PATH.MY_LIFE_LIST}
             className={`pb-[8px] text-lg ${
-              pathname === PATH.MY_LIFE_LIST ? 'text-secondary-900 font-semibold' : 'text-secondary-grey-600'
+              pathname === PATH.MY_LIFE_LIST ? 'text-secondary-900 font-normal' : 'text-secondary-grey-900'
             }`}
           >
             혼자라이프 기록
@@ -52,7 +52,7 @@ const MobileProfileBox = ({ initProfile }: InitProfile) => {
           <Link
             href={PATH.MY_GONGGAM_POST_LIST}
             className={`pb-[8px] text-lg ${
-              pathname === PATH.MY_GONGGAM_POST_LIST ? 'text-secondary-900 font-semibold' : 'text-secondary-grey-600'
+              pathname === PATH.MY_GONGGAM_POST_LIST ? 'text-secondary-900 font-normal' : 'text-secondary-grey-900'
             }`}
           >
             작성 공감글
@@ -65,17 +65,17 @@ const MobileProfileBox = ({ initProfile }: InitProfile) => {
           <Link
             href={PATH.MY_ACHIEVEMENT}
             className={`pb-[8px] text-lg ${
-              pathname === PATH.MY_ACHIEVEMENT ? 'text-secondary-900 font-semibold' : 'text-secondary-grey-600'
+              pathname === PATH.MY_ACHIEVEMENT ? 'text-secondary-900 font-normal' : 'text-secondary-grey-900'
             }`}
           >
             나의 현황
           </Link>
           {pathname === PATH.MY_ACHIEVEMENT && <div className="h-[3px] w-[112px] bg-black" />}
         </div>
-      </div>
+      </nav>
       {/* 구분선 */}
       <div className="h-[1px] w-full bg-secondary-grey-400" />
-    </section>
+    </aside>
   );
 };
 

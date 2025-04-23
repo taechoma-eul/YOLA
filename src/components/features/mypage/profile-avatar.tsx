@@ -11,7 +11,7 @@ interface ProfileAvatarProps {
 const ProfileAvatar = ({ src, mode }: ProfileAvatarProps) => {
   return (
     <Avatar
-      className={clsx('mb-[20px] rounded-2xl border-2 border-[#EFF1F3]', {
+      className={clsx('rounded-2xl', {
         'min-h-[48px] min-w-[48px]': mode === 'mobile',
         'h-[172px] w-[172px]': mode === 'desktop'
       })}
