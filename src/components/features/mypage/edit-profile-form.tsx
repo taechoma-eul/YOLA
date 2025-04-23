@@ -10,10 +10,9 @@ import { FAIL, SUCCESS } from '@/constants/messages';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useProfileForm } from '@/lib/hooks/use-profile-form';
-import { profileImageUpload } from '@/lib/utils/api/mypage/profile-image-upload.api';
-import { processedImage } from '@/lib/utils/processed-image';
 import { toastAlert } from '@/lib/utils/toast';
 import type { EditFormData, InitProfile } from '@/types/auth-form';
+import { profileImageUploader } from '@/lib/utils/api/mypage/profile-image-upload.api';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
@@ -21,26 +20,17 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
   const { profile, isProfileError, profileFetchingError } = useUserProfile(initProfile);
   const updateProfile = useUpdateProfileMutate();
+
   const form = useProfileForm(initProfile.nickname);
   const { isValid } = form.formState;
-
-  const handleProfileImageUpload = async () => {
-    const file = form.getValues('profile_image_file')?.[0];
-
-    if (!file) return null;
-
-    const processedFile = await processedImage(file);
-    const newImageUrl = await profileImageUpload(processedFile, initProfile);
-    return newImageUrl;
-  };
 
   const handleUpdateProfile = async (formData: EditFormData) => {
     startTransition(async () => {
       try {
-        const imageUrl = await handleProfileImageUpload();
+        const imageUrl = await profileImageUploader({ form, profile: initProfile });
         const updatedData = {
           ...formData,
-          profile_image: imageUrl || formData.profile_image // 업로드 없으면 기존 값 유지
+          profile_image: imageUrl || formData.profile_image // 이미지 업로드 없거나 실패시에는 기존 값 유지
         };
         updateProfile(updatedData);
         toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
@@ -67,7 +57,6 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
           disabled={!isValid || !duplicateCheck || isPending}
           variant="default"
           size="gonggam-write"
-          // className="font-semibold"
         >
           {isPending ? '저장 중...' : '저장하기'}
         </CustomButton>

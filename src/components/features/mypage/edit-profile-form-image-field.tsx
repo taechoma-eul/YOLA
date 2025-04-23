@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { AUTH } from '@/constants/auth-form';
-import { processedImagePreview } from '@/lib/utils/processed-image';
 import type { EditFormData } from '@/types/auth-form';
 import CAMERA from '@images/images/camera.svg';
 
@@ -35,7 +34,8 @@ const ProfileImageField = ({
     // Form에 파일 설정
     form.setValue(AUTH.PROFILE_IMAGE_FILE, e.target.files);
 
-    const url = await processedImagePreview(selectedFile);
+    const url = URL.createObjectURL(selectedFile);
+
     setPreviewUrl(url);
   };
 
