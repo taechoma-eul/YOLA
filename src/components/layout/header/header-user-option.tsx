@@ -6,11 +6,13 @@ import { User } from 'lucide-react';
 import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-menu-item';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
+import { usePathnameContext } from '@/contexts/pathname-context';
 import { logout } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 
-const UserOptionMenu = ({ pathname }: { pathname: string }) => {
+const UserOptionMenu = () => {
   const queryClient = useQueryClient();
+  const { pathname } = usePathnameContext();
 
   const isSelect: boolean = pathname.includes(PATH.MYPAGE);
 

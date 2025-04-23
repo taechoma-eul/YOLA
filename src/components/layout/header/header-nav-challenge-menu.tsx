@@ -6,10 +6,13 @@ import HeaderDropdownMenuItem from '@/components/layout/header/header-dropdown-m
 import NavLabel from '@/components/layout/header/header-nav-label';
 import NavUnderBar from '@/components/layout/header/header-nav-under-bar';
 import { PATH } from '@/constants/page-path';
+import { usePathnameContext } from '@/contexts/pathname-context';
 import MENU_ICON from '@images/images/challenge_menu.svg';
 
-const NavChallengeMenu = ({ fullUrl, isMission }: { fullUrl: string; isMission: boolean }) => {
+const NavChallengeMenu = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const { fullUrl, isMission } = usePathnameContext();
+
   const isSelect: boolean = fullUrl.includes(PATH.CHECKLIST);
 
   const challengeMenuItem = [
