@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import { useEffect, useMemo, useState } from 'react';
 
+import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
-import NoPost from '@/components/features/life/no-post';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { LifePostWithImageUrls } from '@/types/life-post';
@@ -66,7 +66,7 @@ const SoloLifeList = ({ selectedDate, setIsEmpty }: SoloLifeListProps) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <NoPost />
+          <NoRecordsBox mode="캘린더" />
         </motion.div>
       </AnimatePresence>
     );

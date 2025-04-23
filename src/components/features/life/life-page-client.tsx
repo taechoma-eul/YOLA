@@ -40,9 +40,11 @@ const LifePageClient = () => {
           onMonthChange={(month) => setCalendarMonth(month)}
         />
       </div>
-      <hr className="mb-[40px]"></hr>
+      <hr className="mb-[40px] border-secondary-grey-400"></hr>
       <div className="mb-[30px] flex flex-col items-center justify-between gap-1 text-center sm:flex-row sm:text-left">
-        <h2 className="whitespace-nowrap text-xl font-semibold">{formatKoreanDate(selectedDate)}</h2>
+        <h2 className="whitespace-nowrap text-xl font-semibold text-secondary-grey-900">
+          {formatKoreanDate(selectedDate)}
+        </h2>
         {!isEmpty && (
           <Link href={PATH.LIFE_POST} className="whitespace-nowrap text-base text-secondary-grey-900 hover:underline">
             일기 작성하기 &gt;

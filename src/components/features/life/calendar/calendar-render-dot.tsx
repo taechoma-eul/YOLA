@@ -8,15 +8,16 @@ const RenderDot = (
     const dateStr = format(date, 'yyyy-MM-dd');
     const dots = dotMap[dateStr];
     const dotTextColor = isOutside ? 'text-secondary-grey-300' : 'text-zinc-500';
-    const missionColor = isOutside ? 'bg-rose-200' : 'bg-rose-400';
-    const normalColor = isOutside ? 'bg-zinc-300' : 'bg-zinc-800';
+    const normalColor = isOutside ? 'bg-secondary-grey-300' : 'bg-secondary-grey-800';
 
     return (
       <div className="flex h-14 w-full select-none flex-col items-center justify-start gap-1 overflow-hidden px-2.5 py-[3px]">
         <div className="flex flex-col items-start justify-start gap-0.5">
           {dots?.has('mission') && (
             <div className="inline-flex items-center justify-start gap-1">
-              <div className={`h-1.5 w-1.5 rounded-full ${missionColor}`} />
+              <div
+                className={`h-2 w-2 rounded-full ${isOutside ? 'bg-calendar-mission opacity-50' : 'bg-calendar-mission'}`}
+              />
               <div className={`justify-center text-center text-xs font-normal leading-none ${dotTextColor}`}>
                 미션인증
               </div>
@@ -24,7 +25,7 @@ const RenderDot = (
           )}
           {dots?.has('normal') && (
             <div className="inline-flex items-center justify-start gap-1">
-              <div className={`h-1.5 w-1.5 rounded-full ${normalColor}`} />
+              <div className={`h-2 w-2 rounded-full ${normalColor}`} />
               <div className={`justify-center text-center text-xs font-normal leading-none ${dotTextColor}`}>
                 하루일기
               </div>
