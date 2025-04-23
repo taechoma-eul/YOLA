@@ -133,3 +133,11 @@ body {
   transform: scale(1.566);
   transform-origin: center;
 }
+
+/* summary 태그 마커 제거 */
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
