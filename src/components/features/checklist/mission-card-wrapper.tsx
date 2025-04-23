@@ -35,7 +35,7 @@ const MissionCardWrapper = ({ mission, userId, onCompletedClick }: MissionCardWr
     <Link
       href={href}
       onClick={handleClick}
-      className="flex h-[248px] w-[221px] flex-col items-start rounded-[20px] border border-secondary-grey-300 bg-white"
+      className="flex h-[280px] w-[250px] flex-col items-start rounded-[20px] border border-secondary-grey-300 bg-white md:h-[248px] md:w-[221px]"
     >
       <MissionCard mission={mission} isCompleted={isCompleted} />
     </Link>

@@ -24,7 +24,7 @@ const ChecklistMissionSwiper = ({ missionList, userId, onCompletedClick }: Check
         slidesPerView={'auto'}
         coverflowEffect={{
           rotate: 0,
-          stretch: -20,
+          stretch: -50,
           depth: 100,
           modifier: 1,
           slideShadows: false
