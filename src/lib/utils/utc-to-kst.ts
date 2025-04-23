@@ -1,3 +1,6 @@
+import { format, parseISO } from 'date-fns';
+import { ko } from 'date-fns/locale';
+
 // 한국 시간 기준 ISO 문자열로 변환 (KST 기준 날짜 문자열 ('YYYY-MM-DD'))
 export const toKoreanISOString = (date: Date) => {
   const offset = 9 * 60; // KST는 UTC+9
@@ -35,4 +38,17 @@ export const getKoreanDateTime = (date: Date | string): string => {
   const min = String(kstDate.getMinutes()).padStart(2, '0');
 
   return `${yy}.${mm}.${dd}. ${hh}:${min}`; // 예: "25.04.10. 15:30"
+};
+
+/**
+ * formatKoreanDate
+ * ISO 형식의 날짜 문자열을 한국어 날짜 포맷으로 변환합니다.
+ * "M월 d일 EEEE" 형식으로 출력하며, 요일은 한글로 표시됩니다.
+ *
+ * @param dateStr - 변환할 날짜 문자열 (예: "2025-04-22")
+ * @returns 포맷된 날짜 문자열 (예: "4월 22일 화요일")
+ */
+export const formatKoreanDate = (dateStr: string): string => {
+  const date = parseISO(dateStr); // "2025-04-22" → Date 객체
+  return format(date, 'M월 d일 EEEE', { locale: ko });
 };
