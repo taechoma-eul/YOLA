@@ -31,7 +31,7 @@ const LifePageClient = () => {
   }, [posts]);
 
   return (
-    <div className="mt-5 flex w-[996px] flex-col gap-4">
+    <div className="mt-[50px] flex w-[996px] flex-col">
       <div className="flex w-full justify-start px-4 sm:justify-center sm:px-0">
         <Calendar
           setDate={setSelectedDate}
@@ -41,8 +41,8 @@ const LifePageClient = () => {
         />
       </div>
       <hr className="mb-[40px]"></hr>
-      <div className="flex flex-col items-center justify-between gap-1 px-4 text-center sm:flex-row sm:text-left">
-        <h2 className="whitespace-nowrap text-base font-semibold">{formatKoreanDate(selectedDate)}</h2>
+      <div className="mb-[30px] flex flex-col items-center justify-between gap-1 text-center sm:flex-row sm:text-left">
+        <h2 className="whitespace-nowrap text-xl font-semibold">{formatKoreanDate(selectedDate)}</h2>
         {!isEmpty && (
           <Link href={PATH.LIFE_POST} className="whitespace-nowrap text-base text-secondary-grey-900 hover:underline">
             일기 작성하기 &gt;
