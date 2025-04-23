@@ -64,7 +64,7 @@ const MyLifeListClient = () => {
   };
 
   return (
-    <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+    <article className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {parsedList.length === 0 ? (
         <NoRecordsBox mode="라이프" />
       ) : (
@@ -86,7 +86,7 @@ const MyLifeListClient = () => {
           </div>
         </>
       )}
-    </div>
+    </article>
   );
 };
 
