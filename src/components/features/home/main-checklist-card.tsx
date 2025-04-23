@@ -7,7 +7,7 @@ const CheckListCard = async ({ checkListType }: { checkListType: string }) => {
   return (
     <Link
       href={`${PATH.CHECKLIST}/${checkListType}`}
-      className="relative h-[221px] w-[221px] overflow-hidden rounded-[30px] bg-white text-secondary-grey-900 outline outline-1 outline-secondary-grey-300"
+      className="relative h-[221px] w-[221px] flex-shrink-0 overflow-hidden rounded-[30px] bg-white text-secondary-grey-900 outline outline-1 outline-secondary-grey-300"
     >
       <section className="absolute top-0 h-[79px] w-full px-[16px] pb-[16px] pt-[19px]">
         <p className="justify-start leading-snug">

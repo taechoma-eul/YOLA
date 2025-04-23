@@ -133,3 +133,11 @@ body {
   transform: scale(1.566);
   transform-origin: center;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
