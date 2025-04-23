@@ -44,10 +44,13 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
 
   return (
     <Form {...form}>
-      <form className="w-[941px] justify-items-end space-y-[38px]" onSubmit={form.handleSubmit(handleUpdateProfile)}>
-        <div className="flex h-[236px] w-full items-start justify-start gap-10 rounded-xl bg-white p-8 outline outline-1 outline-offset-[-1px] outline-secondary-grey-400">
+      <form
+        className="mx-auto mt-[87.5px] w-[375px] justify-items-end space-y-[61px] md:mx-0 md:mt-0 md:min-h-[236px] md:w-[941px] md:space-y-[38px] md:border-none"
+        onSubmit={form.handleSubmit(handleUpdateProfile)}
+      >
+        <div className="flex w-full flex-col items-center gap-[34px] rounded-xl bg-white px-4 md:h-[236px] md:flex-row md:items-start md:gap-10 md:p-8 md:outline md:outline-1 md:outline-offset-[-1px] md:outline-secondary-grey-400">
           <ProfileImageField form={form} profileImage={profile.profile_image} />
-          <div className="flex w-[500px] flex-col items-start justify-center gap-4 self-stretch">
+          <div className="flex w-full flex-col items-start justify-center gap-4 self-stretch md:w-[500px]">
             <EmailField email={profile.email} />
             <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={profile.nickname} />
           </div>
@@ -57,6 +60,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
           disabled={!isValid || !duplicateCheck || isPending}
           variant="default"
           size="gonggam-write"
+          className="mr-4 h-[42px] w-[343px] md:mr-0 md:h-[38px] md:w-[100px]"
         >
           {isPending ? '저장 중...' : '저장하기'}
         </CustomButton>
