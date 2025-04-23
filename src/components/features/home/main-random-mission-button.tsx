@@ -15,7 +15,7 @@ const MissionButton = ({ isLogin, missionData }: ButtonProps) => {
   const clickModal = () => setShowModal(!showModal);
   return (
     <>
-      <CustomButton variant="outline" onClick={clickModal}>
+      <CustomButton variant="outline" onClick={clickModal} className="h-[42px]">
         미션뽑기
       </CustomButton>
       {showModal && (
