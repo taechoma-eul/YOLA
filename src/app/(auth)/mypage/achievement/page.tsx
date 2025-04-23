@@ -43,25 +43,25 @@ const AchievementPage = async () => {
   }));
 
   return (
-    <div className="flex flex-col gap-[86px]">
+    <article className="flex flex-col px-[16px] md:gap-[74px]">
       {/* 전체 레벨 5단계 */}
-      <section className="mt-[72px] flex flex-col gap-[20px]">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+      <section className="mb-[41px] mt-[20px] flex flex-col gap-[20px] md:mb-0 md:mt-[72px]">
+        <h2 className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {profile.nickname}님의 혼자라이프 레벨
-        </div>
+        </h2>
         <MypageProgressBar level={level} remainingMissions={remainingMissions} />
       </section>
 
       {/* 각각의 미션 카테고리 level 현황 */}
-      <section className="flex flex-col gap-[20px]">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+      <section className="mb-[30px] flex flex-col gap-[20px] md:mb-0">
+        <h2 className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {profile.nickname}님의 체크리스트 달성도
-        </div>
-        <div className="relative flex flex-col rounded-[12px] border border-secondary-grey-400 py-[12px] md:flex-row">
+        </h2>
+        <div className="relative flex flex-col rounded-[12px] border border-secondary-grey-400 py-0 md:flex-row md:py-[12px]">
           {categories.map(({ type, level, description, icon }, index) => (
             <div
               key={type}
-              className="group relative flex flex-1 flex-col justify-between px-[20px] py-[20px] transition-colors duration-200 hover:bg-gray-100 md:justify-center"
+              className="group relative flex flex-1 flex-col justify-between px-[20px] py-[20px] md:justify-center"
             >
               {/* 세로 구분선 (데스크탑 환경) */}
               {index !== 0 && (
@@ -98,12 +98,9 @@ const AchievementPage = async () => {
 
       {/* 렌덤 미션 뽑기 */}
       <section className="flex flex-col gap-[20px]">
-        <div className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
-          오늘의 랜덤 미션
-        </div>
         <RandomMissionBox isLogin={isLogin} missionsData={missionsData} />
       </section>
-    </div>
+    </article>
   );
 };
 

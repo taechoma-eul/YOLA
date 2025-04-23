@@ -16,7 +16,7 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
   if (isProfileError) throw profileFetchingError;
 
   return (
-    <section className="flex flex-col items-center justify-start">
+    <aside className="flex flex-col items-center justify-start">
       {/* 프로필 영역 */}
       <ProfileAvatar src={profile.profile_image} mode="desktop" />
       <p className="mt-[20px] text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
@@ -30,13 +30,13 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
       </Link>
 
       {/* 구분선 */}
-      <div className="mb-[12px] h-[1px] w-[172px] bg-secondary-grey-400" />
+      <div className="mb-[38px] h-[1px] w-[172px] bg-secondary-grey-400" />
       {/* 마이페이지 탭 3개 */}
-      <div className="flex w-full flex-col">
+      <nav className="flex w-full flex-col">
         <Link
           href={PATH.MY_LIFE_LIST}
           className={`py-[16px] text-lg ${
-            pathname === PATH.MY_LIFE_LIST ? 'font-semibold text-primary-orange-600' : 'text-secondary-grey-600'
+            pathname === PATH.MY_LIFE_LIST ? 'font-normal text-primary-orange-700' : 'text-secondary-grey-900'
           }`}
         >
           혼자 라이프 기록
@@ -44,7 +44,7 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
         <Link
           href={PATH.MY_GONGGAM_POST_LIST}
           className={`py-[16px] text-lg ${
-            pathname === PATH.MY_GONGGAM_POST_LIST ? 'font-semibold text-primary-orange-600' : 'text-secondary-grey-600'
+            pathname === PATH.MY_GONGGAM_POST_LIST ? 'font-normal text-primary-orange-700' : 'text-secondary-grey-900'
           }`}
         >
           작성 공감글
@@ -52,13 +52,13 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
         <Link
           href={PATH.MY_ACHIEVEMENT}
           className={`py-[16px] text-lg ${
-            pathname === PATH.MY_ACHIEVEMENT ? 'font-semibold text-primary-orange-600' : 'text-secondary-grey-600'
+            pathname === PATH.MY_ACHIEVEMENT ? 'font-normal text-primary-orange-700' : 'text-secondary-grey-900'
           }`}
         >
           나의 현황
         </Link>
-      </div>
-    </section>
+      </nav>
+    </aside>
   );
 };
 
