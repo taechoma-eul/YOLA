@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
-import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { FAIL, SUCCESS } from '@/constants/messages';
 import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
 import { toastAlert } from '@/lib/utils/toast';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 
 interface GonggamCommentFormProps {
   postId: number;

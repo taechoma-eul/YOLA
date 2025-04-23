@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { MAIN_CHARACTER_URL } from '@/constants/default-image-url';
+import CHARACTER from '@images/images/cat-in-question-box-original.svg';
 
 const ImageSection = () => {
   return (
     <div className="h-[249px] w-[218px] p-[40px]">
-      <Image priority src={MAIN_CHARACTER_URL} alt="랜덤미션 뽑기 이미지" width={124} height={168} />
+      <Image priority src={CHARACTER} alt="랜덤미션 뽑기 이미지" width={139} height={164} />
     </div>
   );
 };

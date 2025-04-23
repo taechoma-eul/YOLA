@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        sm: '14px',
+        md: '16px',
+        lg: '18px'
+      },
       colors: {
         'primary-orange': {
           50: '#FFF8E3',
@@ -37,11 +42,6 @@ const config: Config = {
         },
         mypage: {
           peach: '#FFF5E5'
-        },
-        banner: {
-          blue: '#D8EFF7',
-          red: '#FFBFA9',
-          orange: '#FEC84B'
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

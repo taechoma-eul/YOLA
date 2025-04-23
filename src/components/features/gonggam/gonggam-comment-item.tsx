@@ -1,15 +1,15 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useState } from 'react';
-import { formatRelativeDate } from '@/lib/utils/date-format';
-import { toastAlert } from '@/lib/utils/toast';
-import { DEFAULT_AVATAR_URL } from '@/constants/default-image-url';
 import { FAIL, SUCCESS } from '@/constants/messages';
-import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-keys';
 import { useUpdateGonggamComment } from '@/lib/hooks/mutations/use-update-gonggam-comment';
+import { formatRelativeDate } from '@/lib/utils/date-format';
+import { toastAlert } from '@/lib/utils/toast';
 import type { CommentWithUser } from '@/types/gonggam';
+import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 
 interface GonggamCommentItemProps {
   comment: CommentWithUser;
@@ -47,7 +47,7 @@ const GonggamCommentItem = ({ comment, postId, userId, onClickDelete }: GonggamC
       {/* 프로필 이미지 */}
       <div className="border-black/12 relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full border">
         <Image
-          src={comment.writer.profileImage || DEFAULT_AVATAR_URL}
+          src={comment.writer.profile_image || DEFAULT_AVATAR_URL}
           alt={comment.writer.nickname ?? '알 수 없음'}
           fill
           sizes="40px"

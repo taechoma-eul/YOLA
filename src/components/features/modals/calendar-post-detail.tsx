@@ -111,35 +111,37 @@ export const PostDetailModal = ({
       {/** 모달 */}
       <div
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫기 방지
-        className={`fixed right-0 top-0 h-screen w-[650px] transform overflow-auto bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 h-screen w-full transform overflow-auto bg-white shadow-lg transition-transform duration-300 ease-in-out md:w-[650px] ${
           isVisible ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="ml-[40px] h-full overflow-y-auto">
+        <div className="ml-[16px] h-full overflow-y-auto md:ml-[40px]">
           <ChevronsRight onClick={() => handleClose()} className="mb-[34px] mt-[42px] cursor-pointer" />
           {/** 사진 슬라이드 */}
           <ImageSwiper image_urls={post.image_urls} />
-          <div className="mb-[10px] flex gap-[12px] text-center">
-            <p className="text-md font-(family-name:Comfortaa) font-normal text-secondary-grey-900">{date}</p>
+          <div className="mb-[2px] flex gap-[12px] text-center md:mb-[10px]">
+            <p className="font-(family-name:Comfortaa) text-sm font-normal text-secondary-grey-900 md:text-md">
+              {date}
+            </p>
             <Image src={divider} alt="날짜와 미션인증/하루일기 사이의 영역을 나누는 막대" />
             {post.mission_id ? <Image src={missionIcon} alt="미션인증" /> : <Image src={diaryIcon} alt="하루일기" />}
           </div>
-          <div className="mb-[8px] flex min-h-[28px] w-[542px] justify-between">
-            <h1>{post.title}</h1>
+          <div className="flex min-h-[28px] w-[344px] justify-between md:mb-[8px] md:w-[542px]">
+            <h1 className="text-lg">{post.title}</h1>
             <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
           </div>
           <div className="flex gap-[8px] pb-[20px]">
             {post.tags?.map((tag, idx) => (
               <span
                 key={`detail_${idx}`}
-                className="h-auto w-auto gap-[10px] rounded-[8px] bg-secondary-grey-150 px-[8px] py-[4px] text-secondary-grey-900"
+                className="h-auto w-auto gap-[10px] rounded-[8px] bg-secondary-grey-150 px-[8px] text-secondary-grey-900 md:py-[4px]"
               >
                 # {tag}
               </span>
             ))}
           </div>
-          <hr className="w-[542px] border-t border-gray-300 px-[10px] py-[10px]" />
-          <p className="text-md whitespace-pre-wrap font-normal text-secondary-grey-900">{post.content}</p>
+          <hr className="w-[344px] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
+          <p className="whitespace-pre-wrap text-md font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
     </div>

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
-import NoRecordsBox from '@/components/features/mypage/mypage-no-records-box';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';

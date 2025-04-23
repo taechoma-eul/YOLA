@@ -1,7 +1,7 @@
 import { FAIL } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
-import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { getCompletedMissionIds, getMissionListByLevel } from '@/lib/utils/api/checklist/checklist.api';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { EnumChecklist, TableMissionList } from '@/types/supabase-const';
 
 interface DropdownParams {

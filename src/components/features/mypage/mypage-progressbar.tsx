@@ -1,5 +1,6 @@
 'use client';
 
+import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
 import { USER_LEVELS } from '@/lib/utils/calculate-user-level';
 
@@ -52,17 +53,45 @@ const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps)
           </div>
         </div>
 
-        {/* 라벨 - 동그라미와 수직 정렬 */}
+        {/* 5단계 라벨 - 동그라미와 수직 정렬 */}
         <div className="relative mt-3 h-5">
-          {[...Array(totalSteps + 1)].map((_, idx) => (
-            <div
-              key={idx}
-              className="absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap text-sm text-secondary-grey-900"
-              style={{ left: `${(idx / totalSteps) * 100}%` }}
-            >
-              {stepLabels[idx]}
-            </div>
-          ))}
+          {/* 테스크탑 환경 - 5단계 전체 표시 */}
+          <div className="hidden md:block">
+            {[...Array(totalSteps + 1)].map((_, idx) => (
+              <div
+                key={idx}
+                className="absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap"
+                style={{ left: `${(idx / totalSteps) * 100}%` }}
+              >
+                <span className={clsx('text-sm text-secondary-grey-900', stepLabels[idx] === level && 'font-semibold')}>
+                  {stepLabels[idx]}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* 모바일 환경 - 5단계 중 START, MASTER, 현재 레벨만 표시 */}
+          <div className="block md:hidden">
+            {[...Array(totalSteps + 1)].map((_, idx) => {
+              const label = stepLabels[idx];
+              const isVisible = label === USER_LEVELS.START || label === USER_LEVELS.MASTER || label === level;
+
+              if (!isVisible) return null;
+              return (
+                <div
+                  key={idx}
+                  className="absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap"
+                  style={{ left: `${(idx / totalSteps) * 100}%` }}
+                >
+                  <span
+                    className={clsx('text-sm text-secondary-grey-900', stepLabels[idx] === level && 'font-semibold')}
+                  >
+                    {stepLabels[idx]}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
