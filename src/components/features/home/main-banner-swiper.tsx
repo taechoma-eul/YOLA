@@ -11,10 +11,10 @@ import BANNER_2 from '@images/images/main-banner-2.svg';
 import BANNER_3 from '@images/images/main-banner-3.svg';
 
 const MainBannerSwiper = () => {
-  const bannerData: string[] = [BANNER_1, BANNER_2, BANNER_3];
+  const banners: string[] = [BANNER_1, BANNER_2, BANNER_3];
 
   return (
-    <section className="mx-auto w-full max-w-[1280px]">
+    <section className="mx-auto hidden w-full max-w-[1280px] md:block">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={30}
@@ -27,9 +27,9 @@ const MainBannerSwiper = () => {
         }}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop
-        className="my-swiper h-60"
+        className="my-swiper aspect-[1280/238]"
       >
-        {bannerData.map((imageUrl, index) => (
+        {banners.map((imageUrl, index) => (
           <SwiperSlide key={index}>
             <MainBannerImage imageUrl={imageUrl} index={index} />
           </SwiperSlide>
