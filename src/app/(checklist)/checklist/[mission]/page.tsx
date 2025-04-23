@@ -23,22 +23,26 @@ const Checklist = async ({ params }: ChecklistProps) => {
   }
   const decodedMission = decoded as EnumChecklist;
 
-  // /** 레벨 세팅 */
+  // 레벨 세팅
   const { userId } = await getUserSessionState();
   if (userId) {
     userLevel = await getUserLevelByMission({ userId, decodedMission });
   }
 
-  /** 단계별 미션 불러오기 */
-  const missionList = await getMissionListByLevel(decodedMission as EnumChecklist, userLevel as EnumLevel);
-
-  /** 유저 진척도 불러오기 */
+  // 마스터 레벨 처리
+  const targetLevel = userLevel === 'master' && userId ? '5' : userLevel;
+  const missionList = await getMissionListByLevel(decodedMission as EnumChecklist, targetLevel as EnumLevel);
   const missionIds = missionList.map((m) => m.id);
-  let completedIds: number[] = [];
 
+  // 완료된 미션 ID 가져오기
+  let completedIds: number[] = [];
   if (userId) {
     completedIds = await getCompletedMissionIds({ userId, missionIds });
   }
+
+  // 마스터 레벨이고 진행도가 0일 때는 전체 미션 수를 진행도로 설정
+  const progress = userLevel === 'master' && completedIds.length === 0 ? missionList.length : completedIds.length;
+
   const missionListWithStatus = missionList.map((mission) => ({
     ...mission,
     completed: completedIds.includes(mission.id)
@@ -47,10 +51,11 @@ const Checklist = async ({ params }: ChecklistProps) => {
   const props = {
     decodedMission,
     userId,
-    userLevel,
-    progress: completedIds.length,
+    userLevel: targetLevel,
+    progress,
     missionList: missionListWithStatus
   };
+
   return <ChecklistClient {...props} />;
 };
 
