@@ -16,7 +16,7 @@ interface ChecklistMissionSwiperProps {
 
 const ChecklistMissionSwiper = ({ missionList, userId, onCompletedClick }: ChecklistMissionSwiperProps) => {
   return (
-    <div className="overflow-visible px-4">
+    <div className="overflow-visible">
       <Swiper
         effect={'coverflow'}
         grabCursor={true}

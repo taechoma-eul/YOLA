@@ -18,7 +18,7 @@ const MissionListClient = ({ setSelectedMissionId, missionList, userId }: Client
         <ChecklistMissionSwiper missionList={missionList} userId={userId} onCompletedClick={setSelectedMissionId} />
       </section>
 
-      <ul className="mt-[129px] hidden w-full max-w-[1200px] items-center gap-[24px] md:flex">
+      <ul className="mt-[129px] hidden w-full max-w-[1200px] items-center gap-[24px] pl-[37px] pr-[39px] md:flex">
         {missionList.map((mission) => (
           <li key={mission.id}>
             <MissionCardWrapper mission={mission} userId={userId} onCompletedClick={setSelectedMissionId} />
