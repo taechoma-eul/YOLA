@@ -14,16 +14,16 @@ const MainBannerSwiperMobile = () => {
   const banners: string[] = [BANNER_1, BANNER_2, BANNER_3];
 
   return (
-    <section className="mx-auto w-full md:hidden">
+    <section className="mx-auto flex w-full flex-col md:hidden">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={30}
         slidesPerView={1}
         pagination={{
           clickable: true,
-          el: '.custom-pagination',
-          bulletClass: 'custom-bullet',
-          bulletActiveClass: 'custom-bullet-active'
+          el: '.custom-pagination-mobile',
+          bulletClass: 'custom-bullet-mobile',
+          bulletActiveClass: 'custom-bullet-active-mobile'
         }}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop
@@ -35,7 +35,7 @@ const MainBannerSwiperMobile = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="custom-pagination mt-4 inline-flex items-center justify-center gap-2" />
+      <div className="custom-pagination-mobile mt-4 inline-flex items-center justify-center gap-2" />
     </section>
   );
 };
