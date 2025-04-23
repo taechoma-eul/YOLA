@@ -30,8 +30,6 @@ const LifePageClient = () => {
     return map;
   }, [posts]);
 
-  console.log(isEmpty, 'isEmpty');
-
   return (
     <div className="mt-5 flex w-[996px] flex-col gap-4">
       <div className="flex w-full justify-start px-4 sm:justify-center sm:px-0">
