@@ -25,8 +25,7 @@ const MainBannerSwiperMobile = () => {
           bulletClass: 'custom-bullet-mobile',
           bulletActiveClass: 'custom-bullet-active-mobile'
         }}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        loop
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
         className="my-swiper aspect-[375/184] w-full"
       >
         {banners.map((imageUrl, index) => (
