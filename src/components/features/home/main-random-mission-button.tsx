@@ -18,7 +18,7 @@ const MissionButton = ({ isLogin, missionData }: ButtonProps) => {
       <CustomButton
         variant="outline"
         onClick={clickModal}
-        className="absolute top-[154px] h-[42px] w-full md:static md:w-[230px]"
+        className="absolute top-[154px] h-[42px] w-full lg:static lg:w-[230px]"
       >
         미션뽑기
       </CustomButton>
