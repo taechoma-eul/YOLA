@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import type { SortBy } from '@/types/gonggam';
+import type { SortBy } from '@/types/life-post';
 
 interface SelectBoxProps {
   value: string;
@@ -22,11 +22,11 @@ export function SelectBox({ value, onChange }: SelectBoxProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="latest">최신순</SelectItem>
+          <SelectItem value="all">전체 보기</SelectItem>
           <SelectSeparator />
-          <SelectItem value="comments">댓글 많은 순</SelectItem>
+          <SelectItem value="mission">미션 보기</SelectItem>
           <SelectSeparator />
-          <SelectItem value="likes">공감 많은 순</SelectItem>
+          <SelectItem value="diary">일기 보기</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
