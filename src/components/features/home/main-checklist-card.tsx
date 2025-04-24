@@ -17,6 +17,7 @@ const CheckListCard = async ({ checkListType }: { checkListType: string }) => {
       </section>
       <section className="absolute left-0 top-[79px] h-36 w-56 overflow-hidden">
         <Image
+          draggable="false"
           src={`/images/${checkListType}.svg`}
           alt={`${checkListType} 체크리스트 이미지`}
           width={221}
