@@ -5,25 +5,6 @@ import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { MissionWithStatus, UserLevelByMissionType } from '@/types/checklist';
 import type { EnumChecklist, EnumLevel, TableMissionList, TableUserLevel } from '@/types/supabase-const';
 
-/**
- * Supabase에서 `mission_list` 테이블의 고유한 `type` 값을 조회하는 클라이언트 전용 함수
- *
- * @async
- * @function getUniqueMissionType
- * @returns {Promise<Array<{ type: string }> | null>} `type` unique value 배열
- * @throws {Error} Supabase 쿼리 실행 중 오류에 대해 콘솔 로그 출력 & 빈 배열 반환
- */
-export const getUniqueMissionType = async (): Promise<string[]> => {
-  const { data, error } = await supabase.from(TABLE.MISSION_LIST).select('type');
-  if (error) {
-    console.error(error);
-    return [];
-  }
-
-  const uniqueTypes: string[] = Array.from(new Set<string>(data.map((item: { type: string }) => item.type)));
-  return uniqueTypes;
-};
-
 /** getUserLevelByMission: 클라이언트 전용 유저 레벨 정보 불러오기
  *
  * @async
@@ -34,7 +15,7 @@ export const getUniqueMissionType = async (): Promise<string[]> => {
  * @returns {Promise<number>} 해당 미션에 대한 유저의 현재 레벨 (문자열 → 숫자 변환, 기본값은 1)
  * @throws {Error} 미션 이름이 유효하지 않거나 Supabase 쿼리 실행 중 오류가 발생할 경우 에러 발생
  */
-export const getUserLevelByMission = async ({ userId, decodedMission }: UserLevelByMissionType) => {
+export const getUserLevelByMission = async ({ userId, decodedMission }: UserLevelByMissionType): Promise<string> => {
   const col = missionTypeMap[decodedMission];
   if (!col) {
     throw new Error(`${FAIL.INVALID_MISSION_TYPE}: ${decodedMission}`);
