@@ -14,7 +14,13 @@ import type { GetLifePostsResponse } from '@/types/life-post';
  * @from - .range(from,to) 의 from
  * @to - .range(from,to) 의 to
  */
-export const getLifePostsAll = async ({ page }: { page: number }): Promise<GetLifePostsResponse> => {
+export const getLifePostsAll = async ({
+  page,
+  sortBy
+}: {
+  page: number;
+  sortBy: 'all' | 'mission' | 'diary';
+}): Promise<GetLifePostsResponse> => {
   const { userId } = await fetchUserSessionState();
   if (!userId) throw new Error(FAIL.NEED_LOGIN);
 
@@ -23,23 +29,31 @@ export const getLifePostsAll = async ({ page }: { page: number }): Promise<GetLi
   const from = (page - 1) * postsPerPage;
   const to = from + postsPerPage - 1;
 
-  const {
-    data: MyLifePosts,
-    error,
-    count
-  } = await supabase
+  // 필터 추가 (전체, 미션, 일기 보기)
+  let query = supabase
     .from(TABLE.LIFE_POSTS)
-    .select(`*,life_post_image_path(image_url)`, { count: 'exact' })
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false })
-    .order('id', { ascending: false })
-    .range(from, to);
+    .select(`*, life_post_image_path(image_url)`, { count: 'exact' })
+    .eq('user_id', userId);
+
+  //mission_id의 null값의 유무에 따라 일기와 미션 구분
+  if (sortBy === 'mission') {
+    query = query
+      .not('mission_id', 'is', null)
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: false });
+  } else if (sortBy === 'diary') {
+    query = query.is('mission_id', null).order('created_at', { ascending: false }).order('id', { ascending: false });
+  } else {
+    query = query.order('created_at', { ascending: false }).order('id', { ascending: false });
+  }
+
+  const { data, count, error } = await query.range(from, to);
 
   if (error) throw new Error(error.message);
 
   const totalPages = count ? Math.ceil(count / postsPerPage) : 1;
 
-  const processed = (MyLifePosts ?? []).map((post) => ({
+  const processed = (data ?? []).map((post) => ({
     ...post,
     image_urls: post.life_post_image_path?.map((img) => img.image_url) ?? []
   }));
