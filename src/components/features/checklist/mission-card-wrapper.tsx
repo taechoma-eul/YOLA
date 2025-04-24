@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import MissionCard from '@/components/features/checklist/mission-card';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
@@ -16,7 +16,11 @@ interface MissionCardWrapperProps {
 
 const MissionCardWrapper = ({ mission, userId, onCompletedClick }: MissionCardWrapperProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const isCompleted = mission.completed;
+
+  // URL에서 카테고리 정보 추출 및 디코딩
+  const category = decodeURIComponent(pathname.split('/')[2]);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!userId) {
@@ -29,7 +33,10 @@ const MissionCardWrapper = ({ mission, userId, onCompletedClick }: MissionCardWr
     }
   };
 
-  const href = !isCompleted && userId ? `${PATH.LIFE_POST}?mission_id=${mission.id}` : '#';
+  const href =
+    !isCompleted && userId
+      ? `${PATH.LIFE_POST}?mission_id=${mission.id}&category=${encodeURIComponent(category)}`
+      : '#';
 
   return (
     <Link
