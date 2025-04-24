@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import ChecklistProgress from '@/components/features/checklist/checklist-progress';
 import MissionListClient from '@/components/features/checklist/mission-list-client';
+import SkeletonChecklist from '@/components/features/checklist/skeleton-checklist';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useGetChecklistData } from '@/lib/hooks/queries/use-get-checklist-data';
 import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
@@ -36,7 +37,7 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
   };
 
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return <SkeletonChecklist />;
   }
 
   if (!checklistData) {
