@@ -11,13 +11,13 @@ interface ProfileAvatarProps {
 const ProfileAvatar = ({ src, mode }: ProfileAvatarProps) => {
   return (
     <Avatar
-      className={clsx('rounded-2xl', {
-        'min-h-[48px] min-w-[48px]': mode === 'mobile',
-        'h-[172px] w-[172px]': mode === 'desktop'
+      className={clsx({
+        'min-h-[48px] min-w-[48px] rounded-sm': mode === 'mobile',
+        'h-[172px] w-[172px] rounded-2xl': mode === 'desktop'
       })}
     >
       <AvatarImage src={src ? src : ''} />
-      <AvatarFallback className="rounded-2xl">
+      <AvatarFallback className={clsx({ 'rounded-2xl': mode === 'desktop', 'rounded-sm': mode === 'mobile' })}>
         <Image
           src={DEFAULT_AVATAR_IMAGE}
           alt="디폴트 프로필 이미지"
