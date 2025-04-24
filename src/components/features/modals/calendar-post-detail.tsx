@@ -138,7 +138,11 @@ export const PostDetailModal = ({
           </div>
           <div className="flex min-h-[28px] w-[344px] justify-between md:mb-[8px] md:w-[542px]">
             <h1 className="text-lg">{post.title}</h1>
-            <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+            {post.mission_id ? (
+              <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} isMission={true} />
+            ) : (
+              <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+            )}
           </div>
           <div className="flex gap-[8px] pb-[20px]">
             {post.tags?.map((tag, idx) => (

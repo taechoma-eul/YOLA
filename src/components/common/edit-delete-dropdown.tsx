@@ -8,7 +8,12 @@ import dropdown from '@images/images/post-dropdown.svg';
  * 삭제 시 '삭제하시겠습니까?' 모달까지 연결되어 있습니다
  * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
-const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
+interface EditDeleteDropDownProps {
+  handleEdit: () => void;
+  handleDelete: () => void;
+  isMission?: boolean;
+}
+const EditDeleteDropdown = ({ handleEdit, handleDelete, isMission = false }: EditDeleteDropDownProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -66,13 +71,17 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
           >
             수정
           </button>
-          <hr className="border-spacing-4 border-gray-300 px-[35px]" />
-          <button
-            onClick={() => setShowModal(true)}
-            className="flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center text-base"
-          >
-            삭제
-          </button>
+          {!isMission && (
+            <>
+              <hr className="border-spacing-4 border-gray-300 px-[35px]" />
+              <button
+                onClick={() => setShowModal(true)}
+                className="flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center text-base"
+              >
+                삭제
+              </button>
+            </>
+          )}
         </div>
       )}
 
