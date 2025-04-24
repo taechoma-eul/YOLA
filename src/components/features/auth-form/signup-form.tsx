@@ -78,7 +78,10 @@ const SignupForm = () => {
 
   return (
     <Form {...form}>
-      <form className="mt-10 w-[365px] space-y-8" action={handleFormAction}>
+      <form
+        className="mt-[42px] flex w-full max-w-[365px] flex-col gap-[29px] md:mt-[35px] md:gap-[27px]"
+        action={handleFormAction}
+      >
         {signupFieldData.map((data, index) => (
           <FormField
             key={index}

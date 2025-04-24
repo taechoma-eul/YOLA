@@ -33,16 +33,16 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
           disabled={!isValid || isPending || isLoginPending}
           type="submit"
           size="auth-submit"
-          className="h-[42px]"
+          className="h-[42px] w-full"
         >
           {!isPending && !isLoginPending ? '이메일로 로그인' : '로그인 중...'}
         </CustomButton>
-        <CustomButton asChild size="auth-submit" variant="outline" className="h-[42px]">
+        <CustomButton asChild size="auth-submit" variant="outline" className="h-[42px] w-full">
           <Link href={PATH.SIGNUP}>회원가입</Link>
         </CustomButton>
       </div>
-      <div className="relative mb-[23px] h-[78px] border-b border-t-0 border-secondary-grey-600">
-        <p className="absolute left-[120px] top-[69px] justify-start bg-white px-[26px] text-sm font-normal leading-tight text-secondary-grey-600">
+      <div className="relative mb-[21.5px] h-[50px] border-b border-t-0 border-secondary-grey-600 md:mb-[23px] md:h-[78px]">
+        <p className="absolute left-[113px] top-[41px] justify-start bg-white px-[26px] text-sm font-normal leading-tight text-secondary-grey-600 md:left-[120px] md:top-[69px]">
           간편 로그인
         </p>
       </div>
