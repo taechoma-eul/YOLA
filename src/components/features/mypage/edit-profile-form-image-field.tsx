@@ -60,7 +60,7 @@ const ProfileImageField = ({
             onClick={triggerFileInput}
             className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-secondary-grey-800 p-0"
           >
-            <Image src={CAMERA} alt="프로필 이미지 업로드 버튼" width={20} height={20} />
+            <Image src={CAMERA} alt="프로필 이미지 업로드 버튼" width={20} height={20} draggable="false" />
           </Button>
         </div>
       )}
