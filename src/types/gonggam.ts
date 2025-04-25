@@ -1,4 +1,10 @@
-import type { EnumCategories, TableComments, TableGonggamPosts, TableLikes, TableUsers } from '@/types/supabase-const';
+import type {
+  TableComments,
+  TableGonggamPostWithCounts,
+  TableGonggamPosts,
+  TableLikes,
+  TableUsers
+} from '@/types/supabase-const';
 
 export interface PaginatedPostsResponse {
   posts: GonggamPostDetailResponse[];
@@ -48,21 +54,10 @@ export interface GetMyGonggamPostsResponse {
   page: number;
   totalPages: number;
 }
-
-//gonggam_posts_with_counts 뷰 타입 정의
-export type GonggamPostWithCounts = {
-  id: number;
-  category: EnumCategories;
-  content: string | null;
-  created_at: string;
-  updated_at: string;
-  user_id: string;
-  like_count: number | null;
-  comment_count: number | null;
-  // 조인된 users 테이블 필드 추가 (닉네임만)
+export interface GonggamPostWithCounts extends TableGonggamPostWithCounts {
   users: {
     nickname: string;
   };
-};
+}
 
 export type SortBy = 'latest' | 'comments' | 'likes';
