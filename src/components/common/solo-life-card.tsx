@@ -42,12 +42,12 @@ const SoloLifeCard = ({
             'rounded-xl'
           )}
         >
-          <Image src={thumbnail} alt="썸네일" fill className="object-cover" />
+          <Image src={thumbnail} alt="썸네일" fill sizes="205" className="object-cover" priority />
         </div>
       </figure>
 
       {/* 콘텐츠 */}
-      <section className="flex flex-1 flex-col justify-between sm:items-start">
+      <section className="flex h-full flex-1 flex-col justify-between sm:items-start">
         {/* 본문 */}
         <p className="line-clamp-1 text-sm font-medium text-secondary-grey-900 sm:line-clamp-none sm:whitespace-pre-line sm:break-words">
           {previewContent}
