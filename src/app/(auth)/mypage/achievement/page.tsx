@@ -65,7 +65,7 @@ const AchievementPage = async () => {
             >
               {/* 세로 구분선 (데스크탑 환경) */}
               {index !== 0 && (
-                <div className="absolute left-0 top-1/2 h-[62px] w-[1px] -translate-y-1/2 bg-secondary-grey-300" />
+                <div className="absolute left-0 top-1/2 hidden h-[62px] w-[1px] -translate-y-1/2 bg-secondary-grey-300 md:block" />
               )}
 
               {/* 가로 구분선 (모바일 환경) */}
