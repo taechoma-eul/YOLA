@@ -5,13 +5,28 @@ import { useInView } from 'react-intersection-observer';
 import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
+import { SelectBox } from '@/components/features/mypage/my-life-filter';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
+import { QUERY_KEY } from '@/constants/query-keys';
+import { useQueryClient } from '@tanstack/react-query';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
-import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType } from '@/types/life-post';
+import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType, SortBy } from '@/types/life-post';
 
-const MyLifeListClient = () => {
+interface MyLifeListClientProps {
+  nickname: string;
+}
+
+const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
+  const [sortBy, setSortBy] = useState<SortBy>('all');
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_KEY.LIFE_POSTS_INFINITE, sortBy]
+    });
+  }, [sortBy, queryClient]);
 
   const {
     data: posts,
@@ -20,7 +35,7 @@ const MyLifeListClient = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage
-  } = useGetLifePostsInfiniteQuery();
+  } = useGetLifePostsInfiniteQuery(sortBy);
 
   const { ref, inView } = useInView({
     threshold: 0.5
@@ -64,28 +79,43 @@ const MyLifeListClient = () => {
   };
 
   return (
-    <article className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-      {parsedList.length === 0 ? (
-        <NoRecordsBox mode="라이프" />
-      ) : (
-        <>
-          {parsedList.map((post) => (
-            <SoloLifeCard key={post.id} {...post} onClick={() => handleClickCard(post.id)} />
-          ))}
-          {showModal && (
-            <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
-          )}
+    <article className="mt-[20px] px-[16px] md:mt-[72px]">
+      <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
+        {/* 데스크탑에서만 보이는 텍스트 */}
+        <h2 className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
+          {nickname}님의 혼자 라이프 기록
+        </h2>
+        {/* SelectBox는 항상 오른쪽 정렬 */}
+        <div className="ml-auto">
+          <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
+        </div>
+      </section>
 
-          {/* 무한 스크롤 로딩 및 종료 메세지 */}
-          <div className="col-span-full flex items-center justify-center py-4 text-sm text-slate-400">
-            {hasNextPage ? (
-              <div ref={ref}>{isFetchingNextPage && '불러오는 중...'}</div>
-            ) : (
-              '작성하신 라이프글을 전부 불러왔어요.'
+      {/* <section className="grid gap-[18px] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"> */}
+      <section className="flex flex-wrap gap-[18px]">
+        {parsedList.length === 0 ? (
+          <NoRecordsBox mode="라이프" />
+        ) : (
+          <>
+            {parsedList.map((post) => (
+              <figure className="min-w-[222px] max-w-[222px]" key={post.id}>
+                <SoloLifeCard {...post} onClick={() => handleClickCard(post.id)} />
+              </figure>
+            ))}
+            {showModal && (
+              <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
             )}
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </section>
+      {/* 무한 스크롤 로딩 및 종료 메세지 */}
+      <div className="col-span-full flex items-center justify-center py-4 text-sm text-slate-400">
+        {hasNextPage ? (
+          <div ref={ref}>{isFetchingNextPage && '불러오는 중...'}</div>
+        ) : (
+          '작성하신 라이프글을 전부 불러왔어요.'
+        )}
+      </div>
     </article>
   );
 };

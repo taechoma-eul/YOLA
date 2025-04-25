@@ -11,7 +11,12 @@ const useGetGonggamPostsInfiniteQuery = (sortBy: SortBy) => {
   return useInfiniteQuery<GetMyGonggamPostsResponse>({
     queryKey: [QUERY_KEY.GONGGAM_POSTS_INFINITE, sortBy],
     queryFn: async ({ pageParam = 1 }) => getMyGonggamPostsAll({ page: pageParam as number, sortBy }),
-    getNextPageParam: (lastPage) => (lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.totalPages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
     initialPageParam: 1
   });
 };

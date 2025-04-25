@@ -21,3 +21,6 @@ export interface GetLifePostsResponse {
   page: number;
   totalPages: number;
 }
+
+//마이페이지 공감 sort 타입 선언
+export type SortBy = 'all' | 'mission' | 'diary';

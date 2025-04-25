@@ -12,11 +12,12 @@ import GOAT_ICON from '@images/images/goat-icon.svg';
 import MEAL_ICON from '@images/images/meal-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
 import TRAVEL_ICON from '@images/images/travel-icon.svg';
+import { FAIL } from '@/constants/messages';
 
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회
   const profile = await getUserProfile();
-  if (!profile) throw new Error();
+  if (!profile) throw new Error(FAIL.GET_PROFILE);
   const { isLogin } = await getUserSessionState();
 
   // 미션리스트 가져오기
