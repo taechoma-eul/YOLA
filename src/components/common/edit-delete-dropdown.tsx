@@ -2,26 +2,23 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ConfirmModal from '@/components/features/modals/confirm-modal';
 import dropdown from '@images/images/post-dropdown.svg';
+import useIsMobile from '@/lib/hooks/use-is-mobile';
 
 /**
  * 수정/삭제를 할 수 있는 드롭다운입니다
  * 삭제 시 '삭제하시겠습니까?' 모달까지 연결되어 있습니다
  * 수정 로직을 담은 함수와 삭제 로직을 담은 함수를 Props로 넣어주면 사용이 가능합니다
  */
-const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => void; handleDelete: () => void }) => {
+interface EditDeleteDropDownProps {
+  handleEdit: () => void;
+  handleDelete: () => void;
+  isMission?: boolean;
+}
+const EditDeleteDropdown = ({ handleEdit, handleDelete, isMission = false }: EditDeleteDropDownProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // tailwind 기준 md 미만이면 모바일
-    };
-
-    handleResize(); // 초기 체크
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (showModal) {
@@ -66,13 +63,17 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete }: { handleEdit: () => vo
           >
             수정
           </button>
-          <hr className="border-spacing-4 border-gray-300 px-[35px]" />
-          <button
-            onClick={() => setShowModal(true)}
-            className="flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center text-base"
-          >
-            삭제
-          </button>
+          {!isMission && (
+            <>
+              <hr className="border-spacing-4 border-gray-300 px-[35px]" />
+              <button
+                onClick={() => setShowModal(true)}
+                className="flex w-full cursor-pointer justify-center px-[16px] py-[12px] text-center text-base"
+              >
+                삭제
+              </button>
+            </>
+          )}
         </div>
       )}
 

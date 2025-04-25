@@ -18,7 +18,7 @@ const NavMobileLinkItem = ({ href, label, isDropDown = false }: ItemProps) => {
   const isSelect: boolean = decodeURIComponent(pathname).includes(href);
 
   return (
-    <li className="w-full justify-start leading-snug hover:bg-primary-orange-200">
+    <li className="w-full justify-start leading-snug hover:bg-primary-orange-200" aria-label={`${label} 페이지로 이동`}>
       <SheetClose asChild>
         <Link
           href={href}

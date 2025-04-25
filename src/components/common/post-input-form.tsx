@@ -92,6 +92,11 @@ const PostInputForm = ({
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
   const DEFAULT_TITLE = isMission ? (selectedMission?.content ?? '미션 인증') : `${selectedDate}의 혼자 라이프 기록`;
+  const placeHolder = isMission
+    ? `미션 관련 내용과 사진을 필수로 올려주세요.
+ex) 저는 오늘 맥도날드 고구마 후라이를 먹었어요!`
+    : `혼자 보내는 일상에 대해 자유롭게 기록해주세요.
+ex) 오늘은 혼자 코인노래방에 가서 3시간을 부르고 나왔다. 스트레스가 왕창 풀리는 날이었다.`;
 
   // URL에서 카테고리 정보 추출 및 디코딩
   const category = searchParams.get('category') ? decodeURIComponent(searchParams.get('category')!) : null;
@@ -136,6 +141,11 @@ const PostInputForm = ({
   const onSubmit = async (data: FormData) => {
     const title = data.title?.trim() || DEFAULT_TITLE;
     const content = data.content.trim();
+
+    if (images.length + uploadedImages.length === 0) {
+      toastAlert('이미지는 최소 1장 이상 등록해주세요.', 'warning');
+      return;
+    }
 
     try {
       const newUploads = await uploadImages(images);
@@ -236,7 +246,7 @@ const PostInputForm = ({
 
           <textarea
             {...register('content')}
-            placeholder="내용을 입력하세요..."
+            placeholder={placeHolder}
             className="h-[90%] w-full resize-none text-sm placeholder:text-secondary-grey-500 focus:outline-none focus:ring-2 focus:ring-primary-orange-400"
           />
           {errors.content && <p className="mt-2 text-sm text-red-500">{errors.content.message}</p>}

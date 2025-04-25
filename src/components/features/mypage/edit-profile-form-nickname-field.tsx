@@ -64,12 +64,12 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
       control={form.control}
       name={AUTH.NICKNAME}
       render={({ field }) => (
-        <FormItem className="flex h-10 items-center justify-start self-stretch">
+        <FormItem className="flex h-10 w-full items-center justify-start self-stretch">
           <FormLabel className="justify-start text-lg font-normal text-secondary-grey-900">{LABEL.NICKNAME}</FormLabel>
-          <div className="relative ml-[42px] mr-[8px]">
+          <div className="relative ml-[21px] mr-[12px] md:ml-[42px] md:mr-[8px]">
             <FormControl>
               <Input
-                className="h-[37px] w-[269px] rounded border-secondary-grey-400 p-2.5"
+                className="h-[37px] w-[198px] rounded border-secondary-grey-400 p-2.5 md:w-[269px]"
                 placeholder={PLACEHOLDER.NICKNAME}
                 type="text"
                 {...field}
@@ -78,7 +78,13 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
             <FormMessage />
             <DuplicateCheckMessage errorMessage={errorMessage} successMessage={successMessage} />
           </div>
-          <CustomButton type="button" variant="grey" size="check" className="h-[38px]" onClick={handleDuplicateCheck}>
+          <CustomButton
+            type="button"
+            variant="grey"
+            size="check"
+            className="h-[36px] w-[65px] text-sm md:h-[38px] md:w-[72px] md:text-base"
+            onClick={handleDuplicateCheck}
+          >
             중복확인
           </CustomButton>
         </FormItem>

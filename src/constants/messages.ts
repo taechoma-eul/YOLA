@@ -21,6 +21,7 @@ export const FAIL = {
   SESSION: '사용자 세션 정보가 존재하지 않습니다.',
   GET_PROFILE: '사용자 프로필 정보를 받아오는 데 실패했습니다.',
   DUPLICATE: '중복확인에 실패했습니다. 다시 시도해주세요.',
+  PROFILE_IMAGE_UPLOAD: '프로필 이미지 업로드에 실패했습니다.',
   INCREMENT_VIEW_COUNT: '조회수 처리에 실패했습니다.',
   GET_VIEW_COUNT: '조회수 데이터 불러오기를 실패했습니다.',
   STORAGE_DELETE_ERROR: '스토리지 이미지 삭제에 실패했습니다.',

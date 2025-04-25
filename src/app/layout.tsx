@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: '너 혼자 산다',
   description: '혼자 사는 사람들의 소소한 일상 기록',
   icons: {
-    icon: 'images/favicon.svg'
+    icon: '/images/favicon.svg'
   }
 };
 
