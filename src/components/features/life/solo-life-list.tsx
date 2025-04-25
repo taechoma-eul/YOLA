@@ -80,10 +80,10 @@ const SoloLifeList = ({ selectedDate, setIsEmpty }: SoloLifeListProps) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="grid grid-cols-4 items-stretch gap-[16px]"
+        className="flex flex-wrap items-start justify-start gap-4"
       >
         {parsedList.map((data) => (
-          <SoloLifeCard onClick={() => handleClickCard(data.id)} key={data.id} {...data} />
+          <SoloLifeCard onClick={() => handleClickCard(data.id)} key={data.id} {...data} mode="calendar" />
         ))}
         {showModal && (
           <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
