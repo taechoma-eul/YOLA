@@ -15,6 +15,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const publicPaths = [
+    PATH.ONBOARDING,
     PATH.LOGIN,
     PATH.SIGNUP,
     PATH.HOME,
