@@ -1,4 +1,4 @@
-import { Children } from '@/types/children';
+import type { Children } from '@/types/children';
 
 const TextBlock = ({ title, children }: { title: string } & Children) => {
   return (
