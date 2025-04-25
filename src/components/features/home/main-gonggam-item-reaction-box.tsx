@@ -7,7 +7,7 @@ interface Props {
 
 const ReactionBox = ({ likes, comments }: Props) => {
   return (
-    <div className="flex items-center justify-start gap-4">
+    <div className="flex items-center justify-start gap-4 pt-[6px] lg:pt-0">
       <div className="flex gap-1">
         <Heart size={15} />
         <span className="justify-start text-xs">{likes}</span>
