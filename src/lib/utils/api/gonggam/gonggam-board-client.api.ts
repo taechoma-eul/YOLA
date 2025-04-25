@@ -1,25 +1,9 @@
 import { TABLE } from '@/constants/supabase-tables-name';
+import { fetchViewCount } from '@/lib/utils/api/gonggam/gonggam-view-count.api';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import type { GonggamPostMeta, PaginatedPostsResponse } from '@/types/gonggam';
 import type { EnumCategories, TableGonggamPosts } from '@/types/supabase-const';
 import DEFAULT_LIFE_IMAGE_URL from '@images/images/default-image.svg';
-
-/**
- * 선택한 게시글의 조회수를 클라이언트 컴포넌트에서 조회하기 위한 api 함수입니다.
- * @param { string } postId - 선택한 게시글의 id
- * @returns { number } - 선택한 게시글의 조회수
- */
-export const getViewCountByClient = async (postId: string): Promise<number> => {
-  const { data, error } = await supabase
-    .from(TABLE.GONGGAM_POSTS)
-    .select('view_count')
-    .eq('id', Number(postId))
-    .single();
-
-  if (error) throw error;
-
-  return data.view_count;
-};
 
 /** getPaginatedGonggamPostsByClient
  * 공감 게시글을 카테고리별 + 페이지네이션 기반으로 조회하는 클라이언트 전용 함수
@@ -125,7 +109,7 @@ export const getGonggamPostCardMeta = async (postId: number) => {
   const { likeCnt, commentCnt } = await getPostMetaByPostIdByClient(postId);
 
   // 3. 조회수
-  const viewCount = await getViewCountByClient(String(postId));
+  const viewCount = await fetchViewCount(String(postId));
 
   return {
     imagePreview,
