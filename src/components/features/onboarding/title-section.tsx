@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import TITLE from '@images/images/onboarding-title.svg';
+import Link from 'next/link';
+import { CustomButton } from '@/components/ui/custom-button';
+import { PATH } from '@/constants/page-path';
 import CAT from '@images/images/onboarding-cat.svg';
 import SLIDE from '@images/images/onboarding-slide-icon.svg';
-import { CustomButton } from '@/components/ui/custom-button';
-import Link from 'next/link';
-import { PATH } from '@/constants/page-path';
+import TITLE from '@images/images/onboarding-title.svg';
 
 const TitleSection = () => {
   return (

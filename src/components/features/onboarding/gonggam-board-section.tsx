@@ -1,5 +1,5 @@
-import TextBlock from './text-block';
 import Image from 'next/image';
+import TextBlock from '@/components/features/onboarding/text-block';
 import GONGGAM_BOARD_PREVIEW from '@images/images/onboarding-gonggam.svg';
 
 const GonggamBoardSection = () => {

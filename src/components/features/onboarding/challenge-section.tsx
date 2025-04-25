@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import CHECKLIST_CARD from '@images/images/onboarding-checklist-card.svg';
 import TextBlock from '@/components/features/onboarding/text-block';
+import CHECKLIST_CARD from '@images/images/onboarding-checklist-card.svg';
 
 const ChallengeSection = () => {
   return (

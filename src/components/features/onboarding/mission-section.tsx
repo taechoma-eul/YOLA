@@ -1,7 +1,7 @@
-import TextBlock from '@/components/features/onboarding/text-block';
 import Image from 'next/image';
-import MISSION_PREVIEW from '@images/images/onboarding-mission.svg';
+import TextBlock from '@/components/features/onboarding/text-block';
 import LEVEL_PREVIEW from '@images/images/onboarding-level.svg';
+import MISSION_PREVIEW from '@images/images/onboarding-mission.svg';
 
 const MissionSection = () => {
   return (

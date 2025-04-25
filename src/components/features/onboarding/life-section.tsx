@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import TextBlock from './text-block';
+import TextBlock from '@/components/features/onboarding/text-block';
 import LIFE_PREVIEW from '@images/images/onboarding-life.svg';
 
 const LifeSection = () => {

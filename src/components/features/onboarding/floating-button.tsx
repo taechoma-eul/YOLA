@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import FLOATING_ICON from '@images/images/onboarding-floating.svg';
 import { useEffect, useState } from 'react';
+import FLOATING_ICON from '@images/images/onboarding-floating.svg';
 
 const FloatingButton = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
