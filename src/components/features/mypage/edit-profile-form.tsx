@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
 import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
@@ -10,13 +11,14 @@ import { FAIL, SUCCESS } from '@/constants/messages';
 import { useUpdateProfileMutate } from '@/lib/hooks/mutations/use-profile-update-mutate';
 import { useUserProfile } from '@/lib/hooks/queries/use-get-user-profile';
 import { useProfileForm } from '@/lib/hooks/use-profile-form';
+import { profileImageUploader } from '@/lib/utils/api/mypage/profile-image-upload.api';
 import { toastAlert } from '@/lib/utils/toast';
 import type { EditFormData, InitProfile } from '@/types/auth-form';
-import { profileImageUploader } from '@/lib/utils/api/mypage/profile-image-upload.api';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const { profile, isProfileError, profileFetchingError } = useUserProfile(initProfile);
   const updateProfile = useUpdateProfileMutate();
@@ -34,6 +36,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         };
         updateProfile(updatedData);
         toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
+        router.back();
       } catch {
         toastAlert(FAIL.UPDATE_PROFILE, 'destructive');
       }
