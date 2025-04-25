@@ -11,7 +11,7 @@ const RandomMissionSection = async () => {
 
   return (
     <RandomMissionContainer>
-      <div className="flex h-full w-[235px] flex-col gap-[71px]">
+      <div className="flex w-[183px] flex-col gap-[37px] md:w-[230px] md:gap-[71px]">
         <TitleSection />
         <MissionButton isLogin={isLogin} missionData={missionData} />
       </div>

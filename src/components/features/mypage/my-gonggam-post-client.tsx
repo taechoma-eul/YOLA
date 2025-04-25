@@ -59,7 +59,7 @@ const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
         </div>
       </section>
 
-      <section className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
+      <section className="mb-[30px] grid gap-5 md:mb-[272px] md:grid-cols-1 lg:grid-cols-2">
         {allPosts.length === 0 ? (
           <NoRecordsBox mode="공감" />
         ) : (
