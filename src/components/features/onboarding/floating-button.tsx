@@ -27,9 +27,9 @@ const FloatingButton = () => {
   };
 
   return (
-    <div className="fixed bottom-6 flex w-full max-w-[1280px] justify-end">
+    <div className="absolute bottom-6 right-6 flex justify-end">
       <button
-        className={`mr-6 transition-all duration-300 hover:scale-105 ${
+        className={`transition-all duration-300 hover:scale-105 ${
           isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
         }`}
         onClick={scrollToTop}

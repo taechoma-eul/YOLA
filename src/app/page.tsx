@@ -9,7 +9,7 @@ import TitleSection from '@/components/features/onboarding/title-section';
 
 const OnboardingPage = () => {
   return (
-    <>
+    <div className="relative w-full">
       <TitleSection />
       <ChallengeSection />
       <MissionSection />
@@ -17,8 +17,10 @@ const OnboardingPage = () => {
       <RandomMissionSection />
       <GonggamBoardSection />
       <EndSection />
-      <FloatingButton />
-    </>
+      <div className="sticky bottom-0">
+        <FloatingButton />
+      </div>
+    </div>
   );
 };
 
