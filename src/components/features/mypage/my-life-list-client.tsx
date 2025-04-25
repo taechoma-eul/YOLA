@@ -91,16 +91,13 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
         </div>
       </section>
 
-      {/* <section className="grid gap-[18px] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"> */}
       <section className="flex flex-wrap gap-[18px]">
         {parsedList.length === 0 ? (
           <NoRecordsBox mode="라이프" />
         ) : (
           <>
             {parsedList.map((post) => (
-              <figure className="min-w-[222px] max-w-[222px]" key={post.id}>
-                <SoloLifeCard {...post} onClick={() => handleClickCard(post.id)} />
-              </figure>
+              <SoloLifeCard {...post} key={post.id} onClick={() => handleClickCard(post.id)} mode="mypage" />
             ))}
             {showModal && (
               <PostDetailModal clickModal={() => setShowModal(false)} showModal={showModal} post={selectedPost} />
