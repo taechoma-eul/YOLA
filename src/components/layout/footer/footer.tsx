@@ -5,7 +5,7 @@ import { PATH } from '@/constants/page-path';
 
 const Footer = () => {
   return (
-    <div className="flex h-[150px] w-full flex-col items-center justify-center justify-items-center overflow-hidden bg-secondary-grey-150 text-xs">
+    <footer className="flex h-[150px] w-full flex-col items-center justify-center justify-items-center overflow-hidden bg-secondary-grey-150 text-xs">
       <div className="mx-auto flex h-[44px] items-center justify-center">
         <Image src={FOOTER_LOGO} alt="푸터 로고" width={84} height={23} />
       </div>
@@ -19,7 +19,7 @@ const Footer = () => {
       <p className="justify-start self-stretch text-center leading-tight text-secondary-grey-800">
         ⓒ 2025. 태초마을 all rights reserved.
       </p>
-    </div>
+    </footer>
   );
 };
 
