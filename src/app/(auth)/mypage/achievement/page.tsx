@@ -16,7 +16,7 @@ import TRAVEL_ICON from '@images/images/travel-icon.svg';
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회
   const profile = await getUserProfile();
-  if (!profile) throw new Error();
+  if (!profile) throw new Error('유저의 닉네임 정보를 불러오지 못했습니다');
   const { isLogin } = await getUserSessionState();
 
   // 미션리스트 가져오기
