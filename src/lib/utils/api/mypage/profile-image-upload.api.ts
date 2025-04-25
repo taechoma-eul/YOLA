@@ -1,9 +1,9 @@
+import { UseFormReturn } from 'react-hook-form';
 import { deleteExistingImage } from '@/lib/utils/extract-file-form-url';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { toastAlert } from '@/lib/utils/toast';
 import { EditFormData } from '@/types/auth-form';
 import type { TableUsers } from '@/types/supabase-const';
-import { UseFormReturn } from 'react-hook-form';
-import { toastAlert } from '@/lib/utils/toast';
 
 interface ImageUploaderParams {
   form: UseFormReturn<EditFormData>;
