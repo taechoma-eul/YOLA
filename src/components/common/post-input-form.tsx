@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { clsx } from 'clsx';
 import { ChevronLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useState } from 'react';
 
@@ -69,6 +69,7 @@ const PostInputForm = ({
   defaultValues
 }: LifeInputFormProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { mutate, isPending } = useLifePost();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateLifePost();
   const queryClient = useQueryClient();
@@ -91,6 +92,9 @@ const PostInputForm = ({
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
   const DEFAULT_TITLE = isMission ? (selectedMission?.content ?? '미션 인증') : `${selectedDate}의 혼자 라이프 기록`;
+
+  // URL에서 카테고리 정보 추출 및 디코딩
+  const category = searchParams.get('category') ? decodeURIComponent(searchParams.get('category')!) : null;
 
   const {
     register,
@@ -151,7 +155,11 @@ const PostInputForm = ({
           queryKey: [QUERY_KEY.LIFE_POSTS]
         });
         toastAlert(`${action}되었습니다!`, 'success');
-        router.push(PATH.LIFE);
+        if (missionId) {
+          router.push(`${PATH.CHECKLIST}${category ? `/${encodeURIComponent(category)}` : ''}`);
+        } else {
+          router.push(PATH.LIFE);
+        }
       };
 
       const onError = (err: unknown) => {

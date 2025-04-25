@@ -77,6 +77,17 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
   const [showModal, setShowModal] = useState(false);
 
+  const placeholder = {
+    일상공유: `혼자 보내는 일상에 대한 내용을 회원들과 자유롭게 공유해주세요.
+ex) 오늘 한강가서 치맥했어요. 날 풀리니까 혼자 나가도 좋네요!`,
+    꿀팁공유: `이럴 땐 이렇게! 혼자 라이프 꿀팁을 들려주세요. 
+ex) 자취생 냉장고 청소 꿀팁 공유합니다!`,
+    여기추천: `혼자 가기 좋은 장소나 자주 찾는 공간이 있다면 소개해주세요. 
+ex) 자취생에게 꼭 필요한 프린트 카페 추천해요.`,
+    밋업: `관심사 기반의 소모임을 제안하거나 참여해보세요. 
+ex) 사이드 프로젝트 팀원 모집합니다!`
+  };
+
   const {
     register,
     handleSubmit,
@@ -193,8 +204,8 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
 
           <textarea
             {...register('content')}
-            placeholder="내용을 입력하세요..."
-            className="h-[300px] w-full resize-none bg-white p-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder={placeholder[category]}
+            className="h-[300px] w-full resize-none bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
           {errors.content && <p className="mt-1 text-sm text-red-500">{errors.content.message}</p>}
@@ -213,7 +224,7 @@ const GonggamPostInputForm = ({ isEditMode = false, defaultValues }: GonggamPost
         />
 
         <div className="mx-auto mt-4 flex w-full items-center justify-center gap-5">
-          <CustomButton type="submit" disabled={!isValid || isLoading}>
+          <CustomButton type="submit" disabled={!isValid || isLoading} className="w-[344px] md:w-[230px]">
             등록하기
           </CustomButton>
         </div>

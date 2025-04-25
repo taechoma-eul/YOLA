@@ -35,6 +35,7 @@ const NavChallengeMenu = () => {
         <NavUnderBar isVisible={isHovered || isSelect || isMission} />
       </div>
       <Image
+        draggable="false"
         src={MENU_ICON}
         alt="챌린지 메뉴 드롭 다운 표시 아이콘"
         width={14}
