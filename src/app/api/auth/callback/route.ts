@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { PATH } from '@/constants/page-path';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 
 export const GET = async (request: Request) => {
   const { searchParams, origin } = new URL(request.url);

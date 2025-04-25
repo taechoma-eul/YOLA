@@ -1,10 +1,10 @@
+import { DialogTitle } from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import NavMobileChallengeMenu from '@/components/layout/header/header-nav-challenge-menu-mobile';
 import NavMobileLinkItem from '@/components/layout/header/header-nav-link-item-mobile';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { PATH } from '@/constants/page-path';
 import MENU from '@images/images/header-mobile-menu-icon.svg';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 const HeaderMobileMenu = () => {
   return (
