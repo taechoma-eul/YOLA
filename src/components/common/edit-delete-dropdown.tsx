@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ConfirmModal from '@/components/features/modals/confirm-modal';
 import dropdown from '@images/images/post-dropdown.svg';
+import useIsMobile from '@/lib/hooks/use-is-mobile';
 
 /**
  * 수정/삭제를 할 수 있는 드롭다운입니다
@@ -16,17 +17,8 @@ interface EditDeleteDropDownProps {
 const EditDeleteDropdown = ({ handleEdit, handleDelete, isMission = false }: EditDeleteDropDownProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // tailwind 기준 md 미만이면 모바일
-    };
-
-    handleResize(); // 초기 체크
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (showModal) {
