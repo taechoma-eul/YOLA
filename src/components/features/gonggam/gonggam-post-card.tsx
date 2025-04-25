@@ -12,8 +12,11 @@ interface GonggamPostCardProps {
 }
 
 const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
-  const { data: meta, isPending, error } = useGetGonggamPostCardMeta(post.id);
+  /** view 에서 데이터가 없는 경우 예외 처리 */
+  if (!post.id || !post.created_at || !post.title || !post.content)
+    throw new Error('Error occurred in GonggamPostCard');
 
+  const { data: meta, isPending, error } = useGetGonggamPostCardMeta(post.id);
   if (error) throw new Error(error.message);
 
   return (

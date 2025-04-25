@@ -21,7 +21,7 @@ export interface WriterProfile {
   profile_image?: TableUsers['profile_image'];
 }
 
-export interface GonggamPostDetailResponse extends TableGonggamPosts {
+export interface GonggamPostDetailResponse extends TableGonggamPostWithCounts {
   writer: WriterProfile;
 }
 
