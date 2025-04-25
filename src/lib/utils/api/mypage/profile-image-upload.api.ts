@@ -2,8 +2,9 @@ import { UseFormReturn } from 'react-hook-form';
 import { deleteExistingImage } from '@/lib/utils/extract-file-form-url';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import { EditFormData } from '@/types/auth-form';
+import type { EditFormData } from '@/types/auth-form';
 import type { TableUsers } from '@/types/supabase-const';
+import { FAIL } from '@/constants/messages';
 
 interface ImageUploaderParams {
   form: UseFormReturn<EditFormData>;
@@ -38,7 +39,7 @@ export const profileImageUploader = async ({ form, profile }: ImageUploaderParam
   });
 
   if (error) {
-    toastAlert('프로필 이미지 업로드 실패!', 'destructive');
+    toastAlert(FAIL.PROFILE_IMAGE_UPLOAD, 'destructive');
     return;
   }
 
