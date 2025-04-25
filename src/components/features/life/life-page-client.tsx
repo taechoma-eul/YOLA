@@ -7,14 +7,12 @@ import SoloLifeList from '@/components/features/life/solo-life-list';
 import { PATH } from '@/constants/page-path';
 import { useLifePostsByMonthRange } from '@/lib/hooks/queries/use-life-posts-by-month-range';
 import { getNextMonth, getPrevMonth, getToday } from '@/lib/utils/get-date';
+import { formatKoreanDate } from '@/lib/utils/utc-to-kst';
 
-type Props = {
-  nickname: string;
-};
-
-const LifePageClient = ({ nickname }: Props) => {
+const LifePageClient = () => {
   const [selectedDate, setSelectedDate] = useState(getToday());
   const [calendarMonth, setCalendarMonth] = useState(getToday().slice(0, 7));
+  const [isEmpty, setIsEmpty] = useState<boolean | null>(null);
 
   const prevMonth = getPrevMonth(calendarMonth);
   const nextMonth = getNextMonth(calendarMonth);
@@ -33,8 +31,8 @@ const LifePageClient = ({ nickname }: Props) => {
   }, [posts]);
 
   return (
-    <div className="mt-5 flex w-full flex-col gap-4">
-      <div className="flex w-full justify-start px-4 sm:justify-center sm:px-0">
+    <div className="mt-[50px] flex w-full min-w-[440px] max-w-[996px] flex-col items-center px-4">
+      <div className="w-full min-w-[343px] max-w-[996px] px-4 sm:px-0">
         <Calendar
           setDate={setSelectedDate}
           selectedDate={selectedDate}
@@ -42,18 +40,20 @@ const LifePageClient = ({ nickname }: Props) => {
           onMonthChange={(month) => setCalendarMonth(month)}
         />
       </div>
-
-      <div className="flex flex-col items-center justify-between gap-1 px-4 text-center sm:flex-row sm:text-left">
-        <h2 className="whitespace-nowrap text-base font-semibold">
-          {selectedDate} {nickname}님의 혼자 라이프
+      <hr className="mb-[40px] w-full border-secondary-grey-400"></hr>
+      <div className="mb-[30px] flex w-full flex-row justify-between gap-1 text-left">
+        <h2 className="whitespace-nowrap text-xl font-semibold text-secondary-grey-900">
+          {formatKoreanDate(selectedDate)}
         </h2>
-        <Link href={PATH.LIFE_POST} className="whitespace-nowrap text-sm text-blue-600 hover:underline">
-          일기 작성하기 &gt;
-        </Link>
+        {!isEmpty && (
+          <Link href={PATH.LIFE_POST} className="whitespace-nowrap text-base text-secondary-grey-900 hover:underline">
+            일기 작성하기 &gt;
+          </Link>
+        )}
       </div>
 
-      <div className="min-h-[400px] px-10">
-        <SoloLifeList selectedDate={selectedDate} />
+      <div className="min-h-[400px] w-full">
+        <SoloLifeList selectedDate={selectedDate} setIsEmpty={setIsEmpty} />
       </div>
     </div>
   );

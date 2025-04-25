@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CustomButton } from '@/components/ui/custom-button';
@@ -10,7 +11,12 @@ interface NoRecordsBoxProps {
 
 const NoRecordsBox = ({ mode }: NoRecordsBoxProps) => {
   return (
-    <section className="col-span-full mb-[272px] flex min-h-[542px] flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500">
+    <section
+      className={clsx(
+        'col-span-full flex flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500',
+        mode === '캘린더' ? 'min-h-[351px]' : 'min-h-[543px]'
+      )}
+    >
       {/* 고양이 이미지 */}
       <figure className="relative mb-[20px] h-[58px] w-[65px]">
         <Image src={CAT_NO_RECORDS} alt="기록없음을 알리는 고양이 일러스트" fill className="object-contain" />
@@ -26,7 +32,7 @@ const NoRecordsBox = ({ mode }: NoRecordsBoxProps) => {
       </p>
       {/* 캘린더 모드 시, 버튼 적용 */}
       {mode === '캘린더' ? (
-        <Link href={PATH.LIFE_POST} className="mt-[30px]">
+        <Link href={PATH.LIFE_POST} className="mt-[30px] text-secondary-grey-900">
           <CustomButton variant="default">일기 작성하기</CustomButton>
         </Link>
       ) : (

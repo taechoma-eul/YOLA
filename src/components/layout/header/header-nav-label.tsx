@@ -1,11 +1,13 @@
 import { clsx } from 'clsx';
 
-const NavLabel = ({ isBold, label }: { isBold: boolean; label: string }) => {
+const NavLabel = ({ isBold, label, isMobile = false }: { isBold?: boolean; label: string; isMobile?: boolean }) => {
   return (
     <p
+      style={{ userSelect: 'none' }}
       className={clsx(
-        'flex h-[25px] justify-between text-center text-lg text-secondary-grey-900',
-        isBold ? 'font-semibold' : 'font-normal'
+        'flex justify-between text-center text-secondary-grey-900',
+        isBold && 'font-semibold',
+        isMobile ? 'h-[22px] text-base' : 'h-[25px] text-lg'
       )}
     >
       {label}

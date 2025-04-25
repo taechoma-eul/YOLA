@@ -8,24 +8,25 @@ interface CalendarHeaderProps {
 
 const CalendarHeader = ({ calendarMonth, onMoveMonth, onResetToToday }: CalendarHeaderProps) => {
   return (
-    <div className="mb-5 flex w-full items-center justify-center">
+    <div className="mb-5 flex w-full items-center justify-between px-[20px] md:px-[40px]">
+      <div className="hidden w-[61px] sm:invisible sm:block">a</div>
       {/* 가운데 정렬된 월 + 화살표 */}
-      <div className="ml-3 flex items-center justify-center gap-4 sm:ml-auto sm:gap-10">
+      <div className="flex items-center justify-center gap-4 sm:gap-[56px]">
         <button onClick={() => onMoveMonth(-1)} className="flex h-6 w-6 items-center justify-center">
-          <ChevronLeft className="h-5 w-5 text-zinc-800 sm:h-6 sm:w-6" />
+          <ChevronLeft className="h-6 w-6 text-secondary-grey-900" />
         </button>
-        <div className="text-center text-base font-semibold leading-6 text-zinc-800 sm:text-lg">
+        <div className="text-center text-lg font-semibold leading-6 text-secondary-grey-900 sm:text-xl">
           {calendarMonth.replace('-', '.')}
         </div>
         <button onClick={() => onMoveMonth(1)} className="flex h-6 w-6 items-center justify-center">
-          <ChevronRight className="h-5 w-5 text-zinc-800 sm:h-6 sm:w-6" />
+          <ChevronRight className="h-6 w-6 text-secondary-grey-900" />
         </button>
       </div>
 
       {/* TODAY 버튼 */}
       <button
         onClick={onResetToToday}
-        className="ml-auto mt-2 rounded px-2 py-1 text-sm outline outline-1 outline-zinc-800 sm:mt-0"
+        className="mt-2 h-[28px] w-[61px] rounded text-sm outline outline-1 outline-secondary-grey-900 sm:mt-0"
       >
         TODAY
       </button>

@@ -22,9 +22,9 @@ const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps)
   }, [level, stepLabels]);
 
   return (
-    <div className="item-center flex flex-col gap-3 rounded-[12px] border border-secondary-grey-400 px-10 pt-10">
+    <section className="item-center flex flex-col gap-3 rounded-[12px] border border-secondary-grey-400 px-10 pt-10">
       {/* 전체 레벨 바 표시 */}
-      <section>
+      <div>
         <div className="relative flex items-center justify-between">
           {/* Progress Bar */}
           <div className="relative h-[10px] w-full rounded-full bg-secondary-grey-200">
@@ -93,10 +93,10 @@ const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps)
             })}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* 아래 레벨 현황 및 남은 개수 */}
-      <section className="-mx-10 mt-[40px] w-[calc(100%+80px)] rounded-b-[12px] border-t border-dashed border-secondary-grey-600 bg-secondary-grey-100 p-[16px] text-center text-xs md:text-base">
+      <footer className="-mx-10 mt-[40px] w-[calc(100%+80px)] rounded-b-[12px] border-t border-dashed border-secondary-grey-600 bg-secondary-grey-100 p-[16px] text-center text-xs md:text-base">
         {remainingMissions !== null ? (
           <span>
             당신의 레벨은 <span className="font-semibold">{level}</span>입니다. 다음 레벨까지{' '}
@@ -107,8 +107,8 @@ const MypageProgressBar = ({ level, remainingMissions }: MypageProgressBarProps)
             당신의 레벨은 <span className="font-semibold">{level}</span>입니다. 최고 레벨입니다 🎉
           </span>
         )}
-      </section>
-    </div>
+      </footer>
+    </section>
   );
 };
 

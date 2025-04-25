@@ -64,7 +64,7 @@ const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props)
   const isOutside = (date: Date) => !isSameMonth(date, new Date(displayMonth + '-01'));
 
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-2 sm:px-4 lg:px-10">
+    <div className="mx-auto w-full max-w-[1280px]">
       <CalendarHeader
         calendarMonth={calendarMonth}
         onMoveMonth={moveMonth}

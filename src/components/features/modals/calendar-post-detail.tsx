@@ -120,15 +120,29 @@ export const PostDetailModal = ({
           {/** 사진 슬라이드 */}
           <ImageSwiper image_urls={post.image_urls} />
           <div className="mb-[2px] flex gap-[12px] text-center md:mb-[10px]">
-            <p className="font-(family-name:Comfortaa) text-sm font-normal text-secondary-grey-900 md:text-md">
+            <p className="font-(family-name:Comfortaa) md:text-md text-sm font-normal text-secondary-grey-900">
               {date}
             </p>
-            <Image src={divider} alt="날짜와 미션인증/하루일기 사이의 영역을 나누는 막대" />
-            {post.mission_id ? <Image src={missionIcon} alt="미션인증" /> : <Image src={diaryIcon} alt="하루일기" />}
+            <Image
+              src={divider}
+              alt="날짜와 미션인증/하루일기 사이의 영역을 나누는 막대"
+              className="h-auto w-auto"
+              width={100}
+              height={10}
+            />
+            {post.mission_id ? (
+              <Image src={missionIcon} alt="미션인증" width={100} height={10} className="h-auto w-auto" />
+            ) : (
+              <Image src={diaryIcon} alt="하루일기" width={100} height={10} className="h-auto w-auto" />
+            )}
           </div>
           <div className="flex min-h-[28px] w-[344px] justify-between md:mb-[8px] md:w-[542px]">
             <h1 className="text-lg">{post.title}</h1>
-            <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+            {post.mission_id ? (
+              <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} isMission={true} />
+            ) : (
+              <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+            )}
           </div>
           <div className="flex gap-[8px] pb-[20px]">
             {post.tags?.map((tag, idx) => (
@@ -141,7 +155,7 @@ export const PostDetailModal = ({
             ))}
           </div>
           <hr className="w-[344px] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
-          <p className="whitespace-pre-wrap text-md font-normal text-secondary-grey-900">{post.content}</p>
+          <p className="text-md whitespace-pre-wrap font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
     </div>

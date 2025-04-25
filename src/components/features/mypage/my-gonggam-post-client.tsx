@@ -47,19 +47,19 @@ const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
   const allPosts = posts.pages.flatMap((page) => page.data);
 
   return (
-    <div className="mt-[20px] md:mt-[72px]">
+    <article className="mt-[20px] px-[16px] md:mt-[72px]">
       <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
         {/* 데스크탑에서만 보이는 텍스트 */}
-        <div className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
+        <h2 className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
           {nickname}님이 작성한 공감 게시글
-        </div>
+        </h2>
         {/* SelectBox는 항상 오른쪽 정렬 */}
         <div className="ml-auto">
           <SelectBox value={sortBy} onChange={(value) => setSortBy(value as typeof sortBy)} />
         </div>
       </section>
 
-      <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-2">
+      <section className="mb-[30px] grid gap-5 md:mb-[272px] md:grid-cols-1 lg:grid-cols-2">
         {allPosts.length === 0 ? (
           <NoRecordsBox mode="공감" />
         ) : (
@@ -77,8 +77,8 @@ const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
             </div>
           </>
         )}
-      </div>
-    </div>
+      </section>
+    </article>
   );
 };
 

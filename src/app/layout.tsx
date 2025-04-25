@@ -7,7 +7,10 @@ import TQProvider from '@/lib/providers/TQProvider';
 
 export const metadata: Metadata = {
   title: '너 혼자 산다',
-  description: '혼자 사는 사람들의 소소한 일상 기록'
+  description: '혼자 사는 사람들의 소소한 일상 기록',
+  icons: {
+    icon: '/images/favicon.svg'
+  }
 };
 
 export default function RootLayout({
@@ -20,7 +23,7 @@ export default function RootLayout({
       <body>
         <TQProvider>
           <Header />
-          <main className="mx-auto flex min-h-[calc(100vh-150px)] w-full max-w-[1280px] flex-col items-center pt-[100px]">
+          <main className="mx-auto flex min-h-[calc(100vh-150px)] w-full max-w-[1280px] flex-col items-center pt-[60px] md:pt-[100px]">
             {children}
           </main>
           <Toaster />

@@ -1,7 +1,8 @@
 'use client';
 
+import useIsMobile from '@/lib/hooks/use-is-mobile';
 import { motion } from 'framer-motion';
-import { Info } from 'lucide-react';
+import { Info, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 interface TagInputProps {
@@ -15,6 +16,8 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
   const [inputValue, setInputValue] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
   const [shouldShake, setShouldShake] = useState(false);
+
+  const isMobile = useIsMobile();
 
   const triggerShake = () => {
     setShouldShake(true);
@@ -70,6 +73,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
       triggerShake();
     }
   };
+
   const shakeAnimation = {
     initial: { x: 0 },
     animate: {
@@ -78,50 +82,92 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
     }
   };
   return (
-    <div className="mb-5 flex flex-wrap items-center gap-2 rounded-md border border-secondary-grey-300 px-3 py-2">
-      {!inputVisible && (
-        <button
-          type="button"
-          onClick={() => setInputVisible(true)}
-          className="rounded border border-secondary-grey-800 px-3 py-1 text-sm text-secondary-grey-800 hover:bg-secondary-grey-100"
-        >
-          +태그추가
-        </button>
-      )}
-
-      {inputVisible && (
-        <input
-          ref={inputRef}
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          placeholder="입력 후 Enter"
-          className="min-w-[80px] rounded border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-1 focus:ring-primary-orange-500"
-        />
-      )}
-
-      {tags.map((tag) => (
-        <div
-          key={tag}
-          className="flex items-center gap-1 rounded border border-secondary-grey-600 px-3 py-1 text-sm text-secondary-grey-700"
-        >
-          <span>#{tag}</span>
-          <button type="button" onClick={() => handleRemove(tag)}>
-            ×
+    <>
+      {/* 모바일: 버튼 + 인풋 (태그박스 밖 위에 따로 표시) */}
+      <div className="mb-2 flex flex-col gap-2 sm:hidden">
+        {!inputVisible && (
+          <button
+            type="button"
+            onClick={() => setInputVisible(true)}
+            className="w-full rounded-[8px] border border-secondary-grey-800 px-[12px] py-[8px] text-sm text-secondary-grey-800 hover:bg-secondary-grey-100"
+          >
+            +태그추가
           </button>
-        </div>
-      ))}
+        )}
 
-      <motion.div
-        key={shouldShake ? 'shake' : 'stable'} // key 변경으로 애니메이션 재실행 유도
-        {...(shouldShake ? shakeAnimation : {})}
-        className="mt-2 flex w-full items-center gap-1 text-xs text-secondary-grey-700"
-      >
-        <Info className="h-[13px] w-[13px]" />
-        최대 8글자, 6개 이내
-      </motion.div>
-    </div>
+        {inputVisible && (
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder="입력 후 Enter"
+            className="w-full min-w-[80px] rounded-[8px] border border-gray-300 px-[12px] py-[8px] text-sm outline-none focus:ring-1 focus:ring-primary-orange-500"
+          />
+        )}
+        <motion.div
+          key={shouldShake ? 'shake' : 'stable'} // key 변경으로 애니메이션 재실행 유도
+          {...(shouldShake ? shakeAnimation : {})}
+          className="flex w-full items-center justify-end text-xs text-secondary-grey-700 md:mt-2 md:gap-1"
+        >
+          <Info className="h-[12px]" />
+          <p className="mt-[2px] md:hidden">최대 8글자, 6개 이내</p>
+        </motion.div>
+      </div>
+
+      {/* 공통 태그 박스 (데스크탑에서는 버튼/인풋도 여기에 포함됨) */}
+      {isMobile !== null && (tags.length > 0 || !isMobile) && (
+        <div className="mb-[12px] flex flex-wrap items-center rounded-md border border-secondary-grey-300 px-[16px] py-[12px] md:mb-[17px]">
+          <div className="hidden gap-2 sm:flex">
+            {!inputVisible && (
+              <button
+                type="button"
+                onClick={() => setInputVisible(true)}
+                className="flex items-center justify-center rounded-[8px] border border-secondary-grey-800 px-[12px] py-[8px] text-sm text-secondary-grey-800 hover:bg-secondary-grey-100"
+              >
+                +태그추가
+              </button>
+            )}
+
+            {inputVisible && (
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder="입력 후 Enter"
+                className="min-w-[80px] rounded-[8px] border border-gray-300 px-[12px] py-[8px] text-sm outline-none focus:ring-1 focus:ring-primary-orange-500 md:mr-[16px]"
+              />
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-[12px]">
+            {tags.map((tag) => (
+              <div
+                key={tag}
+                className="flex items-center justify-center gap-1 rounded-[8px] border border-secondary-grey-600 px-[10px] py-[8px] text-sm text-secondary-grey-700"
+              >
+                <span className="relative top-[1px]">#{tag}</span>
+                <button type="button" onClick={() => handleRemove(tag)}>
+                  <X className="h-[16px] w-[16px]" />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <motion.div
+            key={shouldShake ? 'shake' : 'stable'} // key 변경으로 애니메이션 재실행 유도
+            {...(shouldShake ? shakeAnimation : {})}
+            className="flex w-full items-center text-xs text-secondary-grey-700 md:mt-2 md:gap-1"
+          >
+            <Info className="hidden h-[12px] sm:block" />
+            <p className="mt-[2px] hidden sm:block">최대 8글자, 6개 이내</p>
+          </motion.div>
+        </div>
+      )}
+    </>
   );
 };
 

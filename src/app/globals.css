@@ -129,7 +129,41 @@ body {
   background: #2e3135;
 }
 
+/* 모바일 스와이프 커스텀 페이지 네이션 */
+.custom-pagination-mobile .custom-bullet-mobile {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid #8d939a;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 모바일 스와이프 커스텀 페이지 네이션 액티브 상태 */
+.custom-pagination-mobile .custom-bullet-active-mobile {
+  width: 1.5rem;
+  height: 0.375rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: #2e3135;
+}
+
 .custom-spinner {
   transform: scale(1.566);
   transform-origin: center;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* summary 태그 마커 제거 */
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
 }

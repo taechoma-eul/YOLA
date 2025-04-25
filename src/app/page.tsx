@@ -1,32 +1,27 @@
-import MainBannerSwiper from '@/components/features/home/main-banner-swiper';
-import CheckListCard from '@/components/features/home/main-checklist-card';
-import GonggamPreviewSection from '@/components/features/home/main-gonggam-preview';
-import RandomMissionSection from '@/components/features/home/main-random-mission';
+import ChallengeSection from '@/components/features/onboarding/challenge-section';
+import EndSection from '@/components/features/onboarding/end-section';
+import FloatingButton from '@/components/features/onboarding/floating-button';
+import GonggamBoardSection from '@/components/features/onboarding/gonggam-board-section';
+import LifeSection from '@/components/features/onboarding/life-section';
+import MissionSection from '@/components/features/onboarding/mission-section';
+import RandomMissionSection from '@/components/features/onboarding/random-mission-section';
+import TitleSection from '@/components/features/onboarding/title-section';
 
-const HomePage = async () => {
-  const checkListTypes: string[] = ['혼밥', '혼자여행', '갓생', '청소', '혼놀'];
-
+const OnboardingPage = () => {
   return (
-    <>
-      <MainBannerSwiper />
-      <section className="mt-[46px] flex w-[1200px] flex-col gap-[26px]">
-        <strong className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
-          YOLA 챌린지
-        </strong>
-        <div className="flex items-center justify-between self-stretch">
-          {checkListTypes.map((item) => (
-            <CheckListCard key={item} checkListType={item} />
-          ))}
-        </div>
-      </section>
-      <hr className="mx-auto mt-[57px] w-[1200px] outline-secondary-grey-200" />
-      <section className="mx-auto mb-[73px] mt-[61px] flex w-[1200px] items-center justify-between self-stretch">
-        <RandomMissionSection />
-        <div className="h-60 w-0 origin-top-left outline outline-1 outline-offset-[-0.50px] outline-gray-200" />
-        <GonggamPreviewSection />
-      </section>
-    </>
+    <div className="relative w-full">
+      <TitleSection />
+      <ChallengeSection />
+      <MissionSection />
+      <LifeSection />
+      <RandomMissionSection />
+      <GonggamBoardSection />
+      <EndSection />
+      <div className="sticky bottom-0">
+        <FloatingButton />
+      </div>
+    </div>
   );
 };
 
-export default HomePage;
+export default OnboardingPage;

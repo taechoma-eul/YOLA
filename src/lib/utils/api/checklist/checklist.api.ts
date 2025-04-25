@@ -5,26 +5,6 @@ import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { UserLevelByMissionType } from '@/types/checklist';
 import type { EnumChecklist, EnumLevel, TableMissionList, TableUserLevel } from '@/types/supabase-const';
 
-/**
- * Supabase에서 `mission_list` 테이블의 고유한 `type` 값을 조회하는 함수
- *
- * @async
- * @function getUniqueMissionType
- * @returns {Promise<Array<{ type: string }> | null>} `type` unique value 배열
- * @throws {Error} Supabase 쿼리 실행 중 오류에 대해 콘솔 로그 출력 & 빈 배열 반환
- */
-export const getUniqueMissionType = async (): Promise<string[]> => {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from(TABLE.MISSION_LIST).select('type');
-  if (error) {
-    console.error(error);
-    return [];
-  }
-
-  const uniqueTypes: string[] = Array.from(new Set<string>(data.map((item: { type: string }) => item.type)));
-  return uniqueTypes;
-};
-
 /** getUserLevelByMission: 유저 레벨 정보 불러오기
  *
  * @async

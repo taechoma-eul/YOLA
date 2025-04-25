@@ -12,11 +12,12 @@ import GOAT_ICON from '@images/images/goat-icon.svg';
 import MEAL_ICON from '@images/images/meal-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
 import TRAVEL_ICON from '@images/images/travel-icon.svg';
+import { FAIL } from '@/constants/messages';
 
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회
   const profile = await getUserProfile();
-  if (!profile) throw new Error();
+  if (!profile) throw new Error(FAIL.GET_PROFILE);
   const { isLogin } = await getUserSessionState();
 
   // 미션리스트 가져오기
@@ -43,29 +44,29 @@ const AchievementPage = async () => {
   }));
 
   return (
-    <div className="flex flex-col gap-[86px]">
+    <article className="flex flex-col px-[16px] md:gap-[74px]">
       {/* 전체 레벨 5단계 */}
-      <section className="mt-[72px] flex flex-col gap-[20px]">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+      <section className="mb-[41px] mt-[20px] flex flex-col gap-[20px] md:mb-0 md:mt-[72px]">
+        <h2 className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {profile.nickname}님의 혼자라이프 레벨
-        </div>
+        </h2>
         <MypageProgressBar level={level} remainingMissions={remainingMissions} />
       </section>
 
       {/* 각각의 미션 카테고리 level 현황 */}
-      <section className="flex flex-col gap-[20px]">
-        <div className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
+      <section className="mb-[30px] flex flex-col gap-[20px] md:mb-0">
+        <h2 className="justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900">
           {profile.nickname}님의 체크리스트 달성도
-        </div>
-        <div className="relative flex flex-col rounded-[12px] border border-secondary-grey-400 py-[12px] md:flex-row">
+        </h2>
+        <div className="relative flex flex-col rounded-[12px] border border-secondary-grey-400 py-0 md:flex-row md:py-[12px]">
           {categories.map(({ type, level, description, icon }, index) => (
             <div
               key={type}
-              className="group relative flex flex-1 flex-col justify-between px-[20px] py-[20px] transition-colors duration-200 hover:bg-gray-100 md:justify-center"
+              className="group relative flex flex-1 flex-col justify-between px-[20px] py-[20px] md:justify-center"
             >
               {/* 세로 구분선 (데스크탑 환경) */}
               {index !== 0 && (
-                <div className="absolute left-0 top-1/2 h-[62px] w-[1px] -translate-y-1/2 bg-secondary-grey-300" />
+                <div className="absolute left-0 top-1/2 hidden h-[62px] w-[1px] -translate-y-1/2 bg-secondary-grey-300 md:block" />
               )}
 
               {/* 가로 구분선 (모바일 환경) */}
@@ -98,12 +99,9 @@ const AchievementPage = async () => {
 
       {/* 렌덤 미션 뽑기 */}
       <section className="flex flex-col gap-[20px]">
-        <div className="hidden justify-start self-stretch text-xl font-semibold leading-7 text-secondary-grey-900 md:block">
-          오늘의 랜덤 미션
-        </div>
         <RandomMissionBox isLogin={isLogin} missionsData={missionsData} />
       </section>
-    </div>
+    </article>
   );
 };
 

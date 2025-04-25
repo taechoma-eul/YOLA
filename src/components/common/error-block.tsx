@@ -22,7 +22,7 @@ const ErrorBlock = ({ errorMessage, image }: ErrorBlockProps) => {
   };
 
   return (
-    <section className="inline-flex h-[calc(100vh-150px-250px)] flex-col items-center justify-center justify-items-center gap-10">
+    <section className="inline-flex h-[calc(100vh-150px-157px)] flex-col items-center justify-center justify-items-center gap-10 md:h-[calc(100vh-150px-250px)]">
       <div className="flex flex-col">
         <Image src={image} alt="에러페이지" width={240} height={184} />
         <p className="font-center mb-[20px] mt-[40px] inline-flex items-center justify-center gap-2.5 self-stretch px-2.5 text-center text-base leading-snug text-zinc-800">

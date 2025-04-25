@@ -52,7 +52,7 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form className="mt-[37px] w-[360px]" action={handleFormAction}>
+      <form className="mt-[28px] w-full max-w-[360px] md:mt-[37px]" action={handleFormAction}>
         <div className="mb-[28px] flex flex-col gap-[17px]">
           {loginFieldData.map((data, index) => (
             <FormField
