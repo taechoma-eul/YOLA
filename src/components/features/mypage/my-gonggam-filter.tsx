@@ -8,6 +8,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import type { SortBy } from '@/types/gonggam';
+import { useEffect, useState } from 'react';
 
 interface SelectBoxProps {
   value: string;
@@ -15,8 +16,21 @@ interface SelectBoxProps {
 }
 
 export function SelectBox({ value, onChange }: SelectBoxProps) {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = isOpen && scrollbarWidth > 0 ? `${scrollbarWidth}px` : '0';
+  };
+
+  useEffect(() => {
+    return () => {
+      document.body.style.paddingRight = '0';
+    };
+  }, []);
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value} onValueChange={onChange} onOpenChange={handleOpenChange} open={open}>
       <SelectTrigger className="h-[44px] w-[120px]">
         <SelectValue />
       </SelectTrigger>
