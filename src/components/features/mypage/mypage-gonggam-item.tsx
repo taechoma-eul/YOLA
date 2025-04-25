@@ -12,7 +12,9 @@ const MypageGonggamItem = ({ post }: ItemProps) => {
   return (
     <MypageItemContainer postId={post.id} category={post.category}>
       <ContentsContainer>
-        <h2 className="justify-start self-stretch text-sm text-secondary-grey-900">{post.category}</h2>
+        <h2 className="justify-start self-stretch text-sm font-normal leading-tight text-secondary-grey-900">
+          {post.title}
+        </h2>
         <p className="w-80 justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs text-secondary-grey-900">
           {post.content}
         </p>

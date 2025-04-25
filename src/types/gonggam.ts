@@ -52,6 +52,7 @@ export interface GetMyGonggamPostsResponse {
 //gonggam_posts_with_counts 뷰 타입 정의
 export type GonggamPostWithCounts = {
   id: number;
+  title: string;
   category: EnumCategories;
   content: string | null;
   created_at: string;
