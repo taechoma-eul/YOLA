@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import FOOTER_LOGO from '@images/images/footer-logo.svg';
 import Link from 'next/link';
 import { PATH } from '@/constants/page-path';
+import FOOTER_LOGO from '@images/images/footer-logo.svg';
 
 const Footer = () => {
   return (

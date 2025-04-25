@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
 import RandomMissionBox from '@/components/features/mypage/mypage-radom-mission-box';
+import { FAIL } from '@/constants/messages';
 import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { getMissionsData } from '@/lib/utils/api/missions.api';
 import { getUserMission } from '@/lib/utils/api/mypage/my-mission.api';
@@ -12,7 +13,6 @@ import GOAT_ICON from '@images/images/goat-icon.svg';
 import MEAL_ICON from '@images/images/meal-icon.svg';
 import PLAY_ICON from '@images/images/play-icon.svg';
 import TRAVEL_ICON from '@images/images/travel-icon.svg';
-import { FAIL } from '@/constants/messages';
 
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회

@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NoRecordsBox from '@/components/common/no-records-box';
@@ -8,7 +9,6 @@ import { PostDetailModal } from '@/components/features/modals/calendar-post-deta
 import { SelectBox } from '@/components/features/mypage/my-life-filter';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import { QUERY_KEY } from '@/constants/query-keys';
-import { useQueryClient } from '@tanstack/react-query';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType, SortBy } from '@/types/life-post';
 

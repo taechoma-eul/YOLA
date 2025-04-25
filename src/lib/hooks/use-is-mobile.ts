@@ -11,7 +11,7 @@ const useIsMobile = (breakpoint: number = 768): boolean | null => {
     handleResize(); // 초기 렌더 시 한 번 실행
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [breakpoint]);
 
   return isMobile;
 };

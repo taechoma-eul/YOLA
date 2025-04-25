@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -10,7 +11,6 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import type { SortBy } from '@/types/life-post';
-import { useEffect, useState } from 'react';
 
 interface SelectBoxProps {
   value: string;

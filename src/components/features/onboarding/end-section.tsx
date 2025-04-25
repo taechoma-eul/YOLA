@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import { CustomButton } from '@/components/ui/custom-button';
 import { PATH } from '@/constants/page-path';
-import Link from 'next/link';
 
 const EndSection = () => {
   return (
