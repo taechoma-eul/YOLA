@@ -27,6 +27,7 @@ const NavMobileChallengeMenu = () => {
         <summary className="flex items-center gap-2 px-5 py-4">
           <NavLabel label="챌린지" isMobile />
           <Image
+            draggable="false"
             className="group-open:rotate-180"
             src={MENU_ICON}
             alt="챌린지 메뉴 드롭 다운 표시 아이콘"

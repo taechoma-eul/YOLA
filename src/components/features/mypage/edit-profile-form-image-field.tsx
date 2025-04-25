@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { AUTH } from '@/constants/auth-form';
-import { processedImagePreview } from '@/lib/utils/processed-image';
 import type { EditFormData } from '@/types/auth-form';
 import CAMERA from '@images/images/camera.svg';
 
@@ -35,7 +34,8 @@ const ProfileImageField = ({
     // Form에 파일 설정
     form.setValue(AUTH.PROFILE_IMAGE_FILE, e.target.files);
 
-    const url = await processedImagePreview(selectedFile);
+    const url = URL.createObjectURL(selectedFile);
+
     setPreviewUrl(url);
   };
 
@@ -47,14 +47,20 @@ const ProfileImageField = ({
         <div className="relative flex w-44 flex-col items-end justify-start">
           <ProfileAvatar src={previewUrl ? previewUrl : profileImage} mode="desktop" />
           <FormControl>
-            <Input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
+            <Input
+              type="file"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/jpeg,image/png,image/webp,image/gif,image/jpg"
+            />
           </FormControl>
           <Button
             type="button"
             onClick={triggerFileInput}
-            className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-neutral-600 p-0"
+            className="absolute left-[140px] top-[140px] flex h-10 w-10 items-center justify-center rounded-full bg-secondary-grey-800 p-0"
           >
-            <Image src={CAMERA} alt="프로필 이미지 업로드 버튼" width={20} height={20} />
+            <Image src={CAMERA} alt="프로필 이미지 업로드 버튼" width={20} height={20} draggable="false" />
           </Button>
         </div>
       )}
