@@ -31,8 +31,8 @@ const LifePageClient = () => {
   }, [posts]);
 
   return (
-    <div className="mt-[50px] flex w-[996px] flex-col">
-      <div className="flex w-full justify-start px-4 sm:justify-center sm:px-0">
+    <div className="mt-[50px] flex w-full min-w-[440px] max-w-[996px] flex-col items-center px-4">
+      <div className="w-full min-w-[343px] max-w-[996px] px-4 sm:px-0">
         <Calendar
           setDate={setSelectedDate}
           selectedDate={selectedDate}
@@ -40,8 +40,8 @@ const LifePageClient = () => {
           onMonthChange={(month) => setCalendarMonth(month)}
         />
       </div>
-      <hr className="mb-[40px] border-secondary-grey-400"></hr>
-      <div className="mb-[30px] flex flex-col items-center justify-between gap-1 text-center sm:flex-row sm:text-left">
+      <hr className="mb-[40px] w-full border-secondary-grey-400"></hr>
+      <div className="mb-[30px] flex w-full flex-row justify-between gap-1 text-left">
         <h2 className="whitespace-nowrap text-xl font-semibold text-secondary-grey-900">
           {formatKoreanDate(selectedDate)}
         </h2>
@@ -52,7 +52,7 @@ const LifePageClient = () => {
         )}
       </div>
 
-      <div className="min-h-[400px]">
+      <div className="min-h-[400px] w-full">
         <SoloLifeList selectedDate={selectedDate} setIsEmpty={setIsEmpty} />
       </div>
     </div>

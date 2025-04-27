@@ -1,9 +1,9 @@
 'use client';
 
-import useIsMobile from '@/lib/hooks/use-is-mobile';
 import { motion } from 'framer-motion';
 import { Info, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import useIsMobile from '@/lib/hooks/use-is-mobile';
 
 interface TagInputProps {
   value?: string[];

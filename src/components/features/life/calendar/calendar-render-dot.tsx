@@ -12,13 +12,15 @@ const RenderDot = (
 
     return (
       <div className="flex h-14 w-full select-none flex-col items-center justify-start gap-1 overflow-hidden px-2.5 py-[3px]">
-        <div className="flex flex-col items-start justify-start gap-0.5">
+        <div className="flex flex-row items-start justify-start gap-0.5 md:flex-col">
           {dots?.has('mission') && (
             <div className="inline-flex items-center justify-start gap-1">
               <div
                 className={`h-2 w-2 rounded-full ${isOutside ? 'bg-calendar-mission opacity-50' : 'bg-calendar-mission'}`}
               />
-              <div className={`justify-center text-center text-xs font-normal leading-none ${dotTextColor}`}>
+              <div
+                className={`hidden justify-center text-center text-xs font-normal leading-none ${dotTextColor} md:block`}
+              >
                 미션인증
               </div>
             </div>
@@ -26,7 +28,9 @@ const RenderDot = (
           {dots?.has('normal') && (
             <div className="inline-flex items-center justify-start gap-1">
               <div className={`h-2 w-2 rounded-full ${normalColor}`} />
-              <div className={`justify-center text-center text-xs font-normal leading-none ${dotTextColor}`}>
+              <div
+                className={`hidden justify-center text-center text-xs font-normal leading-none ${dotTextColor} md:block`}
+              >
                 하루일기
               </div>
             </div>

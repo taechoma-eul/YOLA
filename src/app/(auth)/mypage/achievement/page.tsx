@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import MypageProgressBar from '@/components/features/mypage/mypage-progressbar';
 import RandomMissionBox from '@/components/features/mypage/mypage-radom-mission-box';
+import { FAIL } from '@/constants/messages';
 import { getUserProfile, getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { getMissionsData } from '@/lib/utils/api/missions.api';
 import { getUserMission } from '@/lib/utils/api/mypage/my-mission.api';
@@ -16,7 +17,7 @@ import TRAVEL_ICON from '@images/images/travel-icon.svg';
 const AchievementPage = async () => {
   //유저 닉네임 및 로그인 조회
   const profile = await getUserProfile();
-  if (!profile) throw new Error();
+  if (!profile) throw new Error(FAIL.GET_PROFILE);
   const { isLogin } = await getUserSessionState();
 
   // 미션리스트 가져오기

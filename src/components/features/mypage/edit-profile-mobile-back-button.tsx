@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import BACK_ICON from '@images/images/go-back-icon.svg';
 import { useRouter } from 'next/navigation';
+import BACK_ICON from '@images/images/go-back-icon.svg';
 
 const BackButton = () => {
   const router = useRouter();
