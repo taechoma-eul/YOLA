@@ -23,19 +23,20 @@ export interface WriterProfile {
 
 export interface GonggamPostDetailResponse extends TableGonggamPostWithCounts {
   writer: WriterProfile;
+  imageUrl: string;
 }
 
 export interface GonggamPostDetail extends GonggamPostDetailResponse {
   images: string[];
 }
 
-export interface CommentWithUser extends Omit<TableComments, 'post_id' | 'user_id'> {
+export interface GonggamPostDetailWithoutCounts extends TableGonggamPosts {
   writer: WriterProfile;
+  images: string[];
 }
 
-export interface GonggamPostMeta {
-  likeCnt: number;
-  commentCnt: number;
+export interface CommentWithUser extends Omit<TableComments, 'post_id' | 'user_id'> {
+  writer: WriterProfile;
 }
 
 export interface UploadGonggamCommentParams {
