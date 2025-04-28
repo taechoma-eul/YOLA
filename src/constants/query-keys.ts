@@ -3,6 +3,7 @@ export const QUERY_KEY = {
   LIFE_POSTS_INFINITE: 'life-posts-infinite',
   GONGGAM_POSTS_INFINITE: 'gonggam-posts-infinite',
   LIFE_POSTS: 'life-posts',
+  GONGGAM_LIKE: 'gonggam-like',
   GONGGAM_COMMENTS: 'gonggam-comments',
   GONGGAM_POSTS: 'gonggam-posts',
   MISSIONS: 'missions', // 전체 미션 리스트 조회
