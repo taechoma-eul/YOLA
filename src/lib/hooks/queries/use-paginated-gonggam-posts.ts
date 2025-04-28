@@ -6,7 +6,6 @@ import type { EnumCategories } from '@/types/supabase-const';
 export const usePaginatedGonggamPosts = (category: EnumCategories, page: number) => {
   return useQuery({
     queryKey: [QUERY_KEY.GONGGAM_POSTS, category, page],
-    queryFn: () => getPaginatedGonggamPostsByClient(category, page),
-    staleTime: 0
+    queryFn: () => getPaginatedGonggamPostsByClient(category, page)
   });
 };
