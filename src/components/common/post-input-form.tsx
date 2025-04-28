@@ -88,6 +88,7 @@ const PostInputForm = ({
     defaultValues?.missionId ?? (missionId ? +missionId : null)
   );
   const [showModal, setShowModal] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const isMission = !!missionId;
   const selectedMission = dropdownMissions?.find((m) => m.id === selectedMissionId);
@@ -146,7 +147,7 @@ ex) 오늘은 혼자 코인노래방에 가서 3시간을 부르고 나왔다. �
       toastAlert('이미지는 최소 1장 이상 등록해주세요.', 'warning');
       return;
     }
-
+    setIsClicked(true);
     try {
       const newUploads = await uploadImages(images);
       const imageUrls = [...uploadedImages.map((img) => img.publicUrl), ...newUploads.map((img) => img.publicUrl)];
@@ -270,7 +271,7 @@ ex) 오늘은 혼자 코인노래방에 가서 3시간을 부르고 나왔다. �
         </div>
 
         <div className="mx-auto mt-6 flex w-full items-center justify-center gap-5">
-          <CustomButton type="submit" disabled={isLoading}>
+          <CustomButton type="submit" disabled={isClicked}>
             {buttonLabel}
           </CustomButton>
         </div>
