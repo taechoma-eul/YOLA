@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CustomButton } from '@/components/ui/custom-button';
 import { Input } from '@/components/ui/input';
 import { FAIL, SUCCESS } from '@/constants/messages';
-import { useUploadComment } from '@/lib/hooks/mutations/use-gonggam-mutation';
+import { useInsertGonggamComment } from '@/lib/hooks/mutations/use-insert-gonggam-comment';
 import { toastAlert } from '@/lib/utils/toast';
 import DEFAULT_AVATAR_URL from '@images/images/default-avatar.svg';
 
@@ -16,7 +16,7 @@ interface GonggamCommentFormProps {
 
 const GonggamCommentForm = ({ postId, isLogin, profileImage = DEFAULT_AVATAR_URL }: GonggamCommentFormProps) => {
   const [newComment, setNewComment] = useState<string>('');
-  const { mutate: uploadComment, isPending: isUploading } = useUploadComment(postId);
+  const { mutate: uploadComment, isPending: isUploading } = useInsertGonggamComment(postId);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newComment.trim()) return;
