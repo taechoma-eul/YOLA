@@ -34,13 +34,26 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
               if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
               if (bar.type === 'partial') {
                 return (
-                  <div key={idx} className="flex flex-1 gap-[2px]">
-                    {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={idx} className="flex-1">
+                    {/* 모바일 */}
+                    <div className="flex h-3 w-full bg-secondary-grey-400 md:hidden">
                       <div
-                        key={i}
-                        className={`flex-1 ${i < Math.min(bar.completed, 5) ? 'bg-primary-orange-400' : 'bg-secondary-grey-400'}`}
-                      />
-                    ))}
+                        className="h-3 bg-primary-orange-400"
+                        style={{ width: `${(bar.completed / 5) * 100}%` }}
+                      ></div>
+                    </div>
+                    {/* 데스크탑 */}
+                    <div className="hidden min-h-3 w-full gap-[2px] md:flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={clsx(
+                            'flex-1',
+                            i < Math.min(bar.completed, 5) ? 'bg-primary-orange-400' : 'bg-secondary-grey-400'
+                          )}
+                        />
+                      ))}
+                    </div>
                   </div>
                 );
               }
