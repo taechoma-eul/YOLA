@@ -3,6 +3,7 @@ import { FAIL, SUCCESS } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
+import { useRouter } from 'next/navigation';
 import type { GonggamPostDetailWithoutCounts } from '@/types/gonggam';
 
 interface useDeleteGonggamPostProps {
@@ -10,6 +11,7 @@ interface useDeleteGonggamPostProps {
 }
 
 export const useDeleteGonggamPost = ({ onSuccessCallback }: useDeleteGonggamPostProps) => {
+  const router = useRouter();
   return useMutation({
     mutationFn: async (post: GonggamPostDetailWithoutCounts) => {
       const { id: postId, images: image_urls } = post;
@@ -28,6 +30,7 @@ export const useDeleteGonggamPost = ({ onSuccessCallback }: useDeleteGonggamPost
     onSuccess: () => {
       toastAlert(SUCCESS.DELETE_GONGGAM_POST, 'success');
       onSuccessCallback?.();
+      router.back();
     },
 
     onError: (error) => {
