@@ -10,6 +10,7 @@ import { SelectBox } from '@/components/features/mypage/my-life-filter';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType, SortBy } from '@/types/life-post';
+import { SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 
 interface MyLifeListClientProps {
   nickname: string;
@@ -55,7 +56,7 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
       })
     ) ?? [];
 
-  if (isPending) return <div className="p-4">로딩 중...</div>;
+  if (isPending) return <SoloLifeCardSkeletonSection mode="mypage" />;
   if (error) throw error;
 
   const handleClickCard = (id: string) => {

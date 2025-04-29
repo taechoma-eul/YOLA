@@ -9,6 +9,7 @@ import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { LifePostWithImageUrls } from '@/types/life-post';
+import { SoloLifeCardSkeleton, SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 interface SoloLifeListProps {
   selectedDate: string;
   setIsEmpty: React.Dispatch<React.SetStateAction<boolean | null>>;
@@ -52,9 +53,7 @@ const SoloLifeList = ({ selectedDate, setIsEmpty }: SoloLifeListProps) => {
     setShowModal(true);
   };
 
-  if (isPending) {
-    return <div>로딩 중...</div>;
-  }
+  if (isPending) return <SoloLifeCardSkeletonSection mode="calendar" />;
 
   if (parsedList.length === 0) {
     return (
