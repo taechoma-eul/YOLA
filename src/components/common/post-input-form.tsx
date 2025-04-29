@@ -184,6 +184,7 @@ ex) 오늘은 혼자 코인노래방에 가서 3시간을 부르고 나왔다. �
 
       mutationFn();
     } catch (err) {
+      setIsClicked(false);
       toastAlert(err instanceof Error ? err.message : '알 수 없는 오류', 'destructive');
     }
   };
