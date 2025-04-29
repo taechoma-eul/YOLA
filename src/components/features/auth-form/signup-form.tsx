@@ -51,7 +51,7 @@ const SignupForm = () => {
     { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: signupForm, inputType: 'password' },
     {
       fieldName: AUTH.CHECK_PASSWORD,
-      placeholder: PLACEHOLDER.CHECK_PASSWORD,
+      placeholder: '비밀번호를 한번 더 입력하세요.',
       form: signupForm,
       inputType: 'password',
       isValid: signupForm.formState.dirtyFields.checkPassword && !signupForm.formState.errors.checkPassword

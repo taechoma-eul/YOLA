@@ -6,7 +6,7 @@ import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-che
 import { CustomButton } from '@/components/ui/custom-button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { AUTH, LABEL, PLACEHOLDER } from '@/constants/auth-form';
+import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, FAIL, SUCCESS } from '@/constants/messages';
 import { fetchDuplicateCheck } from '@/lib/utils/api/auth/auth-client.api';
 import type { EditFormData } from '@/types/auth-form';
@@ -65,7 +65,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
       name={AUTH.NICKNAME}
       render={({ field }) => (
         <FormItem className="flex h-10 w-full items-center justify-start self-stretch">
-          <FormLabel className="justify-start text-lg font-normal text-secondary-grey-900">{LABEL.NICKNAME}</FormLabel>
+          <FormLabel className="justify-start text-lg font-normal text-secondary-grey-900">닉네임</FormLabel>
           <div className="relative ml-[21px] mr-[12px] md:ml-[42px] md:mr-[8px]">
             <FormControl>
               <Input
