@@ -1,12 +1,10 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NoRecordsBox from '@/components/common/no-records-box';
 import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
-import { QUERY_KEY } from '@/constants/query-keys';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
 import type { SortBy } from '@/types/gonggam';
 
@@ -16,13 +14,6 @@ interface MyGonggamPostClientProps {
 
 const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
   const [sortBy, setSortBy] = useState<SortBy>('latest');
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    queryClient.invalidateQueries({
-      queryKey: [QUERY_KEY.GONGGAM_POSTS_INFINITE, sortBy]
-    });
-  }, [sortBy, queryClient]);
 
   const {
     data: posts,
@@ -33,13 +24,14 @@ const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
     isFetchingNextPage
   } = useGetGonggamPostsInfiniteQuery(sortBy);
 
-  const { ref, inView } = useInView({ threshold: 0.5 });
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+  const { ref } = useInView({
+    threshold: 0.5,
+    onChange(inView) {
+      if (inView && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
     }
-  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  });
 
   if (isPending) return <div className="p-4">로딩 중...</div>;
   if (error) throw error;
