@@ -1,10 +1,4 @@
-import type {
-  TableComments,
-  TableGonggamPostWithCounts,
-  TableGonggamPosts,
-  TableLikes,
-  TableUsers
-} from '@/types/supabase-const';
+import type { EnumCategories, TableComments, TableGonggamPosts, TableLikes, TableUsers } from '@/types/supabase-const';
 
 export interface PaginatedPostsResponse {
   posts: GonggamPostDetailResponse[];
@@ -21,7 +15,9 @@ export interface WriterProfile {
   profile_image?: TableUsers['profile_image'];
 }
 
-export interface GonggamPostDetailResponse extends TableGonggamPostWithCounts {
+type GonggamBoardTypeViaView = Omit<GonggamPostWithCounts, 'users'>;
+
+export interface GonggamPostDetailResponse extends GonggamBoardTypeViaView {
   writer: WriterProfile;
   imageUrl: string;
 }
@@ -55,9 +51,22 @@ export interface GetMyGonggamPostsResponse {
   page: number;
   totalPages: number;
 }
-export interface GonggamPostWithCounts extends TableGonggamPostWithCounts {
+export interface GonggamPostWithCounts {
+  id: number;
+  title: string;
+  category: EnumCategories;
+  content: string;
+  created_at: string;
+  updated_at: string | null;
+  user_id: string;
+  like_count: number;
+  comment_count: number;
+  tags: string[];
+  view_count: number;
+  // 조인된 users 테이블 필드 추가 (닉네임만)
   users: {
     nickname: string;
+    profile_image?: string;
   };
 }
 

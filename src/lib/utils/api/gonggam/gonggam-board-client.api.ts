@@ -1,6 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { PaginatedPostsResponse } from '@/types/gonggam';
+import type { GonggamPostDetailResponse, PaginatedPostsResponse } from '@/types/gonggam';
 import type { EnumCategories } from '@/types/supabase-const';
 
 const PAGE_SIZE = 5; // 페이지당 보여줄 게시글 수
@@ -69,7 +69,7 @@ export const getPaginatedGonggamPostsByClient = async (
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   return {
-    posts,
+    posts: posts as GonggamPostDetailResponse[],
     pagination: {
       currentPage: page,
       totalPages,
