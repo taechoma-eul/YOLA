@@ -15,7 +15,7 @@ interface FieldProps<T extends FieldValues> {
   inputType: string;
   placeholder: string;
   isCheckButton?: boolean;
-  fieldName: string;
+  fieldName: 'email' | 'nickname' | 'password' | 'checkPassword';
   field: ControllerRenderProps<T>;
   isValid?: boolean;
   setEmailDuplicateCheck?: Dispatch<SetStateAction<boolean>>;
