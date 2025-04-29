@@ -32,14 +32,11 @@ const AchievementPage = async () => {
   const missionList = parseUserMissions(rawMissionsFromSupabase);
   const missionLevels = await getLevelsByTypes({ missionList });
 
-  //레벨이 'master'일 땐 그냥 "master"로 보여주고 숫자 레벨이면 "LV.1", "LV.2" 등으로 포맷해줌
-  const formatLevel = (level: number | 'master') => (level === 'master' ? 'master' : `LV.${level}`);
-
   //가져온 계산값을 객체로 만들면서 description 및 icon 정보 추가
   const categories = missionLevels.map(({ type, currentLevel, nextLevelLeft }) => ({
     type: type,
-    level: currentLevel as number | 'master',
-    description: `다음 레벨까지 ${nextLevelLeft}개`,
+    level: currentLevel as number | string,
+    description: currentLevel === 'CLEAR' ? '모든 항목 완료!' : `다음 레벨까지 ${nextLevelLeft}개`,
     icon: CATEGORY_ICONS[type as keyof typeof CATEGORY_ICONS]
   }));
 
@@ -83,8 +80,12 @@ const AchievementPage = async () => {
                   {type}
                 </div>
                 {/* 레벨 표시 */}
-                <strong className="mt-[15px] flex items-center justify-center text-xl font-semibold">
-                  {formatLevel(level)}
+                <strong
+                  className={`mt-[15px] flex items-center justify-center text-lg font-semibold ${
+                    level === 'CLEAR' ? 'text-mission-clear' : ''
+                  }`}
+                >
+                  {level}
                 </strong>
               </div>
 

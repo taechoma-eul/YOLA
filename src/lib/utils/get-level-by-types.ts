@@ -41,14 +41,14 @@ export const getLevelsByTypes = async ({ missionList }: { missionList: Mission[]
       }
     }
 
-    const isMaster = currentLevel > 5; // LV.6 이상이면 'master'로 간주
-    const activeLevelIndex = isMaster ? 4 : currentLevel - 1; // 현재 레벨 인덱스 계산
+    const isClear = currentLevel > 5; // LV.6 이상이면 'clear'로 간주
+    const activeLevelIndex = isClear ? 4 : currentLevel - 1; // 현재 레벨 인덱스 계산
 
     return {
       type: type as EnumChecklist,
-      currentLevel: isMaster ? 'master' : currentLevel,
+      currentLevel: isClear ? 'CLEAR' : `LV.${currentLevel}`,
       currentLevelDone: levels[activeLevelIndex],
-      nextLevelLeft: isMaster ? 0 : MAX_LEVEL_COUNT - levels[activeLevelIndex]
+      nextLevelLeft: isClear ? 0 : MAX_LEVEL_COUNT - levels[activeLevelIndex]
     };
   });
 

@@ -41,6 +41,7 @@ export const useDeleteLifePost = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LIFE_POSTS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LIFE_POSTS_INFINITE] });
     }
   });
 };
