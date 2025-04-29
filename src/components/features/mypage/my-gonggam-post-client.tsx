@@ -24,7 +24,7 @@ const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
     isFetchingNextPage
   } = useGetGonggamPostsInfiniteQuery(sortBy);
 
-  const { ref, inView } = useInView({
+  const { ref } = useInView({
     threshold: 0.5,
     onChange(inView) {
       if (inView && hasNextPage && !isFetchingNextPage) {

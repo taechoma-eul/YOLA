@@ -29,7 +29,7 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
     isFetchingNextPage
   } = useGetLifePostsInfiniteQuery(sortBy);
 
-  const { ref, inView } = useInView({
+  const { ref } = useInView({
     threshold: 0.5,
     onChange(inView) {
       if (inView && hasNextPage && !isFetchingNextPage) {
