@@ -25,8 +25,24 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
 
   return (
     <section>
-      <div className="relative flex-1 pt-[10px]">
+      <div className="relative flex-1 md:pt-2">
         <div className="flex flex-col gap-1">
+          {/* 레이블: 진행도 텍스트 */}
+          <div className="relative flex w-full justify-between pb-[6px] md:hidden">
+            {Array.from({ length: 5 }).map((_, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={clsx(
+                    'text-gray-secondary-900 w-1/5 text-center text-[12px] font-normal leading-[1.4]',
+                    (idx + 1).toString() === userLevel ? 'visible' : 'invisible'
+                  )}
+                >
+                  {`${progress} / 5`}
+                </div>
+              );
+            })}
+          </div>
           {/* 진행도 바 */}
           <div className="flex h-3 w-full gap-[4px] overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
@@ -37,10 +53,7 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
                   <div key={idx} className="flex-1">
                     {/* 모바일 */}
                     <div className="flex h-3 w-full bg-secondary-grey-400 md:hidden">
-                      <div
-                        className="h-3 bg-primary-orange-400"
-                        style={{ width: `${(bar.completed / 5) * 100}%` }}
-                      ></div>
+                      <div className="h-3 bg-primary-orange-400" style={{ width: `${(bar.completed / 5) * 100}%` }} />
                     </div>
                     {/* 데스크탑 */}
                     <div className="hidden min-h-3 w-full gap-[2px] md:flex">

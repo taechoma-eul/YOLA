@@ -50,7 +50,7 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
 
   return (
     <section className="w-full pt-[32px] md:pt-[59px]">
-      <div className="flex w-full flex-col gap-[34px] pl-[37px] pr-[39px]">
+      <div className="flex w-full flex-col gap-[22px] pl-[37px] pr-[39px]">
         <section className="flex gap-[12px]">
           <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
           {isMaster && (
