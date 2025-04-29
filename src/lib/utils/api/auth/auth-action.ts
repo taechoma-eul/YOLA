@@ -8,6 +8,7 @@ import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
+import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 
 const LAYOUT = 'layout';
 
@@ -60,6 +61,24 @@ export const signup = async (formData: FormData) => {
 
   revalidatePath(PATH.HOME, LAYOUT);
   redirect(PATH.HOME);
+};
+
+export const signInWithSocial = async (provider: 'google' | 'kakao') => {
+  const supabase = await createClient();
+
+  const scopes = provider === 'kakao' ? 'profile_nickname profile_image account_email' : undefined;
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      scopes: scopes,
+      redirectTo: `${NEXT_SERVER_BASE_URL}${API.SOCIAL_LOGIN_CALL_BACK}`
+    }
+  });
+
+  if (error) throw new Error(error.message);
+
+  redirect(data.url);
 };
 
 export const logout = async () => {
