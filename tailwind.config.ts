@@ -43,6 +43,10 @@ const config: Config = {
         mypage: {
           peach: '#FFF5E5'
         },
+        mission: {
+          clear: '#1C8020',
+          line: '#66BB6A'
+        },
         calendar: {
           mission: '#FB7185'
         },

@@ -44,11 +44,22 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
     return null;
   }
 
+  const userLevel = checklistData.userLevel as EnumLevel;
+  const progress = checklistData.progress;
+  const isMaster = userLevel === '5' && progress === 5;
+
   return (
     <section className="w-full pt-[32px] md:pt-[59px]">
       <div className="flex w-full flex-col gap-[34px] pl-[37px] pr-[39px]">
-        <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
-        <ChecklistProgress progress={checklistData.progress} userLevel={checklistData.userLevel as EnumLevel} />
+        <section className="flex gap-[12px]">
+          <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
+          {isMaster && (
+            <figure className="border-mission-line text-mission-clear flex items-center gap-0.5 rounded-[18px] border px-2 py-1 text-[16px] font-semibold leading-[1.4]">
+              CLEAR
+            </figure>
+          )}
+        </section>
+        <ChecklistProgress progress={progress} userLevel={userLevel} isMaster={isMaster} />
       </div>
       <MissionListClient
         setSelectedMissionId={setSelectedMissionId}

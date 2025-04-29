@@ -5,9 +5,10 @@ import type { EnumLevel } from '@/types/supabase-const';
 interface ChecklistProgressProps {
   progress: number;
   userLevel: EnumLevel;
+  isMaster: boolean;
 }
 
-const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
+const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressProps) => {
   const TOTAL_LEVELS = 5;
   const levels = ['1단계', '2단계', '3단계', '4단계', '5단계'];
 
@@ -16,6 +17,7 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
     const isPast = Number(level) < Number(userLevel);
     const isCurrent = level === userLevel;
 
+    if (isMaster) return { type: 'master' as const };
     if (isPast) return { type: 'full' as const };
     if (isCurrent) return { type: 'partial' as const, completed: progress };
     return { type: 'empty' as const };
@@ -26,10 +28,10 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
       <div className="relative flex-1 pt-[10px]">
         <div className="flex flex-col gap-1">
           {/* 진행도 바 */}
-          <div className="flex h-3 w-full overflow-hidden rounded-md">
+          <div className="flex h-3 w-full gap-[4px] overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
+              if (bar.type === 'master') return <div key={idx} className="bg-mission-line flex-1" />;
               if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
-
               if (bar.type === 'partial') {
                 return (
                   <div key={idx} className="gap-[2px]px-[2px] flex flex-1">
