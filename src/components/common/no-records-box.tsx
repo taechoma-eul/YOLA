@@ -13,7 +13,7 @@ const NoRecordsBox = ({ mode }: NoRecordsBoxProps) => {
   return (
     <section
       className={clsx(
-        'col-span-full flex flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500',
+        'col-span-full flex w-full flex-col items-center justify-center whitespace-normal rounded-[12px] bg-secondary-grey-100 text-center text-secondary-grey-500',
         mode === '캘린더' ? 'min-h-[351px]' : 'min-h-[543px]'
       )}
     >
