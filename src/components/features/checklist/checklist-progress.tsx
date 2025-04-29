@@ -34,11 +34,11 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
               if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
               if (bar.type === 'partial') {
                 return (
-                  <div key={idx} className="gap-[2px]px-[2px] flex flex-1">
+                  <div key={idx} className="flex flex-1 gap-[2px]">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <div
                         key={i}
-                        className={`flex-1 rounded-sm ${i < Math.min(bar.completed, 5) ? 'bg-primary-orange-400' : 'bg-secondary-grey-400'}`}
+                        className={`flex-1 ${i < Math.min(bar.completed, 5) ? 'bg-primary-orange-400' : 'bg-secondary-grey-400'}`}
                       />
                     ))}
                   </div>
