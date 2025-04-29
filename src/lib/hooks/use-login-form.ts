@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { LoginFormData, loginSchema } from '@/lib/utils/validation/auth-schema';
 
 export const useLoginForm = () => {
-  const form = useForm<LoginFormData>({
+  const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -12,5 +12,7 @@ export const useLoginForm = () => {
     mode: 'onBlur'
   });
 
-  return form;
+  const { isValid } = loginForm.formState;
+
+  return { loginForm, isValid };
 };

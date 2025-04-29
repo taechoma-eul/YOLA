@@ -4,7 +4,7 @@ import { editProfileSchema } from '@/lib/utils/validation/auth-schema';
 import type { EditFormData } from '@/types/auth-form';
 
 export const useProfileForm = (initNickname: string) => {
-  const form = useForm<EditFormData>({
+  const editProfileForm = useForm<EditFormData>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
       nickname: initNickname,
@@ -14,5 +14,7 @@ export const useProfileForm = (initNickname: string) => {
     mode: 'onBlur'
   });
 
-  return form;
+  const { isValid } = editProfileForm.formState;
+
+  return { editProfileForm, isValid };
 };

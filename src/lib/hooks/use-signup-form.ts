@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { SignupFormData, signupSchema } from '@/lib/utils/validation/auth-schema';
 
 export const useSignupForm = () => {
-  const form = useForm<SignupFormData>({
+  const signupForm = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
@@ -14,5 +14,7 @@ export const useSignupForm = () => {
     mode: 'onChange'
   });
 
-  return form;
+  const { isValid } = signupForm.formState;
+
+  return { signupForm, isValid };
 };
