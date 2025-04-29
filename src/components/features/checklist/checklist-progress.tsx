@@ -28,21 +28,20 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
           {/* 진행도 바 */}
           <div className="flex h-3 w-full overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
-              if (bar.type === 'full') return <div key={idx} className="flex-1 bg-secondary-grey-900" />;
+              if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
 
               if (bar.type === 'partial') {
                 return (
-                  <div key={idx} className="flex flex-1 gap-[2px] bg-secondary-grey-200 px-[2px]">
+                  <div key={idx} className="gap-[2px]px-[2px] flex flex-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <div
                         key={i}
-                        className={`flex-1 rounded-sm ${i < Math.min(bar.completed, 5) ? 'bg-secondary-grey-900' : 'bg-secondary-grey-500'}`}
+                        className={`flex-1 rounded-sm ${i < Math.min(bar.completed, 5) ? 'bg-primary-orange-400' : 'bg-secondary-grey-400'}`}
                       />
                     ))}
                   </div>
                 );
               }
-
               return <div key={idx} className="flex-1 bg-secondary-grey-200" />;
             })}
           </div>
