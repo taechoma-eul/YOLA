@@ -82,7 +82,7 @@ const AchievementPage = async () => {
                 {/* 레벨 표시 */}
                 <strong
                   className={`mt-[15px] flex items-center justify-center text-lg font-semibold ${
-                    level === 'CLEAR' ? 'text-mypage-clear' : ''
+                    level === 'CLEAR' ? 'text-mission-clear' : ''
                   }`}
                 >
                   {level}
