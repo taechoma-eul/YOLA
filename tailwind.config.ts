@@ -41,7 +41,8 @@ const config: Config = {
           900: '#2E3135'
         },
         mypage: {
-          peach: '#FFF5E5'
+          peach: '#FFF5E5',
+          clear: '#1C8020'
         },
         calendar: {
           mission: '#FB7185'
