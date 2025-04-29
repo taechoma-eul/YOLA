@@ -7,9 +7,9 @@ import { useEffect, useMemo, useState } from 'react';
 import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
+import { SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { LifePostWithImageUrls } from '@/types/life-post';
-import { SoloLifeCardSkeleton, SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 interface SoloLifeListProps {
   selectedDate: string;
   setIsEmpty: React.Dispatch<React.SetStateAction<boolean | null>>;

@@ -7,10 +7,10 @@ import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { SelectBox } from '@/components/features/mypage/my-life-filter';
+import { SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType, SortBy } from '@/types/life-post';
-import { SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 
 interface MyLifeListClientProps {
   nickname: string;
