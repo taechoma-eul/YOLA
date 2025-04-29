@@ -3,7 +3,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import LoginFormButton from '@/components/features/auth-form/login-form-button';
-import { Form, FormField } from '@/components/ui/form';
+import { Form as FormProvider, FormField } from '@/components/ui/form';
 import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 import { SUCCESS } from '@/constants/messages';
 import { useLoginForm } from '@/lib/hooks/use-login-form';
@@ -22,16 +22,14 @@ interface LoginField {
 }
 
 const LoginForm = () => {
-  const form = useLoginForm();
-
-  const { isValid } = form.formState;
+  const { loginForm, isValid } = useLoginForm();
 
   const loginFieldData: LoginField[] = [
-    { fieldName: AUTH.EMAIL, placeholder: PLACEHOLDER.EMAIL, form: form, inputType: 'email', isLoginForm: true },
+    { fieldName: AUTH.EMAIL, placeholder: PLACEHOLDER.EMAIL, form: loginForm, inputType: 'email', isLoginForm: true },
     {
       fieldName: AUTH.PASSWORD,
       placeholder: PLACEHOLDER.PASSWORD,
-      form: form,
+      form: loginForm,
       inputType: 'password',
       isLoginForm: true
     }
@@ -47,13 +45,13 @@ const LoginForm = () => {
   };
 
   return (
-    <Form {...form}>
+    <FormProvider {...loginForm}>
       <form className="mt-[28px] w-full max-w-[360px] md:mt-[37px]" action={handleFormAction}>
         <div className="mb-[28px] flex flex-col gap-[17px]">
           {loginFieldData.map((data, index) => (
             <FormField
               key={index}
-              control={form.control}
+              control={loginForm.control}
               name={data.fieldName}
               render={({ field }) => (
                 <AuthFormField
@@ -69,7 +67,7 @@ const LoginForm = () => {
         </div>
         <LoginFormButton isValid={isValid} />
       </form>
-    </Form>
+    </FormProvider>
   );
 };
 

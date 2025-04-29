@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
-import { Form, FormField } from '@/components/ui/form';
+import { Form as FormProvider, FormField } from '@/components/ui/form';
 import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, SUCCESS } from '@/constants/messages';
 import { useSignupForm } from '@/lib/hooks/use-signup-form';
@@ -29,33 +29,32 @@ const SignupForm = () => {
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<boolean>(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
 
-  const form = useSignupForm();
-  const { isValid } = form.formState;
+  const { signupForm, isValid } = useSignupForm();
 
   const signupFieldData: SignupField[] = [
     {
       fieldName: AUTH.EMAIL,
       placeholder: PLACEHOLDER.EMAIL,
       isCheckButton: true,
-      form: form,
+      form: signupForm,
       inputType: 'email',
-      isValid: form.formState.dirtyFields.email && !form.formState.errors.email
+      isValid: signupForm.formState.dirtyFields.email && !signupForm.formState.errors.email
     },
     {
       fieldName: AUTH.NICKNAME,
       placeholder: PLACEHOLDER.NICKNAME,
       isCheckButton: true,
-      form: form,
+      form: signupForm,
       inputType: 'text',
-      isValid: form.formState.dirtyFields.nickname && !form.formState.errors.nickname
+      isValid: signupForm.formState.dirtyFields.nickname && !signupForm.formState.errors.nickname
     },
-    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: form, inputType: 'password' },
+    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: signupForm, inputType: 'password' },
     {
       fieldName: AUTH.CHECK_PASSWORD,
       placeholder: PLACEHOLDER.CHECK_PASSWORD,
-      form: form,
+      form: signupForm,
       inputType: 'password',
-      isValid: form.formState.dirtyFields.checkPassword && !form.formState.errors.checkPassword
+      isValid: signupForm.formState.dirtyFields.checkPassword && !signupForm.formState.errors.checkPassword
     }
   ];
 
@@ -74,7 +73,7 @@ const SignupForm = () => {
   };
 
   return (
-    <Form {...form}>
+    <FormProvider {...signupForm}>
       <form
         className="mt-[42px] flex w-full max-w-[365px] flex-col gap-[29px] md:mt-[35px] md:gap-[27px]"
         action={handleFormAction}
@@ -82,7 +81,7 @@ const SignupForm = () => {
         {signupFieldData.map((data, index) => (
           <FormField
             key={index}
-            control={form.control}
+            control={signupForm.control}
             name={data.fieldName}
             render={({ field }) => (
               <AuthFormField
@@ -100,7 +99,7 @@ const SignupForm = () => {
         ))}
         <SignupFormButton isValid={isValid} />
       </form>
-    </Form>
+    </FormProvider>
   );
 };
 
