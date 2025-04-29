@@ -54,7 +54,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         <div className="flex w-full flex-col items-center gap-[34px] rounded-xl bg-white px-4 md:h-[236px] md:flex-row md:items-start md:gap-10 md:p-8 md:outline md:outline-1 md:outline-offset-[-1px] md:outline-secondary-grey-400">
           <ProfileImageField form={form} profileImage={profile.profile_image} />
           <div className="flex w-full flex-col items-start justify-center gap-4 self-stretch md:w-[500px]">
-            <EmailField email={profile.email} />
+            <EmailField email={profile.email ? profile.email : '게스트'} />
             <NicknameField form={form} setDuplicateCheck={setDuplicateCheck} initNickname={profile.nickname} />
           </div>
         </div>

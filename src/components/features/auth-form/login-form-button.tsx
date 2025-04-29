@@ -11,6 +11,7 @@ import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { toastAlert } from '@/lib/utils/toast';
 import type { AuthFormButtonProps } from '@/types/auth-form';
+import { guestLogin } from '@/lib/utils/api/auth/auth-action';
 
 const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
   const router = useRouter();
@@ -26,6 +27,10 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
     });
   };
 
+  const handleGuestLogin = async () => {
+    await guestLogin();
+  };
+
   return (
     <>
       <div className="flex flex-col gap-3">
@@ -36,6 +41,9 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
           className="h-[42px] w-full"
         >
           {!isPending && !isLoginPending ? '이메일로 로그인' : '로그인 중...'}
+        </CustomButton>
+        <CustomButton type="button" size="auth-submit" className="h-[42px] w-full" onClick={handleGuestLogin}>
+          게스트로 로그인
         </CustomButton>
         <CustomButton asChild size="auth-submit" variant="outline" className="h-[42px] w-full">
           <Link href={PATH.SIGNUP}>회원가입</Link>
