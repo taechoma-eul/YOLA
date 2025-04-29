@@ -26,22 +26,6 @@ export const getUserSessionState = async (): Promise<{
 };
 
 /**
- * 클라이언트 컴포넌트에서 사용하기 위해 라우터 핸들러에서 호출하는 서버 전용 함수입니다.
- * users 테이블에서 nickname, 혹은 email 컬럼에 변경하고자 하는 데이터 값이 있는지 조회하는 api 함수입니다.
- * 검색한 데이터가 이미 존재하면 { 컬럼 이름 : 검색 시도한 데이터 값 } 형태로 반환되고, 없으면 null이 반환됩니다.
- * @param { string } field - 중복 체크 할 항목(field 이름)
- * @param { string } value  - 중복 체크 할 값(바꾸고자 하는 데이터)
- * @returns { Promise<{ field: string } | null> } - 값이 이미 있으면 객체 형태 반환, 없으면 null 반환
- */
-export const getDuplicateCheckData = async (field: string, value: string) => {
-  const supabase = await createClient();
-
-  const { data } = await supabase.from(TABLE.USERS).select(field).eq(field, value).single();
-
-  return data;
-};
-
-/**
  * 서버 환경에서만 동작합니다. 클라이언트에서 호출시 에러 발생합니다.
  * public.users 테이블에서 현재 로그인 된 사용자의 프로필 정보를 불러옵니다.
  * 로그인 세션 정보가 존재하지 않으면 null 값을 반환합니다.
