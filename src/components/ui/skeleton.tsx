@@ -132,11 +132,7 @@ function SoloLifeCardSkeletonSection({ mode }: { mode: 'mypage' | 'calendar' }) 
         <Skeleton className="ml-auto h-[44px] w-[120px]" />
       </section>
 
-      <section className="flex flex-wrap gap-[18px]">
-        {[...Array(4)].map((_, i) => (
-          <SoloLifeCardSkeleton key={i} mode="mypage" />
-        ))}
-      </section>
+      <section className="flex flex-wrap gap-[18px]">{cards}</section>
     </article>
   );
 }
