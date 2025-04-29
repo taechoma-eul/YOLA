@@ -13,15 +13,16 @@ import {
 import { categoryMap } from '@/constants/gonggam-category';
 import { PATH } from '@/constants/page-path';
 import { useDeleteGonggamPost } from '@/lib/hooks/mutations/use-delete-gonggam-post';
-import type { GonggamPostDetail } from '@/types/gonggam';
+import type { GonggamPostDetailWithoutCounts } from '@/types/gonggam';
 
 interface GonggamMyPostDropdownProps {
-  post: GonggamPostDetail;
+  post: GonggamPostDetailWithoutCounts;
 }
 
 const GonggamMyPostDropdown = ({ post }: GonggamMyPostDropdownProps) => {
   const [showModal, setShowModal] = useState(false);
   const route = useRouter();
+
   const handleEdit = () => {
     route.push(`${PATH.GONGGAM_POST}/edit/${post.id}`);
   };

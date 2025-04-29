@@ -10,7 +10,7 @@ const GonggamHeader = () => {
 
   return (
     <section className="mt-[44px] flex justify-between px-[10px] py-[8px]">
-      <h1 className="py-[5px] text-center text-[20px] font-semibold leading-[140%]">혼자 라이프 공감 게시판</h1>
+      <h1 className="py-[5px] text-center text-[20px] font-semibold leading-[140%]">YOLA 공감 게시판</h1>
       <Link href={`${PATH.GONGGAM_POST}/${categoryName}`}>
         <CustomButton size="gonggam-write">글 작성하기</CustomButton>
       </Link>
