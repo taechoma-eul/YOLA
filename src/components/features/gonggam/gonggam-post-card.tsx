@@ -35,8 +35,10 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
 
         {/* 텍스트 영역 */}
         <div className="mb-[13px] mt-[4px] flex flex-col items-start gap-1 self-stretch">
-          <h1 className="flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">{post.title}</h1>
-          <p className="overflow-hidden truncate text-[12px] font-normal leading-[140%] text-secondary-grey-900">
+          <h1 className="line-clamp-1 flex-1 text-[14px] font-normal leading-[140%] text-secondary-grey-900">
+            {post.title}
+          </h1>
+          <p className="line-clamp-1 text-[12px] font-normal leading-[140%] text-secondary-grey-900">
             {post.content.length > 100 ? `${post.content.slice(0, 100)}...` : post.content}
           </p>
         </div>
@@ -47,7 +49,7 @@ const GonggamPostCard = ({ post }: GonggamPostCardProps) => {
 
       {/* 이미지 */}
       {post.imageUrl && (
-        <figure className="relative h-[110px] w-[110px] overflow-hidden rounded-[16px]">
+        <figure className="relative h-[110px] w-[110px] shrink-0 overflow-hidden rounded-[16px]">
           <Image src={post.imageUrl} alt={post.title} fill sizes="110px" className="object-cover" priority />
         </figure>
       )}
