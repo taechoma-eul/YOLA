@@ -6,17 +6,12 @@ import { PATH } from '@/constants/page-path';
 import type { AuthFormButtonProps } from '@/types/auth-form';
 import { guestLogin, signInWithSocial } from '@/lib/utils/api/auth/auth-action';
 
-const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
+const AuthFormButton = ({ isValid }: AuthFormButtonProps) => {
   return (
     <>
       <div className="flex flex-col gap-3">
-        <CustomButton
-          disabled={!isValid || isLoginPending}
-          type="submit"
-          size="auth-submit"
-          className="h-[42px] w-full"
-        >
-          {!isLoginPending ? '이메일로 로그인' : '로그인 중...'}
+        <CustomButton disabled={!isValid} type="submit" size="auth-submit" className="h-[42px] w-full">
+          이메일로 로그인
         </CustomButton>
         <CustomButton type="submit" size="auth-submit" className="h-[42px] w-full" formAction={guestLogin}>
           게스트로 로그인

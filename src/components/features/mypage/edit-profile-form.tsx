@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import EmailField from '@/components/features/mypage/edit-profile-form-email-field';
 import ProfileImageField from '@/components/features/mypage/edit-profile-form-image-field';
 import NicknameField from '@/components/features/mypage/edit-profile-form-nickname-field';
@@ -17,8 +16,6 @@ import type { EditFormData, InitProfile } from '@/types/auth-form';
 
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const { profile, isProfileError, profileFetchingError } = useUserProfile(initProfile);
   const updateProfile = useUpdateProfileMutate();
@@ -27,20 +24,17 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
   const { isValid } = form.formState;
 
   const handleUpdateProfile = async (formData: EditFormData) => {
-    startTransition(async () => {
-      try {
-        const imageUrl = await profileImageUploader({ form, profile: initProfile });
-        const updatedData = {
-          ...formData,
-          profile_image: imageUrl || formData.profile_image // 이미지 업로드 없거나 실패시에는 기존 값 유지
-        };
-        updateProfile(updatedData);
-        toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
-        router.back();
-      } catch {
-        toastAlert(FAIL.UPDATE_PROFILE, 'destructive');
-      }
-    });
+    try {
+      const imageUrl = await profileImageUploader({ form, profile: initProfile });
+      const updatedData = {
+        ...formData,
+        profile_image: imageUrl || formData.profile_image // 이미지 업로드 없거나 실패시에는 기존 값 유지
+      };
+      updateProfile(updatedData);
+      toastAlert(SUCCESS.UPDATE_PROFILE, 'success');
+    } catch {
+      toastAlert(FAIL.UPDATE_PROFILE, 'destructive');
+    }
   };
 
   if (isProfileError) throw profileFetchingError;
@@ -60,12 +54,12 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         </div>
         <CustomButton
           type="submit"
-          disabled={!isValid || !duplicateCheck || isPending}
+          disabled={!isValid || !duplicateCheck}
           variant="default"
           size="gonggam-write"
           className="mr-4 h-[42px] w-[343px] md:mr-0 md:h-[38px] md:w-[100px]"
         >
-          {isPending ? '저장 중...' : '저장하기'}
+          저장하기
         </CustomButton>
       </form>
     </Form>

@@ -1,6 +1,5 @@
 'use client';
 
-import { useTransition } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import LoginFormButton from '@/components/features/auth-form/login-form-button';
@@ -23,7 +22,6 @@ interface LoginField {
 }
 
 const LoginForm = () => {
-  const [isPending, startTransition] = useTransition();
   const form = useLoginForm();
 
   const { isValid } = form.formState;
@@ -40,14 +38,12 @@ const LoginForm = () => {
   ];
 
   const handleFormAction = async (formData: FormData) => {
-    startTransition(async () => {
-      try {
-        await login(formData);
-        toastAlert(SUCCESS.LOGIN, 'success');
-      } catch (error) {
-        if (error instanceof Error) toastAlert(error.message, 'destructive');
-      }
-    });
+    try {
+      await login(formData);
+      toastAlert(SUCCESS.LOGIN, 'success');
+    } catch (error) {
+      if (error instanceof Error) toastAlert(error.message, 'destructive');
+    }
   };
 
   return (
@@ -71,7 +67,7 @@ const LoginForm = () => {
             />
           ))}
         </div>
-        <LoginFormButton isValid={isValid} isLoginPending={isPending} />
+        <LoginFormButton isValid={isValid} />
       </form>
     </Form>
   );

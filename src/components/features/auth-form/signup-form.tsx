@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
@@ -26,7 +26,6 @@ interface SignupField {
 }
 
 const SignupForm = () => {
-  const [isPending, startTransition] = useTransition();
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<boolean>(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
 
@@ -70,10 +69,8 @@ const SignupForm = () => {
       return;
     }
 
-    startTransition(async () => {
-      await signup(formData);
-      toastAlert(SUCCESS.SIGNUP, 'success');
-    });
+    await signup(formData);
+    toastAlert(SUCCESS.SIGNUP, 'success');
   };
 
   return (
@@ -101,7 +98,7 @@ const SignupForm = () => {
             )}
           />
         ))}
-        <SignupFormButton isValid={isValid} isSignupPending={isPending} />
+        <SignupFormButton isValid={isValid} />
       </form>
     </Form>
   );
