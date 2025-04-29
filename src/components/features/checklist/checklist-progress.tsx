@@ -52,17 +52,15 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
               const level = (idx + 1).toString();
               const isPast = Number(level) < Number(userLevel);
               const isCurrent = level === userLevel;
-              const isUnlocked = isPast || isCurrent; // 현재 단계 또는 이미 지난 단계는 풀린 상태
-              const position = `${((idx + 1) / TOTAL_LEVELS) * 100}%`;
+              const isUnlocked = isPast || isCurrent;
+              const position = `${((idx + 0.5) / TOTAL_LEVELS) * 100}%`;
 
               return (
                 <div
                   key={idx}
-                  className="absolute flex justify-end"
+                  className="absolute left-0 top-[12px] flex w-full justify-center"
                   style={{
-                    left: position,
-                    transform: 'translateX(-100%)',
-                    top: '12px',
+                    transform: `translateX(calc(${position} - 50%))`,
                     whiteSpace: 'nowrap'
                   }}
                 >
