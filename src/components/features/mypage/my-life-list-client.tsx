@@ -1,5 +1,6 @@
 'use client';
 
+import { clsx } from 'clsx';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NoRecordsBox from '@/components/common/no-records-box';
@@ -9,7 +10,6 @@ import { SelectBox } from '@/components/features/mypage/my-life-filter';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType, SortBy } from '@/types/life-post';
-import { clsx } from 'clsx';
 
 interface MyLifeListClientProps {
   nickname: string;
