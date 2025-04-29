@@ -2,14 +2,9 @@
 
 import { clsx } from 'clsx';
 import { Heart } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { FAIL } from '@/constants/messages';
-import {
-  dislikePost,
-  getLikeCountClient,
-  getUserLikedStatus,
-  likePost
-} from '@/lib/utils/api/gonggam/gonggam-detail-client.api';
+import { useDislikePost, useLikePost } from '@/lib/hooks/mutations/use-gonggam-likes';
+import { useLikeCount, useLikedStatus } from '@/lib/hooks/queries/use-gonggam-likes';
 import { toastAlert } from '@/lib/utils/toast';
 
 interface GonggamLikesProps {
@@ -18,53 +13,22 @@ interface GonggamLikesProps {
 }
 
 const GonggamLikes = ({ postId, userId }: GonggamLikesProps) => {
-  const [likeCnt, setLikeCnt] = useState<number>(0);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [isLikePending, setIsLikePending] = useState<boolean>(false);
+  const { data: likeCnt = 0 } = useLikeCount(postId);
+  const { data: isLiked = false } = useLikedStatus(postId, userId);
+  const { mutate: likeMutate, isPending: isLiking } = useLikePost();
+  const { mutate: dislikeMutate, isPending: isDisliking } = useDislikePost();
 
-  useEffect(() => {
-    const fetchMeta = async () => {
-      try {
-        const likeCnt = await getLikeCountClient(postId);
-        setLikeCnt(likeCnt);
-      } catch (err) {
-        console.error(FAIL.GET_POST_META, err);
-      }
-    };
-    fetchMeta();
-    const fetchLikeStatus = async () => {
-      if (!userId) return;
-      try {
-        const liked = await getUserLikedStatus({ postId, userId });
-        setIsLiked(liked);
-      } catch (err) {
-        console.error(FAIL.GET_LIKES, err);
-      }
-    };
-    fetchLikeStatus();
-  }, [postId, userId]);
+  const isLikePending = isLiking || isDisliking;
 
-  const handleLikeToggle = async () => {
+  const handleLikeToggle = () => {
     if (!userId) {
       toastAlert(FAIL.NEED_LOGIN, 'destructive');
       return;
     }
-    setIsLikePending(true);
-    try {
-      if (isLiked) {
-        await dislikePost({ postId, userId });
-        setLikeCnt((prev) => prev - 1);
-        setIsLiked(false);
-      } else {
-        await likePost({ postId });
-        setLikeCnt((prev) => prev + 1);
-        setIsLiked(true);
-      }
-    } catch (err) {
-      toastAlert(FAIL.UPDATE_LIKE, 'destructive');
-      console.error(err);
-    } finally {
-      setIsLikePending(false);
+    if (isLiked) {
+      dislikeMutate({ postId, userId });
+    } else {
+      likeMutate({ postId });
     }
   };
 
