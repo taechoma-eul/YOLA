@@ -6,13 +6,10 @@ import { PATH } from '@/constants/page-path';
 import type { AuthFormButtonProps } from '@/types/auth-form';
 import { guestLogin, signInWithSocial } from '@/lib/utils/api/auth/auth-action';
 
-const AuthFormButton = ({ isValid }: AuthFormButtonProps) => {
+const LoginFormButton = ({ isValid, isSubmitting }: AuthFormButtonProps) => {
   return (
-    <>
+    <form className="mt-3 w-full max-w-[360px]">
       <div className="flex flex-col gap-3">
-        <CustomButton disabled={!isValid} type="submit" size="auth-submit" className="h-[42px] w-full">
-          이메일로 로그인
-        </CustomButton>
         <CustomButton type="submit" size="auth-submit" className="h-[42px] w-full" formAction={guestLogin}>
           게스트로 로그인
         </CustomButton>
@@ -33,8 +30,8 @@ const AuthFormButton = ({ isValid }: AuthFormButtonProps) => {
           <Image src={KAKAO_LOGIN} alt="카카오 로그인 버튼" width={50} height={50} />
         </button>
       </div>
-    </>
+    </form>
   );
 };
 
-export default AuthFormButton;
+export default LoginFormButton;

@@ -10,6 +10,7 @@ import { AUTH_ERROR, SUCCESS } from '@/constants/messages';
 import { useSignupForm } from '@/lib/hooks/use-signup-form';
 import { signup } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
+import { SignupFormData } from '@/lib/utils/validation/auth-schema';
 
 interface SignupField {
   fieldName: 'email' | 'password' | 'checkPassword' | 'nickname';
@@ -29,7 +30,7 @@ const SignupForm = () => {
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<boolean>(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
 
-  const { signupForm, isValid } = useSignupForm();
+  const { signupForm, isValid, isSubmitting } = useSignupForm();
 
   const signupFieldData: SignupField[] = [
     {
@@ -58,7 +59,7 @@ const SignupForm = () => {
     }
   ];
 
-  const handleFormAction = async (formData: FormData) => {
+  const handleFormAction = async (formData: SignupFormData) => {
     if (!emailDuplicateCheck) {
       toastAlert(AUTH_ERROR.EMAIL_CHECK, 'destructive');
       return;
@@ -76,7 +77,7 @@ const SignupForm = () => {
     <FormProvider {...signupForm}>
       <form
         className="mt-[42px] flex w-full max-w-[365px] flex-col gap-[29px] md:mt-[35px] md:gap-[27px]"
-        action={handleFormAction}
+        onSubmit={signupForm.handleSubmit(handleFormAction)}
       >
         {signupFieldData.map((data, index) => (
           <FormField
@@ -97,7 +98,7 @@ const SignupForm = () => {
             )}
           />
         ))}
-        <SignupFormButton isValid={isValid} />
+        <SignupFormButton isValid={isValid} isSubmitting={isSubmitting} />
       </form>
     </FormProvider>
   );

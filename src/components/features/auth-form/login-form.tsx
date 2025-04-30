@@ -9,6 +9,8 @@ import { SUCCESS } from '@/constants/messages';
 import { useLoginForm } from '@/lib/hooks/use-login-form';
 import { login } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
+import { LoginFormData } from '@/lib/utils/validation/auth-schema';
+import { CustomButton } from '@/components/ui/custom-button';
 
 interface LoginField {
   fieldName: 'email' | 'password';
@@ -22,7 +24,7 @@ interface LoginField {
 }
 
 const LoginForm = () => {
-  const { loginForm, isValid } = useLoginForm();
+  const { loginForm, isValid, isSubmitting } = useLoginForm();
 
   const loginFieldData: LoginField[] = [
     { fieldName: AUTH.EMAIL, placeholder: PLACEHOLDER.EMAIL, form: loginForm, inputType: 'email', isLoginForm: true },
@@ -35,7 +37,7 @@ const LoginForm = () => {
     }
   ];
 
-  const handleFormAction = async (formData: FormData) => {
+  const handleFormAction = async (formData: LoginFormData) => {
     try {
       await login(formData);
       toastAlert(SUCCESS.LOGIN, 'success');
@@ -46,8 +48,8 @@ const LoginForm = () => {
 
   return (
     <FormProvider {...loginForm}>
-      <form className="mt-[28px] w-full max-w-[360px] md:mt-[37px]" action={handleFormAction}>
-        <div className="mb-[28px] flex flex-col gap-[17px]">
+      <form className="mt-[28px] w-full max-w-[360px] md:mt-[37px]" onSubmit={loginForm.handleSubmit(handleFormAction)}>
+        <div className="mb-[28px] flex flex-col gap-[29px]">
           {loginFieldData.map((data, index) => (
             <FormField
               key={index}
@@ -65,8 +67,16 @@ const LoginForm = () => {
             />
           ))}
         </div>
-        <LoginFormButton isValid={isValid} />
+        <CustomButton
+          disabled={!isValid || isSubmitting}
+          type="submit"
+          size="auth-submit"
+          className="mt-[20px] h-[42px] w-full"
+        >
+          {isSubmitting ? '로그인 중...' : '이메일로 로그인'}
+        </CustomButton>
       </form>
+      <LoginFormButton isValid={isValid} isSubmitting={isSubmitting} />
     </FormProvider>
   );
 };

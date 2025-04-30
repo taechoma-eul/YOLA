@@ -17,10 +17,9 @@ import type { EditFormData, InitProfile } from '@/types/auth-form';
 const EditProfileForm = ({ initProfile }: InitProfile) => {
   const [duplicateCheck, setDuplicateCheck] = useState<boolean>(false);
 
+  const { editProfileForm, isValid, isSubmitting } = useProfileForm(initProfile.nickname);
   const { profile, isProfileError, profileFetchingError } = useUserProfile(initProfile);
   const updateProfile = useUpdateProfileMutate();
-
-  const { editProfileForm, isValid } = useProfileForm(initProfile.nickname);
 
   const handleUpdateProfile = async (formData: EditFormData) => {
     try {
@@ -47,7 +46,7 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         <div className="flex w-full flex-col items-center gap-[34px] rounded-xl bg-white px-4 md:h-[236px] md:flex-row md:items-start md:gap-10 md:p-8 md:outline md:outline-1 md:outline-offset-[-1px] md:outline-secondary-grey-400">
           <ProfileImageField form={editProfileForm} profileImage={profile.profile_image} />
           <div className="flex w-full flex-col items-start justify-center gap-4 self-stretch md:w-[500px]">
-            <EmailField email={profile.email ? profile.email : '게스트'} />
+            <EmailField email={profile.email ? profile.email : '게스트 계정입니다.'} />
             <NicknameField
               form={editProfileForm}
               setDuplicateCheck={setDuplicateCheck}
@@ -57,12 +56,12 @@ const EditProfileForm = ({ initProfile }: InitProfile) => {
         </div>
         <CustomButton
           type="submit"
-          disabled={!isValid || !duplicateCheck}
+          disabled={!isValid || !duplicateCheck || isSubmitting}
           variant="default"
           size="gonggam-write"
           className="mr-4 h-[42px] w-[343px] md:mr-0 md:h-[38px] md:w-[100px]"
         >
-          저장하기
+          {isSubmitting ? '저장 중...' : '저장하기'}
         </CustomButton>
       </form>
     </FormProvider>
