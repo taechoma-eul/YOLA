@@ -1,5 +1,6 @@
 // src/lib/server/queries/get-server-life-posts-by-month-range.ts
 
+import { FAIL } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
@@ -7,7 +8,7 @@ import type { LifePostWithImageUrls } from '@/types/life-post';
 
 export const getServerLifePostsByMonth = async (month: string): Promise<LifePostWithImageUrls[]> => {
   const { userId, isLogin } = await getUserSessionState();
-  if (!isLogin || !userId) throw new Error('로그인 필요');
+  if (!isLogin || !userId) throw new Error(FAIL.NEED_LOGIN);
 
   const supabase = await createClient();
 
