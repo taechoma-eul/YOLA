@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz';
 import { format, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -52,3 +53,6 @@ export const formatKoreanDate = (dateStr: string): string => {
   const date = parseISO(dateStr); // "2025-04-22" → Date 객체
   return format(date, 'M월 d일 EEEE', { locale: ko });
 };
+
+const newTimeZonedISOString = (timezone: string) => TZDate.tz(timezone, Date.now()).toISOString();
+export const newSeoulISOString = () => newTimeZonedISOString('Asia/Seoul');
