@@ -85,7 +85,7 @@ const AuthFormField = <T extends FieldValues>({
         <div className="relative flex-1">
           <FormControl>
             <Input
-              className={clsx('h-11 w-full rounded-lg border-secondary-grey-400')}
+              className="h-11 w-full rounded-lg border-secondary-grey-400"
               placeholder={placeholder}
               type={inputType}
               {...field}

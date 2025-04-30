@@ -37,10 +37,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
   const handleDuplicateCheck = async () => {
     const nowValue: string = getValues(AUTH.NICKNAME);
 
-    if (!isValid) {
-      setErrorMessage(AUTH_ERROR.EMPTY_NICKNAME);
-      return;
-    }
+    if (!isValid) return;
 
     try {
       const isDuplication = await fetchDuplicateCheck(AUTH.NICKNAME, nowValue);
@@ -75,7 +72,7 @@ const NicknameField = ({ form, setDuplicateCheck, initNickname }: FieldProps) =>
                 {...field}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="w-[300px]" />
             <DuplicateCheckMessage errorMessage={errorMessage} successMessage={successMessage} />
           </div>
           <CustomButton
