@@ -3,10 +3,9 @@ import Link from 'next/link';
 import { CustomButton } from '@/components/ui/custom-button';
 import { GOOGLE_LOGIN, KAKAO_LOGIN } from '@/constants/default-image-url';
 import { PATH } from '@/constants/page-path';
-import type { AuthFormButtonProps } from '@/types/auth-form';
 import { guestLogin, signInWithSocial } from '@/lib/utils/api/auth/auth-action';
 
-const LoginFormButton = ({ isValid, isSubmitting }: AuthFormButtonProps) => {
+const LoginFormButton = () => {
   return (
     <form className="mt-3 w-full max-w-[360px]">
       <div className="flex flex-col gap-3">
