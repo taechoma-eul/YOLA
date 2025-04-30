@@ -22,7 +22,9 @@ const MobileProfileBox = ({ initProfile }: InitProfile) => {
         <ProfileAvatar src={profile.profile_image} mode="mobile" />
         <div className="ml-[16px] flex-1 justify-start">
           <p className="text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
-          <p className="mb-[8px] text-base text-secondary-grey-700">{profile.email ? profile.email : '게스트'}</p>
+          <p className="mb-[8px] text-base text-secondary-grey-700">
+            {profile.email ? profile.email : '게스트 계정입니다.'}
+          </p>
         </div>
         {/* 프로필 수정 버튼 */}
         <Link href={PATH.MYPAGE}>
