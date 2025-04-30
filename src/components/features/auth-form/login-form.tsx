@@ -61,7 +61,6 @@ const LoginForm = () => {
                   placeholder={data.placeholder}
                   inputType={data.inputType}
                   field={field}
-                  isLoginForm={data.isLoginForm}
                 />
               )}
             />
