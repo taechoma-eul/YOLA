@@ -17,7 +17,7 @@ const OnboardingPage = () => {
       <RandomMissionSection />
       <GonggamBoardSection />
       <EndSection />
-      <div className="sticky bottom-0">
+      <div className="sticky bottom-0 hidden md:block">
         <FloatingButton />
       </div>
     </div>
