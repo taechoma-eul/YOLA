@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
+import { SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 import { useLifePostsByMonth } from '@/lib/hooks/queries/use-life-posts-by-month';
 import type { LifePostWithImageUrls } from '@/types/life-post';
 interface SoloLifeListProps {
@@ -52,9 +53,7 @@ const SoloLifeList = ({ selectedDate, setIsEmpty }: SoloLifeListProps) => {
     setShowModal(true);
   };
 
-  if (isPending) {
-    return <div>로딩 중...</div>;
-  }
+  if (isPending) return <SoloLifeCardSkeletonSection mode="calendar" />;
 
   if (parsedList.length === 0) {
     return (
