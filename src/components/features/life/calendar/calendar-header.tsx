@@ -12,13 +12,21 @@ const CalendarHeader = ({ calendarMonth, onMoveMonth, onResetToToday }: Calendar
       <div className="hidden w-[61px] sm:invisible sm:block">a</div>
       {/* 가운데 정렬된 월 + 화살표 */}
       <div className="flex items-center justify-center gap-4 sm:gap-[56px]">
-        <button onClick={() => onMoveMonth(-1)} className="flex h-6 w-6 items-center justify-center">
+        <button
+          onClick={() => onMoveMonth(-1)}
+          className="flex h-6 w-6 items-center justify-center"
+          aria-label="이전 달"
+        >
           <ChevronLeft className="h-6 w-6 text-secondary-grey-900" />
         </button>
         <div className="text-center text-lg font-semibold leading-6 text-secondary-grey-900 sm:text-xl">
           {calendarMonth.replace('-', '.')}
         </div>
-        <button onClick={() => onMoveMonth(1)} className="flex h-6 w-6 items-center justify-center">
+        <button
+          onClick={() => onMoveMonth(1)}
+          className="flex h-6 w-6 items-center justify-center"
+          aria-label="다음 달"
+        >
           <ChevronRight className="h-6 w-6 text-secondary-grey-900" />
         </button>
       </div>
