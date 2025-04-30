@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ChecklistMissionSwiper from '@/components/features/checklist/checklist-mission-swiper';
 import ChecklistProgress from '@/components/features/checklist/checklist-progress';
-import MissionListClient from '@/components/features/checklist/mission-list-client';
+import MissionCardWrapper from '@/components/features/checklist/mission-card-wrapper';
 import SkeletonChecklist from '@/components/features/checklist/skeleton-checklist';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useGetChecklistData } from '@/lib/hooks/queries/use-get-checklist-data';
@@ -44,17 +45,41 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
     return null;
   }
 
+  const userLevel = checklistData.userLevel as EnumLevel;
+  const isMaster = userLevel === '5' && checklistData.progress === 5;
+
   return (
     <section className="w-full pt-[32px] md:pt-[59px]">
-      <div className="flex w-full flex-col gap-[34px] pl-[37px] pr-[39px]">
-        <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
-        <ChecklistProgress progress={checklistData.progress} userLevel={checklistData.userLevel as EnumLevel} />
-      </div>
-      <MissionListClient
-        setSelectedMissionId={setSelectedMissionId}
-        missionList={checklistData.missionList}
-        {...(userId && { userId })}
-      />
+      <aside className="flex w-full flex-col gap-[22px] pl-[37px] pr-[39px]">
+        <figure className="flex gap-[12px]">
+          <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
+          {isMaster && (
+            <span className="flex items-center gap-0.5 rounded-[18px] border border-mission-line px-2 py-1 text-[16px] font-semibold leading-[1.4] text-mission-clear">
+              CLEAR
+            </span>
+          )}
+        </figure>
+        <ChecklistProgress progress={checklistData.progress} userLevel={userLevel} isMaster={isMaster} />
+      </aside>
+
+      {/* 모바일 스와이퍼 */}
+      <article className="mb-[36px] mt-[92px] block w-full md:hidden">
+        <ChecklistMissionSwiper
+          missionList={checklistData.missionList}
+          onCompletedClick={setSelectedMissionId}
+          {...(userId && { userId })}
+        />
+      </article>
+      {/* 데스크탑 카드리스트 */}
+      <ul className="mt-[129px] hidden w-full max-w-[1200px] items-center gap-[24px] pl-[37px] pr-[39px] md:flex">
+        {checklistData.missionList.map((mission) => (
+          <li key={mission.id}>
+            <MissionCardWrapper mission={mission} onCompletedClick={setSelectedMissionId} {...(userId && { userId })} />
+          </li>
+        ))}
+      </ul>
+
+      {/* 인증글 보기 모달 */}
       {selectedPost && showModal && (
         <PostDetailModal clickModal={handleCloseModal} showModal={showModal} post={selectedPost} />
       )}

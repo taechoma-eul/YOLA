@@ -1,6 +1,5 @@
 'use client';
 
-import { clsx } from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ControllerRenderProps, FieldValues, useFormContext } from 'react-hook-form';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
@@ -15,12 +14,11 @@ interface FieldProps<T extends FieldValues> {
   inputType: string;
   placeholder: string;
   isCheckButton?: boolean;
-  fieldName: string;
+  fieldName: 'email' | 'nickname' | 'password' | 'checkPassword';
   field: ControllerRenderProps<T>;
   isValid?: boolean;
   setEmailDuplicateCheck?: Dispatch<SetStateAction<boolean>>;
   setNicknameDuplicateCheck?: Dispatch<SetStateAction<boolean>>;
-  isLoginForm?: boolean;
 }
 
 const AuthFormField = <T extends FieldValues>({
@@ -31,8 +29,7 @@ const AuthFormField = <T extends FieldValues>({
   field,
   isValid,
   setEmailDuplicateCheck,
-  setNicknameDuplicateCheck,
-  isLoginForm
+  setNicknameDuplicateCheck
 }: FieldProps<T>) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 중복 확인 실패 메시지
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // 중복 확인 성공 메시지
@@ -87,13 +84,13 @@ const AuthFormField = <T extends FieldValues>({
         <div className="relative flex-1">
           <FormControl>
             <Input
-              className={clsx('h-11 w-full rounded-lg border-secondary-grey-400')}
+              className="h-11 w-full rounded-lg border-secondary-grey-400"
               placeholder={placeholder}
               type={inputType}
               {...field}
             />
           </FormControl>
-          {!isLoginForm && <FormMessage />}
+          <FormMessage />
           <DuplicateCheckMessage errorMessage={errorMessage} successMessage={successMessage} />
         </div>
         {isCheckButton && (

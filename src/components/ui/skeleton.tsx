@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { cn } from '@/lib/utils/utils';
 
 function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
@@ -113,4 +114,118 @@ function GonggamSkeletonDetailContent() {
   );
 }
 
-export { Skeleton, SkeletonCard, SkeletonFlatten, GonggamSkeletonSection, GonggamSkeletonDetailContent };
+function GonggamSkeletonMiniSection() {
+  return (
+    <article className="mt-[20px] px-[16px] md:mt-[72px]">
+      <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
+        {/* 데스크탑에서만 보이는 텍스트 */}
+        <Skeleton className="hidden h-[44px] w-[40%] justify-start md:block" />
+        {/* SelectBox 자리 */}
+        <Skeleton className="ml-auto h-[44px] w-[120px]" />
+      </section>
+      {/* 공간 게시글 컴포넌트 위치 */}
+
+      <section className="mb-[30px] grid gap-5 md:mb-[272px] md:grid-cols-1 lg:grid-cols-2">
+        {[...Array(4)].map((_, idx) => (
+          <div
+            key={idx}
+            className="flex flex-col items-start rounded-[8px] border border-secondary-grey-300 px-[20px] py-[20px]"
+          >
+            {/* 제목 */}
+            <Skeleton className="mb-[8px] h-[14px] w-[70%]" />
+
+            {/* 본문 */}
+            <Skeleton className="mb-[26px] h-[12px] w-[80%]" />
+
+            {/* 작성자 + 작성일 */}
+            <Skeleton className="mb-[16px] h-[12px] w-[15%] md:mb-[12px]" />
+
+            {/* 좋아요 + 댓글 (두 개로 분리) */}
+            <div className="mb-[2px] flex items-center justify-start gap-3 md:mb-0">
+              <Skeleton className="h-[16px] w-[30px]" />
+              <Skeleton className="h-[16px] w-[30px]" />
+            </div>
+          </div>
+        ))}
+      </section>
+    </article>
+  );
+}
+
+function SoloLifeCardSkeletonSection({ mode }: { mode: 'mypage' | 'calendar' }) {
+  const cards = [...Array(4)].map((_, idx) => <SoloLifeCardSkeleton key={idx} mode={mode} />);
+
+  // calendar 모드: 카드들만 렌더링
+  if (mode === 'calendar') {
+    return <section className="flex flex-wrap gap-4">{cards}</section>;
+  }
+
+  // mypage 모드: 제목 + 셀렉트박스 + 카드들 렌더링
+  return (
+    <article className="mt-[20px] px-[16px] md:mt-[72px]">
+      <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
+        {/* 데스크탑에서만 보이는 텍스트 */}
+        <Skeleton className="hidden h-[44px] w-[200px] justify-start md:block" />
+        {/* SelectBox 자리 */}
+        <Skeleton className="ml-auto h-[44px] w-[120px]" />
+      </section>
+
+      <section className="flex flex-wrap gap-[18px]">{cards}</section>
+    </article>
+  );
+}
+
+function SoloLifeCardSkeleton({ mode }: { mode: 'mypage' | 'calendar' }) {
+  return (
+    <article
+      className={clsx(
+        'flex w-full cursor-pointer items-start gap-3 rounded-2xl bg-white outline outline-1 outline-offset-[-1px] outline-secondary-grey-300',
+        mode === 'mypage' && 'p-3 sm:h-[322px] sm:w-[222px] sm:flex-col',
+        mode === 'calendar' && 'p-4 sm:h-[337px] sm:w-[237px] sm:flex-col'
+      )}
+    >
+      {/* 이미지 (좌측 or 상단) */}
+      <figure>
+        <Skeleton
+          className={clsx(
+            'relative h-[66px] w-[66px] overflow-hidden',
+            mode === 'mypage' && 'sm:h-[198px] sm:w-[198px]',
+            mode === 'calendar' && 'sm:h-[205px] sm:w-[205px]',
+            // 기본 사이즈 (모바일)
+            'rounded-xl'
+          )}
+        ></Skeleton>
+      </figure>
+
+      {/* 본문 영역 */}
+      <section className="flex h-full flex-1 flex-col justify-between sm:items-start">
+        {/* 미리보기 텍스트 */}
+        <Skeleton className="h-[14px] w-[80%]" />
+
+        {/* 태그 */}
+        <div className="mt-1 flex flex-wrap gap-1">
+          <Skeleton className="h-[24px] w-[40px]" />
+          <Skeleton className="h-[24px] w-[60px]" />
+        </div>
+
+        {/* Footer */}
+        <footer className="mt-1 flex items-center gap-[6px]">
+          <Skeleton className="h-[16px] w-[60px]" />
+          <div className="mt-[1.7px] h-0 w-[9px] rotate-90 outline outline-[0.5px] outline-secondary-grey-400" />
+          <Skeleton className="h-[16px] w-[60px]" />
+        </footer>
+      </section>
+    </article>
+  );
+}
+
+export {
+  Skeleton,
+  SkeletonCard,
+  SkeletonFlatten,
+  GonggamSkeletonSection,
+  GonggamSkeletonDetailContent,
+  GonggamSkeletonMiniSection,
+  SoloLifeCardSkeletonSection,
+  SoloLifeCardSkeleton
+};

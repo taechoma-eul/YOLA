@@ -1,15 +1,16 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import SignupFormButton from '@/components/features/auth-form/signup-form-button';
-import { Form, FormField } from '@/components/ui/form';
+import { Form as FormProvider, FormField } from '@/components/ui/form';
 import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 import { AUTH_ERROR, SUCCESS } from '@/constants/messages';
 import { useSignupForm } from '@/lib/hooks/use-signup-form';
 import { signup } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
+import { SignupFormData } from '@/lib/utils/validation/auth-schema';
 
 interface SignupField {
   fieldName: 'email' | 'password' | 'checkPassword' | 'nickname';
@@ -26,41 +27,39 @@ interface SignupField {
 }
 
 const SignupForm = () => {
-  const [isPending, startTransition] = useTransition();
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<boolean>(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState<boolean>(false);
 
-  const form = useSignupForm();
-  const { isValid } = form.formState;
+  const { signupForm, isValid, isSubmitting } = useSignupForm();
 
   const signupFieldData: SignupField[] = [
     {
       fieldName: AUTH.EMAIL,
       placeholder: PLACEHOLDER.EMAIL,
       isCheckButton: true,
-      form: form,
+      form: signupForm,
       inputType: 'email',
-      isValid: form.formState.dirtyFields.email && !form.formState.errors.email
+      isValid: signupForm.formState.dirtyFields.email && !signupForm.formState.errors.email
     },
     {
       fieldName: AUTH.NICKNAME,
       placeholder: PLACEHOLDER.NICKNAME,
       isCheckButton: true,
-      form: form,
+      form: signupForm,
       inputType: 'text',
-      isValid: form.formState.dirtyFields.nickname && !form.formState.errors.nickname
+      isValid: signupForm.formState.dirtyFields.nickname && !signupForm.formState.errors.nickname
     },
-    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: form, inputType: 'password' },
+    { fieldName: AUTH.PASSWORD, placeholder: PLACEHOLDER.PASSWORD, form: signupForm, inputType: 'password' },
     {
       fieldName: AUTH.CHECK_PASSWORD,
-      placeholder: PLACEHOLDER.CHECK_PASSWORD,
-      form: form,
+      placeholder: '비밀번호를 한번 더 입력하세요.',
+      form: signupForm,
       inputType: 'password',
-      isValid: form.formState.dirtyFields.checkPassword && !form.formState.errors.checkPassword
+      isValid: signupForm.formState.dirtyFields.checkPassword && !signupForm.formState.errors.checkPassword
     }
   ];
 
-  const handleFormAction = async (formData: FormData) => {
+  const handleFormAction = async (formData: SignupFormData) => {
     if (!emailDuplicateCheck) {
       toastAlert(AUTH_ERROR.EMAIL_CHECK, 'destructive');
       return;
@@ -70,22 +69,20 @@ const SignupForm = () => {
       return;
     }
 
-    startTransition(async () => {
-      await signup(formData);
-      toastAlert(SUCCESS.SIGNUP, 'success');
-    });
+    await signup(formData);
+    toastAlert(SUCCESS.SIGNUP, 'success');
   };
 
   return (
-    <Form {...form}>
+    <FormProvider {...signupForm}>
       <form
         className="mt-[42px] flex w-full max-w-[365px] flex-col gap-[29px] md:mt-[35px] md:gap-[27px]"
-        action={handleFormAction}
+        onSubmit={signupForm.handleSubmit(handleFormAction)}
       >
         {signupFieldData.map((data, index) => (
           <FormField
             key={index}
-            control={form.control}
+            control={signupForm.control}
             name={data.fieldName}
             render={({ field }) => (
               <AuthFormField
@@ -101,9 +98,9 @@ const SignupForm = () => {
             )}
           />
         ))}
-        <SignupFormButton isValid={isValid} isSignupPending={isPending} />
+        <SignupFormButton isValid={isValid} isSubmitting={isSubmitting} />
       </form>
-    </Form>
+    </FormProvider>
   );
 };
 
