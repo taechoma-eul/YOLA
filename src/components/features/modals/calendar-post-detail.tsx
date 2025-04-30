@@ -136,7 +136,7 @@ export const PostDetailModal = ({
               <Image src={diaryIcon} alt="하루일기" width={100} height={10} className="h-auto w-auto" />
             )}
           </div>
-          <div className="flex min-h-[28px] w-[344px] justify-between md:mb-[8px] md:w-[542px]">
+          <div className="flex min-h-[28px] w-full justify-between md:mb-[8px] md:w-[542px]">
             <h1 className="text-lg">{post.title}</h1>
             {post.mission_id ? (
               <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} isMission={true} />
@@ -154,7 +154,7 @@ export const PostDetailModal = ({
               </span>
             ))}
           </div>
-          <hr className="w-[344px] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
+          <hr className="mr-[10px] w-[calc(100%-10px)] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
           <p className="whitespace-pre-wrap text-md font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
