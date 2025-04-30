@@ -2,13 +2,13 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
-import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
-import type { LoginFormData, SignupFormData } from '../../validation/auth-schema';
+import type { LoginFormData, SignupFormData } from '@/lib/utils/validation/auth-schema';
 import type { EditFormData } from '@/types/auth-form';
 
 const LAYOUT = 'layout';
