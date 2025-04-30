@@ -114,8 +114,46 @@ function GonggamSkeletonDetailContent() {
   );
 }
 
+function GonggamSkeletonMiniSection() {
+  return (
+    <article className="mt-[20px] px-[16px] md:mt-[72px]">
+      <section className="mb-[12px] flex flex-row items-center justify-between md:mb-[35px]">
+        {/* 데스크탑에서만 보이는 텍스트 */}
+        <Skeleton className="hidden h-[44px] w-[40%] justify-start md:block" />
+        {/* SelectBox 자리 */}
+        <Skeleton className="ml-auto h-[44px] w-[120px]" />
+      </section>
+      {/* 공간 게시글 컴포넌트 위치 */}
+
+      <section className="mb-[30px] grid gap-5 md:mb-[272px] md:grid-cols-1 lg:grid-cols-2">
+        {[...Array(4)].map((_, idx) => (
+          <div
+            key={idx}
+            className="flex flex-col items-start rounded-[8px] border border-secondary-grey-300 px-[20px] py-[20px]"
+          >
+            {/* 제목 */}
+            <Skeleton className="mb-[8px] h-[14px] w-[70%]" />
+
+            {/* 본문 */}
+            <Skeleton className="mb-[26px] h-[12px] w-[80%]" />
+
+            {/* 작성자 + 작성일 */}
+            <Skeleton className="mb-[16px] h-[12px] w-[15%] md:mb-[12px]" />
+
+            {/* 좋아요 + 댓글 (두 개로 분리) */}
+            <div className="mb-[2px] flex items-center justify-start gap-3 md:mb-0">
+              <Skeleton className="h-[16px] w-[30px]" />
+              <Skeleton className="h-[16px] w-[30px]" />
+            </div>
+          </div>
+        ))}
+      </section>
+    </article>
+  );
+}
+
 function SoloLifeCardSkeletonSection({ mode }: { mode: 'mypage' | 'calendar' }) {
-  const cards = [...Array(4)].map((_, i) => <SoloLifeCardSkeleton key={i} mode={mode} />);
+  const cards = [...Array(4)].map((_, idx) => <SoloLifeCardSkeleton key={idx} mode={mode} />);
 
   // calendar 모드: 카드들만 렌더링
   if (mode === 'calendar') {
@@ -187,6 +225,7 @@ export {
   SkeletonFlatten,
   GonggamSkeletonSection,
   GonggamSkeletonDetailContent,
+  GonggamSkeletonMiniSection,
   SoloLifeCardSkeletonSection,
   SoloLifeCardSkeleton
 };
