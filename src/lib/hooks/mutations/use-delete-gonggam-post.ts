@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { FAIL, SUCCESS } from '@/constants/messages';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
 import { toastAlert } from '@/lib/utils/toast';
-import { useRouter } from 'next/navigation';
 import type { GonggamPostDetailWithoutCounts } from '@/types/gonggam';
 
 interface useDeleteGonggamPostProps {

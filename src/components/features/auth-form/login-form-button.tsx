@@ -9,9 +9,9 @@ import { API } from '@/constants/api-path';
 import { GOOGLE_LOGIN, KAKAO_LOGIN } from '@/constants/default-image-url';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
+import { guestLogin } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import type { AuthFormButtonProps } from '@/types/auth-form';
-import { guestLogin } from '@/lib/utils/api/auth/auth-action';
 
 const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
   const router = useRouter();

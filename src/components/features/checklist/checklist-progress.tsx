@@ -5,9 +5,10 @@ import type { EnumLevel } from '@/types/supabase-const';
 interface ChecklistProgressProps {
   progress: number;
   userLevel: EnumLevel;
+  isMaster: boolean;
 }
 
-const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
+const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressProps) => {
   const TOTAL_LEVELS = 5;
   const levels = ['1단계', '2단계', '3단계', '4단계', '5단계'];
 
@@ -16,6 +17,7 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
     const isPast = Number(level) < Number(userLevel);
     const isCurrent = level === userLevel;
 
+    if (isMaster) return { type: 'master' as const };
     if (isPast) return { type: 'full' as const };
     if (isCurrent) return { type: 'partial' as const, completed: progress };
     return { type: 'empty' as const };
@@ -23,26 +25,51 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
 
   return (
     <section>
-      <div className="relative flex-1 pt-[10px]">
+      <div className="relative flex-1 md:pt-2">
         <div className="flex flex-col gap-1">
+          {/* 레이블: 진행도 텍스트 */}
+          <div className="relative flex w-full justify-between pb-[6px] md:hidden">
+            {Array.from({ length: 5 }).map((_, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={clsx(
+                    'text-gray-secondary-900 w-1/5 text-center text-[12px] font-normal leading-[1.4]',
+                    (idx + 1).toString() === userLevel ? 'visible' : 'invisible'
+                  )}
+                >
+                  {`${progress} / 5`}
+                </div>
+              );
+            })}
+          </div>
           {/* 진행도 바 */}
-          <div className="flex h-3 w-full overflow-hidden rounded-md">
+          <div className="flex h-3 w-full gap-[4px] overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
-              if (bar.type === 'full') return <div key={idx} className="flex-1 bg-secondary-grey-900" />;
-
+              if (bar.type === 'master') return <div key={idx} className="flex-1 bg-mission-line" />;
+              if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
               if (bar.type === 'partial') {
                 return (
-                  <div key={idx} className="flex flex-1 gap-[2px] bg-secondary-grey-200 px-[2px]">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`flex-1 rounded-sm ${i < Math.min(bar.completed, 5) ? 'bg-secondary-grey-900' : 'bg-secondary-grey-500'}`}
-                      />
-                    ))}
+                  <div key={idx} className="flex-1">
+                    {/* 모바일 */}
+                    <div className="flex h-3 w-full bg-secondary-grey-400 md:hidden">
+                      <div className="h-3 bg-primary-orange-400" style={{ width: `${(bar.completed / 5) * 100}%` }} />
+                    </div>
+                    {/* 데스크탑 */}
+                    <div className="hidden min-h-3 w-full gap-[2px] md:flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={clsx(
+                            'flex-1',
+                            i < Math.min(bar.completed, 5) ? 'bg-primary-orange-400' : 'bg-secondary-grey-400'
+                          )}
+                        />
+                      ))}
+                    </div>
                   </div>
                 );
               }
-
               return <div key={idx} className="flex-1 bg-secondary-grey-200" />;
             })}
           </div>
@@ -53,17 +80,15 @@ const ChecklistProgress = ({ progress, userLevel }: ChecklistProgressProps) => {
               const level = (idx + 1).toString();
               const isPast = Number(level) < Number(userLevel);
               const isCurrent = level === userLevel;
-              const isUnlocked = isPast || isCurrent; // 현재 단계 또는 이미 지난 단계는 풀린 상태
-              const position = `${((idx + 1) / TOTAL_LEVELS) * 100}%`;
+              const isUnlocked = isPast || isCurrent;
+              const position = `${((idx + 0.5) / TOTAL_LEVELS) * 100}%`;
 
               return (
                 <div
                   key={idx}
-                  className="absolute flex justify-end"
+                  className="absolute left-0 top-[12px] flex w-full justify-center"
                   style={{
-                    left: position,
-                    transform: 'translateX(-100%)',
-                    top: '12px',
+                    transform: `translateX(calc(${position} - 50%))`,
                     whiteSpace: 'nowrap'
                   }}
                 >
