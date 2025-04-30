@@ -84,7 +84,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
   return (
     <>
       {/* 모바일: 버튼 + 인풋 (태그박스 밖 위에 따로 표시) */}
-      <div className="mb-2 flex flex-col gap-2 sm:hidden">
+      <div className="mb-2 flex flex-col gap-2 md:hidden">
         {!inputVisible && (
           <button
             type="button"
@@ -119,7 +119,7 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
       {/* 공통 태그 박스 (데스크탑에서는 버튼/인풋도 여기에 포함됨) */}
       {isMobile !== null && (tags.length > 0 || !isMobile) && (
         <div className="mb-[12px] flex flex-wrap items-center rounded-md border border-secondary-grey-300 px-[16px] py-[12px] md:mb-[17px]">
-          <div className="hidden gap-2 sm:flex">
+          <div className="hidden gap-2 md:flex">
             {!inputVisible && (
               <button
                 type="button"
@@ -162,8 +162,8 @@ const TagInput = ({ value = [], onChange, maxTags = 6 }: TagInputProps) => {
             {...(shouldShake ? shakeAnimation : {})}
             className="flex w-full items-center text-xs text-secondary-grey-700 md:mt-2 md:gap-1"
           >
-            <Info className="hidden h-[12px] sm:block" />
-            <p className="mt-[2px] hidden sm:block">최대 8글자, 6개 이내</p>
+            <Info className="hidden h-[12px] md:block" />
+            <p className="mt-[2px] hidden md:block">최대 8글자, 6개 이내</p>
           </motion.div>
         </div>
       )}
