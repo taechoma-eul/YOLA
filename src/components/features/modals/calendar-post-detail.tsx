@@ -162,7 +162,7 @@ export const PostDetailModal = ({
               </span>
             ))}
           </div>
-          <hr className="mr-[10px] w-[calc(100%-10px)] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
+          <hr className="mr-[10px] w-[calc(100%-10px)] border-t border-secondary-grey-300 px-[10px] py-[10px] md:w-[542px]" />
           <p className="whitespace-pre-wrap text-md font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>
