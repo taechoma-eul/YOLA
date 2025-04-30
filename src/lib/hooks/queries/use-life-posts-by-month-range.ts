@@ -11,7 +11,7 @@ export const useLifePostsByMonthRange = (months: string[]) => {
     queries: months.map((month) => ({
       queryKey: [QUERY_KEY.LIFE_POSTS, month],
       queryFn: () => getLifePostsByMonth(month),
-      staleTime: Infinity // (or a long time), so we don't refetch on focus
+      staleTime: Infinity
     }))
   });
 
