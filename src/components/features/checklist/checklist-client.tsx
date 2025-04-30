@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ChecklistProgress from '@/components/features/checklist/checklist-progress';
-import SkeletonChecklist from '@/components/features/checklist/skeleton-checklist';
-import MissionCardWrapper from '@/components/features/checklist/mission-card-wrapper';
 import ChecklistMissionSwiper from '@/components/features/checklist/checklist-mission-swiper';
+import ChecklistProgress from '@/components/features/checklist/checklist-progress';
+import MissionCardWrapper from '@/components/features/checklist/mission-card-wrapper';
+import SkeletonChecklist from '@/components/features/checklist/skeleton-checklist';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { useGetChecklistData } from '@/lib/hooks/queries/use-get-checklist-data';
 import { useGetLifePostByMissionId } from '@/lib/hooks/queries/use-get-life-post-by-mission-id';
@@ -54,7 +54,7 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
         <figure className="flex gap-[12px]">
           <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
           {isMaster && (
-            <span className="border-mission-line text-mission-clear flex items-center gap-0.5 rounded-[18px] border px-2 py-1 text-[16px] font-semibold leading-[1.4]">
+            <span className="flex items-center gap-0.5 rounded-[18px] border border-mission-line px-2 py-1 text-[16px] font-semibold leading-[1.4] text-mission-clear">
               CLEAR
             </span>
           )}

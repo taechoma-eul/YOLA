@@ -46,7 +46,7 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
           {/* 진행도 바 */}
           <div className="flex h-3 w-full gap-[4px] overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
-              if (bar.type === 'master') return <div key={idx} className="bg-mission-line flex-1" />;
+              if (bar.type === 'master') return <div key={idx} className="flex-1 bg-mission-line" />;
               if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
               if (bar.type === 'partial') {
                 return (
