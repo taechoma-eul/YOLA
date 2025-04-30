@@ -10,7 +10,7 @@ const TitleSection = () => {
   return (
     <section
       aria-label="타이틀 소개 섹션"
-      className="relative flex h-[733px] w-full flex-col items-center justify-center bg-primary-orange-50"
+      className="relative flex h-[733px] w-full flex-col items-center bg-primary-orange-50 pt-[240.5px]"
     >
       <Image src={TITLE} alt="온보딩 페이지 타이틀: 혼자서도 즐겁게!" width={388} height={48} draggable="false" />
       <p className="mb-[80px] mt-[32px] text-center">
@@ -35,7 +35,7 @@ const TitleSection = () => {
         alt="아래로 스크롤 하기 버튼 아이콘"
         width={66}
         height={48}
-        className="absolute bottom-[34px] right-[607px]"
+        className="mt-[158.5px]"
         draggable="false"
       />
     </section>
