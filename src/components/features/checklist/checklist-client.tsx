@@ -49,12 +49,12 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
   const isMaster = userLevel === '5' && checklistData.progress === 5;
 
   return (
-    <section className="w-full pt-[32px] md:pt-[59px]">
+    <section className="flex w-full flex-col gap-[45px] pt-[32px] md:gap-[74px] md:pt-[59px]">
       <aside className="flex w-full flex-col gap-[22px] pl-[37px] pr-[39px]">
         <figure className="flex gap-[12px]">
           <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
           {isMaster && (
-            <span className="flex items-center gap-0.5 rounded-[18px] border border-mission-line px-2 py-1 text-[16px] font-semibold leading-[1.4] text-mission-clear">
+            <span className="border-mission-line text-mission-clear flex items-center gap-0.5 rounded-[18px] border px-2 py-1 text-[16px] font-semibold leading-[1.4]">
               CLEAR
             </span>
           )}
@@ -63,7 +63,7 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
       </aside>
 
       {/* 모바일 스와이퍼 */}
-      <article className="mb-[36px] mt-[92px] block w-full md:hidden">
+      <article className="mb-[36px] block w-full md:hidden">
         <ChecklistMissionSwiper
           missionList={checklistData.missionList}
           onCompletedClick={setSelectedMissionId}
@@ -71,7 +71,7 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
         />
       </article>
       {/* 데스크탑 카드리스트 */}
-      <ul className="mt-[129px] hidden w-full max-w-[1200px] items-center gap-[24px] pl-[37px] pr-[39px] md:flex">
+      <ul className="hidden w-full max-w-[1200px] items-center gap-[24px] pl-[37px] pr-[39px] md:flex">
         {checklistData.missionList.map((mission) => (
           <li key={mission.id}>
             <MissionCardWrapper mission={mission} onCompletedClick={setSelectedMissionId} {...(userId && { userId })} />
