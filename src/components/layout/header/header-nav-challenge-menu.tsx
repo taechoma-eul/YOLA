@@ -30,10 +30,10 @@ const NavChallengeMenu = () => {
       onMouseLeave={() => setIsHovered(false)}
       className="group relative flex h-[44px] w-[72px] items-center justify-between py-2.5"
     >
-      <div className="relative">
+      <button className="relative">
         <NavLabel label="챌린지" isBold={isHovered || isSelect || isMission} />
         <NavUnderBar isVisible={isHovered || isSelect || isMission} />
-      </div>
+      </button>
       <Image
         draggable="false"
         src={MENU_ICON}
