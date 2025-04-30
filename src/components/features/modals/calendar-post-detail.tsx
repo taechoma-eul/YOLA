@@ -61,16 +61,24 @@ export const PostDetailModal = ({
     };
 
     if (showModal) {
+      // 스크롤을 막기 전 브라우저의 스크롤 크기를 확인합니다.
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
       timeoutId = setTimeout(() => setIsVisible(true), SET_TIME_OUT_SHOW_MODAL);
       document.body.style.overflow = 'hidden'; //모달이 클릭되면 배경에 스크롤 막음
       document.documentElement.style.overflow = 'hidden';
       document.addEventListener('touchmove', preventScroll, { passive: false }); //모바일에서도 막음
+
+      // paddingRight를 추가합니다. 단 현재 스크롤바가 없을 때는 그대로 유지합니다.(역 레이아웃 시프트 방지입니다.)
+      document.body.style.paddingRight = scrollbarWidth > 0 ? `${scrollbarWidth}px` : '0';
     }
     return () => {
       clearTimeout(timeoutId); // 클린업 시 타이머 제거
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       document.removeEventListener('touchmove', preventScroll);
+
+      document.body.style.paddingRight = '0'; // 모든 값을 정상으로 되돌릴 때 패딩값도 0으로 넣어주면 됩니다!
     };
   }, [showModal]);
 
@@ -136,7 +144,7 @@ export const PostDetailModal = ({
               <Image src={diaryIcon} alt="하루일기" width={100} height={10} className="h-auto w-auto" />
             )}
           </div>
-          <div className="flex min-h-[28px] w-[344px] justify-between md:mb-[8px] md:w-[542px]">
+          <div className="flex min-h-[28px] w-full justify-between md:mb-[8px] md:w-[542px]">
             <h1 className="text-lg">{post.title}</h1>
             {post.mission_id ? (
               <EditDeleteDropdown handleEdit={handleEdit} handleDelete={handleDelete} isMission={true} />
@@ -154,7 +162,7 @@ export const PostDetailModal = ({
               </span>
             ))}
           </div>
-          <hr className="w-[344px] border-t border-gray-300 px-[10px] py-[10px] md:w-[542px]" />
+          <hr className="mr-[10px] w-[calc(100%-10px)] border-t border-secondary-grey-300 px-[10px] py-[10px] md:w-[542px]" />
           <p className="whitespace-pre-wrap text-md font-normal text-secondary-grey-900">{post.content}</p>
         </div>
       </div>

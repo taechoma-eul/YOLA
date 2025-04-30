@@ -143,7 +143,7 @@ ex) 오늘은 혼자 코인노래방에 가서 3시간을 부르고 나왔다. �
     const title = data.title?.trim() || DEFAULT_TITLE;
     const content = data.content.trim();
 
-    if (images.length + uploadedImages.length === 0) {
+    if (isMission && images.length + uploadedImages.length === 0) {
       toastAlert('이미지는 최소 1장 이상 등록해주세요.', 'warning');
       return;
     }

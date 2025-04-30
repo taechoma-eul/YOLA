@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { GONGGAM_POSTS_TABLE, IMAGE_TABLE } from '@/lib/hooks/mutations/use-gonggam-post';
 import { parseTags } from '@/lib/utils/parse-tags';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
+import { newSeoulISOString } from '@/lib/utils/utc-to-kst';
 import { EnumCategories } from '@/types/supabase-const';
 
 interface UpdateGonggamPostParams {
@@ -18,7 +19,7 @@ interface UpdateGonggamPostParams {
 export const useUpdateGonggamPost = () => {
   return useMutation({
     mutationFn: async ({ id, title, content, category, imageUrls, rawTags }: UpdateGonggamPostParams) => {
-      const updatedAt = new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString();
+      const updatedAt = newSeoulISOString();
 
       // Step 1. 게시글 업데이트
       const { error: postError } = await supabase

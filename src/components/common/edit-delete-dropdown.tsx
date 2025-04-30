@@ -48,7 +48,10 @@ const EditDeleteDropdown = ({ handleEdit, handleDelete, isMission = false }: Edi
 
   return (
     <div className="relative w-fit" onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave}>
-      <button onClick={handleClickToggle} className="flex w-[24px] cursor-pointer items-center justify-end md:w-[88px]">
+      <button
+        onClick={handleClickToggle}
+        className="mr-[10px] flex w-[24px] cursor-pointer items-center justify-end md:mr-0 md:w-[88px]"
+      >
         <Image src={dropdown} alt="수정/삭제 드롭다운 아이콘" />
       </button>
 
