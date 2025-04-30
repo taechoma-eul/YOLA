@@ -20,7 +20,7 @@ const ProfileBoxDesktop = ({ initProfile }: InitProfile) => {
       {/* 프로필 영역 */}
       <ProfileAvatar src={profile.profile_image} mode="desktop" />
       <p className="mt-[20px] text-xl font-semibold text-secondary-grey-900">{profile.nickname}</p>
-      <p className="mb-[20px] mt-[8px] text-base text-secondary-grey-700">{profile.email}</p>
+      <p className="mb-[20px] mt-[8px] text-base text-secondary-grey-700">{profile.email ? profile.email : '게스트'}</p>
 
       {/* 프로필 수정 버튼 */}
       <Link href={PATH.MYPAGE}>

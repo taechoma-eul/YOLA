@@ -29,6 +29,19 @@ export const login = async (formData: FormData) => {
   redirect(PATH.HOME);
 };
 
+export const guestLogin = async () => {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signInAnonymously();
+
+  if (error) {
+    throw new Error(FAIL.LOGIN); // 호출 측에서 에러 처리 가능
+  }
+
+  revalidatePath(PATH.HOME, LAYOUT);
+  redirect(PATH.HOME);
+};
+
 export const signup = async (formData: FormData) => {
   const supabase = await createClient();
   const data = {

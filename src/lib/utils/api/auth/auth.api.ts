@@ -18,7 +18,7 @@ export const getUserSessionState = async (): Promise<{
     data: { user }
   } = await supabase.auth.getUser();
 
-  const userId = user?.identities?.length !== undefined ? user.identities[0].user_id : null;
+  const userId = user?.id ?? null;
 
   const isLogin = !!userId;
 

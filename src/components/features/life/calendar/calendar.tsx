@@ -84,10 +84,10 @@ const CustomCalendar = ({ selectedDate, setDate, onMonthChange, dotMap }: Props)
           <motion.div
             key={displayMonth}
             custom={direction}
-            initial={{ x: direction === 0 ? 0 : direction * 1000, opacity: 0 }}
+            initial={{ x: direction === 0 ? 0 : direction * 350, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: direction === 0 ? 0 : -direction * 1000, opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            exit={{ x: direction === 0 ? 0 : -direction * 350, opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="flex flex-col items-start justify-start gap-1 self-stretch"
           >
             {weeks.map((week, rowIdx) => (
