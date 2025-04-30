@@ -1,9 +1,9 @@
 // src/lib/server/queries/get-server-life-posts-by-month-range.ts
 
 import { TABLE } from '@/constants/supabase-tables-name';
+import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
 import type { LifePostWithImageUrls } from '@/types/life-post';
-import { createClient } from '../../supabase/supabase-server';
-import { getUserSessionState } from '../auth/auth.api';
 
 export const getServerLifePostsByMonth = async (month: string): Promise<LifePostWithImageUrls[]> => {
   const { userId, isLogin } = await getUserSessionState();
