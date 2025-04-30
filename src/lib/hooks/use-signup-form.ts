@@ -14,7 +14,7 @@ export const useSignupForm = () => {
     mode: 'onChange'
   });
 
-  const { isValid } = signupForm.formState;
+  const { isValid, isSubmitting } = signupForm.formState;
 
-  return { signupForm, isValid };
+  return { signupForm, isValid, isSubmitting };
 };

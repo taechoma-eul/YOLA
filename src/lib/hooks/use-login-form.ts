@@ -9,10 +9,10 @@ export const useLoginForm = () => {
       email: '',
       password: ''
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
-  const { isValid } = loginForm.formState;
+  const { isValid, isSubmitting } = loginForm.formState;
 
-  return { loginForm, isValid };
+  return { loginForm, isValid, isSubmitting };
 };

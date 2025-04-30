@@ -2,6 +2,7 @@ import type { TableUsers } from '@/types/supabase-const';
 
 export interface AuthFormButtonProps {
   isValid: boolean;
+  isSubmitting: boolean;
 }
 
 export interface EditFormData {

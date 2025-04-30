@@ -2,21 +2,22 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { AUTH } from '@/constants/auth-form';
 import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
 import { TABLE } from '@/constants/supabase-tables-name';
 import { getUserSessionState } from '@/lib/utils/api/auth/auth.api';
 import { createClient } from '@/lib/utils/supabase/supabase-server';
 import { API, NEXT_SERVER_BASE_URL } from '@/constants/api-path';
+import type { LoginFormData, SignupFormData } from '../../validation/auth-schema';
+import type { EditFormData } from '@/types/auth-form';
 
 const LAYOUT = 'layout';
 
-export const login = async (formData: FormData) => {
+export const login = async (formData: LoginFormData) => {
   const supabase = await createClient();
   const data = {
-    email: formData.get(AUTH.EMAIL) as string,
-    password: formData.get(AUTH.PASSWORD) as string
+    email: formData.email,
+    password: formData.password
   };
 
   const { error } = await supabase.auth.signInWithPassword(data);
@@ -43,14 +44,14 @@ export const guestLogin = async () => {
   redirect(PATH.HOME);
 };
 
-export const signup = async (formData: FormData) => {
+export const signup = async (formData: SignupFormData) => {
   const supabase = await createClient();
   const data = {
-    email: formData.get(AUTH.EMAIL) as string,
-    password: formData.get(AUTH.PASSWORD) as string,
+    email: formData.email,
+    password: formData.password,
     options: {
       data: {
-        nickname: formData.get(AUTH.NICKNAME) as string
+        nickname: formData.nickname
       }
     }
   };
@@ -100,7 +101,7 @@ export const logout = async () => {
  * @param { { string, string } } - 변경할 닉네임과 프로필 이미지기 업로드 된 주소
  * @returns { TableUser } - 현재 세션에 해당하는 users 테이블 row
  */
-export const updateUserProfile = async (formData: { nickname: string; profile_image: string }): Promise<void> => {
+export const updateUserProfile = async (formData: EditFormData): Promise<void> => {
   const supabase = await createClient();
   const { userId } = await getUserSessionState();
 

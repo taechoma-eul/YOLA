@@ -14,7 +14,7 @@ export const useProfileForm = (initNickname: string) => {
     mode: 'onBlur'
   });
 
-  const { isValid } = editProfileForm.formState;
+  const { isValid, isSubmitting } = editProfileForm.formState;
 
-  return { editProfileForm, isValid };
+  return { editProfileForm, isValid, isSubmitting };
 };
