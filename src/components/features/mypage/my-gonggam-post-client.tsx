@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import NoRecordsBox from '@/components/common/no-records-box';
 import { SelectBox } from '@/components/features/mypage/my-gonggam-filter';
 import MypageGonggamItem from '@/components/features/mypage/mypage-gonggam-item';
+import { GonggamSkeletonMiniSection } from '@/components/ui/skeleton';
 import useGetGonggamPostsInfiniteQuery from '@/lib/hooks/queries/use-get-gonggam-posts-infinite-query';
 import type { SortBy } from '@/types/gonggam';
 
@@ -33,7 +34,7 @@ const MyGonggamPostClient = ({ nickname }: MyGonggamPostClientProps) => {
     }
   });
 
-  if (isPending) return <div className="p-4">로딩 중...</div>;
+  if (isPending) return <GonggamSkeletonMiniSection />;
   if (error) throw error;
 
   const allPosts = posts.pages.flatMap((page) => page.data);

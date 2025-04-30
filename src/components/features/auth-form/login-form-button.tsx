@@ -1,48 +1,15 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
 import { CustomButton } from '@/components/ui/custom-button';
-import { API } from '@/constants/api-path';
 import { GOOGLE_LOGIN, KAKAO_LOGIN } from '@/constants/default-image-url';
-import { FAIL } from '@/constants/messages';
 import { PATH } from '@/constants/page-path';
-import { guestLogin } from '@/lib/utils/api/auth/auth-action';
-import { toastAlert } from '@/lib/utils/toast';
-import type { AuthFormButtonProps } from '@/types/auth-form';
+import { guestLogin, signInWithSocial } from '@/lib/utils/api/auth/auth-action';
 
-const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-
-  const handleSignInWithOAuth = (apiPath: string) => {
-    startTransition(() => {
-      try {
-        router.push(apiPath);
-      } catch {
-        toastAlert(FAIL.SOCIAL_LOGIN, 'destructive');
-      }
-    });
-  };
-
-  const handleGuestLogin = async () => {
-    await guestLogin();
-  };
-
+const LoginFormButton = () => {
   return (
-    <>
+    <form className="mt-3 w-full max-w-[360px]">
       <div className="flex flex-col gap-3">
-        <CustomButton
-          disabled={!isValid || isPending || isLoginPending}
-          type="submit"
-          size="auth-submit"
-          className="h-[42px] w-full"
-        >
-          {!isPending && !isLoginPending ? '이메일로 로그인' : '로그인 중...'}
-        </CustomButton>
-        <CustomButton type="button" size="auth-submit" className="h-[42px] w-full" onClick={handleGuestLogin}>
+        <CustomButton type="submit" size="auth-submit" className="h-[42px] w-full" formAction={guestLogin}>
           게스트로 로그인
         </CustomButton>
         <CustomButton asChild size="auth-submit" variant="outline" className="h-[42px] w-full">
@@ -55,15 +22,15 @@ const AuthFormButton = ({ isValid, isLoginPending }: AuthFormButtonProps) => {
         </p>
       </div>
       <div className="flex justify-center gap-3">
-        <button type="button" onClick={() => handleSignInWithOAuth(API.GOOGLE_LOGIN)}>
+        <button type="submit" formAction={() => signInWithSocial('google')}>
           <Image src={GOOGLE_LOGIN} alt="구글 로그인 버튼" width={50} height={50} />
         </button>
-        <button type="button" onClick={() => handleSignInWithOAuth(API.KAKAO_LOGIN)}>
+        <button type="submit" formAction={() => signInWithSocial('kakao')}>
           <Image src={KAKAO_LOGIN} alt="카카오 로그인 버튼" width={50} height={50} />
         </button>
       </div>
-    </>
+    </form>
   );
 };
 
-export default AuthFormButton;
+export default LoginFormButton;

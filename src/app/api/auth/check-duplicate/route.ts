@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDuplicateCheckData } from '@/lib/utils/api/auth/auth.api';
+import { createClient } from '@/lib/utils/supabase/supabase-server';
+import { TABLE } from '@/constants/supabase-tables-name';
 
 /**
  * 클라이언트에서 supabase ssr 데이터를 조회하기 위한 라우트 핸들러입니다.
@@ -7,6 +8,7 @@ import { getDuplicateCheckData } from '@/lib/utils/api/auth/auth.api';
  * @returns 중복 데이터 존재할 시 { 필드이름: 값 } 형식 반환 / 없을 시 null 반환
  */
 export const GET = async (request: NextRequest) => {
+  const supabase = await createClient();
   try {
     const { searchParams } = request.nextUrl;
     const field = searchParams.get('field');
@@ -16,7 +18,7 @@ export const GET = async (request: NextRequest) => {
       return NextResponse.json({ error: '필드와 값이 필요합니다.' }, { status: 400 });
     }
 
-    const data = await getDuplicateCheckData(field, value);
+    const { data } = await supabase.from(TABLE.USERS).select(field).eq(field, value).single();
 
     return NextResponse.json({ data });
   } catch (error) {

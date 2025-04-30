@@ -14,51 +14,25 @@ export async function updateSession(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser();
 
-  const publicPaths = [
-    PATH.ONBOARDING,
-    PATH.LOGIN,
-    PATH.SIGNUP,
-    PATH.HOME,
-    PATH.CHECKLIST,
-    PATH.MEAL_CHECKLIST,
-    PATH.PLAY_CHECKLIST,
-    PATH.CLEAN_CHECKLIST,
-    PATH.TRAVEL_CHECKLIST,
-    PATH.GOD_LIFE_CHECKLIST,
-    PATH.GONGGAM,
-    `${PATH.GONGGAM}/:category/:postId`,
-    PATH.ERROR,
-    API.GOOGLE_LOGIN,
-    API.KAKAO_LOGIN,
-    API.SOCIAL_LOGIN_CALL_BACK,
-    API.DUPLICATE,
-    API.VIEW_COUNT
-  ];
+  const requestPath = request.nextUrl.pathname;
+  const requestClone = request.nextUrl.clone();
 
-  // 루트 경로는 정확한 매칭, /gonggam/[category]/[postId]는 정규식으로 체크, 나머지는 startsWith
-  const isPublicPath = publicPaths.some((path) => {
-    if (path === PATH.HOME) {
-      return request.nextUrl.pathname === path; // 루트 경로는 정확한 매칭
-    }
-    if (path === `${PATH.GONGGAM}/:category/:postId`) {
-      // /gonggam/[category]/[postId] 패턴 체크
-      return request.nextUrl.pathname.match(new RegExp(`^${PATH.GONGGAM}/[^/]+/[^/]+$`));
-    }
-    return request.nextUrl.pathname.startsWith(path); // 나머지는 startsWith
+  const privatePaths = [PATH.LIFE, PATH.MYPAGE, PATH.MY_ACHIEVEMENT, PATH.MY_LIFE_LIST, API.PROFILE];
+  const isPostUrl = requestPath.includes('post');
+  const isPrivatePath = privatePaths.some((path) => {
+    return requestPath.startsWith(path); // 나머지는 startsWith
   });
 
-  // 로그인하지 않은 사용자가 비공개 경로에 접근하려는 경우
-  if (!user && !isPublicPath) {
-    const url = request.nextUrl.clone();
-    url.pathname = PATH.LOGIN;
-    return NextResponse.redirect(url);
+  // 로그인하지 않은 사용자가 비공개 경로 또는 post 경로에 접근하려는 경우
+  if (!user && (isPrivatePath || isPostUrl)) {
+    requestClone.pathname = PATH.LOGIN;
+    return NextResponse.redirect(requestClone);
   }
 
   // 로그인한 사용자가 login 또는 signup 페이지에 접근하려는 경우
-  if (user && (request.nextUrl.pathname === PATH.LOGIN || request.nextUrl.pathname === PATH.SIGNUP)) {
-    const url = request.nextUrl.clone();
-    url.pathname = PATH.HOME;
-    return NextResponse.redirect(url);
+  if (user && (requestPath === PATH.LOGIN || requestPath === PATH.SIGNUP)) {
+    requestClone.pathname = PATH.HOME;
+    return NextResponse.redirect(requestClone);
   }
 
   return supabaseResponse;

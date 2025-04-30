@@ -10,13 +10,13 @@ export const useLifePostsByMonthRange = (months: string[]) => {
   const results = useQueries({
     queries: months.map((month) => ({
       queryKey: [QUERY_KEY.LIFE_POSTS, month],
-      queryFn: () => getLifePostsByMonth(month)
+      queryFn: () => getLifePostsByMonth(month),
+      staleTime: Infinity
     }))
   });
 
   const isPending = results.some((r) => r.isPending);
   const isError = results.some((r) => r.isError);
-
   const data: LifePostWithImageUrls[] = results.filter((r) => r.status === 'success').flatMap((r) => r.data ?? []);
 
   return { data, isPending, isError };

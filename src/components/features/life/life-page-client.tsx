@@ -52,7 +52,7 @@ const LifePageClient = () => {
         )}
       </div>
 
-      <div className="min-h-[400px] w-full">
+      <div className="mb-[55px] w-full">
         <SoloLifeList selectedDate={selectedDate} setIsEmpty={setIsEmpty} />
       </div>
     </div>
