@@ -54,5 +54,9 @@ export const formatKoreanDate = (dateStr: string): string => {
   return format(date, 'M월 d일 EEEE', { locale: ko });
 };
 
+/**
+ * 라이브러리를 사용하여 정확한 시간을 가져옵니다
+ * newSeoulISOString()을 하면 사용할 수 있습니다
+ */
 const newTimeZonedISOString = (timezone: string) => TZDate.tz(timezone, Date.now()).toISOString();
 export const newSeoulISOString = () => newTimeZonedISOString('Asia/Seoul');
