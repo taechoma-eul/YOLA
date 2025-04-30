@@ -1,6 +1,5 @@
 'use client';
 
-import { clsx } from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ControllerRenderProps, FieldValues, useFormContext } from 'react-hook-form';
 import DuplicateCheckMessage from '@/components/features/auth-form/duplicate-check-message';
