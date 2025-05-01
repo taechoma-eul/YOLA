@@ -3,14 +3,16 @@ import { useForm } from 'react-hook-form';
 import { LoginFormData, loginSchema } from '@/lib/utils/validation/auth-schema';
 
 export const useLoginForm = () => {
-  const form = useForm<LoginFormData>({
+  const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: ''
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
-  return form;
+  const { isValid, isSubmitting } = loginForm.formState;
+
+  return { loginForm, isValid, isSubmitting };
 };

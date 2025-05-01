@@ -1,6 +1,6 @@
 import { TABLE } from '@/constants/supabase-tables-name';
 import { supabase } from '@/lib/utils/supabase/supabase-client';
-import type { CommentWithUser, UploadGonggamCommentParams, GonggamPostDetail } from '@/types/gonggam';
+import type { CommentWithUser, UploadGonggamCommentParams, GonggamPostDetailWithoutCounts } from '@/types/gonggam';
 import type { TableGonggamPosts } from '@/types/supabase-const';
 
 /** getLikeCountClient
@@ -99,16 +99,19 @@ export const dislikePost = async ({ postId, userId }: { postId: number; userId: 
  * @param postId - 게시글 고유 ID
  * @returns 게시글 본문, 이미지 배열, 작성자 정보 등 포함된 상세 정보
  */
-export const getGonggamPostDetailByClient = async (postId: TableGonggamPosts['id']): Promise<GonggamPostDetail> => {
-  // 1. 게시글 + 작성자 조인 조회
+export const getGonggamPostDetailByClient = async (
+  postId: TableGonggamPosts['id']
+): Promise<GonggamPostDetailWithoutCounts> => {
   const { data: post, error: postError } = await supabase
     .from(TABLE.GONGGAM_POSTS)
     .select(
       `
       *,
-      users (
+      writer:users (
         nickname,
         profile_image
+      ),images:gonggam_post_image_path (
+        image_url
       )
     `
     )
@@ -117,20 +120,13 @@ export const getGonggamPostDetailByClient = async (postId: TableGonggamPosts['id
 
   if (postError || !post) throw new Error(postError.message);
 
-  // 2. 이미지 배열 직접 조회
-  const { data: imageData, error: imageError } = await supabase
-    .from(TABLE.GONGGAM_POST_IMAGE_PATH)
-    .select('image_url')
-    .eq('post_id', postId);
-
-  if (imageError || !imageData) throw new Error(imageError.message);
-  const images = !imageError && imageData ? imageData.map((item) => item.image_url) : [];
+  const images = post.images?.map((image) => image.image_url) ?? [];
 
   return {
     ...post,
     writer: {
-      nickname: post.users.nickname,
-      profile_image: post.users.profile_image
+      nickname: post.writer.nickname,
+      profile_image: post.writer.profile_image
     },
     images
   };

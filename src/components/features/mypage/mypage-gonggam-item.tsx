@@ -15,7 +15,7 @@ const MypageGonggamItem = ({ post }: ItemProps) => {
         <h2 className="justify-start self-stretch text-sm font-normal leading-tight text-secondary-grey-900">
           {post.title}
         </h2>
-        <p className="w-80 justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs text-secondary-grey-900">
+        <p className="w-full justify-start overflow-hidden text-ellipsis whitespace-nowrap text-xs text-secondary-grey-900">
           {post.content}
         </p>
       </ContentsContainer>

@@ -15,21 +15,24 @@ export interface WriterProfile {
   profile_image?: TableUsers['profile_image'];
 }
 
-export interface GonggamPostDetailResponse extends TableGonggamPosts {
+type GonggamBoardTypeViaView = Omit<GonggamPostWithCounts, 'users'>;
+
+export interface GonggamPostDetailResponse extends GonggamBoardTypeViaView {
   writer: WriterProfile;
+  imageUrl: string;
 }
 
 export interface GonggamPostDetail extends GonggamPostDetailResponse {
   images: string[];
 }
 
-export interface CommentWithUser extends Omit<TableComments, 'post_id' | 'user_id'> {
+export interface GonggamPostDetailWithoutCounts extends TableGonggamPosts {
   writer: WriterProfile;
+  images: string[];
 }
 
-export interface GonggamPostMeta {
-  likeCnt: number;
-  commentCnt: number;
+export interface CommentWithUser extends Omit<TableComments, 'post_id' | 'user_id'> {
+  writer: WriterProfile;
 }
 
 export interface UploadGonggamCommentParams {
@@ -48,22 +51,23 @@ export interface GetMyGonggamPostsResponse {
   page: number;
   totalPages: number;
 }
-
-//gonggam_posts_with_counts 뷰 타입 정의
-export type GonggamPostWithCounts = {
+export interface GonggamPostWithCounts {
   id: number;
   title: string;
   category: EnumCategories;
-  content: string | null;
+  content: string;
   created_at: string;
-  updated_at: string;
+  updated_at: string | null;
   user_id: string;
-  like_count: number | null;
-  comment_count: number | null;
+  like_count: number;
+  comment_count: number;
+  tags: string[];
+  view_count: number;
   // 조인된 users 테이블 필드 추가 (닉네임만)
   users: {
     nickname: string;
+    profile_image?: string;
   };
-};
+}
 
 export type SortBy = 'latest' | 'comments' | 'likes';

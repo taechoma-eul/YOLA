@@ -1,14 +1,14 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { clsx } from 'clsx';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NoRecordsBox from '@/components/common/no-records-box';
 import SoloLifeCard from '@/components/common/solo-life-card';
 import { PostDetailModal } from '@/components/features/modals/calendar-post-detail';
 import { SelectBox } from '@/components/features/mypage/my-life-filter';
+import { SoloLifeCardSkeletonSection } from '@/components/ui/skeleton';
 import { DEFAULT_LIFE_IMAGE_URL } from '@/constants/default-image-url';
-import { QUERY_KEY } from '@/constants/query-keys';
 import useGetLifePostsInfiniteQuery from '@/lib/hooks/queries/use-get-life-posts-infinite-query';
 import type { GetLifePostsResponse, LifePostWithImageUrls, SoloLifeCardType, SortBy } from '@/types/life-post';
 
@@ -20,13 +20,6 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<LifePostWithImageUrls | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>('all');
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    queryClient.invalidateQueries({
-      queryKey: [QUERY_KEY.LIFE_POSTS_INFINITE, sortBy]
-    });
-  }, [sortBy, queryClient]);
 
   const {
     data: posts,
@@ -37,15 +30,14 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
     isFetchingNextPage
   } = useGetLifePostsInfiniteQuery(sortBy);
 
-  const { ref, inView } = useInView({
-    threshold: 0.5
-  });
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+  const { ref } = useInView({
+    threshold: 0.5,
+    onChange(inView) {
+      if (inView && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
     }
-  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  });
 
   const parsedList: SoloLifeCardType[] =
     posts?.pages?.flatMap((page: GetLifePostsResponse) =>
@@ -64,7 +56,7 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
       })
     ) ?? [];
 
-  if (isPending) return <div className="p-4">로딩 중...</div>;
+  if (isPending) return <SoloLifeCardSkeletonSection mode="mypage" />;
   if (error) throw error;
 
   const handleClickCard = (id: string) => {
@@ -91,7 +83,7 @@ const MyLifeListClient = ({ nickname }: MyLifeListClientProps) => {
         </div>
       </section>
 
-      <section className="flex flex-wrap gap-[18px]">
+      <section className={clsx(parsedList.length === 0 ? 'flex w-full' : 'flex flex-wrap gap-[18px]')}>
         {parsedList.length === 0 ? (
           <NoRecordsBox mode="라이프" />
         ) : (

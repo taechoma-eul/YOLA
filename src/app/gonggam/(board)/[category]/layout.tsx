@@ -4,7 +4,7 @@ import type { Children } from '@/types/children';
 
 const GonggamLayout = ({ children }: Children) => {
   return (
-    <div className="w-full">
+    <div className="w-full max-w-[1200px]">
       <GonggamHeader />
       <TabsNav />
       {children}
