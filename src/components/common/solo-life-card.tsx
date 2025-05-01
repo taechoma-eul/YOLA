@@ -26,7 +26,7 @@ const SoloLifeCard = ({
     <article
       onClick={onClick}
       className={clsx(
-        'flex w-full cursor-pointer items-start gap-3 rounded-2xl bg-white outline outline-1 outline-offset-[-1px] outline-secondary-grey-300',
+        'flex w-full cursor-pointer items-start justify-between gap-3 rounded-2xl bg-white outline outline-1 outline-offset-[-1px] outline-secondary-grey-300',
         mode === 'mypage' && 'p-3 sm:h-[322px] sm:w-[222px] sm:flex-col',
         mode === 'calendar' && 'p-4 sm:h-[337px] sm:w-[237px] sm:flex-col'
       )}
@@ -52,36 +52,37 @@ const SoloLifeCard = ({
         <p className="line-clamp-1 text-sm font-medium text-secondary-grey-900 sm:line-clamp-none sm:whitespace-pre-line sm:break-words">
           {previewContent}
         </p>
-
-        {/* 태그 */}
-        <ul className="mt-1 flex flex-wrap gap-1 text-xs text-secondary-grey-900">
-          {tags.slice(0, 2).map((tag, idx) => (
-            <li
-              key={idx}
-              className="line-clamp-1 max-w-[80px] overflow-hidden rounded bg-secondary-grey-100 px-[6px] py-1 outline outline-1 outline-offset-[-1px] outline-black/10"
-            >
-              # {tag}
-            </li>
-          ))}
-          {tags.length > 2 && (
-            <li className="line-clamp-1 rounded px-2 py-1 outline outline-1 outline-offset-[-1px] outline-black/10">
-              +{tags.length - 2}
-            </li>
-          )}
-        </ul>
-
-        {/* Footer */}
-        <footer className="mt-1 flex items-center gap-[6px] text-xs text-secondary-grey-800">
-          <time>{formattedDate}</time>
-          <div className="mt-[1.7px] h-0 w-[9px] rotate-90 outline outline-[0.5px] outline-secondary-grey-400" />
-          <div
-            className={clsx(
-              `h-[8px] w-[8px] rounded-full`,
-              isMission ? 'bg-calendar-mission' : 'bg-secondary-grey-900'
+        <div>
+          {/* 태그 */}
+          <ul className="mt-1 flex flex-wrap gap-1 text-xs text-secondary-grey-900">
+            {tags.slice(0, 2).map((tag, idx) => (
+              <li
+                key={idx}
+                className="line-clamp-1 max-w-[80px] overflow-hidden rounded bg-secondary-grey-100 px-[6px] py-1 outline outline-1 outline-offset-[-1px] outline-black/10"
+              >
+                # {tag}
+              </li>
+            ))}
+            {tags.length > 2 && (
+              <li className="line-clamp-1 rounded px-2 py-1 outline outline-1 outline-offset-[-1px] outline-black/10">
+                +{tags.length - 2}
+              </li>
             )}
-          ></div>
-          <span>{isMission ? '미션인증' : '하루일기'}</span>
-        </footer>
+          </ul>
+
+          {/* Footer */}
+          <footer className="mt-1 flex items-center gap-[6px] text-xs text-secondary-grey-800">
+            <time>{formattedDate}</time>
+            <div className="mt-[1.7px] h-0 w-[9px] rotate-90 outline outline-[0.5px] outline-secondary-grey-400" />
+            <div
+              className={clsx(
+                `h-[8px] w-[8px] rounded-full`,
+                isMission ? 'bg-calendar-mission' : 'bg-secondary-grey-900'
+              )}
+            ></div>
+            <span>{isMission ? '미션인증' : '하루일기'}</span>
+          </footer>
+        </div>
       </section>
     </article>
   );
