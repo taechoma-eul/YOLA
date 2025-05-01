@@ -3,6 +3,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import AuthFormField from '@/components/features/auth-form/auth-form-field';
 import LoginFormButton from '@/components/features/auth-form/login-form-button';
+import { CustomButton } from '@/components/ui/custom-button';
 import { Form as FormProvider, FormField } from '@/components/ui/form';
 import { AUTH, PLACEHOLDER } from '@/constants/auth-form';
 import { SUCCESS } from '@/constants/messages';
@@ -10,7 +11,6 @@ import { useLoginForm } from '@/lib/hooks/use-login-form';
 import { login } from '@/lib/utils/api/auth/auth-action';
 import { toastAlert } from '@/lib/utils/toast';
 import { LoginFormData } from '@/lib/utils/validation/auth-schema';
-import { CustomButton } from '@/components/ui/custom-button';
 
 interface LoginField {
   fieldName: 'email' | 'password';
@@ -75,7 +75,7 @@ const LoginForm = () => {
           {isSubmitting ? '로그인 중...' : '이메일로 로그인'}
         </CustomButton>
       </form>
-      <LoginFormButton isValid={isValid} isSubmitting={isSubmitting} />
+      <LoginFormButton />
     </FormProvider>
   );
 };

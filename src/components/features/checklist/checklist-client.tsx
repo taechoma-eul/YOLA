@@ -54,7 +54,7 @@ const ChecklistClient = ({ mission, userId }: ChecklistClientProps) => {
         <figure className="flex gap-[12px]">
           <h1 className="whitespace-nowrap text-[20px] font-semibold">{checklistData.decodedMission} 체크리스트</h1>
           {isMaster && (
-            <span className="border-mission-line text-mission-clear flex items-center gap-0.5 rounded-[18px] border px-2 py-1 text-[16px] font-semibold leading-[1.4]">
+            <span className="flex items-center gap-0.5 rounded-[18px] border border-mission-line px-2 py-1 text-[16px] font-semibold leading-[1.4] text-mission-clear">
               CLEAR
             </span>
           )}

@@ -28,8 +28,8 @@ const MissionSection = () => {
       <Image
         src={MOBILE_MISSION_PREVIEW}
         alt="챌린지 미션 인증 작성 미리보기"
-        width={548}
-        height={288}
+        width={343}
+        height={340}
         className="mb-10 mt-7 md:hidden"
         draggable="false"
       />
