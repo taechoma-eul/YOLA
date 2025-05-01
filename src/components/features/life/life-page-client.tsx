@@ -31,7 +31,7 @@ const LifePageClient = () => {
   }, [posts]);
 
   return (
-    <div className="mt-[50px] flex w-full min-w-[440px] max-w-[1028px] flex-col items-center px-4">
+    <div className="mt-[50px] flex w-full min-w-[425px] max-w-[1028px] select-none flex-col items-center px-2 md:px-4">
       <div className="w-full min-w-[343px] max-w-[1028px] px-4 sm:px-0">
         <Calendar
           setDate={setSelectedDate}
