@@ -27,7 +27,7 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
     <section>
       <div className="relative flex-1 md:pt-2">
         <div className="flex flex-col gap-1">
-          {/* 레이블: 진행도 텍스트 */}
+          {/* 모바일 레이블: 진행도 텍스트 */}
           <div className="relative flex w-full justify-between pb-[6px] md:hidden">
             {Array.from({ length: 5 }).map((_, idx) => {
               return (
@@ -46,7 +46,7 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
           {/* 진행도 바 */}
           <div className="flex h-3 w-full gap-[4px] overflow-hidden rounded-md">
             {progressBar.map((bar, idx) => {
-              if (bar.type === 'master') return <div key={idx} className="flex-1 bg-mission-line" />;
+              if (bar.type === 'master') return <div key={idx} className="bg-mission-line flex-1" />;
               if (bar.type === 'full') return <div key={idx} className="flex-1 bg-primary-orange-400" />;
               if (bar.type === 'partial') {
                 return (
@@ -75,43 +75,34 @@ const ChecklistProgress = ({ progress, userLevel, isMaster }: ChecklistProgressP
           </div>
 
           {/* 단계 말풍선 */}
-          <div className="relative w-full">
+          <div className="flex w-full justify-between">
             {levels.map((label, idx) => {
               const level = (idx + 1).toString();
               const isPast = Number(level) < Number(userLevel);
               const isCurrent = level === userLevel;
-              const isUnlocked = isPast || isCurrent;
-              const position = `${((idx + 0.5) / TOTAL_LEVELS) * 100}%`;
 
               return (
-                <div
-                  key={idx}
-                  className="absolute left-0 top-[12px] flex w-full justify-center"
-                  style={{
-                    transform: `translateX(calc(${position} - 50%))`,
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  <div className="relative flex items-center">
+                <div key={idx} className="flex w-1/5 justify-center">
+                  <div className="relative flex flex-col items-center">
+                    {isCurrent && (
+                      <div className="-mb-3 mt-[4px] border-x-8 border-b-8 border-x-transparent border-b-secondary-grey-900 md:-mb-4 md:mt-[10px]" />
+                    )}
                     <span
                       className={clsx(
-                        'inline-flex items-center gap-1 rounded-[12px]',
+                        'mt-[10px] inline-flex items-center gap-1 rounded-[12px] md:mt-[14px]',
                         isCurrent
-                          ? 'h-[37px] w-[63px] bg-secondary-grey-900 px-2 py-[10px] text-[12px] text-white md:h-[42px] md:w-[79px] md:px-3 md:py-2.5 md:text-[16px]'
-                          : 'h-[38px] w-[38px] border border-secondary-grey-400 p-[12px] text-[12px] font-normal text-secondary-grey-800 md:h-[41px] md:w-[71px] md:px-3 md:py-2.5',
+                          ? 'h-[37px] w-[63px] bg-secondary-grey-900 py-[10px] pl-[8px] text-[12px] text-white md:h-[42px] md:w-[79px] md:py-2.5 md:pl-[12px] md:text-[16px]'
+                          : 'h-[38px] w-[38px] border border-secondary-grey-400 text-[12px] font-normal text-secondary-grey-800 md:h-[41px] md:w-[71px] md:py-2.5 md:pl-[12px]',
                         !isCurrent && 'justify-center md:justify-start'
                       )}
                     >
                       <span className={clsx('md:inline', !isCurrent && 'hidden')}>{label}</span>
-                      {isUnlocked ? (
+                      {isPast || isCurrent ? (
                         <Unlock className="h-[16px] w-[16px] shrink-0" />
                       ) : (
                         <Lock className="h-[14px] w-[14px] shrink-0" />
                       )}
                     </span>
-                    {isCurrent && (
-                      <div className="absolute left-1/2 top-[-6px] -translate-x-1/2 border-x-8 border-b-8 border-x-transparent border-b-secondary-grey-900" />
-                    )}
                   </div>
                 </div>
               );
