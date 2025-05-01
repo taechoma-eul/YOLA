@@ -18,7 +18,7 @@ const SoloLifeCard = ({
   onClick,
   mode = 'calendar' // 기본값 설정
 }: SoloLifeCardProps) => {
-  const maxLength = mode === 'mypage' ? 28 : 30;
+  const maxLength = mode === 'mypage' ? 24 : 28;
   const previewContent = content.length > maxLength ? content.slice(0, maxLength) + '...' : content;
   const formattedDate = date.replaceAll('-', '.');
 
@@ -55,14 +55,19 @@ const SoloLifeCard = ({
 
         {/* 태그 */}
         <ul className="mt-1 flex flex-wrap gap-1 text-xs text-secondary-grey-900">
-          {tags.map((tag, idx) => (
+          {tags.slice(0, 2).map((tag, idx) => (
             <li
               key={idx}
-              className="rounded bg-secondary-grey-100 px-2 py-1 outline outline-1 outline-offset-[-1px] outline-black/10"
+              className="line-clamp-1 max-w-[80px] overflow-hidden rounded bg-secondary-grey-100 px-[6px] py-1 outline outline-1 outline-offset-[-1px] outline-black/10"
             >
               # {tag}
             </li>
           ))}
+          {tags.length > 2 && (
+            <li className="line-clamp-1 rounded px-2 py-1 outline outline-1 outline-offset-[-1px] outline-black/10">
+              +{tags.length - 2}
+            </li>
+          )}
         </ul>
 
         {/* Footer */}
