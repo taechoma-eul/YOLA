@@ -55,7 +55,8 @@
 
 ### System Architecture
 
-  <img src='public/images/system-architecture.png'/>
+  ![System Architecture](https://github.com/user-attachments/assets/6e7d022a-b345-4dd3-8241-93c353f67a01)
+
 
 </br>
 
